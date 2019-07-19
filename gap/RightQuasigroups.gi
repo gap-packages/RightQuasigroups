@@ -365,6 +365,19 @@ function( x, y )
 	return Objectify( TypeObj(x), [ F!.rdiv( x![ 1 ], y![ 1 ] ) ] );
 end );
 
+InstallMethod( \^, "for a right quasigroup element and a permutation",
+    [ IsRightQuasigroupElement, IsPerm ],
+function( x, p )
+    local F,i;
+    F := FamilyObj( x );
+    if F!.indexBased then
+        i := x![1];
+    else 
+        i := PositionSorted( F!.set, x );
+    fi;
+    return F!.set[i^p];
+end );
+
 #############################################################################
 # SECTIONS
 
@@ -456,7 +469,7 @@ end );
 ###################
 ## TO DO:
 # [x] RightMultiplicationGroup, RelativeRightMultiplicationGroup, IsSubrightQuasigroup
-# [ ] Actions by permutations
+# [x] Actions by permutations
 # [ ] IntoRightQuasigroup
 # [ ] Isomorphism checks
 # [ ] Automorphism group

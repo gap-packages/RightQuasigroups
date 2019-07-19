@@ -80,7 +80,9 @@ RightSection(v);
 ###
 
 s:=RightCoreOfGroup(SymmetricGroup(5));
-StructureDescription(RightMultiplicationGroup(s));
+rmlt:=RightMultiplicationGroup(s);
+StructureDescription(rmlt);
+OrbitLengths(rmlt,Elements(s));
 
 ###
 
