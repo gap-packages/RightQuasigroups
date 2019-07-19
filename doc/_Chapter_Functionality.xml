@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Functionality">
+<Heading>Functionality</Heading>
+
+<P/>
+<Section Label="Chapter_Functionality_Section_Construction_Filters">
+<Heading>Construction Filters</Heading>
+
+This section will describe the construction
+filters of right quasigroups.
+<P/>
+<ManSection>
+  <Filt Arg="object" Name="IsRightQuasigroupElement" Label="for IsMultiplicativeElement"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+A &GAP; category of elements of right quasigroups.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Functionality_Section_Construction_Methods">
+<Heading>Construction Methods</Heading>
+
+<P/>
+This section will describe the construction
+methods of right quasigroups.
+<ManSection>
+  <Filt Arg="object" Name="IsRightQuasigroupMagma" Label="for IsObject"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+An auxiliary category for &GAP; to tell apart <C>IsMagma</C> and <C>IsRightQuasigroup</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="object" Name="IsRightQuasigroup" Label="for IsMagma and IsRightQuasigroupMagma"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+A &GAP; category of right quasigroups.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="set" Name="ProjectionRightQuasigroup" Label="for IsCollection"/>
+ <Returns>The projection right quasigroup on the set <A>set</A>
+</Returns>
+ <Description>
+The operation is defined by <M>x*y=x</M>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="set, f, g" Name="RightQuasigroupByFunctions" Label="for IsCollection, IsFunction, IsFunction"/>
+ <Returns>The right quasigroup <M>(Q,*,/)</M>, where <M>Q</M> is indexed by <A>set</A> and <M>x*y=f(x,y)</M> and <M>x/y = g(x,y)</M>.
+</Returns>
+ <Description>
+The identities <M>f(g(x,y),y)=x</M> and <M>g(f(x,y),y)=x</M> must hold.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="set, f, g" Name="RightQuasigroupByFunction" Label="for IsCollection, IsFunction"/>
+ <Returns>The right quasigroup <M>(Q,*,/)</M>, where <M>Q</M> is indexed by <A>set</A> and <M>x*y=f(x,y)</M> and <M>x/y = z</M> iff <M>z=f(x,y)</M>.
+</Returns>
+ <Description>
+For any <M>x,z</M> there must be a unique <M>y</M> such that <M>f(x,y)=z</M>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+</Chapter>
+
