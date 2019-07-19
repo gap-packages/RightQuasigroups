@@ -184,7 +184,7 @@ end );
 
 #############################################################################
 ##  
-#O  SubrightQuasigroupNC( Q, pos_of_gens )
+#O  SubrightquasigroupNC( Q, pos_of_gens )
 ##    
 ##  This auxiliary function assumes that:
 ##    a) Q is a quasigroup with Q = Parent( Q )
@@ -192,7 +192,7 @@ end );
 ##    c) pos_of_gens determines a subquasigroup of Q
 ##  It then returns the corresponding subquasigroup of Q.
  
- InstallMethod( SubrightQuasigroupNC, "for a right quasigroup and a collection of elements", 
+ InstallMethod( SubrightquasigroupNC, "for a right quasigroup and a collection of elements", 
     [ IsRightQuasigroup, IsCollection ],
 function( Q, pos_of_gens )
     local subqg, Qtype, elms;
@@ -214,8 +214,8 @@ end );
 
 #############################################################################
 ##  
-#O  SubrightQuasigroup( Q, gens )
-#O  SubrightQuasigroup( Q, gens, elms_of_uset )
+#O  Subrightquasigroup( Q, gens )
+#O  Subrightquasigroup( Q, gens, elms_of_uset )
 ##  
 ##   <A>Q</A> is a right quasigroup and <A>gens</A> is one of the following:
 ##  
@@ -229,7 +229,7 @@ end );
 ##   positive integers. In this case, in order to obtain 3), one has to add
 ##   <C>true</C> as third argument.
 
-InstallMethod( SubrightQuasigroup, "for a right quasigroup and a list of elements",
+InstallMethod( Subrightquasigroup, "for a right quasigroup and a list of elements",
     [ IsRightQuasigroup, IsCollection ],
 function( Q, gens )
     local F, gen_elms, new_elms, transl, relmultgr, subqg;
@@ -254,19 +254,19 @@ function( Q, gens )
 #        relmultgr := Subgroup( MultiplicationGroup( Parent( Q ) ), transl );
 #        pos_gens := Set( Orbits( relmultgr, pos_gens )[ 1 ] );
     od;
-    subqg := SubrightQuasigroupNC( Parent( Q ), gen_elms );
+    subqg := SubrightquasigroupNC( Parent( Q ), gen_elms );
     SetGeneratorsOfMagma( subqg, gen_elms );
     return subqg;
 end );
 
-InstallMethod( SubrightQuasigroup, "for a right quasigroup and a list of elements",
+InstallMethod( Subrightquasigroup, "for a right quasigroup and a list of elements",
     [ IsRightQuasigroup, IsCollection, IsBool ],
 function( Q, gens, bubu )
     return fail;
 end );
 
 ##  Returns true if <S> is a sub right quasigorup of a right quasigroup <Q>.
-InstallMethod( IsSubrightQuasigroup, "for two right quasigroups",
+InstallMethod( IsSubrightquasigroup, "for two right quasigroups",
     [ IsRightQuasigroup, IsRightQuasigroup ],
 function( Q, S )
     return Parent( Q ) = Parent( S ) and
@@ -445,7 +445,7 @@ InstallMethod( RelativeRightMultiplicationGroup, "for two right quasigroups",
     [ IsRightQuasigroup, IsRightQuasigroup ],
 function( L, S )
     local perms;
-    if not IsSubrightQuasigroup( L, S ) then
+    if not IsSubrightquasigroup( L, S ) then
         Error("LOOPS: <2> must be a sub right quasigroup of <1>.");
     fi;
     perms := List( S, x -> RightTranslation( L, x ) );
@@ -491,7 +491,7 @@ end );
 
 ###################
 ## TO DO:
-# [x] RightMultiplicationGroup, RelativeRightMultiplicationGroup, IsSubrightQuasigroup
+# [x] RightMultiplicationGroup, RelativeRightMultiplicationGroup, IsSubrightquasigroup
 # [x] Actions by permutations
 # [x] IntoRightQuasigroup
 # [ ] Isomorphism checks
@@ -504,3 +504,4 @@ end );
 # [ ] better isom checks
 # [ ] ID function
 # [ ] library of small racks and quandles
+# [ ] documentation, InfoClass

@@ -64,7 +64,7 @@ q:=ProjectionRightQuasigroup([1,3,5,7,9]);
 Elements(q);
 CayleyTable(q);
 MultiplicationTable(q);
-s:=SubrightQuasigroup(q,[1,3]);
+s:=Subrightquasigroup(q,[1,3]);
 Elements(s);
 CayleyTable(s);
 MultiplicationTable(s);

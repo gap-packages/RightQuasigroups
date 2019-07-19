@@ -98,10 +98,10 @@ DeclareOperation( "RelativeRightMultiplicationGroup", [ IsRightQuasigroup, IsRig
 ##  CREATING SUBRIGHT QUASIGROUPS
 ##  -------------------------------------------------------------------------
 
-DeclareOperation( "SubrightQuasigroupNC", [ IsRightQuasigroup, IsCollection ] );
-DeclareOperation( "SubrightQuasigroup", [ IsRightQuasigroup, IsCollection ] );
-DeclareOperation( "SubrightQuasigroup", [ IsRightQuasigroup, IsCollection, IsBool ] );
-DeclareOperation( "IsSubrightQuasigroup", [ IsRightQuasigroup, IsRightQuasigroup ] );
+DeclareOperation( "SubrightquasigroupNC", [ IsRightQuasigroup, IsCollection ] );
+DeclareOperation( "Subrightquasigroup", [ IsRightQuasigroup, IsCollection ] );
+DeclareOperation( "Subrightquasigroup", [ IsRightQuasigroup, IsCollection, IsBool ] );
+DeclareOperation( "IsSubrightquasigroup", [ IsRightQuasigroup, IsRightQuasigroup ] );
 
 #############################################################################
 ##  CREATING RIGHT QUASIGROUPS FROM A FILE
