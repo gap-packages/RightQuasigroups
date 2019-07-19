@@ -119,5 +119,5 @@ DeclareOperation( "RightQuasigroupByCayleyTable", [ IsRectangularTable ] );
 ##  CONSTRUCTIONS
 ##  -------------------------------------------------------------------------
 
-#DeclareOperation( "IntoRightQuasigroup", [ IsMagma ] );
+DeclareOperation( "IntoRightQuasigroup", [ IsMagma ] );
 DeclareOperation( "RightCoreOfGroup", [ IsGroup ] );

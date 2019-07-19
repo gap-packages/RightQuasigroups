@@ -457,6 +457,29 @@ end);
 #############################################################################
 ##  CONSTRUCTIONS
 
+##  Given a magma, returns the corresponding right quasigroup, if possible.
+##  Handles additive groups too. For (additive) groups, not checks are needed.
+InstallMethod( IntoRightQuasigroup, "for magma",
+    [ IsMagma ],
+function( M )
+    local ct;
+    if IsRightQuasigroup( M ) then # leave right quasigroups intact
+        return M;
+    fi;
+    # magma, group case
+    if IsGroup( M ) then
+        return RightQuasigroupByFunctionsNC( M, \*, \/, false );
+    fi;
+    # magma, general case
+    return RightQuasigroupByFunction( M, \* );
+end);
+
+InstallOtherMethod( IntoRightQuasigroup, "for additive group",
+    [ IsAdditiveGroup ],
+function( M )
+    return RightQuasigroupByFunctionsNC( M, \+, \-, false );
+end);
+
 InstallMethod( RightCoreOfGroup, "for a group",
     [ IsGroup ], 
 function(G)
@@ -470,7 +493,7 @@ end );
 ## TO DO:
 # [x] RightMultiplicationGroup, RelativeRightMultiplicationGroup, IsSubrightQuasigroup
 # [x] Actions by permutations
-# [ ] IntoRightQuasigroup
+# [x] IntoRightQuasigroup
 # [ ] Isomorphism checks
 # [ ] Automorphism group
 # [ ] Factoring by congruences

@@ -94,4 +94,8 @@ RightSection(uu0);; time;
 RightSection(uu1);; time;
 RightSection(uu1)=RightSection(uu0);
 
+###
+
+IntoRightQuasigroup(AlternatingGroup(4));
+IntoRightQuasigroup(GF(7)^2);
 
