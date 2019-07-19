@@ -265,6 +265,14 @@ function( Q, gens, bubu )
     return fail;
 end );
 
+##  Returns true if <S> is a sub right quasigorup of a right quasigroup <Q>.
+InstallMethod( IsSubrightQuasigroup, "for two right quasigroups",
+    [ IsRightQuasigroup, IsRightQuasigroup ],
+function( Q, S )
+    return Parent( Q ) = Parent( S ) and
+           IsSubset( Elements( Q ), Elements( S ) );
+end );
+
 #############################################################################
 ##
 #O  SetQuasigroupElmName( Q, name )
@@ -414,6 +422,25 @@ function( Q )
     return List( Elements( Q ), x -> RightTranslation( Q, x ) );
 end );
 
+InstallMethod( RightMultiplicationGroup, "for a right quasigroup",
+    [ IsRightQuasigroup ],
+function( Q )
+    return Group( RightSection( Q ) );
+end );
+
+InstallMethod( RelativeRightMultiplicationGroup, "for two right quasigroups",
+    [ IsRightQuasigroup, IsRightQuasigroup ],
+function( L, S )
+    local perms;
+    if not IsSubrightQuasigroup( L, S ) then
+        Error("LOOPS: <2> must be a sub right quasigroup of <1>.");
+    fi;
+    perms := List( S, x -> RightTranslation( L, x ) );
+    return Group( perms );
+end);
+
+
+
 #############################################################################
 ##  CONSTRUCTIONS
 
@@ -428,16 +455,16 @@ end );
 
 ###################
 ## TO DO:
-# RightMultiplicationGroup
-# Actions by permutations
-# IntoRightQuasigroup
-# Isomorphism checks
-# Automorphism group
-# Factoring by congruences
-# TOWARD RACKS AND QUANDLES:
-# displacement group
-# checking basic properties (is affine?)
-# affine representations
-# better isom checks
-# ID function
-# library of small racks and quandles
+# [x] RightMultiplicationGroup, RelativeRightMultiplicationGroup, IsSubrightQuasigroup
+# [ ] Actions by permutations
+# [ ] IntoRightQuasigroup
+# [ ] Isomorphism checks
+# [ ] Automorphism group
+# [ ] Factoring by congruences
+# [ ] TOWARD RACKS AND QUANDLES:
+# [ ] displacement group
+# [ ] checking basic properties (is affine?)
+# [ ] affine representations
+# [ ] better isom checks
+# [ ] ID function
+# [ ] library of small racks and quandles

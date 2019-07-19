@@ -69,6 +69,8 @@ Elements(s);
 CayleyTable(s);
 MultiplicationTable(s);
 
+RelativeRightMultiplicationGroup(q,s);
+
 ###
 
 RightSection(s);
@@ -78,7 +80,7 @@ RightSection(v);
 ###
 
 s:=RightCoreOfGroup(SymmetricGroup(5));
-StructureDescription(Group(RightSection(s)));
+StructureDescription(RightMultiplicationGroup(s));
 
 ###
 

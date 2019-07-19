@@ -91,6 +91,8 @@ DeclareAttribute( "RightDivisonTable", IsRightQuasigroup );
 DeclareOperation( "PosInParent", [ IsRightQuasigroupElement ] );
 DeclareOperation( "RightTranslation", [ IsRightQuasigroup, IsRightQuasigroupElement ] );
 DeclareAttribute ("RightSection", IsRightQuasigroup );
+DeclareAttribute( "RightMultiplicationGroup", IsRightQuasigroup );
+DeclareOperation( "RelativeRightMultiplicationGroup", [ IsRightQuasigroup, IsRightQuasigroup ] );
 
 #############################################################################
 ##  CREATING SUBRIGHT QUASIGROUPS
@@ -99,6 +101,7 @@ DeclareAttribute ("RightSection", IsRightQuasigroup );
 DeclareOperation( "SubrightQuasigroupNC", [ IsRightQuasigroup, IsCollection ] );
 DeclareOperation( "SubrightQuasigroup", [ IsRightQuasigroup, IsCollection ] );
 DeclareOperation( "SubrightQuasigroup", [ IsRightQuasigroup, IsCollection, IsBool ] );
+DeclareOperation( "IsSubrightQuasigroup", [ IsRightQuasigroup, IsRightQuasigroup ] );
 
 #############################################################################
 ##  CREATING RIGHT QUASIGROUPS FROM A FILE
