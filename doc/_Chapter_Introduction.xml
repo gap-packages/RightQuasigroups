@@ -4,9 +4,629 @@
 <Chapter Label="Chapter_Introduction">
 <Heading>Introduction</Heading>
 
+ <P/>&RightQuasigroups; is a package for &GAP; that supports calculations with finite
+ right quasigroups, quasigroups, loops and various varieties of right quasigroups, such as racks and quandles.
+ <P/>In this chapter we briefly describe the main features of the implementation of
+ right quasigroups in &GAP;.
+ <P/>Remarks on this manual:
+ <List>
+ <Item>Sections and subsections marked by * are for users who wish to
+      understand the inner workings of the package. These can be skipped by casual users.</Item>
+ <Item>Global variables and auxiliary functions in &RightQuasigroups; start with the prefix <Code>RQ_</Code>
+      and are not fully documented in this manual. More information on these functions
+      can be found in the declaration files <Code>gap\*.gd</Code>.</Item>
+ </List>
+<Section Label="Section_Categories">
+<Heading>Categories and representations for right quasigroups, quasigroups and loops</Heading>
+
+ <P/>A <Index>right quasigroup</Index><Emph>right quasigroup</Emph> is a set <Math>Q</Math>
+ with a binary operation <Math>\cdot</Math> called <Index>multiplication</Index><Emph>multiplication</Emph>
+ such that for every <Math>x\in Q</Math>
+ the right translation <Math>R_x:Q\to Q</Math> defined by <Math>R_x(y)=y\cdot x</Math> is a permutation of <Math>Q</Math>. We
+ then denote <Math>R_x^{-1}(y)</Math> by <Math>y/x</Math> and refer to <Math>/</Math> as <Index>right division</Index><Emph>right division</Emph>.
+ <P/>Similarly, <Math>(Q,\cdot)</Math> is a <Index>left quasigroup</Index><Emph>left quasigroup</Emph> 
+ if for every <Math>x\in Q</Math> the left translation <Math>L_x:Q\to Q</Math> defined by <Math>L_x(y)=x\cdot y</Math> is a permutation of <Math>Q</Math>. We
+ then denote <Math>L_x^{-1}(y)</Math> by <Math>x\backslash y</Math> and refer to <Math>\backslash</Math> as <Index>left division</Index><Emph>left division</Emph>.
+ <P/>If <Math>(Q,\cdot)</Math> is both a right quasigroup and a left quasigroup, it is a <Index>quasigroup</Index><Emph>quasigroup</Emph>.
+ <P/>A <Index>loop</Index><Emph>loop</Emph> is a quasigroup <Math>(Q,\cdot)</Math> with a neutral element
+ <Math>e\in Q</Math> satisfying <Math>x\cdot e=x=e\cdot x</Math> for every <Math>x\in Q</Math>.
+ <P/>In &GAP;, right quasigroups and their elements are constructs that mimic the mathematical objects. The set 
+ on which a right quasigroup <Code>Q</Code> is based is called the <Index>underlying set</Index><Emph>underlying set</Emph>,
+ cf. Section <Ref Sect="Section_Displaying"/>.
+ <P/>From a universal-algebraic point of view, right quasigroups, quasigroups and loops have different signatures, which is
+ why we have created separate, nested representations for the three kinds of algebras and their elements.
+<ManSection Label="RightQuasigroupCategory">
+<Heading>Categories and representations for right quasigroup elements and right quasigroups</Heading>
+  <Filt Arg="object" Name="IsRightQuasigroupElement" Label="for IsMultiplicativeElement"/>
+  <Filt Arg="object" Name="IsRightQuasigroupElmRep" Label="for IsPositionalObjectRep and IsMultiplicativeElement"/>
+  <Filt Arg="object" Name="IsRightQuasigroup" Label="for IsMagma and IsRightQuasigroupAux"/>
+ <Returns><Code>true</Code> or <Code>false</Code>
+</Returns>
+ <Description>
 <P/>
-RightQuasigroups is a package which does some
-interesting and cool things
+ </Description>
+</ManSection>
+
+
+ <P/>These are the &GAP; categories and representations for right quasigroup elements and right quasigroups.
+ <Code>IsRightQuasigroupElement</Code> is contained in the filter <Code>IsMultiplicativeElement</Code>,
+ <Code>IsRightQuasigroupElmRep</Code> is contained in the filters <Code>IsPositionalObjectRep</Code>
+ and <Code>IsMultiplicativeElement</Code>, and <Code>IsRightQuasigroup</Code> is contained in the
+ filter <Code>IsMagma</Code>.
+<ManSection Label="QuasigroupCategory">
+<Heading>Categories and representations for quasigroup elements and quasigroups</Heading>
+  <Filt Arg="object" Name="IsQuasigroupElement" Label="for IsRightQuasigroupElement and IsQuasigroupElementAux"/>
+  <Filt Arg="object" Name="IsQuasigroupElmRep" Label="for IsPositionalObjectRep and IsMultiplicativeElement"/>
+  <Filt Arg="object" Name="IsQuasigroup" Label="for IsRightQuasigroup and IsQuasigroupAux"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
 <P/>
+ </Description>
+</ManSection>
+
+
+ <P/>These are the &GAP; categories and representations for quasigroup elements and quasigroups.
+ <Code>IsQuasigroupElement</Code> is contained in the filter <Code>IsRightQuasigroupElement</Code>,
+ <Code>IsQuasigroupElmRep</Code> is contained in the filters <Code>IsPositionalObjectRep</Code>
+ and <Code>IsMultiplicativeElement</Code>, and <Code>IsQuasigroup</Code> is contained in the
+ filter <Code>IsRightQuasigroup</Code>.
+<ManSection Label="LoopCategory">
+<Heading>Categories and representations for loop elements and loops</Heading>
+  <Filt Arg="object" Name="IsLoopElement" Label="for IsQuasigroupElement and IsMultiplicativeElementWithInverse"/>
+  <Filt Arg="object" Name="IsLoopElmRep" Label="for IsPositionalObjectRep and IsMultiplicativeElementWithInverse"/>
+  <Filt Arg="object" Name="IsLoop" Label="for IsQuasigroup and IsMultiplicativeElementWithInverseCollection"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+ <P/>These are the &GAP; categories and representations for loop elements and loops.
+ <Code>IsLoopElement</Code> is contained in the filters <Code>IsQuasigroupElement</Code> and
+ <Code>IsMultiplicativeElementWithInverse</Code>, 
+ <Code>IsLoopElmRep</Code> is contained in the filters <Code>IsPositionalObjectRep</Code>
+ and <Code>IsMultiplicativeElementWithInverse</Code>, and <Code>IsLoop</Code> is contained in the
+ filters <Code>IsQuasigroup</Code> and <Code>IsMultiplicativeElementWithInverseCollection</Code>.
+ <P/>Note that these declarations do not imply that every loop element has an inverse. 
+<ManSection>
+  <Oper Arg="Q" Name="CategoryOfRightQuasigroup" Label="for IsRightQuasigroup"/>
+ <Returns>the smallest category from among <Code>IsRightQuasigroup</Code>, <Code>IsQuasigroup</Code> and  <Code>IsLoop</Code> to which <Arg>Q</Arg> belongs
+</Returns>
+ <Description>
+All declared right quasigroups, quasigroups and loops belong to the filter <Code>IsRightQuasigroup</Code>.
+ It is sometimes useful to know if a right quasigroup is in fact declared as a quasigroup or a loop,
+ which is what the above method furnishes.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Section_Displaying">
+<Heading>Displaying right quasigroups and their elements</Heading>
+
+<Subsection Label="Chapter_Introduction_Section_Displaying_right_quasigroups_and_their_elements_Subsection_Displaying_right_quasigroups_quasigroups_and_loops">
+<Heading>Displaying right quasigroups, quasigroups and loops</Heading>
+
+ <P/>The standard <Code>ViewObj</Code> function is implemented for right quasigroups <Code>Q</Code> 
+ and it always displays at least the size of <Code>Q</Code>, namely <Code>&lt;right quasigroup of size n&gt;</Code>, 
+ <Code>&lt;quasigroup of size n&gt;</Code> or <Code>&lt;loop of size n&gt;</Code>, depending on whether <Code>Q</Code>
+ is declared as a right quasigroup, quasigroup or loop.
+ <P/>When additional properties of <Code>Q</Code> are known, one of the strongest properties of <Code>Q</Code> is displayed,
+ e.g., <Code>&lt;associative loop of order n&gt;</Code>.
+ <P/>Library objects are displayed with their catalog numbers, e.g., <Code>&lt;Moufang loop 64/12&gt;</Code>.
+ <P/>Likewise, the standard <Code>PrintObj</Code> function is implemented for right quasigroups.
+ If <Code>Q</Code> has a Cayley table, the Cayley table is printed, which is potentially slow for large right quasigroups.
+ Otherwise the elements of <Code>Q</Code> are printed.
+<Log><![CDATA[
+gap> Q := RightQuasigroupByCayleyTable( [[0,1],[1,0]] );
+<right quasigroup of size 2>
+gap> IsAssociative( Q );
+true
+gap> Q;
+<associative right quasigroup of size 2>
+gap> Print( Q );
+<right quasigroup with Cayley table
+[ [  0,  1 ],
+  [  1,  0 ] ]
+>
+gap> Q := QuasigroupByFunction( GF(5), \+, false ); # no Cayley table
+<quasigroup of size 5>
+gap> Print( Q );
+<quasigroup with elements
+[ q0*Z(5), qZ(5)^0, qZ(5), qZ(5)^2, qZ(5)^3 ]>
+]]></Log>
+
+
+</Subsection>
+
+
+<ManSection Label="AutoDoc_generated_group36">
+<Heading>The underlying set</Heading>
+  <Oper Arg="obj" Name="UnderlyingSetElm" Label="for IsRightQuasigroupElement"/>
+  <Oper Arg="Q" Name="UnderlyingSet" Label="for IsRightQuasigroup"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+ <P/>Elements of right quasigroups know implicitly into which right quasigroup they belong.
+ If <Code>x</Code> is a right quasigroup element then <Code>UnderlyingSetElm( x )</Code> returns the corresponding element
+ of the underlying set. If <Code>ls</Code> is a list of right quasigroup elements then <Code>UnderlyingSetElm( ls )</Code>
+ returns the list of corresponding elements of the underlying set.
+ If <Code>Q</Code> is a right quasigroup, both <Code>UnderlyingSetElm( Q )</Code> and <Code>UnderlyingSet( Q )</Code>
+ return the underlying set of <Code>Q</Code>.
+<Subsection Label="Chapter_Introduction_Section_Displaying_right_quasigroups_and_their_elements_Subsection_Displaying_right_quasigroup_elements">
+<Heading>Displaying right quasigroup elements</Heading>
+
+ <P/>The <Code>PrintObj</Code> function is implemented in &RightQuasigroups; to display elements of right quasigroups.
+ By default, if <Code>Q</Code> is a right quasigroup and <Code>x</Code> is an element of the underlying set of
+ <Code>Q</Code> then the corresponding element of <Code>Q</Code> is displayed as <Code>rx</Code>, <Code>qx</Code>
+ or <Code>lx</Code>, depending on whether <Code>Q</Code> is declared as a right quasigroup, a quasigroup or a loop.
+</Subsection>
+
+
+<ManSection Label="AutoDoc_generated_group37">
+<Heading>Changing the name of right quasigroup elements</Heading>
+  <Oper Arg="Q, s" Name="SetRightQuasigroupElementsName" Label="for IsRightQuasigroup, IsString"/>
+  <Oper Arg="Q, s" Name="SetQuasigroupElementsName" Label="for IsQuasigroup, IsString"/>
+  <Oper Arg="Q, s" Name="SetLoopElementsName" Label="for IsLoop, IsString"/>
+ <Returns><Code>true</Code>
+</Returns>
+ <Description>
+ Changes the name of all elements of the parent of <Arg>Q</Arg> for the purposes of displaying so that the name
+ of every element starts with the prefix (string) <Arg>s</Arg>.
+<P/>
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Section_Elementwise">
+<Heading>Accessing elements and elementwise right quasigroup operations</Heading>
+
+ <P/>The <Math>i</Math>th element of a right quasigroup <Code>Q</Code> can be obtained by <Code>Elements( Q )[ i ]</Code>.
+ <P/>The <Math>i</Math>the element of the parent <Code>Parent( Q )</Code> or a right quasigroup <Code>Q</Code> can be obtained
+ by <Code>Q.i</Code> (see Section <Ref Sect="Section_Parent"/>). Note that <Code>Q.i</Code> need not be the same element
+ as <Code>Elements( Q )[ i ]</Code>, in fact, it need not even be an element of <Code>Q</Code>.
+ <P/>Finally, if <Code>x</Code> is an element of the underlying set of <Code>Parent( Q )</Code>, the corresponding
+ element of <Code>Parent( Q )</Code> is obtained by <Code>Q[x]</Code>. Note that <Code>Q[x]</Code> therefore need not 
+ be an element of <Code>Q</Code>.
+ <P/>The product of two right quasigroup elements <Code>x</Code> and <Code>y</Code> is obtained by <Code>x*y</Code>, while the
+ right division is obtained via <Code>x/y</Code>, <Code>RightQuotient( x, y )</Code> or <Code>RightDivision( x, y )</Code>.
+ In case of quasigroups, the left division is obtained via <Code>LeftQuotient( x, y )</Code> or <Code>LeftDivision( x, y )</Code>
+ but not by <Code>x\y</Code> since <Code>\</Code> is not supported in &GAP; as a binary operation symbol. If the
+ underlying magma is a loop with two-sided inverses that satisfies the left inverse property
+ <Math>x^{-1}(xy)=y</Math>, then <Code>LeftQuotient( x, y )</Code> coincides with <Code>x^(-1)*y</Code>.
+ <P/>In each of these operations, one of the two arguments can be a list of right quasigroup elements,
+ in which case the corresponding list is returned.
+<ManSection Label="AutoDoc_generated_group38">
+<Heading>Inverses in loops</Heading>
+  <Attr Arg="Q" Name="One" Label="for IsLoopElement"/>
+  <Attr Arg="x" Name="RightInverse" Label="for IsLoopElement"/>
+  <Attr Arg="x" Name="LeftInverse" Label="for IsLoopElement"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+ <P/>In a loop <Code>Q</Code>, the neutral element is returned by <Code>One( Q )</Code>. Note that the neutral
+ element need not be the first element <Code>Q.1</Code> of <Code>Q</Code>.
+ <P/>If <Code>e</Code> is the neutral element of <Code>Q</Code>, then for every <Code>x</Code> in <Code>Q</Code>
+ there are <Code>y</Code> and <Code>z</Code> in <Code>Q</Code> such that <Code>x*y = z*x = e</Code>. The element
+ <Code>y</Code> is the <Index>right inverse</Index><Emph>right inverse</Emph> of <Code>x</Code> and is returned by
+ <Code>RightInverse( x )</Code>. Dually, the element <Code>z</Code> is the <Index>left inverse</Index><Emph>left inverse</Emph>
+ of <Code>x</Code> and is returned by <Code>LeftInverse( x )</Code>.
+ <P/>If the two inverses of <Code>x</Code> coincide, the <Index>two-sided inverse</Index><Emph>two-sided inverse</Emph>
+ of <Code>x</Code> is returned by <Code>Inverse(x)</Code> or by <Code>x^-1</Code>. 
+<Subsection Label="Chapter_Introduction_Section_Accessing_elements_and_elementwise_right_quasigroup_operations_Subsection_Powers_order_and_exponent">
+<Heading>Powers, order and exponent</Heading>
+
+ <P/>Products without specified parentheses are evalutated from left to right, i.e., <Code>x*y*z = (x*y)*z</Code>.
+ A magma <Code>M</Code> is said to be <Index>power associative</Index><Emph>power associative</Emph> if for every <Code>x</Code> in <Code>M</Code>
+ the submagma generated by <Code>x</Code> is a group. In particular, powers <Code>x^n</Code> are well-defined in power
+ associative magmas. Even if <Code>M</Code> is not power-associative, <Code>x^n</Code> with positive <Code>n</Code> returns the element
+ of <Code>M</Code> obtained from the binary expansion of the exponent <Code>n</Code>.
+ <P/>If <Code>M</Code> is a magma with neutral element <Code>e</Code> and <Code>x</Code> is an element of <Code>M</Code>, then <Code>Order( x )</Code> returns
+ the smallest nonnegative integers <Code>n</Code> such that <Code>x^n=e</Code>, if possible, else returns <Code>fail</Code>. Note that
+ in view of the above remarks, <Code>Order( x )</Code> always returns a nonegative integer if <Code>x</Code> is an element 
+ of a finite loop.
+ <P/>The exponent <Code>Exponent( Q )</Code> returns the smallest nonnegative integer <Code>n</Code> such that <Code>x^n</Code> is 
+ the neutral element of <Code>Q</Code>, if such an integer exists, else it returns <Code>fail</Code>. Note again that
+ <Code>Exponent( Q )</Code> will never fail for a finite loop <Code>Q</Code> in &RightQuasigroups;, even if <Code>Q</Code> is not
+ power associative.
+ <P/>If <Code>n</Code> is negative and <Code>x</Code> has a two-sided inverse, then <Code>x^n</Code> is calculated as <Code>(x^(-1))^(-n)</Code>.
+</Subsection>
+
+
+<ManSection>
+  <Oper Arg="x, y" Name="Commutator" Label="for IsRightQuasigroupElement, IsRightQuasigroupElement"/>
+ <Returns>the commutator of <Code>x</Code> and <Code>y</Code>, that is, the unique element  <Code>z = (x*y)/(y*x)</Code> satisfying <Code>x*y = z*(y*x)</Code>. This is a logical choice for the
+  elementwise commutator in right quasigroups.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+ <P/>We also support group-like commutators via <Code>Comm( x, y )</Code>. If <Code>x</Code> and <Code>y</Code> are
+ quasigroup elements, <Code>Comm( x, y )</Code> returns the
+ unique element <Code>z = LeftQuotient( y*x, x*y )</Code> that satisfies <Code>x*y = (y*x)*z</Code>. When
+ the underlying quasigroup is a loop with two-sided inverses in which
+ the antiautomorphic inverse property <Math>(xy)^{-1}=y^{-1}x^{-1}</Math> and the
+ left inverse property <Math>x^{-1}(xy) = y</Math> hold, then
+ <Code>Comm( x, y )</Code> coincides with the &GAP; commutator <Code>x^(-1)*y^(-1)*x*y</Code>.
+<ManSection>
+  <Oper Arg="x, y, z" Name="Associator" Label="for IsRightQuasigroupElement, IsRightQuasigroupElement, IsRightQuasigroupElement"/>
+ <Returns>the associator of <Code>x</Code>, <Code>y</Code> and <Code>z</Code>, that is, the unique element  <Code>u = (x*(y*z))/((x*y)*z)</Code> satisfying <Code>x*(y*z) = u*((x*y)*z)</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Section_Examples">
+<Heading>First examples</Heading>
+
+ Arithmetic operations in right quasigroups (quasigroup, loops) are carried out either via tables or via functions,
+ depending on whether the algebra in question is index based or not. See Section <Ref Sect="Section_IndexBased"/>
+ for more information on index based versus non-index based right quasigroups, Section <Ref Sect="Section_Cayley"/>
+ for details on multiplication tables and Cayley tables, and Section <Ref Sect="Section_Function"/> for details
+ on how functions are used as arithmetic operations. 
+ <P/>Chapter <Ref Chap="Chapter_Constructors"/> contains a comprehensive list of right quasigroup constructors.
+ Here we present two examples, starting with a right quasigroup constructor based on a multiplication function.
+<Example><![CDATA[
+gap> Q := RightQuasigroupByFunction( [0..3], function( x,y ) return (x+2*y) mod 4; end ); # index based by default
+<right quasigroup of size 4>
+gap> UnderlyingSet( Q );
+[ 0, 1, 2, 3 ]
+gap> Elements( Q ); # default prefix "r" is assigned to right quasigroup elements
+[ r0, r1, r2, r3 ]
+gap> Display( CayleyTable( Q ) ); # based on the underlying set
+[ [  0,  2,  0,  2 ],
+  [  1,  3,  1,  3 ],
+  [  2,  0,  2,  0 ],
+  [  3,  1,  3,  1 ] ]
+gap> Display( MultiplicationTable( Q ) ); # based on [1..n], here [1..4]
+[ [  1,  3,  1,  3 ],
+  [  2,  4,  2,  4 ],
+  [  3,  1,  3,  1 ],
+  [  4,  2,  4,  2 ] ]
+gap> mult := MultiplicationFunction( Q ); # based on [1..n] since Q is index based
+function( i, j ) ... end
+gap> mult( 1, 1 );
+1
+gap> [ Elements( Q )[ 1 ], Q.1, Q[0] ]; # three ways of accessing elements
+[ r0, r0, r0 ]
+gap> SetRightQuasigroupElementsName( Q, "Q" );; Q.1; # changing the default prefix
+Q0
+gap> Q[0]*Q[1];
+Q2
+gap> Q[0]/Q[2]; # RightQuotient and RightDivision are also supported
+Q0
+]]></Example>
+
+
+ <P/>If, as in the above example, 
+ the remaining operations (right division, left division, neutral element) are not provided
+ by the user, they are automatically inferred from the given multiplication function depending on the 
+ algebra under construction. However, this might lead to slower division operations in the non-index based case.
+ For instance, if only the multiplication function for
+ a right quasigroup <Code>Q</Code> is given and <Code>Q</Code> is not index based, then the right division <Code>x/y</Code> returns
+ the first (and only) element <Code>z</Code> of <Code>Q</Code> such that <Code>x = z*y</Code>, which is slow when <Code>Q</Code> is large.
+ <P/>Here is an example of a loop constructor based on a Cayley table. The underlying set
+ is automatically understood to be the sorted list of elements contained in the first column of the Cayley table.
+<Example><![CDATA[
+gap> Q := LoopByCayleyTable( [["a", "b"], ["b", "a"]], false ); # the optional argument makes it non-index based
+<loop of size 2>
+gap> UnderlyingSet( Q ); 
+[ "a", "b" ]
+gap> Elements( Q ); # default prefix "l" is assigned to loop elements
+[ la, lb ]
+gap> HasMultiplicationTable( Q );
+false
+gap> mult := MultiplicationFunction( Q ); # based on the underlying set since Q is not index based
+function( x, y ) ... end
+gap> mult( "a", "b" );
+"b"
+gap> One( Q );
+la
+gap> Commutator( Q["a"], Q["b"] );
+la
+gap> Associator( Q.1, Q.1, Q.2 );
+la
+gap> LeftQuotient( Q.1, Q.2 ); # LeftDivision is also supported
+lb
+]]></Example>
+
+
+ <P/>Note that right quasigroups that happen to be quasigroups and/or loops mathematically must be explicitly
+ declared as such in &GAP; to make quasigroup and/or loop methods available to them. For instance,
+ the above right quasigroup of size 2 is in fact an associative quasigroup (that is, a group),
+ but it will not be automatically recognized as a quasigroup, loop or group by &GAP;. There are methods
+ provided that check if a given right quasigroup is mathematically a quasigroup or a loop,
+ cf. Section <Ref Sect="Section_Converting"/>.
+</Section>
+
+
+<Section Label="Section_Parent">
+<Heading>The parent right quasigroup</Heading>
+
+ <P/>The parent mechanism is employed in &GAP; and in &RightQuasigroups; to save memory and to take advantage of
+ the containment of subalgebras in the enveloping algebras. The <Index>parent</Index>parent <Code>Parent( Q )</Code> of
+ a right quasigorup <Code>Q</Code> is the largest right quasigroup from which <Code>Q</Code> has been constructed
+ as a subalgebra. In more detail, if <Code>Q</Code> is constructed as a subalgebra of a right quasigroup
+ <Code>P</Code> then <Code>Parent( Q ) = Parent( P )</Code>, while if <Code>Q</Code> is not constructed
+ as a subalgebra of some right quasigroup then <Code>Parent( Q ) = Q</Code>.
+ <P/>Right quasigroup elements are created automatically every time a new right quasigroup
+ is constructed, with one exception: When <Code>Q</Code> is constructed as a subalgebra then the
+ elements of <Code>Q</Code> are inherited from <Code>Parent( Q )</Code>. In particular,
+ if <Code>x</Code> is any element of <Code>Q</Code> then <Code>F = FamilyObj( x )</Code> points to <Code>Parent( Q )</Code>
+ and many attributes of <Code>P</Code> can be accessed via <Code>F</Code> (see Section <Ref Sect="Section_Direct"/>). 
+<Example><![CDATA[
+gap> Q := RightQuasigroupByFunction([0..5], function(x,y) return (x+y) mod 6; end );; Elements( Q ); 
+[ r0, r1, r2, r3, r4, r5 ]
+gap> A := Subrightquasigroup( Q, [2] );
+<right quasigroup of size 3>
+gap> Elements( A );
+[ r0, r2, r4 ]
+gap> Parent( A ) = Q;
+true;
+gap> Elements( A )[ 3 ]; # the 3rd element of A
+r4
+gap> A.3; # the 3rd element of the parent of A
+r3
+gap> A[4]; # the element of parent of A corresponding to the given underlying element
+r4
+gap> Display( CayleyTable( A ) );
+[ [  0,  2,  4 ],
+  [  2,  4,  0 ],
+  [  4,  0,  2 ] ]
+gap> Display( MultiplicationTable( A ) );
+[ [  1,  2,  3 ],
+  [  2,  3,  1 ],
+  [  3,  1,  2 ] ]
+]]></Example>
+
+
+</Section>
+
+
+<Section Label="Section_IndexBased">
+<Heading>Index based and canonical right quasigroups</Heading>
+
+ <P/>Every right quasigroup <Code>Q</Code> is constructed either as an <Index>index based right quasigroup</Index>
+ <Emph>index based</Emph> right quasigroup or as a right quasigroup that is not index based.
+ <P/>Generally speaking, index based right quasigroups take longer to construct, cannot be very large (thousands of
+ elements) and can be calculated with fast, while non-index based right quasigroups are constructed quickly,
+ can be very large (millions of elements) but only basic methods will work for them.
+ <P/>If <Code>Q</Code> is an index based right quasigroup of size <Math>n</Math>,
+ then the multiplication and divisions in <Code>Q</Code> are carried out via multiplication and division tables. The multiplication
+ and division functions might then be present as functions <Math>[1..n]\times[1..n]\to[1..n]</Math> but they are not directly involved
+ in carrying out arithmetic operations.
+ <P/>If <Code>Q</Code> is a non-index based right quasigroup on the underlying set <Code>S</Code>,
+ then the multiplication and divisions in <Code>Q</Code> are carried out via multiplication and division functions <Math>S\times S\to S</Math>.
+ The multiplication and division tables might then be present but they are not directly involved
+ in carrying out arithmetic operations.
+ <P/>In more details, if <Code>Q</Code> is a right quasigroup with parent <Code>P</Code> of size <Math>n</Math>, 
+ <Code>x</Code> is an an element of <Code>Q</Code> and <Code>F=FamilyObj( x )</Code>, then:
+ <List>
+ <Item>If <Code>Q</Code> is index based:
+      <List>
+      <Item><Code>x![1]</Code> is the position of <Code>x</Code> among the elements of <Code>P</Code>, i.e.,
+          the index of <Code>x</Code> (see below),</Item>
+      <Item>the multiplication and division tables of <Code>P</Code> are precalculated and stored,</Item>
+      <Item>the multiplication and division functions of <Code>P</Code>, if present, are functions
+          <Math>[1..n]\times[1..n]\to [1..n]</Math> but they are not directly involved since all operations
+          are handled by means of the tables,</Item>
+      <Item>the fundamental piece of data is <Code>F!.multTable</Code>, the multiplication table of <Code>P</Code>.</Item>
+      </List>
+ </Item>
+ <Item>If <Code>Q</Code> is not index based:
+      <List>
+      <Item><Code>x![1]</Code> is the element of the underlying set <Math>S</Math> of <Code>Q</Code> corresponding to <Code>x</Code>,</Item>
+      <Item>the mutliplication and division tables of <Code>P</Code> are not precalculated,</Item>
+      <Item>the multiplication and division functions of <Code>P</Code> are possibly slow functions <Math>S\times S\to S</Math>, 
+          often based on some additional data provided by the user in the constructor,</Item>
+      <Item>the fundamental piece of data is <Code>F!.mult</Code>, the multiplication function of <Code>P</Code>.</Item>
+      </List>
+ </Item>
+ </List>
+ <P/>A right quasigroup of size <Math>n</Math> is said to be <Index>canonical right quasigroup</Index><Emph>canonical</Emph>
+ if it is index based, is its own parent and the underlying set is <Math>[1..n]</Math>.
+ Many computationally intensive methods of &RightQuasigroups; internally work with canonical right quasigroups.
+<ManSection>
+  <Oper Arg="x" Name="ParentInd" Label="for IsRightQuasigroupElement"/>
+ <Returns>the index of the element <Code>x</Code>, that is, the position of <Code>x</Code>  among the elements of the parent right quasigroup. The operation also accepts 
+  a list of right quasigroup elements or a right quasigroup as the argument, in which
+  case the corresponding list of indices is returned.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="Q" Name="IsIndexBased" Label="for IsRightQuasigroup"/>
+ <Returns><Code>true</Code> if the right quasigroup <Arg>Q</Arg> is index based, else returns <Code>false</Code>
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="Q" Name="IndexBasedCopy" Label="for IsRightQuasigroup"/>
+ <Returns>a copy of <Arg>Q</Arg> that has the same underlying set as <Arg>Q</Arg>,  is index based and is its own parent.
+</Returns>
+ <Description>
+Note that there is no general method available for converting index based right quasigroups
+ into right quasigroups that are not index based.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="Q" Name="IsCanonical" Label="for IsRightQuasigroup"/>
+ <Returns><Code>true</Code> if the right quasigroup <Arg>Q</Arg> of size <Math>n</Math> is canonical,  else returns <Code>false</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="Q" Name="CanonicalCopy" Label="for IsRightQuasigroup"/>
+ <Returns>a canonical copy of the right quasigroup <Arg>Q</Arg>
+</Returns>
+ <Description>
+Note that there is no general method available for converting canonical
+ right quasigroups into right quasigroups that are not canonical.
+ </Description>
+</ManSection>
+
+
+ <P/>The following example illustrates basic features of non-index based right quasigroups.
+<Example><![CDATA[
+gap> Q := RightQuasigroupByFunction( GF( 8 ), \+, false ); # the optional argument makes the right quasigroup not index based
+<right quasigroup of size 8>
+gap> [ IsIndexBased( Q ), HasMultiplicationTable( Q ) ];
+[ false, false ]
+gap> x := Q.1;; 
+gap> [ x![1],  x*x ];
+[ 0*Z(2), r0*Z(2) ]
+gap> F := FamilyObj( Q.1 );; [ IsBound( F!.mult ), IsBound( F!.rdiv ), IsBound( F!.ldiv ) ];
+[ true, true, false ]
+gap> mult := MultiplicationFunction( Q );
+<Operation "+">
+gap> mult( Z(2), Z(2) );
+0*Z(2)
+gap> rdiv := RightDivisionFunction( Q ); # the constructor does not know that this really is <Operation "-">
+function( x, y ) ... end
+gap> rdiv( Z(2), Z(2) );
+0*Z(2)
+]]></Example>
+
+
+ <P/>Note how things change in index based and canonical copies.
+<Example><![CDATA[
+gap> Q := RightQuasigroupByFunction( GF( 8 ), \+, false );; # same as in the above example, not index based
+gap> R := IndexBasedCopy( Q );;
+gap> UnderlyingSet( R ); # no change to the underlying set
+[ 0*Z(2), Z(2)^0, Z(2^3), Z(2^3)^2, Z(2^3)^3, Z(2^3)^4, Z(2^3)^5, Z(2^3)^6 ]
+gap> [ HasMultiplicationTable( R ); IsCanonical( R ); ]
+[ true, false ]
+gap> x := R.1;; [ x![1], x*x ];
+[ 1, r0*Z(2) ]
+gap> F := FamilyObj( R.1 );; [ IsBound( F!.mult ), IsBound( F!.rdiv ), IsBound( F!.ldiv ) ];
+[ true, true, false ]
+gap> mult := MultiplicationFunction( R ); # the multiplication function is now based on indices
+function( i, j ) ... end
+gap> mult( 1, 1 );
+1
+gap> C := CanonicalCopy( Q );
+<right quasigroup of size 8>
+gap> UnderlyingSet( C ); # underlying set has changed to [1..n]
+[ 1, 2, 3, 4, 5, 6, 7, 8 ]
+]]></Example>
+
+
+</Section>
+
+
+<Section Label="Section_Generators">
+<Heading>Generators and comparison of right quasigroups</Heading>
+
+ <P/>We support <Code>GeneratorsOfRightQuasigroup</Code>, <Code>GeneratorsOfQuasigroup</Code> and <Code>GeneratorsOfLoop</Code> as synonyms of <Code>GeneratorsOfMagma</Code>.
+ <P/>The function <Code>SmallGeneratingSet( Q )</Code> returns a small generating set of a right quasigroup <Code>Q</Code> obtained by a greedy
+ algorithm that starts with the empty set of generators and in every steps adds the first element of <Code>Q</Code> that enlarges
+ the generated subalgebra the most. There is no guarantee that <Code>SmallGeneratingSet</Code> returns a generating set of smallest
+ possible cardinality.
+ <P/>The elements of a right quasigroup inherit a linear ordering from the underlying set. The attribute
+ <Code>GeneratorsSmallest( Q )</Code> returns the smallest generating set of <Code>Q</Code> with respect to the lexicographic
+ ordering of elements of <Code>Q</Code>.
+ <P/>Finally, if <Code>A</Code> and <Code>B</Code> are right quasigroups with the same parent, cf. Section <Ref Sect="Section_Parent"/>,
+ then <Code>A&lt;B</Code> iff <Code>GeneratorsSmallest( A )&lt;GeneratorsSmallest( B )</Code>.
+<Example><![CDATA[
+gap> Q := AsLoop( GF(8) );;
+gap> Length( GeneratorsOfLoop( Q ) );
+8
+gap> GeneratorsSmallest( Q );
+[ lZ(2^3)^4, lZ(2^3)^5, lZ(2^3)^6 ]
+gap> SmallGeneratingSet( Q );
+[ lZ(2)^0, lZ(2^3), lZ(2^3)^2 ]
+]]></Example>
+
+
+</Section>
+
+
+<Section Label="Section_Nonqualified">
+<Heading>Non-qualified operations</Heading>
+
+ <P/>There are several so-called <Emph>non-qualified operations</Emph> in &GAP;. These are 
+ operations which are not attributes or properties but whose result depends on the type of
+ the argument. As far as &RightQuasigroups; is concerned, the non-qualified operations are
+ <Code>DerivedSeries</Code>, <Code>IsNilpotent</Code>, <Code>IsSimple</Code>, <Code>IsSolvable</Code>, <Code>LowerCentralSeries</Code> and <Code>UpperCentralSeries</Code>.
+ For all such operations we provide qualified methods, e.g., <Code>DerivedSeriesOfLoop( Q )</Code> called with
+ a loop <Code>Q</Code> as argument, but also support the non-qualified versions, e.g., <Code>DerivedSeries( Q )</Code>.
+</Section>
+
+
+<Section Label="Section_Direct">
+<Heading>*Direct access to the parent right quasigroup record</Heading>
+
+ <P/>Let <Code>Q</Code> be a right quasigroup, <Code>F</Code> the family object of any element of <Code>Q</Code>
+ (that is, <Code>F = FamilyObj(Q.1)</Code>) and <Code>P</Code> the parent of <Code>Q</Code>
+ (see Section <Ref Sect="Section_Parent"/>). Then:
+ <List>
+ <Item><Code>F!.indexBased</Code> determines is <Code>P</Code> and hence also <Code>Q</Code> are index based.</Item>
+ <Item><Code>F!.ldiv</Code> is the left division function of <Code>P</Code>, if <Code>Q</Code> is a declared quasigroup.</Item>
+ <Item><Code>F!.ldivTable</Code> is the left division table of <Code>P</Code>, if <Code>Q</Code> is a declared quasigroup.</Item>
+ <Item><Code>F!.mult</Code> is the multiplication function of <Code>P</Code>.</Item>
+ <Item><Code>F!.multTable</Code> is the multiplication table of <Code>P</Code>.</Item>
+ <Item><Code>F!.names</Code> is the prefix used for all elements of <Code>P</Code>.</Item>
+ <Item><Code>F!.one</Code> is the neutral element of <Code>P</Code> and hence also of <Code>Q</Code>, if <Code>Q</Code> is a declared loop.</Item>
+ <Item><Code>F!.parent</Code> is <Code>P</Code>.</Item>
+ <Item><Code>F!.rdiv</Code> is the right division function of <Code>P</Code>.</Item>
+ <Item><Code>F!.rdivTable</Code> is the right division table of <Code>P</Code>.</Item>
+ <Item><Code>F!.rSection</Code> is the right section for <Code>P</Code>.</Item>
+ <Item><Code>F!.set</Code> is the set of &GAP; elements of <Code>P</Code>.</Item>
+ <Item><Code>F!.size</Code> is the size of <Code>P</Code>.</Item>
+ <Item><Code>F!.uSet</Code> is the underlying set of <Code>P</Code>. Note that if <Code>Q</Code> is a proper
+      subalgebra of <Code>P</Code> then <Code>UnderlyingSet( Q )</Code> is a proper subset of <Code>F!.uSet</Code>.</Item>
+ </List>
+ <P/>Note that not all of the above components of <Code>F</Code> are necessarily bound,
+ depending on the constructor used for <Code>P</Code>. The list of names of all bound components of <Code>F</Code>
+ can be obtained by the standard &GAP; function <Code>NamesOfComponents( F )</Code>.
+</Section>
+
+
+<Section Label="Section_Global">
+<Heading>*Global variables</Heading>
+
+ <P/>The global variable <Code>RQ_defaultIndexBased</Code> determines if by default right quasigroups
+ are constructed as index based or not. It is set to <Code>true</Code>.
+ <P/>The global variable <Code>RQ_defaultCheckArgs</Code> determines if by default the arguments
+ of right quasigroup contructors are checked. It is set to <Code>false</Code>.
+</Section>
+
+
 </Chapter>
 

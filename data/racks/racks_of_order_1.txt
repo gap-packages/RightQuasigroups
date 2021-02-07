@@ -1,0 +1,12 @@
+# racks_of_order_1.txt
+
+# groups
+
+RQ_rack_groups[1] := [ [ () ] ];
+
+# racks
+
+RQ_rack_ids[1] := [[1]];
+
+# number of racks in this file = 1
+

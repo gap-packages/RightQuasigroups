@@ -1,0 +1,57 @@
+  
+  [1X2 [33X[0;0YFunctionality[133X[101X
+  
+  
+  [1X2.1 [33X[0;0YConstruction Filters[133X[101X
+  
+  [33X[0;0YThis section will describe the construction filters of right quasigroups.[133X
+  
+  [1X2.1-1 IsRightQuasigroupElement[101X
+  
+  [33X[1;0Y[29X[2XIsRightQuasigroupElement[102X( [3Xobject[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YA [5XGAP[105X category of elements of right quasigroups.[133X
+  
+  
+  [1X2.2 [33X[0;0YConstruction Methods[133X[101X
+  
+  [33X[0;0YThis section will describe the construction methods of right quasigroups.[133X
+  
+  [1X2.2-1 IsRightQuasigroupMagma[101X
+  
+  [33X[1;0Y[29X[2XIsRightQuasigroupMagma[102X( [3Xobject[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YAn auxiliary category for [5XGAP[105X to tell apart [10XIsMagma[110X and [10XIsRightQuasigroup[110X.[133X
+  
+  [1X2.2-2 IsRightQuasigroup[101X
+  
+  [33X[1;0Y[29X[2XIsRightQuasigroup[102X( [3Xobject[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YA [5XGAP[105X category of right quasigroups.[133X
+  
+  [1X2.2-3 ProjectionRightQuasigroup[101X
+  
+  [33X[1;0Y[29X[2XProjectionRightQuasigroup[102X( [3Xset[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YThe projection right quasigroup on the set [3Xset[103X[133X
+  
+  [33X[0;0YThe operation is defined by [22Xx*y=x[122X.[133X
+  
+  [1X2.2-4 RightQuasigroupByFunctions[101X
+  
+  [33X[1;0Y[29X[2XRightQuasigroupByFunctions[102X( [3Xset[103X, [3Xf[103X, [3Xg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YThe  right  quasigroup  [22X(Q,*,/)[122X,  where  [22XQ[122X  is  indexed by [3Xset[103X and
+            [22Xx*y=f(x,y)[122X and [22Xx/y = g(x,y)[122X.[133X
+  
+  [33X[0;0YThe identities [22Xf(g(x,y),y)=x[122X and [22Xg(f(x,y),y)=x[122X must hold.[133X
+  
+  [1X2.2-5 RightQuasigroupByFunction[101X
+  
+  [33X[1;0Y[29X[2XRightQuasigroupByFunction[102X( [3Xset[103X, [3Xf[103X, [3Xg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YThe  right  quasigroup  [22X(Q,*,/)[122X,  where  [22XQ[122X  is  indexed by [3Xset[103X and
+            [22Xx*y=f(x,y)[122X and [22Xx/y = z[122X iff [22Xz=f(x,y)[122X.[133X
+  
+  [33X[0;0YFor any [22Xx,z[122X there must be a unique [22Xy[122X such that [22Xf(x,y)=z[122X.[133X
+  

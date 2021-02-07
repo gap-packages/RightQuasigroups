@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Nilpotency_and_solvability">
+<Heading>Nilpotency and solvability</Heading>
+
+<Section Label="Chapter_Nilpotency_and_solvability_Section_Nuclei_commutant_and_center">
+<Heading>Nuclei, commutant and center</Heading>
+
+ <P/>The <Index>right nucleus</Index><Emph>right nucleus</Emph> (resp. <Index>middle nucleus</Index><Emph>middle nucleus</Emph>,
+ <Index>left nucleus</Index><Emph>left nucleus</Emph>) of a right quasigroup <Math>Q</Math> is the set
+ <Math>\mathrm{Nuc}_r(Q) = \{z\in Q:x(yz)=(xy)z</Math> for all <Math>x,y\in Q\}</Math> (resp.
+ <Math>\mathrm{Nuc}_m(Q) = \{y\in Q:x(yz)=(xy)z</Math> for all <Math>x,z\in Q\}</Math>,
+ <Math>\mathrm{Nuc}_\ell(Q) = \{x\in Q:x(yz)=(xy)z</Math> for all <Math>y,z\in Q\}</Math>).
+ The <Index>nucles</Index><Emph>nucleus</Emph> <Math>\mathrm{Nuc}(Q)</Math> of <Math>Q</Math> is the intesection of the three nuclei.
+ <P/>In the finite case, each of the four nuclei is either an empty set or a subalgebra. 
+ For loops, each of the four nuclei is always a subloop.
+ <P/>The <Index>commutant</Index><Emph>commutant</Emph> of a right quasigroup <Math>Q</Math> is the
+ possibly empty set <Math>\{x\in Q:xy=yx</Math> for all <Math>y\in Q\}</Math>. 
+ In the case of loops, the neutral element always belongs to the commutant.
+ <P/>The <Index>center</Index><Emph>center</Emph> of a right quasigroup is the
+ intersection of the nucleus and the commutant. In the case of loops, the
+ center is always a normal subloop.
+<ManSection Label="AutoDoc_generated_group19">
+<Heading>Nuclei</Heading>
+  <Attr Arg="Q" Name="RightNucleus" Label="for IsRightQuasigroup"/>
+  <Attr Arg="Q" Name="MiddleNucleus" Label="for IsRightQuasigroup"/>
+  <Attr Arg="Q" Name="LeftNucleus" Label="for IsRightQuasigroup"/>
+  <Attr Arg="Q" Name="Nuc" Label="for IsRightQuasigroup"/>
+ <Returns>the (right, middle, left) nucleus of a right quasigroup <Code>Q</Code>,  either as the empty set or as a subalgebra of <Code>Q</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+ <P/>We also support the synonyms <Code>NucleusOfRightQuasigroup</Code>, <Code>NucleusOfQuasigroup</Code>
+ and <Code>NucleusOfLoop</Code> of <Code>Nuc</Code>.
+<ManSection>
+  <Attr Arg="Q" Name="Commutant" Label="for IsRightQuasigroup"/>
+ <Returns>the commutant of the rigt quasigroup <Code>Q</Code>, a possibly empty subset of <Code>Q</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="Q" Name="Center" Label="for IsRightQuasigroup"/>
+ <Returns>the center of the right quasigroup <Code>Q</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Nilpotency_and_solvability_Section_Nilpotency_for_loops">
+<Heading>Nilpotency for loops</Heading>
+
+ The <Index>nilpotency class</Index><Emph>nilpotency class</Emph> of a loop <Math>Q</Math> is defined inductively
+ by <Math>cl(Q)=1</Math> if <Math>Q</Math> is an abelian group and by <Math>cl(Q)=cl(Q/Z(Q))+1</Math>, if this process terminates,
+ in which case <Code>Q</Code> is <Index>nilpotent loop</Index><Emph>nilpotent</Emph>.
+<ManSection>
+  <Attr Arg="Q" Name="NilpotencyClassOfLoop" Label="for IsLoop"/>
+ <Returns>the nilpotency class of a loop <Code>Q</Code>. When <Code>Q</Code> is not nilpotent, returns <Code>fail</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="Q" Name="IsNilpotentLoop" Label="for IsLoop"/>
+ <Returns><Code>true</Code> if <Code>Q</Code> is a nilpotent loop, else returns <Code>false</Code>.  The non-qualified version <Code>IsNilpotent</Code> is also supported, cf. Section <Ref Sect="Section_Nonqualified"/>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="Q" Name="UpperCentralSeriesOfLoop" Label="for IsLoop"/>
+ <Returns>the upper central series of the loop <Code>Q</Code>, that is, the series  <Math>[Z_0(Q), Z_1(Q), Z_2(Q), ...]</Math>, where <Math>Z_0(Q)=1</Math> and <Math>Z_{n+1}(Q)</Math> is the preimage of <Math>Z(Q/Z_n(Q))</Math>
+  under the canonical projection <Math>Q\to Q/Z_n(Q)</Math>. The function returns the longest strictly increasing segment
+  of the upper central series. The non-qualified version <Code>UpperCentralSeries</Code> is also supported.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="Q" Name="LowerCentralSeriesOfLoop" Label="for IsLoop"/>
+ <Returns>the lower central series of the loop <Code>Q</Code>, that is, the series  <Math>Q=Q_{(0)}\ge Q_{(1)}\ge Q_{(2)}\ge \dots</Math> such that <Math>Q_{(i+1)}</Math> is the smallest normal subloop of <Math>Q</Math>
+  such that <Math>Q_{(i)}/Q_{(i+1)}\le Z(Q/Q_{(i+1)})</Math>.
+  The function returns the longest strictly decreasing segment of the lower central series.
+  The non-qualified version <Code>LowerCentralSeries</Code> is also supported.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Nilpotency_and_solvability_Section_Solvability_and_congruence_solvability_for_loops">
+<Heading>Solvability and congruence solvability for loops</Heading>
+
+ <P/>There are two competing notions of solvability in loop theory and both are supported in
+ &RightQuasigroups;.
+ <P/>A loop <Math>Q</Math> is <Index>classically solvable loop</Index><Emph>classically solvable</Emph>
+ if there exists a series <Math>Q=Q_0&gt; Q_1&gt;\dots&gt;Q_n=1</Math> such that <Math>Q_i\unlhd Q</Math> and <Math>Q_i/Q_{i+1}</Math> 
+ is a commutative group. To conform with historical terminology, we call classically solvable loops
+ <Emph>solvable</Emph>.
+ <P/>There is a well-established universal-algebraic notion of commutators of congruences in
+ congruence-modular varieties, which includes the variety of loops. We denote by <Math>[A,B]_Q</Math> this
+ commutator of two normal subloops <Math>A</Math>, <Math>B</Math> of a loop <Math>Q</Math>. A normal subloop <Math>A</Math> is 
+ <Index>abelian subloop</Index><Emph>abelian in</Emph> <Math>Q</Math> if <Math>[A,A]_Q=1</Math>. If a normal subloop
+ <Math>A</Math> is abelian in <Math>Q</Math> then <Math>A</Math> is a commutative group, but not necessarily vice versa.
+ <P/>A loop <Math>Q</Math> is then <Index>congruence solvable loop</Index><Emph>congruence solvable</Emph> if there
+ exists a series <Math>Q=Q_0&gt; Q_1&gt;\dots&gt;Q_n=1</Math> such that <Math>Q_i\unlhd Q</Math> and <Math>Q_i/Q_{i+1}</Math> is abelian
+ in <Math>Q/Q_{i+1}</Math>. Universally-algebraically speaking, this is the correct notion of solvablity
+ for loops. Every congruence solvable loop is classically solvable but not necessarily
+ vice versa. A group is congruence solvable iff it is classically solvable.
+<ManSection>
+  <Attr Arg="Q" Name="AssociatorSubloop" Label="for IsLoop"/>
+ <Returns>the <Index>associator subloop</Index><Emph>associator subloop</Emph> of <Code>Q</Code>, that is,  the smallest normal subloop of <Code>Q</Code> containing all associators.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="Q" Name="IsSolvableLoop" Label="for IsLoop"/>
+ <Returns><Code>true</Code> if <Code>Q</Code> is a (classically) solvable loop, else returns <Code>false</Code>. The non-qualified  version <Code>IsSolvable</Code> is also supported.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="Q" Name="DerivedSubloop" Label="for IsLoop"/>
+ <Returns>the <Index>derived subloop</Index><Emph>derived subloop</Emph> of <Code>Q</Code>, that is, the smallest  normal subloop <Code>A</Code> of <Code>Q</Code> such that <Code>Q/A</Code> is an abelian group. Note that this coincides
+  with the congruence derived subloop <Math>[Q,Q]_Q</Math> and there is therefore no need for
+  <Code>CongruenceDerivedSubloop</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="Q" Name="DerivedSeriesOfLoop" Label="for IsLoop"/>
+ <Returns>the derived series of <Code>Q</Code>. If <Math>Q'</Math> denotes the derived subloop of <Math>Q</Math>, then  the derived series is the series <Math>[Q,Q',Q'',\dots]</Math>. The function returns the longest
+  strictly decreasing initial segment of the derived series. The non-qualified version
+  <Code>DerivedSeries</Code> is also supported.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="Q" Name="DerivedLength" Label="for IsLoop"/>
+ <Returns>the number of steps in the derived series of the loop <Code>Q</Code> if <Code>Q</Code> is solvable, else  returns <Code>fail</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<P/>The following methods deal with congruence solvability of loops.
+<ManSection>
+  <Oper Arg="Q, A, B" Name="CommutatorOfNormalSubloops" Label="for IsLoop, IsLoop, IsLoop"/>
+ <Returns>the commutator of normal subloops <Code>A</Code>, <Code>B</Code> of the loop <Code>Q</Code>, that is, <Math>[A,B]_Q</Math>. For finite loops,  <Math>[A,B]_Q</Math> is the smallest normal subloop of <Math>Q</Math> contaning the elements <Math>R_{b_1,c_1}(a)/R_{b_2,c_2}(a)</Math>,
+  <Math>L_{b_1,c_1}(a)/L_{b_2,c_2}(a)</Math>, <Math>T_{b_1}(a)/T_{b_2}(a)</Math>, where <Math>a\in A</Math>, <Math>b_1/b_2\in B</Math>, <Math>c_1/c_2\in B</Math>
+  and where <Math>R_{x,y}</Math>, <Math>L_{x,y}</Math>, <Math>T_x</Math> are the standard inner mappings of <Math>Q</Math>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="Q, A" Name="IsAbelianNormalSubloop" Label="for IsLoop, IsLoop"/>
+ <Returns><Code>true</Code> if <Code>A</Code> is an abelian normal subloop of the loop <Code>Q</Code>, else returns <Code>false</Code>.  A normal subloop <Math>A</Math> of <Math>Q</Math> is abelian in <Math>Q</Math> if <Math>[A,A]_Q=1</Math>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="Q" Name="IsCongruenceSolvableLoop" Label="for IsLoop"/>
+ <Returns><Code>true</Code> if <Code>Q</Code> is a congruence solvable loop, else returns <Code>false</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="Q" Name="CongruenceDerivedSeriesOfLoop" Label="for IsLoop"/>
+ <Returns>the congruence derived series of <Code>Q</Code>. With <Math>Q^{(0)}=Q</Math> and <Math>Q^{(i+1)} = [Q^{(i)},Q^{(i)}]_Q</Math>,  this is the series <Math>[Q^{(0)},Q^{(1)},Q^{(2)},\dots]</Math>. The function returns the longest
+  strictly decreasing initial segment of the congruence derived series. 
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="Q" Name="CongruenceDerivedLength" Label="for IsLoop"/>
+ <Returns>the number of steps in the congruence derived series of the loop <Code>Q</Code> if <Code>Q</Code> is congruence  solvable, else returns <Code>fail</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<Example><![CDATA[
+gap> uset := Union( List([0..3], i-> [[i,0],[i,1]] ) ); # the underlying set
+[ [ 0, 0 ], [ 0, 1 ], [ 1, 0 ], [ 1, 1 ], [ 2, 0 ], [ 2, 1 ], [ 3, 0 ], [ 3, 1 ] ]
+gap> ct := [[0,1,2,3],[1,3,0,2],[2,0,3,1],[3,2,1,0]];;
+gap> mult := function( x, y )
+>       if x[2]=0 or y[2]=0 then
+>               return [ (x[1]+y[1]) mod 4, (x[2]+y[2]) mod 2 ];
+>       else
+>               return [ ct[x[1]+1][y[1]+1], (x[2]+y[2]) mod 2 ];
+>       fi;
+> end;
+function( x, y ) ... end
+gap> Q := LoopByFunction( uset, mult ); # Z_4 x Z_2 with one quandrant "replaced" with ct
+<loop of size 8>
+gap> DerivedSeries( Q );
+[ <loop of size 8>, <loop of size 4>, <loop of size 1> ]
+gap> IsSolvable( Q );
+true
+gap> DerivedLength( Q );
+2
+gap> C := CommutatorOfNormalSubloops(Q,Q,Q); # congruence derived subloop = derived subloop
+<loop of size 4>
+gap> D := CommutatorOfNormalSubloops(Q,C,C); # 2nd congruence derived subloop differs from 2nd derived subloop
+<loop of size 4>
+gap> CongruenceDerivedSeriesOfLoop( Q );
+[ <loop of size 8>, <loop of size 4> ]
+gap> IsCongruenceSolvableLoop( Q );
+false
+gap> CongruenceDerivedLength( Q );
+fail
+gap> IsCommutative( C ) and IsAssociative( C ) and IsNormal( Q, C ); # commutative group, normal in Q
+true
+gap> IsAbelianNormalSubloop( Q, C ); # but not abelian in Q
+false
+]]></Example>
+
+
+</Section>
+
+
+
+</Chapter>
+

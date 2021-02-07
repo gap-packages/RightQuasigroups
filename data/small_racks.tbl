@@ -1,0 +1,19 @@
+# small_racks.tbl
+# Library of small racks
+# =============================================================================
+
+RQ_small_racks := [  
+#implemented orders
+[1,2,3,4,5,6,7,8,9,10],
+#number of racks of given order
+[1,2,6,19,74,353,2080,16023,159526,2093244],
+#the racks (data given elsewhere, in racks\*.*, to be read on demand)
+[
+]
+];
+
+RQ_rack_groups := [];
+RQ_rack_ids := [];
+
+# info about previous rack constructed, to speed up the library
+RQ_rack_previous := rec( G := "", orbs := "", reps := "", m := "", stabs := "", folder := "", trans := "" );

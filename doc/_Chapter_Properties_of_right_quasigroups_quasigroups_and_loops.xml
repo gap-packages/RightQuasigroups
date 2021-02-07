@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Properties_of_right_quasigroups_quasigroups_and_loops">
+<Heading>Properties of right quasigroups, quasigroups and loops</Heading>
+
+<Section Label="Chapter_Properties_of_right_quasigroups_quasigroups_and_loops_Section_Parser">
+<Heading>Parser</Heading>
+
+ <P/>&RightQuasigroups; contains a simple, custom-built parser for
+ parsing of right quasigroup, quasigroup and loop terms and for verification
+ of right quasigroup, quasigroup and loop identities. For the purposes of the parser:
+ <List>
+ <Item>variables are lower case characters <Code>a</Code>, ..., <Code>z</Code>,</Item>
+ <Item>the multiplication operation is denoted by <Code>*</Code>,</Item>
+ <Item>the right division operation is denoted by <Code>/</Code>,</Item>
+ <Item>the left division operation is denoted by <Code>|</Code> (since <Code>\</Code> behaves badly in &GAP; strings)
+      and is only allowed in quasigroup and loop terms,</Item>
+ <Item>the neutral element is denoted by <Code>1</Code> and is only allowed in loop terms,</Item>
+ <Item>parentheses and brackets <Code>(</Code>, <Code>[</Code>, <Code>{</Code>, <Code>)</Code>, <Code>]</Code>, <Code>}</Code> are allowed and they are all treated as <Code>(</Code> and <Code>)</Code>, respectively,</Item>
+ <Item>spaces are allowed and ignorred,</Item>
+ <Item>no other characters are allowed.</Item>
+ </List>
+<ManSection Label="AutoDoc_generated_group20">
+<Heading>Building terms from strings</Heading>
+  <Oper Arg="s" Name="RightQuasigroupTermFromString" Label="for IsString"/>
+  <Oper Arg="s" Name="QuasigroupTermFromString" Label="for IsString"/>
+  <Oper Arg="s" Name="LoopTermFromString" Label="for IsString"/>
+ <Returns>the right quasigroup (quasigroup, loop) term corresponding to  the string <Code>s</Code>. The term is returned as a structured list mimicking
+  the infix tree for the term. 
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+ <P/>It is possible to verify identities directly in &GAP;. For instance,
+ <Code>ForAll( Q, x -> ForAll( Q, y -> ForAll( Q, z -> x*(y*z) = (x*y)*z ) ) )</Code>
+ returns <Code>true</Code> iff <Code>Q</Code> is associative.
+ <P/>For the convenience of the user, we support checking of identities
+ in right quasigroups, quasigroups and loops by the custom-built parser.
+ Despite some effort to make the checking fast, it is about half as fast
+ as the direct check using &GAP; code.
+<ManSection Label="AutoDoc_generated_group21">
+<Heading>Verifying identities</Heading>
+  <Oper Arg="Q, s" Name="RightQuasigroupSatisfiesIdentity" Label="for IsRightQuasigroup, IsString"/>
+  <Oper Arg="Q, s" Name="QuasigroupSatisfiesIdentity" Label="for IsQuasigroup, IsString"/>
+  <Oper Arg="Q, s" Name="LoopSatisfiesIdentity" Label="for IsLoop, IsString"/>
+ <Returns><Code>true</Code> if the right quasigroup (quasigroup, loop) <Code>Q</Code> satisfies  the right quasigroup (quasigroup, loop) identity represented by the string <Code>s</Code>.
+  If <Code>Q</Code> does not satisfy <Code>s</Code>, the function returns a list of variables of <Code>s</Code>
+  and their values in <Code>Q</Code> that violate <Code>s</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<Example><![CDATA[
+gap> Q := AsLoop( CyclicGroup( 6 ) );;
+gap> LoopSatisfiesIdentity( Q, "x*y=y*x" );
+true
+gap> LoopSatisfiesIdentity( Q, "x*x=1" );
+[ [ 'x', lf1 ] ]
+gap> RightQuasigroupTermFromString("x*(y/z)");
+[ 24, '*', [ 25, '/', 26 ] ]
+]]></Example>
+
+
+<Subsection Label="Chapter_Properties_of_right_quasigroups_quasigroups_and_loops_Section_Parser_Subsection_How_the_parser_works">
+<Heading>*How the parser works</Heading>
+
+<P/>To speed up evaluation of identities, the parser produces terms in which 
+ variables have been replaced by their positions in the global variable string
+ <Code>RQ_parserVarNames = "abcedfghijklmnopqrstuvwxyz"</Code>. The current values
+ of all variables are stored in the global list <Code>RQ_parserVars</Code> of length 26.
+ The current value of the neutral element is stored in the global variable
+ <Code>RQ_parserOne</Code>. A term <Code>t</Code> produced by <Code>RightQuasigroupTermFromString</Code>, 
+ <Code>QuasigroupTermFromString</Code> or <Code>LoopTermFromString</Code> is then evaluated via
+ <Code>RQ_EvaluateTerm( t )</Code>.
+</Subsection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Properties_of_right_quasigroups_quasigroups_and_loops_Section_Properties_of_magmas_and_right_quasigroups">
+<Heading>Properties of magmas and right quasigroups</Heading>
+
+ <P/>The following list summarizes properties of magmas tested in &RightQuasigroups;. All identities 
+ are universally quantified with respect to all variables.
+ <List>
+ <Item><Index>3-power associative magma</Index><Emph>3-power associative</Emph>: <Math>x(xx)=(xx)x</Math></Item>
+ <Item><Index>alternative magma</Index><Emph>alternative</Emph>: <Math>x(xy) = (xx)y</Math> and <Math>x(yy)=(xy)y</Math></Item>
+ <Item><Index>associative magma</Index><Emph>associative</Emph>: <Math>x(yz)=(xy)z</Math></Item>
+ <Item><Index>commutative magma</Index><Emph>commutative</Emph>: <Math>xy=yx</Math></Item>
+ <Item><Index>flexible magma</Index><Emph>flexible</Emph>: <Math>x(yx)=(xy)x</Math></Item>
+ <Item><Index>idempotent magma</Index><Emph>idempotent</Emph>: <Math>xx=x</Math></Item>
+ <Item><Index>left alternative magma</Index><Emph>left alternative</Emph>: <Math>x(xy)=(xx)y</Math></Item>
+ <Item><Index>left self-distributive magma</Index><Emph>left self-distributive</Emph>: <Math>x(yz)=(xy)(xz)</Math></Item>
+ <Item><Index>right alternative magma</Index><Emph>right alternative</Emph>: <Math>x(yy)=(xy)y</Math></Item>
+ <Item><Index>right self-distributive magma</Index><Emph>right self-distributive</Emph>: <Math>(xy)z=(xz)(yz)</Math></Item>
+ <Item><Index>self-distributive magma</Index><Emph>self-distributive</Emph>: <Math>x(yz)=(xy)(xz)</Math> and <Math>(xy)z=(xz)(yz)</Math></Item>
+ <Item><Index>unipotent magma</Index><Emph>unipotent</Emph>: <Math>xx=yy</Math></Item>
+ </List>
+ <P/>Some of these methods for magmas are already available in &GAP;, e.g., <Code>IsCommutative</Code>. In such a case,
+ we provide a new method for right quasigroups that takes advantage of right translations as permutations.
+<ManSection Label="AutoDoc_generated_group28">
+<Heading>Testing properties of magma and right quasigroups</Heading>
+  <Prop Arg="Q" Name="Is3PowerAssociative" Label="for IsMagma"/>
+  <Prop Arg="Q" Name="IsAlternative" Label="for IsMagma"/>
+  <Prop Arg="Q" Name="IsAssociative" Label="for IsRightQuasigroup"/>
+  <Prop Arg="Q" Name="IsCommutative" Label="for IsRightQuasigroup"/>
+  <Prop Arg="Q" Name="IsFlexible" Label="for IsMagma"/>
+  <Prop Arg="Q" Name="IsIdempotent" Label="for IsMagma"/>
+  <Prop Arg="Q" Name="IsLeftAlternative" Label="for IsMagma"/>
+  <Prop Arg="Q" Name="IsLeftSelfDistributive" Label="for IsMagma"/>
+  <Prop Arg="Q" Name="IsRightAlternative" Label="for IsMagma"/>
+  <Prop Arg="Q" Name="IsRightSelfDistributive" Label="for IsMagma"/>
+  <Prop Arg="Q" Name="IsSelfDistributive" Label="for IsMagma"/>
+  <Prop Arg="Q" Name="IsUnipotent" Label="for IsMagma"/>
+ <Returns><Code>true</Code> if <Code>Q</Code> is a magma with the property in the title of the function, else returns <Code>false</Code>
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Properties_of_right_quasigroups_quasigroups_and_loops_Section_Properties_of_quasigroups">
+<Heading>Properties of quasigroups</Heading>
+
+<ManSection>
+  <Prop Arg="Q" Name="IsSemisymmetric" Label="for IsQuasigroup"/>
+ <Returns><Code>true</Code> if <Code>Q</Code> is a semisymmetric quasigroup (that is, a quasigroup  satisfying <Code>(x*y)*x=y</Code> for all <Code>x</Code>, <Code>y</Code>), else returns <Code>false</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="Q" Name="IsTotallySymmetric" Label="for IsQuasigroup"/>
+ <Returns><Code>true</Code> if <Code>Q</Code> is a totally symmetric quasigroup (that is, a quasigroup  that is semisymmetric and commutative), else returns <Code>false</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="Q" Name="IsSteinerQuasigroup" Label="for IsQuasigroup"/>
+ <Returns><Code>true</Code> if <Code>Q</Code> is a Steiner quasigroup (that is, a quasigroup  that is idempotent and totally symmetric), else returns <Code>false</Code>.
+  We also support the synonym <Code>IsMedial</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="Q" Name="IsEntropic" Label="for IsQuasigroup"/>
+ <Returns><Code>true</Code> if <Code>Q</Code> is an entropic quasigroup (that is, a quasigroup  satisfying <Code>(x*u)*(v*y) = (x*v)*(u*y)</Code> for all <Code>x</Code>, <Code>y</Code>, <Code>u</Code>, <Code>v</Code>), else returns <Code>false</Code>.
+  We also support the synonym <Code>IsMedial</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="Q" Name="IsPowerAssociative" Label="for IsQuasigroup"/>
+ <Returns><Code>true</Code> if <Code>Q</Code> is a power associative quasigroup (that is, a quasigroup  in which every element generates an associative subquasigroup), else returns <Code>false</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="Q" Name="IsDiassociative" Label="for IsQuasigroup"/>
+ <Returns><Code>true</Code> if <Code>Q</Code> is a diassociative quasigroup (that is, a quasigroup  in which every two elements generate an associative subquasigroup), else returns <Code>false</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Properties_of_right_quasigroups_quasigroups_and_loops_Section_Inverse_properties_of_loops">
+<Heading>Inverse properties of loops</Heading>
+
+ <P/>In a loop <Math>Q</Math> with neutral element <Math>e</Math>, for every <Math>x\in Q</Math> there is a unique left inverse
+ <Math>x^\ell</Math> of <Math>x</Math> satisfying <Math>x^\ell x = e</Math> and a unique right inverse <Math>x^r</Math> of <Math>x</Math> satisfying
+ <Math>xx^r=e</Math>, cf. Section <Ref Sect="Section_Elementwise"/>. If <Math>x^ell = x^r</Math> then the two-sided
+ inverse of <Math>x</Math> is denoted by <Math>x^{-1}</Math>.
+<ManSection>
+  <Prop Arg="Q" Name="HasTwosidedInverses" Label="for IsLoop"/>
+ <Returns><Code>true</Code> if <Code>Q</Code> is a loop with two-sided inverses, else returns <Code>false</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection Label="AutoDoc_generated_group29">
+<Heading>Right and left inverse properties</Heading>
+  <Prop Arg="Q" Name="HasRightInverseProperty" Label="for IsLoop"/>
+  <Prop Arg="Q" Name="HasLeftInverseProperty" Label="for IsLoop"/>
+  <Prop Arg="Q" Name="HasInverseProperty" Label="for IsLoop"/>
+ <Returns><Code>true</Code> if the loop <Code>Q</Code> has the right inverse property (resp. left inverse property,  inverse property), else returns <Code>false</Code>.
+</Returns>
+ <Description>
+<P/>
+A loop <Math>Q</Math> has the <Index>right inverse property</Index><Emph>right inverse property</Emph>
+ (resp. <Index>left inverse property</Index><Emph>left inverse property</Emph>)
+ if <Math>(xy)y^r=x</Math> (resp. <Math>x^\ell(xy)=y</Math>) holds for all <Math>x,y\in Q</Math>. It has the
+ <Index>inverse property</Index><Emph>inverse property</Emph> if it is has the right inverse property
+ and the left inverse property. In all three cases, the loop automatically has two-sided inverses.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="Q" Name="HasWeakInverseProperty" Label="for IsLoop"/>
+ <Returns><Code>true</Code> if the loop <Code>Q</Code> has the weak inverse property.
+</Returns>
+ <Description>
+A loop <Math>Q</Math> has the <Index>weak inverse property</Index><Emph>weak inverse property</Emph>
+ if <Math>(xy)^\ell x = y^\ell</Math> holds for all <Math>x,y\in Q</Math>. The dual identity <Math>x(yx)^r = y^r</Math> is equivalent
+ to the weak inverse property. A weak inverse property loop does not necessarily posses 
+ two-sided inverses.
+ </Description>
+</ManSection>
+
+
+<ManSection Label="AutoDoc_generated_group30">
+<Heading>Automorphic and antiautomorphic inverse properties</Heading>
+  <Prop Arg="Q" Name="HasAutomorphicInverseProperty" Label="for IsLoop"/>
+  <Prop Arg="Q" Name="HasAntiautomorphicInverseProperty" Label="for IsLoop"/>
+ <Returns><Code>true</Code> if the loop <Code>Q</Code> has the automorphic inverse property (resp. antiautomorphic  inverse property), else returns <Code>false</Code>.
+</Returns>
+ <Description>
+<P/>
+A loop <Math>Q</Math> has the <Index>automorphic inverse property</Index><Emph>automorphic
+ inverse property</Emph> if <Math>(xy)^r = x^r y^r</Math> holds for all <Math>x,y\in Q</Math> (the dual identity
+ <Math>(xy)^\ell = x^\ell y^\ell</Math> is equivalent to it in loops). An automorphic inverse property loop does
+ not necessarily posses two-sided inverses. A loop <Math>Q</Math> has the <Index>antiautomorphic inverse
+ property</Index><Emph>antiautomorphic inverse property</Emph> if <Math>(xy)^r = y^r x^r</Math> holds
+ for all <Math>x,y\in Q</Math> (the dual identity <Math>(xy)^\ell = y^\ell x^\ell</Math> is equivalent to it in loops). 
+ An antiautomorphic inverse property loop automatically possesses two-sided inverses and
+ the definining identity can therefore be restated as <Math>(xy)^{-1}=y^{-1}x^{-1}</Math>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Properties_of_right_quasigroups_quasigroups_and_loops_Section_Loops_of_Bol-Moufang_type">
+<Heading>Loops of Bol-Moufang type</Heading>
+
+ <P/>A loop identity is said to be of <Index>identity of Bol-Moufang type</Index><Emph>Bol-Moufang type</Emph>
+ if two of its three variables occur once on each side, the third variable occurs twice on each side,
+ and the order in which the variables appear on both sides is the same, cf. <Math>((xy)x)z=x(y(xz))</Math>.
+ A variety of loops is of <Index>variety of Bol-Moufang type</Index><Emph>Bol-Moufang type</Emph>
+ if it is defined by a single identity of Bol-Moufang type. It can be shown that there are precisey
+ 14 varieties of loops of Bol-Moufang type; the 11 varieties included in the list below plus the already
+ introduced associative loops (aka groups), flexible loops, left alternative loops and right alternative loops.
+ <P/>Here are the 11 varieties of loops of Bol-Moufang type not yet introduced. In some cases
+ there are several equivalent identities of Bol-Moufang type for the given variety but we only list one such identity.
+ <List>
+ <Item><Index>C loops</Index><Emph>C loops</Emph>: <Math>x(y(yz))=((xy)y)z</Math></Item>
+ <Item><Index>extra loops</Index><Emph>extra loops</Emph>: <Math>x(y(zx))=((xy)z)x</Math></Item>
+ <Item><Index>LC loops</Index><Emph>LC loops</Emph>: <Math>(xx)(yz)=(x(xy))z</Math></Item>
+ <Item><Index>left Bol loops</Index><Emph>left Bol loops</Emph>: <Math>x(y(xz)) = (x(yx))z</Math></Item>
+ <Item><Index>left nuclear square loops</Index><Emph>left nuclear square loops</Emph>: <Math>(xx)(yz)=((xx)y)z</Math></Item>
+ <Item><Index>middle nuclear square loops</Index><Emph>middle nuclear square loops</Emph>: <Math>x((yy)z)=(x(yy))z</Math></Item>
+ <Item><Index>Moufang loops</Index><Emph>Moufang loops</Emph>: <Math>(xy)(zx)=(x(yz))x</Math></Item>
+ <Item><Index>RC loops</Index><Emph>RC loops</Emph>: <Math>x((yz)z)=(xy)(zz)</Math></Item>
+ <Item><Index>right Bol loops</Index><Emph>right Bol loops</Emph>: <Math>x((yz)y)=((xy)z)y</Math></Item>
+ <Item><Index>right nuclear square loops</Index><Emph>right nuclear square loops</Emph>: <Math>x(y(zz))=(xy)(zz)</Math></Item>
+ </List>
+<ManSection Label="AutoDoc_generated_group31">
+<Heading>Testing for loops of Bol-Moufang type</Heading>
+  <Prop Arg="Q" Name="IsCLoop" Label="for IsLoop"/>
+  <Prop Arg="Q" Name="IsExtraLoop" Label="for IsLoop"/>
+  <Prop Arg="Q" Name="IsLCLoop" Label="for IsLoop"/>
+  <Prop Arg="Q" Name="IsLeftBolLoop" Label="for IsLoop"/>
+  <Prop Arg="Q" Name="IsLeftNuclearSquareLoop" Label="for IsLoop"/>
+  <Prop Arg="Q" Name="IsMiddleNuclearSquareLoop" Label="for IsLoop"/>
+  <Prop Arg="Q" Name="IsMoufangLoop" Label="for IsLoop"/>
+  <Prop Arg="Q" Name="IsRCLoop" Label="for IsLoop"/>
+  <Prop Arg="Q" Name="IsRightBolLoop" Label="for IsLoop"/>
+  <Prop Arg="Q" Name="IsRightNuclearSquareLoop" Label="for IsLoop"/>
+ <Returns><Code>true</Code> if the loop <Code>Q</Code> has the property in the title of the function, else returns <Code>false</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="Q" Name="IsNuclearSquareLoop" Label="for IsLoop"/>
+ <Returns><Code>true</Code> if <Code>Q</Code> is a <Index>nuclear square loop</Index><Emph>nuclear square loop</Emph>  (that is, a loop where the square of every element lies in the nucleus), else returns <Code>false</Code>.
+  The variety of nuclear square loops is technically not of Bol-Moufang type,
+  but can be obtained by interesecting varieties of Bol-Moufang type.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Properties_of_right_quasigroups_quasigroups_and_loops_Section_Power_alternative_loops">
+<Heading>Power alternative loops</Heading>
+
+ <P/>A loop <Math>Q</Math> is <Index>right power alternative loop</Index><Index>right power alternative loops</Index>
+ <Emph>right power alternative</Emph> (resp. <Emph>left power alternative</Emph>) if it is power associative and 
+ <Math>(xy^n)y^m = xy^{n+m}</Math> (resp. <Math>x^n(x^my) = x^{n+m}y</Math>) holds for all <Math>x,y\in Q</Math> and all integers <Math>n</Math>, <Math>m</Math>.
+ A loop is <Index>power alternative loop</Index><Emph>power alternative</Emph> if it is both right and left power
+ alternative.
+<ManSection Label="AutoDoc_generated_group32">
+<Heading>Testing for power alternative loops</Heading>
+  <Prop Arg="Q" Name="IsRightPowerAlternative" Label="for IsLoop"/>
+  <Prop Arg="Q" Name="IsLeftPowerAlternative" Label="for IsLoop"/>
+  <Prop Arg="Q" Name="IsPowerAlternative" Label="for IsLoop"/>
+ <Returns><Code>true</Code> if the loop <Code>Q</Code> is right power alternative (resp. left power alternative, power alternative),  else returns <Code>false</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Properties_of_right_quasigroups_quasigroups_and_loops_Section_Conjugacy_closed_loops_and_Osborn_loops">
+<Heading>Conjugacy closed loops and Osborn loops</Heading>
+
+ <P/>A loop <Math>Q</Math> is <Index>right conjugacy closed loop</Index><Emph>right conjugacy closed</Emph>
+ (aka <Emph>RCC</Emph>) if for all <Math>x,y\in Q</Math> the permutation <Math>R_x^{-1}R_yR_x</Math> is a right translation.
+ Dually, <Math>Q</Math> is <Index>left conjugacy closed loop></Index><Emph>left conjugacy closed</Emph>
+ (aka <Emph>LCC</Emph>) if for all <Math>x,y\in Q</Math> the permutation <Math>L_x^{-1}L_yL_x</Math> is a left translation.
+ A loop <Math>Q</Math> is <Index>conjugacy closed loop</Index><Emph>conjugacy closed</Emph> (aka <Emph>CC</Emph>)
+ if it is both RCC and LCC.
+<ManSection Label="AutoDoc_generated_group33">
+<Heading>Testing for conjugacy closed loops</Heading>
+  <Prop Arg="Q" Name="IsRightConjugacyClosedLoop" Label="for IsLoop"/>
+  <Prop Arg="Q" Name="IsLeftConjugacyClosedLoop" Label="for IsLoop"/>
+  <Prop Arg="Q" Name="IsConjugacyClosedLoop" Label="for IsLoop"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+<P/>
+The synonyms <Code>IsRCCLoop</Code>, <Code>IsLCCLoop</Code> and <Code>IsCCLoop</Code> are also supported.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="Q" Name="IsOsbornLoop" Label="for IsLoop"/>
+ <Returns><Code>true</Code> if <Code>Q</Code> is an Osborn loop<Index>Osborn loop</Index> (that is, a loop  satisfying <Math>y\backslash (x(zx)) = ((y/x)z)x</Math>), else returns <Code>false</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Properties_of_right_quasigroups_quasigroups_and_loops_Section_Additional_varieties_of_loops">
+<Heading>Additional varieties of loops</Heading>
+
+<ManSection>
+  <Prop Arg="Q" Name="IsCodeLoop" Label="for IsLoop"/>
+ <Returns><Code>true</Code> if <Code>Q</Code> is a code loop, else returns <Code>false</Code>.  A loop <Math>Q</Math> is a <Index>code loop</Index><Emph>code loop</Emph> if it a Moufang loop containing a central subloop <Math>Z</Math> of size <Math>2</Math>
+  such that <Math>Q/Z</Math> is an elementary abelian <Math>2</Math>-group.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="Q" Name="IsSteinerLoop" Label="for IsLoop"/>
+ <Returns><Code>true</Code> if <Code>Q</Code> is a Steiner loop, else retunrs <Code>false</Code>.  A loop <Math>Q</Math> is a <Index>Steiner loop</Index><Emph>Steiner loop</Emph> if it is an inverse property loop
+  of exponent at most <Math>2</Math>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection Label="AutoDoc_generated_group34">
+<Heading>Bruck loops</Heading>
+  <Prop Arg="Q" Name="IsRightBruckLoop" Label="for IsLoop"/>
+  <Prop Arg="Q" Name="IsLeftBruckLoop" Label="for IsLoop"/>
+ <Returns><Code>true</Code> if <Code>Q</Code> is a right Bruck loop (resp. left Bruck loop), else returns <Code>false</Code>.
+</Returns>
+ <Description>
+ <P/>A loop <Math>Q</Math> is a <Index>right Bruck loop</Index><Emph>right Bruck loop</Emph> (aka <Emph>right K-loop</Emph>) if
+ it is right Bol an has the automorphic inverse property. A loop <Math>Q</Math> is a <Index>left Bruck loop</Index>
+ <Emph>left Bruck loop</Emph> (aka <Emph>left K-loop</Emph>) if it is left Bol and has the automorphic inverse property.
+The synonyms <Code>IsRightKLoop</Code> and <Code>IsLeftKLoop</Code> are also supported.
+ </Description>
+</ManSection>
+
+
+<ManSection Label="AutoDoc_generated_group35">
+<Heading>Automorphic loops</Heading>
+  <Prop Arg="Q" Name="IsRightAutomorphicLoop" Label="for IsLoop"/>
+  <Prop Arg="Q" Name="IsMiddleAutomorphicLoop" Label="for IsLoop"/>
+  <Prop Arg="Q" Name="IsLeftAutomorphicLoop" Label="for IsLoop"/>
+  <Prop Arg="Q" Name="IsAutomorphicLoop" Label="for IsLoop"/>
+ <Returns><Code>true</Code> if <Code>Q</Code> is a right automorphic loop (resp. middle automorphic loop, left automorphic loop,  automorphic loop), else returns <Code>false</Code>.
+</Returns>
+ <Description>
+ <P/>A loop <Math>Q</Math> is a <Index>right automorphic loop</Index><Emph>right automorphic loop</Emph> (aka <Emph>right A-loop</Emph>) if
+ all right inner mapping of <Math>Q</Math> are automorphisms of <Math>Q</Math>. 
+ A loop <Math>Q</Math> is a <Index>middle automorphic loop</Index>
+ <Emph>middle automorphic loop</Emph> (aka <Emph>middle A-loop</Emph>) if all its middle inner mappings are automorphisms of <Math>Q</Math>.
+ A loop <Math>Q</Math> is a <Index>left automorphic loop</Index>
+ <Emph>left automorphic loop</Emph> (aka <Emph>left A-loop</Emph>) if all its left inner mappings are automorphisms of <Math>Q</Math>.
+ A loop <Math>Q</Math> is an <Index>automorphic loop</Index><Emph>automorphic loop</Emph> (aka <Emph>A-loop</Emph>) if all
+ its inner mappings are automorphisms of <Math>Q</Math>.
+<P/>
+The synonyms <Code>IsRightALoop</Code>, <Code>IsMiddleALoop</Code>, <Code>IsLeftALoop</Code> and <Code>IsALoop</Code> are also supported.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+ <P/>In this chapter we present functions that check various properties of right quasigroups,
+ quasigroups and loops. WHY IS THIS MISPLACED?
+</Chapter>
+

@@ -1,0 +1,19 @@
+# small_quandles.tbl
+# Library of small quandles
+# =============================================================================
+
+RQ_small_quandles := [  
+#implemented orders
+[1,2,3,4,5,6,7,8,9,10,11],
+#number of quandles of given order
+[1,1,3,7,22,73,298,1581,11079,102771,1275419],
+#the quandles (data given elsewhere, in quandles\*.*, to be read on demand)
+[
+]
+];
+
+RQ_quandle_groups := [];
+RQ_quandle_ids := [];
+
+# info about previous quandle constructed, to speed up the library
+RQ_quandle_previous := rec( G := "", orbs := "", reps := "", m := "", stabs := "", folder := "", trans := "" );

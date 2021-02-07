@@ -1,0 +1,58 @@
+# CC_loops.tbl
+# Library of conjugacy closed loops
+# =============================================================================
+
+#############################################################################
+## Binding global variables 
+## RQ_CC_used_factors
+## RQ_CC_cocycles
+## RQ_CC_bases
+## RQ_CC_coordinates
+
+# CC loops are activated as follows:
+# If n = 2p, where p is an odd prime, then we call an algebraic method for
+# constructing these loops.
+# If n = p^2, where p>3 is a prime, then we call an algebraic method for
+# construction these loops.
+# If n is a power of 2 or 3, then we use cocycles located in cc/cc_cocycles_n.tbl.
+# For all other orders, we point to the library of RCC loops.
+
+RQ_CC_loops := [ 
+#implemented orders
+[ 2, 3, 4, 5, 7, 8, 9, 12, 16, 18, 20, 21, 24, 25, 27,  32, 49,    64,   81,  125, 343],
+#number of loops of given order in the library
+[ 1, 1, 2, 1, 1, 7, 5,  3, 42,  7,  3,  1, 14,  5, 60, 437,  5, 14854, 5406,   84, 122],
+[
+#order 2 (Z_2)
+["010"],
+#order 3 (Z_3)
+["201"],
+#order 4 (placeholder only)
+,
+# order 5 (Z_5)
+["2340401123"],
+# order 7 (Z_7)
+["234560456016012123345"],
+#order 8 (placeholder only)
+,
+#order 9 (placeholder only)
+,
+#order 12
+[53,73,89],
+#order 16 (placeholder only)
+,
+#order 18
+[22,29,77,292,360,377,1133],
+#order 20
+[453,1456,2245],
+#order 21
+[104],
+#order 24
+[302,1025,2119,2182,2335,3066,4569,5176,5589,5997,7495,194830,225705,243216]
+]
+];
+
+RQ_CC_used_factors := [];
+RQ_CC_cocycles := [];
+RQ_CC_bases := [];
+RQ_CC_coordinates := [];

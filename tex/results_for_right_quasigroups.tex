@@ -1,0 +1,224 @@
+\documentclass{amsart}
+
+\def\rdiv{/}
+\def\ldiv{\backslash}
+\def\rmlt#1{\mathrm{Mlt}_r(#1)}
+\def\mlt#1{\mathrm{Mlt}(#1)}
+\def\inn#1{\mathrm{Inn}(#1)}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{acknowledgement}{Acknowledgement}
+\newtheorem{axiom}{Axiom}%
+\newtheorem{case}{Case}
+\newtheorem{claim}{Claim}
+\newtheorem{conclusion}{Conclusion}
+\newtheorem{condition}[theorem]{Condition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{criterion}{Criterion}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{exercise}{Exercise}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{solution}{Solution}
+\newtheorem{summary}{Summary}
+\newtheorem{construction}[theorem]{Construction}
+
+\theoremstyle{definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{algorithm}[theorem]{Algorithm}
+
+\begin{document}
+
+\title{Some results used by the \texttt{GAP} package \texttt{RightQuasigroups}}
+
+\author{G\'abor~P.~Nagy}
+
+\author{Petr Vojt\v{e}chovsk\'y}
+
+\maketitle
+
+\section{Congruences}
+
+Let $Q=(Q,\cdot,/)$ be a right quasigroup. Then an equivalence relation $\sim$ on $Q$ is a \emph{right quasigroup congruence} if for every $x,y,u,v\in Q$, if $x\sim y$ and $u\sim v$ then $xu\sim yv$ and $x/u\sim y/v$.
+
+\begin{proposition}\label{Pr:RightQuasigroupCongruence}
+Let $Q=(Q,\cdot,/)$ be a right quasigroup and $\sim$ an equivalence relation on $Q$. Then:
+\begin{enumerate}
+\item[(i)] $\sim$ is a right quasigroup congruence iff for every $x,y,u\in Q$, if $x\sim y$ then $xu\sim yu$, $x/u\sim y/u$, $ux\sim uy$ and $u/x\sim u/y$.
+\item[(ii)] If $Q$ is finite then $\sim$ is a right quasigroup congruence iff for every $x,y,u\in Q$, if $x\sim y$ then $xu\sim yu$ and $ux\sim uy$.
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+If $\sim$ is a right quasigroup congruence then certainly the conditions of (i) and (ii) hold. Conversely, suppose that the condition of (i) holds and let $x,y,u,v\in Q$ be such that $x\sim y$ and $u\sim v$. Then $xu\sim yu\sim yv$ and $x/u\sim y/u\sim y/v$ shows that $\sim$ is a right quasigroup congruence.
+
+Finally suppose that $Q$ is finite and the condition of (ii) holds. We will verify the condition of (i). Suppose that $x,y,u\in Q$ and $x\sim y$. We then have $xu\sim yu$ and $ux\sim uy$ by assumption. Since $Q$ is finite, there is $n$ such that $R_u^n=1$ and thus $R_u^{-1}=R_u^{n-1}$. It follows by an easy induction on $n$ that $x/u = R_u^{-1}(x) = R_u^{n-1}(x) \sim R_u^{n-1}(y) = R_u^{-1}(y) = y/u$. Using finiteness again, let $s$ and $t$ be such that $R_x^s=1=R_y^t$. Consider $m = st-1$. Then $R_x^m = R_x^{st-1} = R_x^{-1}$ and $R_y^m = R_y^{ts-1} = R_y^{-1}$. We then again have $u/x = R_x^{-1}(u) = R_x^m(u)\sim R_y^m(u) = R_y^{-1}(u) = u/y$ by induction on $m$. The condition of (i) therefore holds and $\sim$ is a congruence.
+\end{proof}
+
+Let $Q=(Q,\cdot,/,\ldiv)$ be a right quasigroup. Then an equivalence relation $\sim$ on $Q$ is a \emph{quasigroup congruence} if for every $x,y,u,v\in Q$, if $x\sim y$ and $u\sim v$ then $xu\sim yv$, $x/u\sim y/v$ and $x\ldiv u \sim y\ldiv v$.
+
+\begin{proposition}
+Let $Q=(Q,\cdot,/,\ldiv)$ be a quasigroup and $\sim$ an equivalence relation on $Q$. Then:
+\begin{enumerate}
+\item[(i)] $\sim$ is a quasigroup congruence iff for every $x,y,u\in Q$, if $x\sim y$ then $xu\sim yu$, $ux\sim uy$, $x\rdiv u \sim y\rdiv u$ and $u\ldiv x\sim u\ldiv y$.
+\item[(ii)] If $Q$ is finite then $\sim$ is a quasigroup congruence iff for every $x,y,u\in Q$, if $x\sim y$ then $xu\sim yu$ and $ux\sim uy$.
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+If $\sim$ is a quasigroup congruence then the certainly the conditions of (i) and (ii) holds. Conversely, suppose that the condition of (i) holds and let $x,y,u,v\in Q$ be such that $x\sim y$ and $u\sim v$. Since $u\sim v$, we have $x = (x/u\cdot u)\sim (x/u\cdot v)$ and therefore $x/v \sim ((x/u\cdot v)/v) = x/u$. Also, from $x\sim y$ we get $x/v\sim y/v$. Therefore $x/u\sim x/v\sim y/v$. Dually, $x\ldiv u\sim y\ldiv v$. Hence $\sim$ is a quasigroup congruence.
+
+If $Q$ is finite, the condition of (i) reduces to the condition of (ii) by the usual trick: $R_u^{-1}=R_u^{n-1}$ and $L_u^{-1}=L_u^{m-1}$ for suitable $n$ and $m$.
+\end{proof}
+
+
+\section{Simplicity}
+
+Let $G$ be a group acting on $X$. Then $B\subseteq X$ is a \emph{block} of the action if for every $g\in G$ either $g(B)=B$ or $g(B)\cap B=\emptyset$. Given a partition $\mathcal P$ of $X$, we say that the action of $G$ \emph{preserves} $\mathcal P$ if for every $B\in\mathcal P$ and every $g\in G$ we have $g(B)\in\mathcal P$. The partitions $\{\{x\}:x\in X\}$ and $\{X\}$ are \emph{trivial}. A transitive permutation group $G$ acts \emph{primitively} on $X$ if it preserves no nontrivial partition of $X$, else it acts \emph{imprimitively}. (The requirement that $G$ be transitive is only needed if $|X|=2$.)
+
+For a right quasigroup $Q$ let $\rmlt{Q}=\langle R_x:x\in Q\rangle$ be the \emph{right multiplication group} of $Q$. For a quasigroup $Q$ let $\mlt{Q}=\langle R_x,L_x:x\in Q\rangle$ be the \emph{multiplication group} of $Q$.
+
+\begin{theorem}[Albert]
+A quasigroup $Q$ is simple if and only if $\mlt{Q}$ acts primitively on $Q$.
+\end{theorem}
+\begin{proof}
+Well known.
+\end{proof}
+
+\begin{example}
+Consider the right quasigroup $Q$ with multiplication table
+\begin{displaymath}
+    \begin{array}{c|cccc}
+         &1&2&3&4\\
+        \hline
+        1&2&1&1&1\\
+        2&3&2&2&2\\
+        3&4&3&3&3\\
+        4&1&4&4&4
+    \end{array}
+\end{displaymath}
+Then $G=\rmlt{Q} = \langle g\rangle$, where $g=(1,2,3,4)$. Note that $G$ acts transitively but imprimitively on $Q$, with $\{\{1,3\},\{2,4\}\}$ being a nontrivial partition of $Q$ preserved by $G$. However, an inspection of all possible partitions of $Q$ reveals that $Q$ has no nontrivial congruences and hence is simple. For instance, the above partition is not a right quasigroup congruence since $1\sim 3$ but $1\cdot 1 = 2\not\sim 1 = 1\cdot 3$.
+\end{example}
+
+\begin{proposition}
+Let $Q$ be a right quasigroup. If $\rmlt{Q}$ acts primitively on $Q$ then $Q$ is simple. (The converse does not hold, as shown by the above example.)
+\end{proposition}
+\begin{proof}
+Suppose that $Q$ is not simple and let $\sim$ be a nontrivial congruence on $Q$. Let $B$ be an equivalence class of $\sim$. If $y\sim z$ then $R_x(y)\sim R_x(z)$ and $R_x^{-1}(y)\sim R_x^{-1}(z)$ since $\sim$ is a congruence. In particular, $R_x(B)$ is contained in some equivalence class $C$ of $\sim$. Write $B=[b]$ and $C=[bx]$. If $c\in C$ then $c\sim bx$ and thus $c\rdiv x\sim (bx)\rdiv x = b$, so $c\rdiv x\in B$, but then $R_x(c\rdiv x) = (c\rdiv x)x = c$ shows that $R_x(B)=C$. Similarly, $R_x^{-1}(B)$ is an equivalence class of $\sim$. This shows that $\rmlt{Q}$ preserves the partition induced by $\sim$ and hence $\rmlt{Q}$ acts imprimitively on $Q$.
+\end{proof}
+
+\begin{lemma}
+Let $Q$ be a right quasigroup. The orbits of $\rmlt{Q}$ form a right quasigroup congruence of $Q$.
+\end{lemma}
+\begin{proof}
+Let $\sim$ be the equivalence relation induced by the orbits of $G=\rmlt{Q}$. Suppose that $x\sim y$ and $u\in Q$. Then $ux = R_x(u)\sim R_y(u) = uy$ and $u/x = R_x^{-1}(u)\sim R_y^{-1}(u) = u/y$. Let $g\in G$ be such that $g(x)=y$. Then $xu = R_u(x)\sim R_u(g(x)) = R_u(y) = yu$ and $x/u = R_u^{-1}(x)\sim R_u^{-1}(g(x)) = R_u^{-1}(y) = y/u$. By Proposition \ref{Pr:RightQuasigroupCongruence}, $\sim$ is a right quasigroup congruence.
+\end{proof}
+
+\begin{corollary}
+Let $Q$ be a right quasigroup and suppose that $\rmlt{Q}\ne 1$ does not act transitively on $Q$. Then $Q$ is not simple.
+\end{corollary}
+
+Note that a right quasigroup $Q$ satisfies $\rmlt{Q}=1$ if and only if it is a projection right quasigroup, that is, a right quasigroup with multiplication and right division given by $xy=x$, $x/y=x$.
+
+\begin{lemma}
+Let $Q$ be a projection right quasigroup. Then any partition of $Q$ is a right quasigroup congruence of $Q$. In particular, $Q$ is simple if and only if $|Q|>2$.
+\end{lemma}
+\begin{proof}
+Let $\sim$ be the equivalence relation induced by a given partition of $Q$. Suppose that $x\sim y$ and $u\in Q$. Then $xu = x\sim y = yu$, $x/u = x\sim y = y/u$, $ux = u\sim u = uy$ and $u/x = u\sim u = u/y$. By Proposition \ref{Pr:RightQuasigroupCongruence}, $\sim$ is a right quasigroup congruence.
+\end{proof}
+
+\section{Nuclei and center}
+
+\begin{proposition}\label{Pr:Sub}
+A nonempty subset $S$ of a finite (right) quasigroup $Q$ is a sub(right)quasigroup of $Q$ iff it is closed under multiplication.
+\end{proposition}
+\begin{proof}
+In the case of right quasigroups, it suffices to show that $S$ is closed under right division. For $x,y\in S$, consider $R_x\in\mathrm{Sym}(Q)$. Since $Q$ is finite, there is $n$ such that $R_x^n=\mathrm{id}_Q$, so $R_x^{-1} = R_x^{n-1}$. Then $y\rdiv x = R_x^{-1}(y) = R_x^{n-1}(y)\in S$ by induction on $n$. The argument for left divisions is dual in the case of quasigroups.
+\end{proof}
+
+\begin{proposition}
+Let $Q$ be a finite (right) quasigroup. Then each of the four nuclei is either a sub(right)quasigroup of $Q$ or the empty set.
+\end{proposition}
+\begin{proof}
+Let $S=\mathrm{Nuc}_\ell(Q)\ne\emptyset$. Then for every $x,y\in S$ and every $u,v\in Q$ we have $(xy)(uv) = x(y(uv)) = x((yu)v) = (x(yu))v = ((xy)u)v$, so $xy\in S$ and we are done by Proposition \ref{Pr:Sub}. Dually, if $\mathrm{Nuc}_r(Q)\ne\emptyset$ then it is a sub(right)quasigroup of $Q$. Now suppose that $S=\mathrm{Nuc}_m(Q)\ne\emptyset$. Then for all $x,y\in S$ and $u,v\in Q$ we have $(u(xy))v = ((ux)y)v = (ux)(yv) = u(x(yv)) = u((xy)v)$, so $xy\in S$ and we are done by Proposition \ref{Pr:Sub}. The intersection of sub(right)quasigroups is a sub(right)quasigroup.
+\end{proof}
+
+\begin{proposition}
+Let $Q$ be a finite (right) quasigroup. Then the center of $Q$ is either a sub(right)quasigroup of $Q$ or the empty set. (Do we need finiteness here?)
+\end{proposition}
+\begin{proof}
+It remains to prove that if $x,y\in Z(Q)$ and $u\in Q$ then $(xy)u=u(xy)$. We have $(xy)u = x(yu) = (yu)x = (uy)x = u(yx) = u(xy)$.
+\end{proof}
+
+\section{Lower central series for loops}
+
+The lower central series for a loop $Q$ is defined by $Q_{(0)}=Q$, $Q_{(i+1)}=[Q_{(i)},Q]_Q$, using the congruence commutator of normal subloops. Here we are only using the commutator of the form $[A,Q]_Q$ for $A\unlhd Q$. It's easy to see that $[A,Q]_Q=D$ iff $D$ is the smallest normal subloop of $Q$ such that $A/D\le Z(Q/D)$.
+
+\begin{lemma}
+Let $A\unlhd Q$. Then $[A,Q]_Q$ is the smallest normal subloop of $Q$ containing $\{\theta(a)/a:a\in A,\,\theta\in\inn{Q}\}$.
+\end{lemma}
+\begin{proof}
+Let $D\unlhd Q$. The following conditions are equivalent:
+\begin{itemize}
+\item $A/D\le Z(Q/D)$
+\item $\theta(aD)=aD$ for all $a\in A$, $\theta\in\inn{Q/D}$
+\item $L_{xD,yD}(aD)=aD$, $R_{xD,yD}(aD)=aD$, $T_{xD}(aD)=aD$ for all $x,y\in Q$, $a\in A$
+\item $L_{x,y}(a)D = aD$, $R_{x,y}(a)(D)=aD$, $T_x(a)D=aD$ for all $x,y\in Q$, $a\in A$,
+\item $\theta(a)D=aD$ for all $a\in A$, $\theta\in\inn{Q}$
+\item $\theta(a)/a\in D$ for all $a\in A$, $\theta\in\inn{Q}$.
+\end{itemize}
+\end{proof}
+
+\section{Displacement groups}
+
+For a right quasigroup $(Q,\cdot)$, define the \emph{right positive displacement group}, the \emph{right negative displacement group} and the \emph{right displacement group} by
+\begin{align*}
+    \mathrm{Dis}_r^+(Q) &=\langle R_xR_y^{-1}:x,y\in Q\rangle,\\
+    \mathrm{Dis}_r^-(Q) &=\langle R_x^{-1}R_y:x,y\in Q\rangle,\\
+    \mathrm{Dis}_r(Q) &= \langle R_xR_y^{-1},R_x^{-1}R_y:x,y\in Q\rangle,
+\end{align*}
+respectively.
+
+Fix $e\in Q$. Since $R_xR_y^{-1} = (R_eR_x^{-1})^{-1}(R_eR_y^{-1}) = (R_xR_e^{-1})(R_yR_e^{-1})^{-1}$ and $R_x^{-1}R_y=(R_x^{-1}R_e)(R_y^{-1}R_e)^{-1} = (R_e^{-1}R_x)^{-1}(R_e^{-1}R_y)$, we have
+\begin{align*}
+    \mathrm{Dis}_r^+(Q)=\langle R_eR_x^{-1}:x\in Q\rangle = \langle R_xR_e^{-1}:x\in Q\rangle,\\
+    \mathrm{Dis}_r^-(Q)=\langle R_x^{-1}R_e:x\in Q\rangle = \langle R_e^{-1}R_x:x\in Q\rangle.
+\end{align*}
+    
+The left displacement groups are defined analogously for a left quasigroup $(Q,\cdot)$ by 
+\begin{align*}
+    \mathrm{Dis}_\ell^+(Q) &=\langle L_xL_y^{-1}:x,y\in Q\rangle,\\
+    \mathrm{Dis}_\ell^-(Q) &=\langle L_x^{-1}L_y:x,y\in Q\rangle,\\
+    \mathrm{Dis}_\ell(Q) &= \langle L_xL_y^{-1},L_x^{-1}L_y:x,y\in Q\rangle,    
+\end{align*}
+and we once again have
+\begin{align*}
+    \mathrm{Dis}_\ell^+(Q)=\langle L_eL_x^{-1}:x\in Q\rangle = \langle L_xL_e^{-1}:x\in Q\rangle,\\
+    \mathrm{Dis}_\ell^-(Q)=\langle L_x^{-1}L_e:x\in Q\rangle = \langle L_e^{-1}L_x:x\in Q\rangle
+\end{align*}
+for a fixed $e\in Q$.
+
+\begin{proposition}
+Let $(Q,\cdot)$ be a quasigroup. Then $(Q,\cdot)$ is isotopic to a group if and only if the left positive displacement group $\mathrm{Dis}_\ell^+(Q,\cdot)$ acts regularly on $Q$. In that case, $(Q,\cdot)$ is isotopic to 
+$\mathrm{Dis}_\ell^+(Q,\cdot)$.
+\end{proposition}
+\begin{proof}
+Let $D=\mathrm{Dis}_\ell^+(Q,\cdot)$. Given $y,z\in Q$, there exists a unique $x\in Q$ such that $L_xL_e^{-1}(y)=z$, namely $x = z\rdiv (e\ldiv y)$. Suppose that $D$ acts regularly on $Q$. Then $D=\{L_xL_e^{-1}:x\in Q\}$ and for every $x,y\in Q$ there is $z\in Q$ such that $L_xL_e^{-1}L_yL_e^{-1} = L_zL_e^{-1}$. Thus $L_xL_e^{-1}L_y = L_z$ and, applying this to $e$, we get $x(e\ldiv (ye)) = ze$ and $z=x(e\ldiv ye)\rdiv e$. Define $(Q,*)$ by $x*y = x(e\ldiv ye)\rdiv e$. Then $f:D\to (Q,*)$, $L_xL_e^{-1}\mapsto x$ is an isomorphism, so $(Q,*)$ is a group. Since $(x*y)e = x(e\ldiv ye)$, the triple $(\mathrm{id},L_e^{-1}R_e,R_e)$ is an isotopism $(Q,*)\to (Q,\cdot)$.
+
+Conversely, suppose that $(Q,*)$ is a group and $(\alpha,\beta,\gamma)$ is an isotopism $(Q,*)\to (Q,\cdot)$, so $\alpha(x)\cdot\beta(y) = \gamma(x*y)$, or $x\cdot y = \gamma(\alpha^{-1}(x)*\beta^{-1}(y))$ for all $x,y\in Q$. This shows that the left translation by $x$ in $(Q,\cdot)$ is equal to $L_x = \gamma L_{\alpha^{-1}(x)}^*\beta^{-1}$. Then
+\begin{align*}
+    L_xL_e^{-1} &= (\gamma L_{\alpha^{-1}(x)}^*\beta^{-1})(\gamma L_{\alpha^{-1}(e)}^*\beta^{-1})^{-1}\\
+     &= \gamma L_{\alpha^{-1}(x)}^*(L_{\alpha^{-1}(e)}^*)^{-1}\gamma^{-1} = \gamma L_{\alpha^{-1}(x)*(\alpha^{-1}(e))^{-1}}\gamma^{-1}
+\end{align*}
+because $(Q,*)$ is a group. Hence $D$ is a conjugate of $\langle L_{\alpha^{-1}(x)*(\alpha^{-1}(e))^{-1}}:x\in Q\rangle = \langle L_x^*:x\in Q\rangle = \{L_x^*:x\in Q\}$, which certainly acts regularly on $Q$.
+\end{proof}
+
+\begin{corollary}
+A quasigroup $Q$ is isotopic to a group iff $|\mathrm{Dis}_\ell^+(Q)|=|Q|$.
+\end{corollary}
+
+\end{document} 

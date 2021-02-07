@@ -1,0 +1,1048 @@
+
+# HSP.gi
+# Direct products, subalgebras and factor algebras
+# =============================================================================
+
+# DIRECT PRODUCT OF RIGHT QUASIGROUPS
+# _____________________________________________________________________________
+
+InstallGlobalFunction( RQ_DirectProduct,
+function( list )
+    local S, Q, newS, e, x, mult, rq_list, indexBased, category;
+    # assumes that list is nonempty and consists of groups and right quasigroups, with at least one non-group
+    if Length( list ) = 1 then 
+        return list[ 1 ];
+    fi;
+    # at least two algebras
+    # underlying set
+    S := [[]];
+    for Q in list do
+        newS := [];
+        for e in S do
+            for x in Q do
+                Add( newS, Concatenation( e, [x] ) );
+            od;
+        od;
+        S := ShallowCopy( newS );
+    od;
+    # multiplication function
+    mult := function( x, y )        
+        return List( [1..Length(x)], i -> x[i]*y[i] );
+    end;
+    # selecting category and whether it is index based
+    rq_list := Filtered( list, IsRightQuasigroup ); # list of right quasigroups
+    indexBased := ForAll( rq_list, IsIndexBased );
+    if ForAll( rq_list, IsLoop ) then category := IsLoop;
+    elif ForAll( rq_list, IsQuasigroup ) then category := IsQuasigroup;
+    else category := IsRightQuasigroup;
+    fi;
+    return RQ_AlgebraByFunction( category, S, mult, fail, fail, fail, ConstructorStyle( indexBased, false ) );
+    # REVISIT: Return quandle/rack if all are quandles/racks? Other varieties? Seems complicated to test everything.
+end );
+
+# DirectProductOp( list, first )
+# The following is necessary due to implementation of DirectProduct for groups in GAP.
+# We want to calculate direct product of right quasigroups, quasigroups, loops and groups.
+# If only groups are on the list, standard GAP DirectProduct will take care of it.
+# If there are also some right quasigroups on the list, we must take care of it.
+# However, we do not know if such a list will be processed with
+# DirectProductOp( <IsList>, <IsGroup> ), or
+# DirectProductOp( <IsList>, <IsRightQuasigroup> ),
+# since this depends on which algebra is listed first. We therefore take care of both situations.
+
+InstallOtherMethod( DirectProductOp, "for DirectProduct( <IsList>, <IsGroup> )",
+    [ IsList, IsGroup],
+function( list, first )
+    # check the arguments
+    if IsEmpty( list ) then Error( "RQ: <1> must be nonempty." ); fi;
+    if not ForAny( list, IsRightQuasigroup ) then
+        # there are no right quasigroups on the list
+        TryNextMethod();
+    fi;
+    if ForAny( list, Q -> (not IsGroup( Q )) and (not IsRightQuasigroup( Q ) ) ) then
+        # there are other objects beside groups and right quasigroups on the list
+        TryNextMethod();
+    fi;
+    return RQ_DirectProduct( list );
+end);
+
+InstallOtherMethod( DirectProductOp, "for DirectProduct( <IsList>, <IsRightQuasigroup> )",
+    [ IsList, IsRightQuasigroup ],
+function( list, first )
+    # check the arguments
+    if IsEmpty( list ) then Error( "RQ: <1> must be nonempty." ); fi;
+    if ForAny( list, Q -> (not IsGroup( Q )) and (not IsRightQuasigroup( Q ) ) ) then
+        TryNextMethod();
+    fi;
+    return RQ_DirectProduct( list );
+end );
+
+# OPPOSITE QUASIGROUPS
+# _____________________________________________________________________________
+
+# RQ_OppositeAlgebra
+InstallGlobalFunction( RQ_OppositeAlgebra, 
+function( category, Q )
+    local old_mult, mult;
+    if IsIndexBased( Q ) then
+        return RQ_AlgebraByCayleyTable( category, TransposedMat( CayleyTable( Q ) ), ConstructorStyle( true, false ) );
+    fi;
+    # not index based
+    old_mult := MultiplicationFunction( Q );
+    mult := function( x, y )
+        return old_mult( y, x );
+    end;
+    return RQ_AlgebraByFunction( category, UnderlyingSet( Q ), mult, fail, fail, fail, ConstructorStyle( false, false ) );
+end );
+
+# OppositeQuasigroup
+InstallMethod( OppositeQuasigroup, "for quasigroup",
+    [ IsQuasigroup ],
+    Q -> RQ_OppositeAlgebra( IsQuasigroup, Q )
+);
+
+# OppositeLoop
+InstallMethod( OppositeLoop, "for loop",
+    [ IsLoop ],
+    Q -> RQ_OppositeAlgebra( IsLoop, Q )
+);
+
+# SUBALGEBRAS
+# _____________________________________________________________________________
+
+# IsSubrightquasigroup
+# IsSubquasigroup
+# IsSubloop
+
+InstallMethod( IsSubrightquasigroup, "for two right quasigroups",
+    [ IsRightQuasigroup, IsRightQuasigroup ],
+function( Q, S )
+    return Parent( Q ) = Parent( S ) and IsSubset( Elements( Q ), Elements( S ) );
+end );
+
+InstallMethod( IsSubquasigroup, "for two quasigroups",
+    [ IsQuasigroup, IsQuasigroup ],
+function( Q, S )
+    return IsSubrightquasigroup( Q, S );
+end );
+
+InstallMethod( IsSubloop, "for two loops",
+    [ IsLoop, IsLoop ],
+function( Q, S )
+    return IsSubrightquasigroup( Q, S );
+end );
+
+# RQ_InheritProperties
+InstallGlobalFunction( RQ_InheritProperties,
+function( P, Q )
+    # PROG: Add more as new properties are implemented.
+    # REVISIT: Carefully check that all these are inherited by subloops and factor loops.
+    local category;
+    category := CategoryOfRightQuasigroup( P );
+    if HasIsAssociative( P ) and IsAssociative( P ) then SetIsAssociative( Q, true ); fi;
+    if HasIsCommutative( P ) and IsCommutative( P ) then SetIsCommutative( Q, true ); fi;
+    if HasIsUnipotent( P ) and IsUnipotent( P ) then SetIsUnipotent( Q, true ); fi;
+    if HasIsIdempotent( P ) and IsIdempotent( P ) then SetIsIdempotent( Q, true ); fi;
+    if HasIsRightSelfDistributive( P ) and IsRightSelfDistributive( P ) then SetIsRightSelfDistributive( Q, true ); fi;
+    if HasIsLeftSelfDistributive( P ) and IsLeftSelfDistributive( P ) then SetIsLeftSelfDistributive( Q, true ); fi;
+    if HasIsSelfDistributive( P ) and IsSelfDistributive( P ) then SetIsSelfDistributive( Q, true ); fi;
+    if HasIsFlexible( P ) and IsFlexible( P ) then SetIsFlexible( Q, true ); fi;
+    if HasIsRightAlternative( P ) and IsRightAlternative( P ) then SetIsRightAlternative( Q, true ); fi;
+    if HasIsLeftAlternative( P ) and IsLeftAlternative( P ) then SetIsLeftAlternative( Q, true ); fi;
+    if HasIsAlternative( P ) and IsAlternative( P ) then SetIsAlternative( Q, true ); fi;
+    if HasIsRack( P ) and IsRack( P ) then SetIsRack( Q, true ); fi;
+    if HasIsQuandle( P ) and IsQuandle( P ) then SetIsQuandle( Q, true ); fi;
+    if HasIsLeftQuasigroupMagma( P ) and IsLeftQuasigroupMagma( P ) then SetIsLeftQuasigroupMagma( Q, true ); fi;
+    if HasIsLatinRack( P ) and IsLatinRack( P ) then SetIsLatinRack( Q, true ); fi;
+    if HasIsLatinQuandle( P ) and IsLatinQuandle( P ) then SetIsLatinQuandle( Q, true ); fi;
+    if category in [ IsQuasigroup, IsLoop ] then
+        if HasIsPowerAssociative( P ) and IsPowerAssociative( P ) then SetIsPowerAssociative( Q, true ); fi;
+        if HasIsDiassociative( P ) and IsDiassociative( P ) then SetIsDiassociative( Q, true ); fi; 
+        if HasIsSemisymmetric( P ) and IsSemisymmetric( P ) then SetIsSemisymmetric( Q, true ); fi;
+        if HasIsTotallySymmetric( P ) and IsTotallySymmetric( P ) then SetIsTotallySymmetric( Q, true ); fi;
+        if HasIsEntropic( P ) and IsEntropic( P ) then SetIsEntropic( Q, true ); fi;
+        if HasIsSteinerQuasigroup( P ) and IsSteinerQuasigroup( P ) then SetIsSteinerQuasigroup( Q, true ); fi;
+    fi;
+    if category = IsLoop then 
+        if HasHasRightInverseProperty( P ) and HasRightInverseProperty( P ) then SetHasRightInverseProperty( Q, true ); fi; 
+        if HasHasLeftInverseProperty( P ) and HasLeftInverseProperty( P ) then SetHasLeftInverseProperty( Q, true ); fi; 
+        if HasHasInverseProperty( P ) and HasInverseProperty( P ) then SetHasInverseProperty( Q, true ); fi; 
+        if HasHasWeakInverseProperty( P ) and HasWeakInverseProperty( P ) then SetHasWeakInverseProperty( Q, true ); fi; 
+        if HasHasTwosidedInverses( P ) and HasTwosidedInverses( P ) then SetHasTwosidedInverses( Q, true ); fi;
+        if HasHasAutomorphicInverseProperty( P ) and HasAutomorphicInverseProperty( P ) then SetHasAutomorphicInverseProperty( Q, true ); fi;
+        if HasHasAntiautomorphicInverseProperty( P ) and HasAntiautomorphicInverseProperty( P ) then SetHasAntiautomorphicInverseProperty( Q, true ); fi;
+        if HasIsExtraLoop( P ) and IsExtraLoop( P ) then SetIsExtraLoop( Q, true ); fi;
+        if HasIsMoufangLoop( P ) and IsMoufangLoop( P ) then SetIsMoufangLoop( Q, true ); fi;
+        if HasIsCLoop( P ) and IsCLoop( P ) then SetIsCLoop( Q, true ); fi;
+        if HasIsRightBolLoop( P ) and IsRightBolLoop( P ) then SetIsRightBolLoop( Q, true ); fi;
+        if HasIsLeftBolLoop( P ) and IsLeftBolLoop( P ) then SetIsLeftBolLoop( Q, true ); fi;
+        if HasIsRCLoop( P ) and IsRCLoop( P ) then SetIsRCLoop( Q, true ); fi;
+        if HasIsLCLoop( P ) and IsLCLoop( P ) then SetIsLCLoop( Q, true ); fi;
+        if HasIsRightNuclearSquareLoop( P ) and IsRightNuclearSquareLoop( P ) then SetIsRightNuclearSquareLoop( Q, true ); fi;
+        if HasIsLeftNuclearSquareLoop( P ) and IsLeftNuclearSquareLoop( P ) then SetIsLeftNuclearSquareLoop( Q, true ); fi;
+        if HasIsMiddleNuclearSquareLoop( P ) and IsMiddleNuclearSquareLoop( P ) then SetIsMiddleNuclearSquareLoop( Q, true ); fi;
+        if HasIsNuclearSquareLoop( P ) and IsNuclearSquareLoop( P ) then SetIsNuclearSquareLoop( Q, true ); fi;
+        if HasIsLeftPowerAlternative( P ) and IsLeftPowerAlternative( P ) then SetIsLeftPowerAlternative( Q, true ); fi;
+        if HasIsRightPowerAlternative( P ) and IsRightPowerAlternative( P ) then SetIsRightPowerAlternative( Q, true ); fi;
+        if HasIsPowerAlternative( P ) and IsPowerAlternative( P ) then SetIsPowerAlternative( Q, true ); fi;
+        if HasIsRCCLoop( P ) and IsRCCLoop( P ) then SetIsRCCLoop( Q, true ); fi;
+        if HasIsLCCLoop( P ) and IsLCCLoop( P ) then SetIsLCCLoop( Q, true ); fi;
+        if HasIsCCLoop( P ) and IsCCLoop( P ) then SetIsCCLoop( Q, true ); fi;
+        if HasIsOsbornLoop( P ) and IsOsbornLoop( P ) then SetIsOsbornLoop( Q, true ); fi;
+        # REVISIT: Is being a code loop inherited by subloops and factor loops? 
+        if HasIsSteinerLoop( P ) and IsSteinerLoop( P ) then SetIsSteinerLoop( Q, true ); fi;
+        if HasIsRightBruckLoop( P ) and IsRightBruckLoop( P ) then SetIsRightBruckLoop( Q, true ); fi;
+        if HasIsLeftBruckLoop( P ) and IsLeftBruckLoop( P ) then SetIsLeftBruckLoop( Q, true ); fi;
+        if HasIsRightALoop( P ) and IsRightALoop( P ) then SetIsRightALoop( Q, true ); fi;
+        if HasIsMiddleALoop( P ) and IsMiddleALoop( P ) then SetIsMiddleALoop( Q, true ); fi;
+        if HasIsLeftALoop( P ) and IsLeftALoop( P ) then SetIsLeftALoop( Q, true ); fi;
+        if HasIsALoop( P ) and IsALoop( P ) then SetIsALoop( Q, true ); fi;
+    fi;
+end );
+
+# RQ_Subalgebra
+
+InstallGlobalFunction( RQ_Subalgebra,
+function( Q, gens ) 
+    local category, initial_gens, x, elms, transl, relmultgr, Qtype, subqg, P;
+    category := CategoryOfRightQuasigroup( Q );
+    P := Parent( Q );
+    gens := Set( gens, function(x) if x in Q then return x; else return Q[x]; fi; end );
+    initial_gens := ShallowCopy( gens );
+    if category = IsLoop then  # add identity element into generator set
+        AddSet( gens, One( Q ) );
+    fi;
+    if IsEmpty( gens ) then # return empty set
+        return [];
+    fi;
+    # generate the subalgebra
+    if not IsIndexBased( Q ) then
+        # REVISIT: Multiplicative closure implemented in GAP. How efficient is it? See alternative code for MutiplicativeClosure in a text file.
+        # MATH: If a subset of a finite right quasigroup is closed under multiplication, it is also closed under right division.
+        elms := Elements( Magma( gens ) ); 
+    else # index based; let's work with permutation groups 
+        gens := ParentInd( gens );
+        elms := [];
+        while gens<>elms do
+            elms := ShallowCopy( gens );
+            if category = IsRightQuasigroup then
+                transl := RightSection( P ){ gens };
+                relmultgr := Subgroup( RightMultiplicationGroup( P ), transl );
+            else 
+                transl := Concatenation( RightSection( P ){ gens }, LeftSection( P ){ gens } );
+                relmultgr := Subgroup( MultiplicationGroup( P ), transl );
+            fi;          
+            gens := Union( Orbits( relmultgr, gens ) );
+        od;
+        elms := Immutable( List( elms, i -> P.(i) ) );
+    fi;
+    # create the subrightquasigroup 
+    Qtype := NewType( FamilyObj( elms ), category and IsAttributeStoringRep );
+    subqg := Objectify( Qtype, rec( ) );
+    SetSize( subqg, Length( elms ) );
+    SetAsSSortedList( subqg, elms );
+    SetParent( subqg, P );
+    SetGeneratorsOfMagma( subqg, initial_gens );
+    RQ_InheritProperties( Q, subqg ); # subqg inherits certain properties from Q
+    return subqg;
+end );
+
+# Subrightquasigroup
+# Subquasigroup
+# Subloop
+
+InstallMethod( Subrightquasigroup, "for right quasigroup and collection of elements",
+    [IsRightQuasigroup, IsCollection ],
+function( Q, gens )
+    return RQ_Subalgebra( Q, gens );
+end );
+
+InstallMethod( Subquasigroup, "for quasigroup and collection of elements",
+    [IsQuasigroup, IsCollection ],
+function( Q, gens )
+    return RQ_Subalgebra( Q, gens );
+end );
+
+InstallMethod( Subloop, "for loop and collection of elements",
+    [IsLoop, IsList ], # PROG: we use IsList to allow empty set as argument
+function( Q, gens )
+    return RQ_Subalgebra( Q, gens );
+end );
+
+# ALL SUBALGEBRAS
+# _____________________________________________________________________________
+
+# RQ_AllSubalgebras
+InstallMethod( RQ_AllSubalgebras, "for right quasigroup",
+    [ IsRightQuasigroup ],
+function( Q )
+    # MATH: Let S be a subquasigroup of a right quasigroup Q. Then:
+    # S is among right cosests (but not necessarily among left cosets).
+    # In the quasigroup case, is x is in Q\S, then the cosets S and xS are disjoint.
+    # In the quasigroup case, if S is proper then |Q| is at least 2|S|.
+    # In the quasigroup case, if S is proper and |S| > |Q|/4 then S is maximal in Q.
+    # If S is a subloop of a power-associative loop Q and x is in Q\S then <S,x> = <S,x^m> whenever m is relatively prime to |x|.
+    # If S is a subloop of a LIP loop Q and x is in Q\S then <S,zx> = <S,x> for every z in S.
+    # If S is a subloop of a LIP power associative loop Q and x is in Q\S then <S,z(x^m)> = <S,x> for every z in S and every m relatively prime to |x|.
+
+    local category, allSubs, lastSubs, newSubs, A, out, B, x, coprime_powers, n, m;
+
+    category := CategoryOfRightQuasigroup( Q );
+    # initialization
+    allSubs := [];   #all subalgebras
+    if category = IsLoop then
+        newSubs := [ Subloop( Q, [ One( Q ) ] ) ]; # the trivial subloop
+    else
+        newSubs := Set( Elements( Q ), x -> RQ_Subalgebra( Q, [ x ] ) ); # all mono-generated subrightquasigroups 
+    fi;
+
+    # rounds
+    repeat
+        Append( allSubs, newSubs );
+        if category <> IsRightQuasigroup then 
+            lastSubs := Filtered( newSubs, A -> Size( A ) <= Size( Q )/4 ); # subalgebras found in the previous round that are possibly not maximal in Q
+        else
+            lastSubs := Filtered( newSubs, A -> Size( A ) < Size( Q ) ); 
+        fi;
+        newSubs := [];   # subalgebras generated in this round
+        for A in lastSubs do
+            out := Difference( Elements( Q ), Elements( A ) );
+            while not IsEmpty(out) do
+                x := out[ 1 ];
+                out := out{[2..Length(out)]};
+                B := RQ_Subalgebra( Q, Union( Elements( A ), [ x ] ) );
+                if not B in newSubs and not B in allSubs then
+                    Add( newSubs, B );   # new subalgebra found
+                fi;
+                # attempting to reduce the number of elements to be checked; this is critical for speed.
+                if category <> IsRightQuasigroup and Size( B ) < 4*Size( A ) then # A is maximal in B, removing everything in B
+                    out := Difference( out, Elements( B ) );
+                elif category = IsLoop then # additional removal methods for loops in the non-maximal case
+                    coprime_powers := [ 1 ];
+                    if IsPowerAssociative( Q ) then
+                        n := Order( x );
+                        coprime_powers := Filtered( [1..n], m -> Gcd(m,n) = 1 );
+                    fi;
+                    out := Difference( out, List( coprime_powers, m -> x^m ) );
+                    if HasLeftInverseProperty( Q ) then
+                        for m in coprime_powers do
+                            out := Difference( out, Elements(A)*(x^m) );
+                        od;
+                    fi;
+                    if HasRightInverseProperty( Q ) then
+                        for m in coprime_powers do
+                            out := Difference( out, (x^m)*Elements(A) );
+                        od;
+                    fi;
+                fi; # end of removal
+            od; # end of cycle for x
+        od; # end of cycle for A
+    until IsEmpty( newSubs );
+
+    # finishing
+    if not Q in allSubs then Add( allSubs, Q ); fi;
+    return allSubs;
+
+end );
+
+# AllSubrightquasigroups
+InstallMethod( AllSubrightquasigroups, "for right quasigroup",
+    [ IsRightQuasigroup ],
+    Q -> RQ_AllSubalgebras( Q )
+);
+
+# AllSubquasigroups
+InstallMethod( AllSubquasigroups, "for quasigroup",
+    [ IsQuasigroup ],
+    Q -> RQ_AllSubalgebras( Q )
+);
+
+# AllSubloops
+InstallMethod( AllSubloops, "for loop",
+    [ IsLoop ],
+    Q -> RQ_AllSubalgebras( Q )
+);
+
+# RIGHT COSETS AND RIGHT TRANSVERSALS
+# _____________________________________________________________________________
+
+# RightCosets
+# RightCosetsNC
+InstallOtherMethod( RightCosetsNC, "for two right quasigroups",
+    [ IsRightQuasigroup, IsRightQuasigroup ],
+function( Q, S )
+    local cosets, x;
+    if not IsSubrightquasigroup( Q, S ) then
+        Error( "RQ: <2> must be a subalgebra of <1>" );
+    fi;
+    if IsIndexBased( Q ) then
+        cosets := Set( Orbit( RightMultiplicationGroup( Q ), Elements( S ), OnSets ) );
+    else
+        cosets := [];
+        for x in Q do
+            AddSet( cosets, Set( Elements(S)*x ) );
+        od;
+    fi;
+    return cosets;
+end );
+
+# RightTransversal
+InstallOtherMethod( RightTransversal, "for two right quasigroups",
+    [ IsRightQuasigroup, IsRightQuasigroup ],
+function( Q, S )
+    return List( RightCosetsNC( Q, S ), x -> x[1] );
+end );
+
+# RIGHT QUASIGROUP BY GENERATORS
+# _____________________________________________________________________________
+
+# RQ_AlgebraByGenerators
+# This is the main constructor here.
+InstallMethod( RQ_AlgebraByGenerators, "for category/property and list",
+    [ IsObject, IsList ],
+function( category, gens )
+    # PROG: category is only used to check for arguments, not to construct the algebra
+    local F;
+    if IsEmpty( gens ) then
+        Error( "RQ: <1> must be a nonempty list of right quasigroup elements" );
+    fi;
+    if Length( gens ) = 1 and IsList( gens[ 1 ] ) then # generators given in a list, flatten
+        gens := gens[ 1 ];
+    fi;
+    if not ForAll( gens, IsRightQuasigroupElement ) then
+        Error( "RQ: <1> must consists of right quasigroup elements." );
+    fi;
+    F := FamilyObj( gens[1] );
+    if not ForAll( gens, x -> x in F!.set ) then
+        Error( "RQ: <1> must consists of elements in the same parent algebra") ;
+    fi;
+    if category in [ IsRack, IsQuandle ] and not category( F!.parent ) then
+        Error( "RQ: The generators do not lie in a rack/quandle. ");
+    elif not category = CategoryOfRightQuasigroup( F!.parent ) then
+        Error( "RQ: The algebra must be of the same type as the parent of the generators." );
+    fi;
+    return RQ_Subalgebra( F!.parent, gens ); # this is one of the reasons for the existence of F!.parent
+end );
+
+# RightQuasigroup
+# Quasigroup
+# Loop
+
+InstallGlobalFunction( RightQuasigroup,
+function( gens... )
+    # watch for how argument is passed down
+    return RQ_AlgebraByGenerators( IsRightQuasigroup, gens );
+end );
+
+InstallGlobalFunction(Quasigroup,
+function( gens... )
+    return RQ_AlgebraByGenerators( IsQuasigroup, gens );
+end );
+
+InstallGlobalFunction( Loop,
+function( gens... )
+    return RQ_AlgebraByGenerators( IsLoop, gens ); 
+end );
+
+# RightQuasigroupByGenerators
+# QuasigroupByGenerators
+# LoopByGenerators
+
+InstallGlobalFunction( RightQuasigroupByGenerators,
+function( gens... )
+    return RQ_AlgebraByGenerators( IsRightQuasigroup, gens ); 
+end );
+
+InstallGlobalFunction(QuasigroupByGenerators,
+function( gens... )
+    return RQ_AlgebraByGenerators( IsQuasigroup, gens );
+end );
+
+InstallGlobalFunction( LoopByGenerators,
+function( gens... )
+    return RQ_AlgebraByGenerators( IsLoop, gens ); 
+end );
+
+# RQ_AlgebraWithGenerators
+InstallMethod( RQ_AlgebraWithGenerators, "for category/property and list",
+    [ IsObject, IsList ],
+function( category, gens )
+    local Q;
+    Q := RQ_AlgebraByGenerators( category, gens );
+    if Length( gens ) = 1 and IsList( gens[ 1 ] ) then # generators given in a list, flatten
+        gens := gens[ 1 ];
+    fi;
+    SetGeneratorsOfMagma( Q, gens ); # this line is the purpose of "WithGenerators"
+    return Q;
+end );
+
+# RightQuasigroupWithGenerators
+# QuasigroupWithGenerators
+# LoopWithGenerators
+
+InstallGlobalFunction( RightQuasigroupWithGenerators,
+function( gens... )
+    return RQ_AlgebraWithGenerators( IsRightQuasigroup, gens );
+end );
+
+InstallGlobalFunction(QuasigroupWithGenerators,
+function( gens... )
+    return RQ_AlgebraWithGenerators( IsQuasigroup, gens );
+end );
+
+InstallGlobalFunction( LoopWithGenerators,
+function( gens... )
+    return RQ_AlgebraWithGenerators( IsLoop, gens ); 
+end );
+
+# INTERSECTIONS AND JOINS
+# _____________________________________________________________________________
+
+# Intersection2
+InstallOtherMethod( Intersection2, "for two right quasigroups",
+    [ IsRightQuasigroup, IsRightQuasigroup ],
+function( A, B )
+    local S;
+    if not ( Parent( A ) = Parent( B ) ) then
+        TryNextMethod();
+    fi;
+    S := Intersection( Elements( A ), Elements( B ) );
+    return RQ_Subalgebra( Parent( A ), S );
+end );
+
+InstallGlobalFunction( Join,
+function( arg... )
+    local Q;
+    if IsEmpty( arg ) then
+        TryNextMethod();
+    fi;
+    if Length( arg ) = 1 then # arguments given in a list, flatten
+        arg := arg[ 1 ];
+    fi;
+    if Length( arg ) = 1 then
+        return arg[1];
+    fi;
+    # the list has at least two items
+    Q := Join2( arg[1], arg[2] ); # mimicking the funcionality for Intersection and Union
+    if Length( arg ) = 2 then
+        return Q;
+    fi;
+    return Join( Concatenation( [ Q ], arg{[3..Length(arg)]} ) ); #recursive
+end);
+
+InstallMethod( Join2, "for two right quasigroups",
+    [ IsRightQuasigroup, IsRightQuasigroup ],
+function( A, B )
+    local S;
+    if not ( Parent( A ) = Parent( B ) ) then
+        TryNextMethod();
+    fi;
+    S := Union( GeneratorsOfMagma( A ), GeneratorsOfMagma( B ) );
+    return RQ_Subalgebra( Parent( A ), S );
+end );
+
+# CONGRUENCES
+# _____________________________________________________________________________
+
+InstallGlobalFunction( RQ_IsAlgebraCongruence,
+function( category, C, reportErrors )
+    # PROG: Works correctly only for finite algebras.
+    local Q, AreEquiv, classes, ok;
+    Q := Source( C );
+    if not category( Q ) then   # note the usage of category as a filter
+        return RQ_OptionalError( reportErrors, "RQ: Types of algebra and congruence do not agree." );
+    fi;
+    AreEquiv := function( x, y ) # returns true if x and y are equivalent modulo E
+        return y in ImagesElm( C, x );
+    end;
+    # for a (right) quasigroup congruence on a finite (right) quasigroup, it is enough to check that
+    # for all x and for all u~v we have x*u~x*v and u*x~v*x
+    # we can certainly also assume that u is different from v and the tuple (u,v) is ordered
+    classes := List( EquivalenceClasses( C ), c -> Elements( c ));
+    ok := ForAll( Q, x -> ForAll( classes, c ->
+        ForAll( Combinations(c,2), t -> AreEquiv(x*t[1],x*t[2]) and AreEquiv(t[1]*x,t[2]*x) )
+    ) );
+    if not ok then
+        return RQ_OptionalError( reportErrors, "RQ: <1> is not a congruence." );
+    fi;
+    return true;
+end );
+
+# IsRightQuasigroupCongruence
+# IsQuasigroupCongruence
+# IsLoopCongruence
+
+InstallMethod( IsRightQuasigroupCongruence, "for equivalence relation on right quasigroup",
+    [ IsEquivalenceRelation ],
+function( C ) 
+    return RQ_IsAlgebraCongruence( IsRightQuasigroup, C, false );
+end );
+
+InstallMethod( IsQuasigroupCongruence, "for equivalence relation on quasigroup",
+    [ IsEquivalenceRelation ],
+function( C )
+    return RQ_IsAlgebraCongruence( IsQuasigroup, C, false );
+end );
+
+InstallMethod( IsLoopCongruence, "for equivalence relation on loop",
+    [ IsEquivalenceRelation ],
+function( C )
+    return RQ_IsAlgebraCongruence( IsLoop, C, false );
+end );
+
+# RQ_AlgebraCongruenceByPartition 
+# this is the main method for generating congruences
+# REVISIT: For loops we could take advantage of NormalClosure, which is faster
+
+InstallMethod( RQ_AlgebraCongruenceByPartition, "for right quasigroup and partition",
+    [ IsRightQuasigroup, IsList ],
+function( Q, parts )
+    local category, n, classes, partition, merge2Parts, mergeParts, done, G, indQ,
+        f, x, y, old_partition, sizes, biggest, blocks, B;
+    category := CategoryOfRightQuasigroup( Q );
+    # checking arguments
+    if not ForAll( parts, x -> IsList( x ) and IsSubset( Q, x ) ) then
+        Error( "RQ: <2> must be a list of subsets of <1>.");
+    fi;
+    # convert all to indices 
+    parts := List( parts, ParentInd );
+    n := Size( Parent( Q ) );
+    classes := EquivalenceClasses( EquivalenceRelationByPartition( Domain([1..n]), parts ) );
+    partition := List( [1..n], i -> First( [1..n], j -> i in classes[j] ) ); # partition[i]=j means that i is in part j
+    merge2Parts := function( x, y ) # merges the 2 parts of partition that contain x and y
+        local a, b, i;
+        if partition[x] = partition[y] then return true; fi; # nothing to merge
+        a := Minimum(partition[x],partition[y]);
+        b := Maximum(partition[x],partition[y]);
+        for i in [1..n] do
+            if partition[ i ] = b then
+                partition[ i ] := a;
+            elif partition[ i ] > b then # relabeling so that there are no gaps in indices
+                partition[ i ] := partition[ i ] - 1;
+            fi;
+        od;
+        return true;
+    end;
+    mergeParts := function( ls ) # merges parts of partition so that all elements of <ls> are in the same part
+        local x, y;
+        if IsEmpty( ls ) then return true; fi;
+        x := ls[1];
+        for y in ls{[2..Length(ls)]} do
+            merge2Parts(x,y);
+        od;
+        return true;
+    end;
+    # prepare variables
+    done := false;
+    if category = IsRightQuasigroup then 
+        G := RightMultiplicationGroup( Q );
+    else
+        G := MultiplicationGroup( Q );
+    fi;
+    indQ := ParentInd( Q );
+    # main loop
+    while not done do
+        old_partition := ShallowCopy( partition );
+        # find biggest part
+        sizes := List( [1..n], i -> Length( Positions( partition, i ) ) );
+        biggest := Position( sizes, Maximum( sizes ) );
+        # find blocks of G so that a block will contain the biggest part
+        blocks := Blocks( G, [1..n], Filtered([1..n], i -> partition[i]=biggest) );
+        # merge parts of partition across blocks
+        for B in blocks do 
+            mergeParts( B );
+        od;
+        if category = IsRightQuasigroup then # for right quasigroups, merge parts by left translations
+            for f in LeftSection( Q ) do # left section consists of transformations only
+                for x in indQ do for y in indQ do
+                    if x<y and partition[x] = partition[y] then # x and y are related
+                        merge2Parts( x^f, y^f );  # thus relate f(x) and f(y)
+                    fi;
+                od; od;
+            od;
+        fi;
+        # recalculating the equivalence relation and partition
+        parts := List([1..Maximum(partition)], i -> Filtered( [1..n], j -> partition[j]=i ) );
+        classes := EquivalenceClasses( EquivalenceRelationByPartition( Domain([1..n]), parts ) );
+        partition := List( [1..n], i -> First( [1..n], j -> i in classes[j] ) );
+        done := partition = old_partition;
+    od;
+    # returning the congruence
+    parts := Filtered( parts, A -> IsSubset( indQ, A ) ); # keep only the parts that form Q
+    parts := List( parts, part -> List( part, i -> Q.(i) ) ); # convert to elements
+    return EquivalenceRelationByPartition( Q, parts );
+end );
+
+# RightQuasigroupCongruenceByPartition
+# QuasigroupCongruenceByPartition
+# LoopCongruenceByPartition
+
+InstallMethod( RightQuasigroupCongruenceByPartition, "for right quasigroup and partition",
+    [ IsRightQuasigroup, IsList ],
+function( Q, parts )
+    return RQ_AlgebraCongruenceByPartition( Q, parts );
+end );
+
+InstallMethod( QuasigroupCongruenceByPartition, "for quasigroup and partition",
+    [ IsQuasigroup, IsList ],
+function( Q, parts )
+    return RQ_AlgebraCongruenceByPartition( Q, parts );
+end );
+
+InstallMethod( LoopCongruenceByPartition, "for loop and partition",
+    [ IsLoop, IsList ],
+function( Q, parts )
+    return RQ_AlgebraCongruenceByPartition( Q, parts );
+end );
+
+# RQ_AlgebraCongruenceByPairs
+
+InstallMethod( RQ_AlgebraCongruenceByPairs, "for right quasigroup and list of pairs",
+    [ IsRightQuasigroup, IsList ],
+function( Q, gens )
+    local classes;
+    # checking parameters
+    if not ForAll( gens, x -> IsList( x ) and Length( x ) = 2 and x[1] in Q and x[2] in Q ) then
+        Error( "RQ: <2> must be a list of pairs of elements of <1>.");
+    fi;
+    classes := EquivalenceClasses( EquivalenceRelationByPairs( Q, gens ) );
+    return RQ_AlgebraCongruenceByPartition( Q, List( classes, Elements ) );
+end );
+
+# RightQuasigroupCongruenceByPairs
+# QuasigroupCongruenceByPairs
+# LoopCongruenceByPairs
+
+InstallMethod( RightQuasigroupCongruenceByPairs, "for right quasigroup and list of pairs",
+    [ IsRightQuasigroup, IsList ],
+function( Q, pairs )
+    return RQ_AlgebraCongruenceByPairs( Q, pairs );
+end );
+ 
+InstallMethod( QuasigroupCongruenceByPairs, "for quasigroup and list of pairs",
+    [ IsQuasigroup, IsList ],
+function( Q, pairs )
+    return RQ_AlgebraCongruenceByPairs( Q, pairs );
+end );
+
+InstallMethod( LoopCongruenceByPairs, "for loop and list of pairs",
+    [ IsLoop, IsList ],
+function( Q, pairs )
+    return RQ_AlgebraCongruenceByPairs( Q, pairs );
+end );  
+ 
+# AllRightQuasigroupCongruences
+
+InstallMethod( AllRightQuasigroupCongruences, "for right quasigroup with transitive right multiplication group",
+    [ IsRightQuasigroup ],
+function( Q )
+    # PROG: Only implemented for finite right quasigroups with transitive right multiplication groups.
+	local G, blocks, firstQ, T, systems, good_systems, S, good, x, B, C, D;
+    G := RightMultiplicationGroup( Q ); 
+    if not IsTransitive( G, ParentInd( Q ) ) then
+        Error( "RQ: No method for right quasigroups with non-transitive right multiplication groups.");
+    fi;
+	blocks := AllBlocks( G );
+	# add trivial blocks
+    firstQ := ParentInd( Elements( Q )[ 1 ] ); # the smallest index of an element in Q
+	blocks := Concatenation( [ [firstQ] ], blocks );
+	if Size( Q ) > 1 then
+		blocks := Concatenation( blocks, [ ParentInd( Q ) ] );
+	fi;
+	# complete blocks into systems
+	T := RightTransversal( G, Stabilizer(G, firstQ ) );
+	systems := List( blocks, B -> Set( T, f -> Set( B, i -> i^f ) ) );
+	# convert to elements
+	systems := List( systems, S -> List( S, B -> List( B, i -> Q.(i) ) ) );
+	# verify that these are preserved by multiplication on the left, too
+    # MATH: multiplying on the left might map a block onto a proper subset of another block
+	good_systems := [];
+	for S in systems do
+		good := true;
+		for x in Q do
+			for B in S do
+				C := Set( x*B );
+                D := First( S, block -> C[1] in block );
+                if not IsSubset( D, C ) then
+				    good := false; break;
+				fi;
+			od;
+			if not good then
+                break;
+            fi;
+		od;
+		if good then
+			Add( good_systems, S );
+		fi;
+	od;
+	# return GAP congruences
+	return List( good_systems, S -> EquivalenceRelationByPartition( Q, S ) );
+end );
+
+# AllQuasigroupCongruences
+# AllLoopCongruences
+
+InstallMethod( AllQuasigroupCongruences, "for quasigroup",
+    [ IsQuasigroup ],
+function( Q )
+	local G, blocks, firstQ, T, systems;
+	G := MultiplicationGroup( Q ); # acts transitively, no need to check
+	blocks := AllBlocks( G );
+	# add trivial blocks
+    firstQ := ParentInd( Elements( Q )[ 1 ] ); # the smallest index of an element in Q
+	blocks := Concatenation( [ [firstQ] ], blocks );
+	if Size( Q ) > 1 then
+		blocks := Concatenation( blocks, [ ParentInd( Q ) ] );
+	fi;
+    # complete blocks into systems
+    T := RightSection( Q );
+    systems := List( blocks, B -> Set( T, f -> Set( B, i -> i^f ) ) );
+	# convert to elements
+	systems := List( systems, S -> List( S, B -> List( B, i -> Q.(i) ) ) );
+	# return GAP congruences
+	return List( systems, S -> EquivalenceRelationByPartition( Q, S ) );
+end );
+
+InstallMethod( AllLoopCongruences, "for loop",
+    [ IsLoop ],
+    Q -> AllQuasigroupCongruences( Q )
+);
+
+# NORMALITY AND SIMPLICITY
+# _____________________________________________________________________________
+
+# IsNormalOp
+InstallOtherMethod( IsNormalOp, "for loop and subloop",  
+    [ IsLoop, IsLoop ], 
+function( Q, S )
+    local pos;
+    if not IsSubloop( Q, S ) then
+        Error( "RQ: <2> must be a subloop of <1>." );
+    fi;
+    pos := ParentInd( S );
+    return ForAll( GeneratorsOfGroup( InnerMappingGroup( Q ) ), g -> pos = OnSets( pos, g ) );  
+    # PROG: The above would not work if left translations of Q were permutations of [1..Size(Q)]; we would need indexes of S relative to Q.
+end );
+
+# NormalClosureOp
+InstallOtherMethod( NormalClosureOp, "for loop and subloop",
+    [ IsLoop, IsLoop ],
+function( Q, S )
+    if not IsSubloop( Q, S ) then
+        Error( "RQ: <2> must be a subloop of <1>." );
+    fi;
+    return NormalClosure( Q, Elements( S ) );
+end );
+
+# NormalClosure
+InstallOtherMethod( NormalClosure, "for loop and collection of its elements",
+    [ IsLoop, IsCollection ],
+function( Q, gens )
+    local transl_of_gens, nc_mltgr, subloop_indices;
+    if ForAny( gens, x -> not x in Q ) then
+        Error( "RQ: <2> must be a subset of <1>." );
+    fi;
+    transl_of_gens := List( gens, x -> LeftTranslation( Q, x ) );
+    nc_mltgr := Group( Union( GeneratorsOfGroup( InnerMappingGroup( Q ) ), transl_of_gens ) );
+    subloop_indices :=  Orbit( nc_mltgr, ParentInd( One(Q) ) );
+    return Subloop( Q, List( subloop_indices, i -> Q.(i) ) );
+    # PROG: this seems to be faster than adding 1 to gens and calculating Blocks( MultiplicationGroup(Q), [1..Size(Parent(Q))], gens )[ 1 ]
+end );
+
+# NaturalHomomorphismByNormalSubloop 
+InstallMethod( NaturalHomomorphismByNormalSubloop, "for two loops",
+    [ IsLoop, IsLoop ],
+function( Q, N )
+    local QmodN, cosets, in_coset, map;
+    QmodN := FactorLoop( Q, N, true ); # index based factor loop here
+    cosets := Set( Orbit( RightMultiplicationGroup( Q ), Elements( N ), OnSets ) ); # same cosets as in the constructor
+    in_coset := function( x )
+        return First( [1..Size( Q )/Size( N )], i -> x in cosets[ i ] );
+    end;
+    map := function( x )
+        return QmodN[ in_coset( x ) ];
+    end;
+    return MappingByFunction( Q, QmodN, map );
+end );
+
+# AllNormalSubloops
+InstallMethod( AllNormalSubloops, "for loop",
+    [ IsLoop ],
+function( Q )
+	local G, blocks, new_blocks, B, f, subs;
+	G := MultiplicationGroup( Q ); # acts transitively on the points it moves, namely on ParentInd( Q )
+	blocks := AllBlocks( G ); # returns a representative from each nontrivial block system
+	# adding trivial representatives
+	blocks := Concatenation( [[1]], blocks ); # it does not matter that 1 is not necessarily the neutral element
+	if Size( Q ) > 1 then
+		blocks := Concatenation( blocks, [ ParentInd( Q ) ] );
+	fi;
+	# making sure that blocks contain the neutral element
+	new_blocks := [];
+	for B in blocks do
+		f := Inverse( RightTranslation( Q, Q.(B[1]) ) ); # sends B[1] to the index of the neutral element
+		Add( new_blocks, List( B, i -> i^f ) );
+	od;
+	# creating subloops
+	subs := List( new_blocks, B -> List(B, i -> Q.(i) ) );
+	return List( subs, S -> Subloop( Q, S ) );
+end );
+
+# IsSimpleRightQuasigroup
+InstallMethod( IsSimpleRightQuasigroup, "for right quasigroup",
+    [ IsRightQuasigroup ],
+function( Q )
+    local G, orbits, reps, x, C;
+    if Size( Q ) in [1,2] then # always simple
+        return true;
+    fi;
+    # size > 2
+    if not IsTransitive( RightMultiplicationGroup( Q ), ParentInd( Q ) ) then
+        return false; # the orbits (or some unions of orbits) form a nontrivial right quasigroup congruence
+    fi;
+    # transitive right multiplication group
+    # return Length( AllRightQuasigroupCongruences( Q ) ) = 2; # this is not bad but the following might be faster
+    G := RightMultiplicationGroup( Q );
+    orbits := OrbitsDomain( G, Tuples(ParentInd(Q),2), OnPairs );;  # action of G on QxQ
+    # MATH: If (x,y), (u,v) are in the same orbit, they generate the same congruence since right translations are invertible.
+    reps := List( orbits, orbit -> orbit[1] );
+    for x in reps do
+	    C := RightQuasigroupCongruenceByPairs( Q, [ [ Q.(x[1]), Q.(x[2]) ] ] ); # congruence generated by (x[1],x[2])
+	    if Length( EquivalenceClasses( C ) ) > 1 then
+            return false;
+        fi;
+    od;
+    return true;
+end );
+
+# IsSimpleQuasigroup
+InstallMethod( IsSimpleQuasigroup, "for quasigroup",
+    [ IsQuasigroup ],
+function( Q )
+    return IsPrimitive( MultiplicationGroup( Q ) );
+end );
+
+# IsSimpleLoop
+InstallMethod( IsSimpleLoop, "for loop",
+    [ IsLoop ],
+function( Q )
+    return IsPrimitive( MultiplicationGroup( Q ) );
+end );
+
+# IsSimple
+# PROG: Note the ranking so that IsSimpleLoop rather than IsSimpleQuasigroup is called for loops, etc.
+InstallOtherMethod( IsSimple, "for right quasigroup", [ IsRightQuasigroup ], 0, IsSimpleRightQuasigroup );
+InstallOtherMethod( IsSimple, "for quasigroup", [ IsQuasigroup ], 1, IsSimpleQuasigroup );
+InstallOtherMethod( IsSimple, "for loop", [ IsLoop ], 2, IsSimpleLoop );
+
+# FACTOR ALGEBRAS
+# _____________________________________________________________________________
+
+# RQ_FactorAlgebra
+
+InstallMethod( RQ_FactorAlgebra, "for equivalence relation and record",
+    [ IsEquivalenceRelation, IsRecord ],
+function( C, style )
+    local category, classes, ct, factorQ, F;
+    RQ_CompleteConstructorStyle( style );
+    if style.checkArguments then 
+        RQ_IsAlgebraCongruence( category, C, true );
+    fi;
+    category := CategoryOfRightQuasigroup( Source( C ) );
+    classes := EquivalenceClasses( C );
+    if style.indexBased then
+        ct := List( classes, A -> List( classes, B -> EquivalenceClassOfElement(C,Elements(A)[1]*Elements(B)[1]) ) );
+        factorQ := RQ_AlgebraByCayleyTable( category, ct, style );
+    else # not index based
+        factorQ := RQ_AlgebraShell( category, classes, rec( indexBased := false ) );
+        F := FamilyObj( factorQ.1 );
+        F!.mult := function( A, B )
+            return First( F!.uSet, class -> Elements(A)[1]*Elements(B)[1] in class ); # since the equivalence relation is not stored
+        end;
+        RQ_AddDefaultOperations( factorQ );
+    fi;
+    RQ_InheritProperties( Source( C ), factorQ );
+    return factorQ;
+end );
+
+# FactorRightQuasigroup
+InstallMethod( FactorRightQuasigroup, "for equivalence relation",
+    [ IsEquivalenceRelation ],
+    C -> RQ_FactorAlgebra( C, RQ_defaultConstructorStyle )
+);
+
+InstallOtherMethod( FactorRightQuasigroup, "for equivalence relation and record",
+    [ IsEquivalenceRelation, IsRecord ],
+function( C, style )
+    return RQ_FactorAlgebra( C, style );
+end );
+
+# FactorQuasigroup
+InstallMethod( FactorQuasigroup, "for equivalence relation",
+    [ IsEquivalenceRelation ],
+    C -> RQ_FactorAlgebra( C, RQ_defaultConstructorStyle )
+);
+
+InstallOtherMethod( FactorQuasigroup, "for equivalence relation and record",
+    [ IsEquivalenceRelation, IsRecord ],
+function( C, style )
+    return RQ_FactorAlgebra( C, style );
+end );
+
+# FactorLoop
+InstallMethod( FactorLoop, "for equivalence relation",
+    [ IsEquivalenceRelation ],
+    C -> RQ_FactorAlgebra( C, RQ_defaultConstructorStyle )
+);
+
+InstallOtherMethod( FactorLoop, "for equivalence relation and record",
+    [ IsEquivalenceRelation, IsRecord ],
+function( C, style )
+    return RQ_FactorAlgebra( C, style );
+end );
+
+InstallOtherMethod( FactorLoop, "for loop and normal subloop",
+    [ IsLoop, IsLoop ],
+function( Q, N )
+    return FactorLoop( Q, N, RQ_defaultConstructorStyle );
+end );
+
+InstallOtherMethod( FactorLoop, "for loop, normal subloop and record",
+    [ IsLoop, IsLoop, IsRecord ],
+function( Q, N, style )
+    local cosets, ct, factorQ, F;
+    RQ_CompleteConstructorStyle( style );
+    if style.checkArguments and not ( IsSubloop( Q, N ) and IsNormal( Q, N ) ) then
+        Error("RQ: <2> must be a normal subloop of <1>.");
+    fi;
+    cosets := RightCosets( Q, N );
+    if style.indexBased then
+        # REVISIT: We are converting to [1..n]. Do we want to keep a different underlying set?
+        ct :=  List( cosets, x -> List( cosets, y -> First( [1..Length(cosets)], i->x[1]*y[1] in cosets[i] ) ) );
+        factorQ := RQ_AlgebraByCayleyTable( IsLoop, ct, ConstructorStyle( true, false ) );
+    else # not index based
+        factorQ := RQ_AlgebraShell( IsLoop, cosets, rec( indexBased := false ) );
+        F := FamilyObj( factorQ.1 );
+        F!.cosets := ShallowCopy( cosets );
+        F!.mult := function( x, y ) return First( F!.cosets, c -> x[1]*y[1] in c ); end;
+        RQ_AddDefaultOperations( factorQ );
+    fi;
+    RQ_InheritProperties( Q, factorQ );
+    return factorQ;
+end );
+
+# \/ 
+InstallOtherMethod( \/, "for right quasigroup and equivalence relation",
+    ReturnTrue, # families of arguments are not the same hence default IsIdenticalObj cannot be used 
+    [ IsRightQuasigroup, IsEquivalenceRelation ], 0,
+function( Q, C )
+    # there seems to be no way to have optional arguments here, note usage of inheritance and defaults
+    return RQ_FactorAlgebra( C, ConstructorStyle( IsIndexBased( Q ), RQ_defaultConstructorStyle.checkArguments ) );
+end );
+
+InstallOtherMethod( \/, "for loop and its normal subloop",
+    IsIdenticalObj,
+    [ IsLoop, IsLoop ], 0,
+function( Q, N )
+    return FactorLoop( Q, N, ConstructorStyle( IsIndexBased( Q ), RQ_defaultConstructorStyle.checkArguments ) );
+end );

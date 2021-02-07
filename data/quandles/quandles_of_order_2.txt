@@ -1,0 +1,12 @@
+# quandles_of_order_2.txt
+
+# groups
+
+RQ_quandle_groups[2] := [ [ () ] ];
+
+# quandles
+
+RQ_quandle_ids[2] := [[1]];
+
+# number of quandles in this file = 1
+
