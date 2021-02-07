@@ -4,7 +4,12 @@
 <Chapter Label="Chapter_Properties_of_right_quasigroups_quasigroups_and_loops">
 <Heading>Properties of right quasigroups, quasigroups and loops</Heading>
 
-<Section Label="Chapter_Properties_of_right_quasigroups_quasigroups_and_loops_Section_Parser">
+ <P/>In this chapter we present functions that check various properties of right quasigroups,
+ quasigroups and loops. Any identity of right quasigroups, quasigroups and loops can be verified
+ or refuted with the custom-built parser. Specific (and typically faster) methods are provided
+ for many identities and properties of right quasigroups, and we recommend using them,
+ rather than the generic parser method, whenever possible.
+<Section Label="Section_Parser">
 <Heading>Parser</Heading>
 
  <P/>&RightQuasigroups; contains a simple, custom-built parser for
@@ -17,11 +22,13 @@
  <Item>the left division operation is denoted by <Code>|</Code> (since <Code>\</Code> behaves badly in &GAP; strings)
       and is only allowed in quasigroup and loop terms,</Item>
  <Item>the neutral element is denoted by <Code>1</Code> and is only allowed in loop terms,</Item>
- <Item>parentheses and brackets <Code>(</Code>, <Code>[</Code>, <Code>{</Code>, <Code>)</Code>, <Code>]</Code>, <Code>}</Code> are allowed and they are all treated as <Code>(</Code> and <Code>)</Code>, respectively,</Item>
+ <Item>parentheses and brackets <Code>(</Code>, <Code>[</Code>, <Code>{</Code> and  <Code>)</Code>, <Code>]</Code>, <Code>}</Code> are allowed and they are all treated as <Code>(</Code> and <Code>)</Code>, respectively,</Item>
+ <Item>the three binary operations have the same priority and if terms are not fully parenthesized, the term is parsed from right to left,
+ (e.g., <Code>x*y\z</Code> is parsed as <Code>(x*y)\z</Code>) in accordance with &GAP; conventions for parsing of products,</Item>
  <Item>spaces are allowed and ignorred,</Item>
  <Item>no other characters are allowed.</Item>
  </List>
-<ManSection Label="AutoDoc_generated_group20">
+<ManSection Label="AutoDoc_generated_group39">
 <Heading>Building terms from strings</Heading>
   <Oper Arg="s" Name="RightQuasigroupTermFromString" Label="for IsString"/>
   <Oper Arg="s" Name="QuasigroupTermFromString" Label="for IsString"/>
@@ -41,8 +48,8 @@
  <P/>For the convenience of the user, we support checking of identities
  in right quasigroups, quasigroups and loops by the custom-built parser.
  Despite some effort to make the checking fast, it is about half as fast
- as the direct check using &GAP; code.
-<ManSection Label="AutoDoc_generated_group21">
+ as the direct check using &GAP; code. 
+<ManSection Label="AutoDoc_generated_group40">
 <Heading>Verifying identities</Heading>
   <Oper Arg="Q, s" Name="RightQuasigroupSatisfiesIdentity" Label="for IsRightQuasigroup, IsString"/>
   <Oper Arg="Q, s" Name="QuasigroupSatisfiesIdentity" Label="for IsQuasigroup, IsString"/>
@@ -65,11 +72,13 @@ gap> LoopSatisfiesIdentity( Q, "x*x=1" );
 [ [ 'x', lf1 ] ]
 gap> RightQuasigroupTermFromString("x*(y/z)");
 [ 24, '*', [ 25, '/', 26 ] ]
+gap> QuasigroupTermFromString("(a|b)/(c*d)"); # note the symbol | for left division
+[ [ 1, '|', 2 ], '/', [ 3, '*', 5 ] ]
 ]]></Example>
 
 
-<Subsection Label="Chapter_Properties_of_right_quasigroups_quasigroups_and_loops_Section_Parser_Subsection_How_the_parser_works">
-<Heading>*How the parser works</Heading>
+<Subsection Label="Chapter_Properties_of_right_quasigroups_quasigroups_and_loops_Section_Parser_Subsection_How_evaluation_of_identities_with_the_parser_works">
+<Heading>*How evaluation of identities with the parser works</Heading>
 
 <P/>To speed up evaluation of identities, the parser produces terms in which 
  variables have been replaced by their positions in the global variable string
@@ -106,7 +115,7 @@ gap> RightQuasigroupTermFromString("x*(y/z)");
  </List>
  <P/>Some of these methods for magmas are already available in &GAP;, e.g., <Code>IsCommutative</Code>. In such a case,
  we provide a new method for right quasigroups that takes advantage of right translations as permutations.
-<ManSection Label="AutoDoc_generated_group28">
+<ManSection Label="AutoDoc_generated_group48">
 <Heading>Testing properties of magma and right quasigroups</Heading>
   <Prop Arg="Q" Name="Is3PowerAssociative" Label="for IsMagma"/>
   <Prop Arg="Q" Name="IsAlternative" Label="for IsMagma"/>
@@ -216,7 +225,7 @@ gap> RightQuasigroupTermFromString("x*(y/z)");
 </ManSection>
 
 
-<ManSection Label="AutoDoc_generated_group29">
+<ManSection Label="AutoDoc_generated_group49">
 <Heading>Right and left inverse properties</Heading>
   <Prop Arg="Q" Name="HasRightInverseProperty" Label="for IsLoop"/>
   <Prop Arg="Q" Name="HasLeftInverseProperty" Label="for IsLoop"/>
@@ -247,7 +256,7 @@ A loop <Math>Q</Math> has the <Index>weak inverse property</Index><Emph>weak inv
 </ManSection>
 
 
-<ManSection Label="AutoDoc_generated_group30">
+<ManSection Label="AutoDoc_generated_group50">
 <Heading>Automorphic and antiautomorphic inverse properties</Heading>
   <Prop Arg="Q" Name="HasAutomorphicInverseProperty" Label="for IsLoop"/>
   <Prop Arg="Q" Name="HasAntiautomorphicInverseProperty" Label="for IsLoop"/>
@@ -294,7 +303,7 @@ A loop <Math>Q</Math> has the <Index>automorphic inverse property</Index><Emph>a
  <Item><Index>right Bol loops</Index><Emph>right Bol loops</Emph>: <Math>x((yz)y)=((xy)z)y</Math></Item>
  <Item><Index>right nuclear square loops</Index><Emph>right nuclear square loops</Emph>: <Math>x(y(zz))=(xy)(zz)</Math></Item>
  </List>
-<ManSection Label="AutoDoc_generated_group31">
+<ManSection Label="AutoDoc_generated_group51">
 <Heading>Testing for loops of Bol-Moufang type</Heading>
   <Prop Arg="Q" Name="IsCLoop" Label="for IsLoop"/>
   <Prop Arg="Q" Name="IsExtraLoop" Label="for IsLoop"/>
@@ -337,7 +346,7 @@ A loop <Math>Q</Math> has the <Index>automorphic inverse property</Index><Emph>a
  <Math>(xy^n)y^m = xy^{n+m}</Math> (resp. <Math>x^n(x^my) = x^{n+m}y</Math>) holds for all <Math>x,y\in Q</Math> and all integers <Math>n</Math>, <Math>m</Math>.
  A loop is <Index>power alternative loop</Index><Emph>power alternative</Emph> if it is both right and left power
  alternative.
-<ManSection Label="AutoDoc_generated_group32">
+<ManSection Label="AutoDoc_generated_group52">
 <Heading>Testing for power alternative loops</Heading>
   <Prop Arg="Q" Name="IsRightPowerAlternative" Label="for IsLoop"/>
   <Prop Arg="Q" Name="IsLeftPowerAlternative" Label="for IsLoop"/>
@@ -362,7 +371,7 @@ A loop <Math>Q</Math> has the <Index>automorphic inverse property</Index><Emph>a
  (aka <Emph>LCC</Emph>) if for all <Math>x,y\in Q</Math> the permutation <Math>L_x^{-1}L_yL_x</Math> is a left translation.
  A loop <Math>Q</Math> is <Index>conjugacy closed loop</Index><Emph>conjugacy closed</Emph> (aka <Emph>CC</Emph>)
  if it is both RCC and LCC.
-<ManSection Label="AutoDoc_generated_group33">
+<ManSection Label="AutoDoc_generated_group53">
 <Heading>Testing for conjugacy closed loops</Heading>
   <Prop Arg="Q" Name="IsRightConjugacyClosedLoop" Label="for IsLoop"/>
   <Prop Arg="Q" Name="IsLeftConjugacyClosedLoop" Label="for IsLoop"/>
@@ -414,7 +423,7 @@ The synonyms <Code>IsRCCLoop</Code>, <Code>IsLCCLoop</Code> and <Code>IsCCLoop</
 </ManSection>
 
 
-<ManSection Label="AutoDoc_generated_group34">
+<ManSection Label="AutoDoc_generated_group54">
 <Heading>Bruck loops</Heading>
   <Prop Arg="Q" Name="IsRightBruckLoop" Label="for IsLoop"/>
   <Prop Arg="Q" Name="IsLeftBruckLoop" Label="for IsLoop"/>
@@ -429,7 +438,7 @@ The synonyms <Code>IsRightKLoop</Code> and <Code>IsLeftKLoop</Code> are also sup
 </ManSection>
 
 
-<ManSection Label="AutoDoc_generated_group35">
+<ManSection Label="AutoDoc_generated_group55">
 <Heading>Automorphic loops</Heading>
   <Prop Arg="Q" Name="IsRightAutomorphicLoop" Label="for IsLoop"/>
   <Prop Arg="Q" Name="IsMiddleAutomorphicLoop" Label="for IsLoop"/>
@@ -455,7 +464,5 @@ The synonyms <Code>IsRightALoop</Code>, <Code>IsMiddleALoop</Code>, <Code>IsLeft
 </Section>
 
 
- <P/>In this chapter we present functions that check various properties of right quasigroups,
- quasigroups and loops. WHY IS THIS MISPLACED?
 </Chapter>
 

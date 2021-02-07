@@ -11,7 +11,7 @@
 #! is a **group with triality**<Index>group with triality</Index> if $[g, \sigma] [g,\sigma]^\rho [g,\sigma]^{\rho^2} =1$
 #! holds for all $g \in G$. It is known that one can associate a group with triality $(G,\rho,\sigma)$ in a canonical way
 #! with a Moufang loop $Q$. See
-# <Cite Key="NaVo2003"/>
+#! <Cite Key="NaVo2003"/>
 #! for more details.
 
 #! <P/>For any Moufang loop $Q$, we can calculate the triality group as a permutation group acting on $3|Q|$ points.

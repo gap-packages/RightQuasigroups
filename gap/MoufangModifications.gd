@@ -8,14 +8,14 @@
 #! @Section Quarter modifications of Moufang loops
 
 #! <P/>Dr&#225;pal 
-# <Cite Key="DrapalCD"/>
+#! <Cite Key="DrapalCD"/>
 #! described two prominent families of extensions of Moufang loops. The common feature of these extensions is that
 #! they modify multiplication tables of groups or other Moufang loops in exactly one quarter of the mutliplication table.
 
 #! It turns out that these extensions suffice to obtain all nonassociative Moufang loops of order at most 64 if one starts with so-called Chein loops.
 #! We call the two constructions **Moufang modifications**<Index Subkey="Moufang">modification</Index>. The library of Moufang loops 
 #! used to be based on Moufang modifications. See
-# <Cite Key="DrVo"/>
+#! <Cite Key="DrVo"/>
 #! for details.
 
 #! @Arguments G[, constructorStyle]
