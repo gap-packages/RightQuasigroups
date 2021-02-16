@@ -4,10 +4,10 @@
 
 #! @Chapter Properties of right quasigroups, quasigroups and loops
 
-# PROPERTIES OF RIGHT QUASIGROUPS
+# PROPERTIES OF MAGMAS
 # _____________________________________________________________________________
 
-#! @Section Properties of magmas and right quasigroups
+#! @Section Properties of magmas
 
 #! <P/>The following list summarizes properties of magmas tested in &RightQuasigroups;. All identities 
 #! are universally quantified with respect to all variables.
@@ -70,6 +70,21 @@ DeclareProperty( "IsSelfDistributive", IsMagma );
 DeclareProperty( "IsUnipotent", IsMagma ); # xx=yy
 
 #! @EndGroup
+
+# PROPERTIES OF RIGHT QUASIGROUPS
+# _____________________________________________________________________________
+
+#! @Section Properties of right quasigroups
+
+#! @Arguments Q
+#! @Returns `true` if <Arg>Q</Arg> is a faithful right quasigroup, that is, a right quasigroup
+#! for which the mapping $x\mapsto R_x$ is injective.
+DeclareProperty( "IsFaithfulRightQuasigroup", IsRightQuasigroup );
+
+#! @Arguments Q
+#! @Returns `true` if <Arg>Q</Arg> is a projection right quasigroup, that is, a right quasigroup
+#! satisfying the identity $xy=x$.
+DeclareProperty( "IsProjectionRightQuasigroup", IsRightQuasigroup );
 
 # PROPERTIES OF QUASIGROUPS
 # _____________________________________________________________________________
@@ -390,11 +405,35 @@ DeclareSynonymAttr( "IsALoop", IsAutomorphicLoop );
 ##  IMPLICATIONS for InstallTrueMethod
 ##  -------------------------------------------------------------------------
 
-# implies
-InstallTrueMethod( IsExtraLoop, IsAssociative and IsLoop );
-InstallTrueMethod( HasTwosidedInverses, IsPowerAssociative and IsLoop );
+# for magmas/right quasigroups
+InstallTrueMethod( IsLeftAlternative, IsAlternative );
+InstallTrueMethod( IsRightAlternative, IsAlternative );
+InstallTrueMethod( IsRightAlternative, IsLeftAlternative and IsCommutative );
+InstallTrueMethod( IsLeftAlternative, IsRightAlternative and IsCommutative );
+InstallTrueMethod( IsAlternative, IsLeftAlternative and IsRightAlternative );
+InstallTrueMethod( IsLeftSelfDistributive, IsDistributive );
+InstallTrueMethod( IsRightSelfDistributive, IsDistributive );
+InstallTrueMethod( IsSelfDistributive, IsLeftSelfDistributive and IsCommutative );
+InstallTrueMethod( IsSelfDistributive, IsRightSelfDistributive and IsCommutative );
+InstallTrueMethod( IsSelfDistributive, IsLeftSelfDistributive and IsRightSelfDistributive );
+InstallTrueMethod( IsFlexible, IsCommutative );
+InstallTrueMethod( Is3PowerAssociative, IsAssociative );
+InstallTrueMethod( Is3PowerAssociative, IsCommutative );
+InstallTrueMethod( Is3PowerAssociative, IsLeftAlternative );
+InstallTrueMethod( Is3PowerAssociative, IsRightAlternative );
+InstallTrueMethod( IsAssociative, IsProjectionRightQuasigroup );
+InstallTrueMethod( IsFaithfulRightQuasigroup, IsUnipotent and IsRightQuasigroup );
+InstallTrueMethod( IsFaithfulRightQuasigroup, IsLeftQuasigroupMagma ); # left tranlations biject --> right translations distinct
+
+# for quasigroups
+InstallTrueMethod( IsFaithfulRightQuasigroup, IsQuasigroup );
 InstallTrueMethod( IsPowerAlternative, IsDiassociative );
 InstallTrueMethod( IsFlexible, IsDiassociative );
+InstallTrueMethod( Is3PowerAssociative, IsPowerAssociative );
+
+# for loops
+InstallTrueMethod( IsExtraLoop, IsAssociative and IsLoop );
+InstallTrueMethod( HasTwosidedInverses, IsPowerAssociative and IsLoop );
 InstallTrueMethod( IsMoufangLoop, IsExtraLoop );
 InstallTrueMethod( IsCLoop, IsExtraLoop );
 InstallTrueMethod( IsLeftBolLoop, IsMoufangLoop );
@@ -420,10 +459,6 @@ InstallTrueMethod( IsLeftNuclearSquareLoop, IsRightNuclearSquareLoop and IsCommu
 InstallTrueMethod( IsLeftNuclearSquareLoop, IsNuclearSquareLoop );
 InstallTrueMethod( IsRightNuclearSquareLoop, IsNuclearSquareLoop );
 InstallTrueMethod( IsMiddleNuclearSquareLoop, IsNuclearSquareLoop );
-InstallTrueMethod( IsRightAlternative, IsLeftAlternative and IsCommutative );
-InstallTrueMethod( IsLeftAlternative, IsRightAlternative and IsCommutative );
-InstallTrueMethod( IsLeftAlternative, IsAlternative );
-InstallTrueMethod( IsRightAlternative, IsAlternative );
 InstallTrueMethod( IsLeftAlternative, IsLeftPowerAlternative );
 InstallTrueMethod( HasLeftInverseProperty, IsLeftPowerAlternative );
 InstallTrueMethod( IsPowerAssociative, IsLeftPowerAlternative );
@@ -461,21 +496,12 @@ InstallTrueMethod( IsMoufangLoop, IsALoop and IsRightAlternative );
 InstallTrueMethod( IsMoufangLoop, IsALoop and HasLeftInverseProperty );
 InstallTrueMethod( IsMoufangLoop, IsALoop and HasRightInverseProperty );
 InstallTrueMethod( IsMoufangLoop, IsALoop and HasWeakInverseProperty );
-
-# is implied by
 InstallTrueMethod( IsExtraLoop, IsMoufangLoop and IsLeftNuclearSquareLoop );
 InstallTrueMethod( IsExtraLoop, IsMoufangLoop and IsMiddleNuclearSquareLoop );
 InstallTrueMethod( IsExtraLoop, IsMoufangLoop and IsRightNuclearSquareLoop );
 InstallTrueMethod( IsMoufangLoop, IsLeftBolLoop and IsRightBolLoop );
 InstallTrueMethod( IsCLoop, IsLCLoop and IsRCLoop );
-InstallTrueMethod( IsNuclearSquareLoop, IsLeftNuclearSquareLoop
-        and IsRightNuclearSquareLoop and IsMiddleNuclearSquareLoop );
-InstallTrueMethod( IsFlexible, IsCommutative );
-InstallTrueMethod( Is3PowerAssociative, IsPowerAssociative );
-InstallTrueMethod( Is3PowerAssociative, IsCommutative );
-InstallTrueMethod( Is3PowerAssociative, IsLeftAlternative );
-InstallTrueMethod( Is3PowerAssociative, IsRightAlternative );
-InstallTrueMethod( IsAlternative, IsLeftAlternative and IsRightAlternative );
+InstallTrueMethod( IsNuclearSquareLoop, IsLeftNuclearSquareLoop and IsRightNuclearSquareLoop and IsMiddleNuclearSquareLoop );
 InstallTrueMethod( IsCCLoop, IsLCCLoop and IsRCCLoop );
 InstallTrueMethod( IsOsbornLoop, IsMoufangLoop );
 InstallTrueMethod( IsOsbornLoop, IsCCLoop );
@@ -491,7 +517,7 @@ InstallTrueMethod( IsALoop, IsLeftALoop and IsMiddleALoop );
 InstallTrueMethod( IsALoop, IsRightALoop and IsMiddleALoop );
 InstallTrueMethod( IsALoop, IsAssociative and IsLoop);
 
-# implies and is implied by (for inverse properties)
+# for loops with inverse properties
 InstallTrueMethod( HasAntiautomorphicInverseProperty, HasAutomorphicInverseProperty and IsCommutative );
 InstallTrueMethod( HasAutomorphicInverseProperty, HasAntiautomorphicInverseProperty and IsCommutative );
 InstallTrueMethod( HasLeftInverseProperty, HasInverseProperty );

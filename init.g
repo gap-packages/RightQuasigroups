@@ -7,13 +7,15 @@ ReadPackage( "RightQuasigroups", "gap/Representation.gd");          # Representi
 ReadPackage( "RightQuasigroups", "gap/Constructors.gd");            # Constructing right quasigroups in GAP
 ReadPackage( "RightQuasigroups", "gap/Random.gd");                  # Random right quasigroups, quasigroups and loops
 ReadPackage( "RightQuasigroups", "gap/HSP.gd");                     # Direct products, subalgebras and factor algebras
+ReadPackage( "RightQuasigroups", "gap/Mappings.gd");                # Mappings, transformations and permutations of right quasigroups
 ReadPackage( "RightQuasigroups", "gap/PermutationGroups.gd");       # Permutation groups associated with right quasigroups
 ReadPackage( "RightQuasigroups", "gap/MltSearch.gd");               # Realizing permutation groups as multiplication groups of loops
 ReadPackage( "RightQuasigroups", "gap/NilpotencySolvability.gd");   # Nilpotency and solvability for right quasigroups   
 ReadPackage( "RightQuasigroups", "gap/Extensions.gd");              # Nuclear and central extensions
 ReadPackage( "RightQuasigroups", "gap/Parser.gd");                  # Parser for evaluating right quasigroup terms and identities
 ReadPackage( "RightQuasigroups", "gap/Properties.gd");              # Properties of right quasigroups, quasigroups and loops
-ReadPackage( "RightQuasigroups", "gap/Isomorphisms.gd");            # Isomorphisms and isotopisms of right quasigroups
+ReadPackage( "RightQuasigroups", "gap/Morphisms.gd");               # Homomorphisms, isomorphisms and automorphisms of right quasigroups
+ReadPackage( "RightQuasigroups", "gap/Topisms.gd");                 # Homotopisms, isotopisms and autotopisms of right quasigroups
 ReadPackage( "RightQuasigroups", "gap/BolLoops.gd");                # Methods for Bol loops
 ReadPackage( "RightQuasigroups", "gap/MoufangTriality.gd");         # Triality for Moufang loops
 ReadPackage( "RightQuasigroups", "gap/MoufangModifications.gd");    # Quarter modifications of Moufang loops

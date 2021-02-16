@@ -375,12 +375,12 @@ InstallMethod( AllLoopCocyclesInVariety, "for loop, prime and list of loop ident
 function( Q, p, equational_basis )
     local cob, coc; 
     if not IsCanonical( Q ) then Q := CanonicalCopy( Q ); fi;
-    Info( InfoRightQuasigroups, 1, " - Calculating coboundaries");
+    Info( InfoRightQuasigroups, 1, "RQ: Calculating coboundaries");
     cob := LoopCoboundaries( Q, p );
-    Info( InfoRightQuasigroups, 1, " - Coboundaries have dimension ", Length(cob) );
-    Info( InfoRightQuasigroups, 1, " - Calculating cocycles");
+    Info( InfoRightQuasigroups, 1, "RQ: Coboundaries have dimension ", Length(cob) );
+    Info( InfoRightQuasigroups, 1, "RQ: Calculating cocycles");
     coc := LoopCocyclesInVariety( Q, p, equational_basis );	
-    Info( InfoRightQuasigroups, 1, " - Cocycles have dimension ", Length(coc) );
+    Info( InfoRightQuasigroups, 1, "RQ: Cocycles have dimension ", Length(coc) );
     return LoopCocyclesModAction( Q, p, coc, cob );
 end );
 

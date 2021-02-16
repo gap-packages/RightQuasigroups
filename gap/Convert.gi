@@ -81,7 +81,7 @@ function( category, str )
             pos := pos+1;
         od; od;
     else # commutative case
-        for i in [start..n] do for j in [start..n] do
+        for i in [start..n] do for j in [i..n] do
             ret[i,j] := RQ_CharToDigit( str[pos] ) + 1;
             ret[j,i] := ret[i,j];
             pos := pos + 1;

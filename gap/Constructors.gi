@@ -793,6 +793,7 @@ function( category, S, section, style )
             F!.mult := function(x,y) return F!.uSet[ PositionSorted(F!.uSet,x)^F!.rSection[ PositionSorted( F!.uSet, y )] ]; end;
         else # action on S
             F!.mult := function(x,y) return x^F!.rSection[ PositionSorted( F!.uSet, y ) ]; end;
+
         fi;
         RQ_AddDefaultOperations( Q );
     fi;
@@ -1056,7 +1057,7 @@ function( S, style )
 	# multiplication and right division are the same here, and there is nothing to check
     Q := RQ_AlgebraByFunction( IsRightQuasigroup, S, mult, mult, fail, fail, ConstructorStyle( style.indexBased, false ) );
     # setting implied properties
-    SetIsAssociative( Q, true );
+    SetIsProjectionRightQuasigroup( Q, true );
     SetIsQuandle( Q, true );
     return Q;
 end );
@@ -1070,25 +1071,4 @@ InstallOtherMethod( ProjectionRightQuasigroup, "for positive integer abd record"
     [ IsPosInt, IsRecord ],
 function( n, style )
     return ProjectionRightQuasigroup( [1..n], style );
-end );
-
-# RightCoreOfGroup
-InstallMethod( RightCoreOfGroup, "for group",
-    [ IsGroup ],
-    G -> RightCoreOfGroup( G, RQ_defaultConstructorStyle )
-);
-
-InstallOtherMethod( RightCoreOfGroup, "for group and record",
-    [ IsGroup, IsRecord ],
-function( G, style )
-    local mult;
-    RQ_CompleteConstructorStyle( style );
-    if IsAdditiveGroup( G ) then 
-        mult := function(x,y) return y-x+y; end;
-    else
-        mult := function(x,y) return y*x^(-1)*y; end;
-    fi;
-    # MATH: right division coincides with multiplication, since
-    # if x*y = yx^{-1}y and x/y=z, then x = z*y = yz^{-1}y, so z = x/y = (y^{-1}xy^{-1})^{-1} = yx^{-1}y = x*y.
-    return RQ_AlgebraByFunction( IsRightQuasigroup, G, mult, mult, fail, fail, ConstructorStyle( style.indexBased, false ) );# nothing to check
 end );

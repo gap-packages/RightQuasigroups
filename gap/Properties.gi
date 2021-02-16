@@ -161,6 +161,22 @@ function( Q )
     return ForAll( Q, y -> y^2 = square );
 end );
 
+# PROPERTIES OF RIGHT QUASIGROUPS
+# _____________________________________________________________________________
+
+# IsFaithfulRightQuasigroup 
+InstallMethod( IsFaithfulRightQuasigroup, "for right quasigroup",
+    [ IsRightQuasigroup ],
+    Q -> Size( Set( RightSection( Q ) ) ) = Size( Q )
+);
+
+# IsProjectionRightQuasigroup
+InstallMethod( IsProjectionRightQuasigroup, "for right quasigroup",
+    [ IsRightQuasigroup ],
+function( Q )
+    return ForAll( Q, x -> ForAll( Q, y -> x*y = x ) );
+end );
+
 # PROPERTIES OF QUASIGROUPS
 # _____________________________________________________________________________
 

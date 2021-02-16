@@ -2,32 +2,6 @@
 # Permutation groups associated with right quasigroups
 # =============================================================================
 
-# PARENT PERMUTATIONS AND CANONICAL PERMUTATIONS
-# _____________________________________________________________________________
-
-# AsParentPerm
-InstallMethod( AsParentPerm, "for right quasigroup and permutation",
-    [ IsRightQuasigroup, IsPerm ],
-function( Q, f )
-	local ind, ls, i;
-	ind := ParentInd( Q );
-	ls := [1..Size(Parent(Q))];
-	for i in [1..Size(Q)] do
-		ls[ ind[i] ] := ind[ i^f ];
-	od;
-	return PermList( ls );
-end);
-
-# AsCanonicalPerm
-InstallMethod( AsCanonicalPerm, "for right quasigroup and permutation",
-    [ IsRightQuasigroup, IsPerm ],
-function( Q, f )
-	local ind, ls;
-	ind := ParentInd( Q );
-	ls := List( [1..Size(Q)], i -> PositionSorted( ind, ind[i]^f ));
-	return PermList( ls );
-end);
-
 # TRANSLATIONS AND SECTIONS
 # _____________________________________________________________________________
 
@@ -251,9 +225,9 @@ end );
 # DISPLACEMENT GROUPS
 # ____________________________________________________________________________
 
-# RightPositiveDisplacementGroup
+# RightPosDisplacementGroup
 
-InstallMethod( RightPositiveDisplacementGroup, "for right quasigroup",
+InstallMethod( RightPosDisplacementGroup, "for right quasigroup",
     [ IsRightQuasigroup ],
 function( Q )
     local g, gens;
@@ -262,9 +236,9 @@ function( Q )
     return RQ_GroupByGenerators( SmallGeneratingSet( Group( gens ) ) );
 end );
 
-# RightNegativeDisplacementGroup
+# RightNegDisplacementGroup
 
-InstallMethod( RightNegativeDisplacementGroup, "for right quasigroup",
+InstallMethod( RightNegDisplacementGroup, "for right quasigroup",
     [ IsRightQuasigroup ],
 function( Q )
     local g, gens;
@@ -284,9 +258,9 @@ function( Q )
     return RQ_GroupByGenerators( SmallGeneratingSet( Group( gens ) ) );
 end );
 
-# LeftPositiveDisplacementGroup
+# LeftPosDisplacementGroup
 
-InstallMethod( LeftPositiveDisplacementGroup, "for quasigroup",
+InstallMethod( LeftPosDisplacementGroup, "for quasigroup",
     [ IsQuasigroup ],
 function( Q )
     local g, gens;
@@ -295,9 +269,9 @@ function( Q )
     return RQ_GroupByGenerators( SmallGeneratingSet( Group( gens ) ) );
 end );
 
-# LeftNegativeDisplacementGroup
+# LeftNegDisplacementGroup
 
-InstallMethod( LeftNegativeDisplacementGroup, "for quasigroup",
+InstallMethod( LeftNegDisplacementGroup, "for quasigroup",
     [ IsQuasigroup ],
 function( Q )
     local g, gens;
@@ -321,5 +295,15 @@ end );
 
 InstallMethod( IsIsotopicToGroup, "for quasigroup",
     [ IsQuasigroup ],
-    Q -> Size( LeftPositiveDisplacementGroup( Q ) ) = Size( Q )
+    Q -> Size( LeftPosDisplacementGroup( Q ) ) = Size( Q )
 );
+
+# IsIsotopicToAbelianGroup
+
+InstallMethod( IsIsotopicToAbelianGroup, "for quasigroup",
+    [ IsQuasigroup ],
+function( Q )
+    local D;
+    D := LeftPosDisplacementGroup( Q );
+    return Size( D ) = Size( Q ) and IsCommutative( D );
+end );

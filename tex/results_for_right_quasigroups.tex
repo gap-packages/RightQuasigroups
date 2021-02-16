@@ -188,12 +188,12 @@ Fix $e\in Q$. Since $R_xR_y^{-1} = (R_eR_x^{-1})^{-1}(R_eR_y^{-1}) = (R_xR_e^{-1
     \mathrm{Dis}_r^+(Q)=\langle R_eR_x^{-1}:x\in Q\rangle = \langle R_xR_e^{-1}:x\in Q\rangle,\\
     \mathrm{Dis}_r^-(Q)=\langle R_x^{-1}R_e:x\in Q\rangle = \langle R_e^{-1}R_x:x\in Q\rangle.
 \end{align*}
-    
-The left displacement groups are defined analogously for a left quasigroup $(Q,\cdot)$ by 
+
+The left displacement groups are defined analogously for a left quasigroup $(Q,\cdot)$ by
 \begin{align*}
     \mathrm{Dis}_\ell^+(Q) &=\langle L_xL_y^{-1}:x,y\in Q\rangle,\\
     \mathrm{Dis}_\ell^-(Q) &=\langle L_x^{-1}L_y:x,y\in Q\rangle,\\
-    \mathrm{Dis}_\ell(Q) &= \langle L_xL_y^{-1},L_x^{-1}L_y:x,y\in Q\rangle,    
+    \mathrm{Dis}_\ell(Q) &= \langle L_xL_y^{-1},L_x^{-1}L_y:x,y\in Q\rangle,
 \end{align*}
 and we once again have
 \begin{align*}
@@ -203,7 +203,7 @@ and we once again have
 for a fixed $e\in Q$.
 
 \begin{proposition}
-Let $(Q,\cdot)$ be a quasigroup. Then $(Q,\cdot)$ is isotopic to a group if and only if the left positive displacement group $\mathrm{Dis}_\ell^+(Q,\cdot)$ acts regularly on $Q$. In that case, $(Q,\cdot)$ is isotopic to 
+Let $(Q,\cdot)$ be a quasigroup. Then $(Q,\cdot)$ is isotopic to a group if and only if the left positive displacement group $\mathrm{Dis}_\ell^+(Q,\cdot)$ acts regularly on $Q$. In that case, $(Q,\cdot)$ is isotopic to
 $\mathrm{Dis}_\ell^+(Q,\cdot)$.
 \end{proposition}
 \begin{proof}
@@ -220,5 +220,55 @@ because $(Q,*)$ is a group. Hence $D$ is a conjugate of $\langle L_{\alpha^{-1}(
 \begin{corollary}
 A quasigroup $Q$ is isotopic to a group iff $|\mathrm{Dis}_\ell^+(Q)|=|Q|$.
 \end{corollary}
+
+\section{Affine right quasigroups}
+
+Given a loop $(Q,\cdot)$, its automorphism $f$, endomorphism $g$ and a central element $c$, define $\mathrm{Aff}(Q,\cdot,f,g,c)=(Q,*)$ by $x*y = f(x)g(y)c$. Then $(Q,*)$ is \emph{affine} over $(Q,\cdot)$ and $(Q,\cdot,f,g,c)$ is the \emph{arithmetic form} of $(Q,*)$.
+
+\begin{lemma}
+$(Q,*)$ is a right quasigroup. $(Q,*)$ is a quasigroup iff $g$ is an automorphism.
+\end{lemma}
+\begin{proof}
+Solving $x*y = f(x)g(y)c=z$ for $x$ yields $x = f^{-1}((z/c)/g(y))$. Solving $x*y=f(x)g(y)c=z$ for $y$ is equivalent to solving $g(y) = f(x)\ldiv (z/c)$.
+\end{proof}
+
+\begin{lemma}\label{Lm:AffineRack}
+$(Q,*)$ is a rack iff $g(c)=1$, $fg=gf$, $g(x)=fg(x)g^2(x)$ and $xfg(y)\cdot g(z) = xfg(z)\cdot fg(y)g^2(z)$ for all $x,y,z\in Q$.
+\end{lemma}
+\begin{proof}
+We have $(x*y)*z = (f(x)g(y)c)*z = f^2(x)fg(y)f(c)\cdot g(z)\cdot c$, while $(x*z)*(y*z) = (f(x)g(z)c)*(f(y)g(z)c) = f^2(x)fg(z)f(c)\cdot gf(y)g^2(z)g(c)\cdot c$. Since $c$, $f(c)$ and $g(c)$ are central, we see that $(Q,*)$ is a rack iff $f^2(x)fg(y)\cdot g(z) = f^2(x)fg(z)\cdot gf(y)g^2(z)\cdot g(c)$. Substituting $x=y=z=1$ then yields $g(c)=1$ as a necessary condition. Assuming this, we need to verify $f^2(x)fg(y)\cdot g(z) = f^2(x)fg(z)\cdot gf(y)g^2(z)$. With $x=z=1$ we obtain $fg(y) = gf(y)$ as a necessary condition. Assuming this, we need to verify $f^2(x)fg(y)\cdot g(z) = f^2(x)fg(z)\cdot fg(y)g^2(z)$. With $x=y=1$ we get $g(z)=fg(z)g^2(z)$ as a necessary condition. Assuming this and substituting $x$ for $f^2(x)$ yields the last condition.
+\end{proof}
+
+Substituting $fg(z)g^2(z)$ for $g(z)$ into the left hand side of the last condition of Lemma \ref{Lm:AffineRack} yields $xfg(y)\cdot fg(z)g^2(z) = xfg(z)\cdot fg(y)g^2(z)$. This condition is certainly satisfied when $(Q,\cdot)$ is a medial loop. Recall that a loop is medial iff it is an abelian group. Indeed, from $(xu)(vy)= (xv)(uy)$ we obtain commutativity with $x=y=1$ and associativity with $v=1$.
+
+\begin{lemma}\label{Lm:AffineQuandle}
+$(Q,*)$ is a quandle iff $c=1$, $g(x)=f(x)\ldiv x$ and $xfg(y)\cdot g(z) = xfg(z)\cdot fg(y)g^2(z)$ for all $x,y,z\in Q$.
+\end{lemma}
+\begin{proof}
+We have $x*x=x$ iff $f(x)g(x)c=x$. Substituting $x=1$ yields $c=1$. Using this, we have $x*x=x$ iff $f(x)g(x)=x$, that is, $g(x)=f(x)\ldiv x$. If $g(x)=f(x)\ldiv x$ then both $fg=gf$ and $g(x)=fg(x)g^2(x)$ hold. We are done by Lemma \ref{Lm:AffineRack}.
+\end{proof}
+
+Note that the conditions of Lemma \ref{Lm:AffineQuandle} do not impose any restrictions on the loop $(Q,\cdot)$. Indeed, if $(Q,\cdot)$ is any loop, $f(x)=x$, $g(x)=1$ and $c=1$ then $x*y=f(x) = x$ and $(Q,*)$ is a projection quandle.
+
+Also note that a latin rack is a quandle. Indeed, substituting $z=y$ into $(xy)z=(xz)(yz)$ yields $(xy)y = (xy)(yy)$ and canceling $xy$ on the left then yields $y=yy$.
+
+\begin{lemma}\label{Lm:AffineLatinQuandle}
+$(Q,*)$ is a latin rack (i.e., latin quandle) iff $c=1$, $g(x)=f(x)\ldiv x$ and $xy\cdot z = xf(z)\cdot y(f(z)\ldiv z)$ for all $x,y,z\in Q$.
+\end{lemma}
+\begin{proof}
+Replace $g(z)$ with $z$ and $fg(y)$ with $y$ in the last condition of Lemma \ref{Lm:AffineQuandle}.
+\end{proof}
+
+\begin{corollary}
+Suppose that $(Q,\cdot)$ is an abelian group. Then $(Q,*)$ is a rack iff $g(c)=1$, $fg=gf$ and $g(x)=fg(x)g^2(x)$ for all $x\in Q$.
+\end{corollary}
+\begin{proof}
+Suppose that $g(x)=fg(x)g^2(x)$ for all $x\in Q$. Then $xfg(y)\cdot g(z) = xfg(y)\cdot fg(z)g^2(z) =  xfg(z)\cdot fg(y)g^2(z)$, where we have used mediality in the last step.
+\end{proof}
+
+\begin{corollary}
+Suppose that $(Q,\cdot)$ is an abelian group. Then $(Q,*)$ is a quandle iff $c=1$ and $g(x)=f(x)\ldiv x = xf(x)^{-1}$.
+\end{corollary}
+
 
 \end{document} 

@@ -151,7 +151,7 @@ RQ_Algebra := function( n, k, rack_or_quandle )
 
     # load data file if needed
     if not IsBound( groups[ n ] ) then
-        Info( InfoRightQuasigroups, 1, " - reading data file " );
+        Info( InfoRightQuasigroups, 1, "RQ: reading data file for racks/quandles of size ", n );
         Read( Concatenation( RQ_path, rack_or_quandle, "s_of_order_", String(n), ".txt" ) );
     fi;
 

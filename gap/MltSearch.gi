@@ -117,32 +117,32 @@ RQ_TableSearchNC:=function(g, ldepth, infolevel, task)
 		only_one:=false;
 		only_proper:=false;
 		only_exact:=false;
-		Info( InfoRightQuasigroups, 1, "### Search for all loops in the given group ###");
+		Info( InfoRightQuasigroups, 1, "RQ: ### Search for all loops in the given group ###");
 	elif task="all proper" then 
 		only_one:=false;
 		only_proper:=true;
 		only_exact:=false;
-		Info( InfoRightQuasigroups, 1, "### Search for all nonassociative loops in the given group ###");
+		Info( InfoRightQuasigroups, 1, "RQ: ### Search for all nonassociative loops in the given group ###");
 	elif task="one" then 
 		only_one:=true;
 		only_proper:=false;
 		only_exact:=false;
-		Info( InfoRightQuasigroups, 1, "### Search for one loop in the given group ###");
+		Info( InfoRightQuasigroups, 1, "RQ: ### Search for one loop in the given group ###");
 	elif task="one proper" then 
 		only_one:=true;
 		only_proper:=true;
 		only_exact:=false;
-		Info( InfoRightQuasigroups, 1, "### Search for one nonassociative loops loops in the given group ###");
+		Info( InfoRightQuasigroups, 1, "RQ: ### Search for one nonassociative loops loops in the given group ###");
 	elif task="all exact" then 
 		only_one:=false;
 		only_proper:=false;
 		only_exact:=true;
-		Info( InfoRightQuasigroups, 1, "### Search for all loops with given multiplication group ###");
+		Info( InfoRightQuasigroups, 1, "RQ: ### Search for all loops with given multiplication group ###");
 	elif task="one exact" then 
 		only_one:=true;
 		only_proper:=false;
 		only_exact:=true;
-		Info( InfoRightQuasigroups, 1, "### Search for one loop with given multiplication group ###");
+		Info( InfoRightQuasigroups, 1, "RQ: ### Search for one loop with given multiplication group ###");
 	else 
 		SetInfoLevel(InfoRightQuasigroups,old_infolevel);
 		return fail; 
@@ -151,8 +151,8 @@ RQ_TableSearchNC:=function(g, ldepth, infolevel, task)
 	time_start:=Runtime();
 	degree:=NrMovedPoints(g);
 	depth:=ldepth;
-	Info(InfoRightQuasigroups, 1, "# Size of the input group: ", Size(g));
-	Info(InfoRightQuasigroups, 1, "# Degree of the permutation group: ", degree);
+	Info(InfoRightQuasigroups, 1, "RQ: # Size of the input group: ", Size(g));
+	Info(InfoRightQuasigroups, 1, "RQ: # Degree of the permutation group: ", degree);
 
 	# analysis of the fixed point free elements
 	fpf_classes:=Filtered(ConjugacyClasses(g),x->NrMovedPoints(Representative(x))=degree);
@@ -164,11 +164,11 @@ RQ_TableSearchNC:=function(g, ldepth, infolevel, task)
 	MakeImmutable(V);
 	reps:=List(fpf_classes,x->Minimum(Elements(x)));
 	reps:=Set(reps,x->Position(V,x));
-	Info(InfoRightQuasigroups, 1, "# ", RQ_MltSearchRuntime(time_start), " Search started."); 
+	Info(InfoRightQuasigroups, 1, "RQ: # ", RQ_MltSearchRuntime(time_start), " Search started."); 
 
-	Info(InfoRightQuasigroups, 1, "# Collected the fixed point free elements." );
-	Info(InfoRightQuasigroups, 1, "# Number of conjugacy classes = ", Size(reps), "." );
-	Info(InfoRightQuasigroups, 1, "# Number of fixed point free elements = ", Size(V), "." );
+	Info(InfoRightQuasigroups, 1, "RQ: # Collected the fixed point free elements." );
+	Info(InfoRightQuasigroups, 1, "RQ: # Number of conjugacy classes = ", Size(reps), "." );
+	Info(InfoRightQuasigroups, 1, "RQ: # Number of fixed point free elements = ", Size(V), "." );
 
 	# hash tables
 	hash:=List([1..depth],i->[]);
@@ -198,7 +198,7 @@ RQ_TableSearchNC:=function(g, ldepth, infolevel, task)
 
 	while next_node() do
 		if level=2 then 
-			Info(InfoRightQuasigroups, 1, "# ", RQ_MltSearchRuntime(time_start), 
+			Info(InfoRightQuasigroups, 1, "RQ: # ", RQ_MltSearchRuntime(time_start), 
 				" We have ", Length(pi[2])+1, " more step(s)." ); 
 		fi;
 		if level=degree then 
@@ -216,8 +216,8 @@ RQ_TableSearchNC:=function(g, ldepth, infolevel, task)
 			fi;
 			if takeit then 
 				Add(results, ShallowCopy(row));
-				Info(InfoRightQuasigroups, 2, "##############################");
-				Info(InfoRightQuasigroups, 1, "# ", RQ_MltSearchRuntime(time_start), 
+				Info(InfoRightQuasigroups, 2, "RQ: ##############################");
+				Info(InfoRightQuasigroups, 1, "RQ: # ", RQ_MltSearchRuntime(time_start), 
 					" Hit number ", Length(results));
 				Info(InfoRightQuasigroups, 2, ct);
 				if only_one then break; fi;
@@ -228,8 +228,8 @@ RQ_TableSearchNC:=function(g, ldepth, infolevel, task)
 		fi;
 	od;
 
-	Info(InfoRightQuasigroups, 1, "##############################");
-	Info(InfoRightQuasigroups, 1, "# ", RQ_MltSearchRuntime(time_start), " Finished. ", Length(results), " loops found." );
+	Info(InfoRightQuasigroups, 1, "RQ: ##############################");
+	Info(InfoRightQuasigroups, 1, "RQ: # ", RQ_MltSearchRuntime(time_start), " Finished. ", Length(results), " loops found." );
 	
 	SetInfoLevel(InfoRightQuasigroups,old_infolevel);
 	return List(results,x->Concatenation([()],V{x{[2..degree]}}));
@@ -239,26 +239,26 @@ end;
 RQ_MltSearchInputCheck:=function( G, depth, infolevel, task )
 	local degree;
     if not IsPermGroup( G ) then 
-		Info( InfoRightQuasigroups, 1, "<G> must be a permutation group" );
+		Info( InfoRightQuasigroups, 1, "RQ: <G> must be a permutation group" );
 		return false;
 	fi;
 	degree:=NrMovedPoints(G);
 	if MovedPoints(G)<>[1..degree] then 
-		Info( InfoRightQuasigroups, 1, "<G> must act transitively on [1..degree]" );
+		Info( InfoRightQuasigroups, 1, "RQ: G> must act transitively on [1..degree]" );
 		return false;
 	fi;
 	if depth=fail then depth := Maximum(1,LogInt(Size(G),degree)-1); fi;
     if not IsInt(depth) or depth<=0 then 
-		Info( InfoRightQuasigroups, 1, "<depth> must be a positive integer" ); 
+		Info( InfoRightQuasigroups, 1, "RQ: <depth> must be a positive integer" ); 
 		return false;
 	fi; 
 	if infolevel=fail then infolevel:=1; fi;
 	if not IsInt(infolevel) or infolevel<0 then 
-		Info( InfoRightQuasigroups, 1, "<infolevel> must be a positive integer" ); 
+		Info( InfoRightQuasigroups, 1, "RQ: <infolevel> must be a positive integer" ); 
 		return false;
 	fi; 
 	if not task in ["", "all", "all proper", "one", "one proper", "all exact", "one exact"] then
-		Info( InfoRightQuasigroups, 1, "<task> must be one of the following:");
+		Info( InfoRightQuasigroups, 1, "RQ; <task> must be one of the following:");
 		Info( InfoRightQuasigroups, 1, "\t\"\", \"all\", \"all proper\", \"one\", ", 
 			"\"one proper\", \"all exact\", \"one exact\"." ); 
 		return false;

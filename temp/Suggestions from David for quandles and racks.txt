@@ -2,19 +2,19 @@ Suggestions from David
 
 - vsechno, co umi RIG
 
-- Knihovny: connected, simple.
+- Knihovny: connected (DONE), simple.
 
-- Konstrukce: coset construction (DONE), conjugation quandles (DONE), core of group (DONE)/ core of Bol loop,
+- Konstrukce: coset construction (DONE), conjugation quandles (DONE), core of group (DONE)/ core of Bol loop (DONE),
 simple quandle dany trojici (L,t,fi), konstrukce medialnich pomoci meshi, faktor podle Cayley kernel, extenze (central, by constant cocycle, ...?)
 
 - RMlt(Q) (DONE, Dis(Q) (obecne Dis+,Dis-) (DONE)
 
 - Testovani vlastnosti:
-IsLatin (DONE), IsConnected, IsMedial, IsPrincipal, IsConjugation, IsFaithful, IsProjection, IsAffine, IsQuasiAffine, IsHomImAffine, IsSimple, IsPrimitive
+IsLatin (DONE), IsConnected (DONE), IsMedial, IsPrincipal, IsConjugation, IsFaithful (DONE), IsProjection (DONE), IsAffine, IsQuasiAffine, IsHomImAffine, IsSimple, IsPrimitive
 
 - pocitani s kongruencemi, faktory podle obecnych kongruenci (DONE), komutator kongruenci, IsAbelianCongruence, IsCentralCongruence,
 IsSolvable, IsNilpotent, Center, faktor podle centra, IsDirectlyDecomposable
 
-- obecne pro kvazigrupy: IsIsotopicToGroup (DONE), IsIsotopicToAbelianGroup, IsLinear nad danou lupou
+- obecne pro kvazigrupy: IsIsotopicToGroup (DONE), IsIsotopicToAbelianGroup (DONE), IsLinear nad danou lupou
 
 - YBE kvazigrupy: IsRump, .... (cokoliv by se byvalo mohlo hodit v tech clancich)

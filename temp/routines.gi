@@ -157,3 +157,33 @@ ListOfListsToCompactString := function( data )
     Append(s, "]");
     return s;
 end;
+
+# the following is useful in saving library files
+# it assumes that "orders", "NOA" and "data" is populated
+
+f := "c:/temp/temp.txt";
+PrintTo( f, "# TITLE HERE\n");
+AppendTo( f, "RQ_LIB_NAME :=\n");
+AppendTo( f, "[\n" );
+AppendTo( f, "# implemented orders\n");
+AppendTo( f, orders );
+AppendTo( f, ",\n# number of OBJECT NAME of given order\n");
+AppendTo( f, NOA );
+AppendTo( f, ",\n[\n" );
+for i in [1..Length(orders)] do
+	AppendTo( f, Concatenation( "# OBJECT NAME of order ", String( orders[i] ) ) );
+	AppendTo( f, "\n[\n");
+	for j in [1..NOA[i]] do
+		AppendTo( f, data[i][j] );
+		if j < NOA[i] then
+			AppendTo( f, ",\n" );
+		else
+			AppendTo( f, "\n]" );
+		fi;
+	od;
+	if i<Length(orders) then
+		AppendTo( f, ",\n" );
+	else
+		AppendTo( f, "\n]\n];");
+	fi;
+od;

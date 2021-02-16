@@ -24,6 +24,7 @@
 #! <List>
 #! <Item>"automorphic loops",</Item>
 #! <Item>"CC loops",</Item>
+#! <Item>"connected quandles",</Item>
 #! <Item>"code loops",</Item>
 #! <Item>"interesting loops",</Item>
 #! <Item>"itp small loops",</Item>
@@ -387,6 +388,15 @@ DeclareOperation( "SmallRack", [ IsPosInt, IsPosInt ] );
 #! @Arguments n, m 
 #! @Returns the <Arg>m</Arg>th quandle of order <Arg>n</Arg>.
 DeclareOperation( "SmallQuandle", [ IsPosInt, IsPosInt ] );
+
+#! @Section Library of connected quandles
+
+#! <P/>The library name **connected quandles** contains all connected quandles of order less than 48 up to isomorphism.
+#! A quandle `Q` is connected if its right multiplication group acts transitively on `Q`.
+
+#! @Arguments n, m
+#! @Returns the <Arg>m</Arg>th connected quandle of order <Arg>n</Arg>.
+DeclareOperation( "ConnectedQuandle", [ IsPosInt, IsPosInt ] );
 
 #! @Section Library of small loops up to isotopism
 

@@ -14,21 +14,26 @@ RQ_aux := [];
 ##  READING DATA
 ##  -------------------------------------------------------------------------
 
+# PROG: reading only *.tbl files that contain several global variables referred in the code below.
+# The remaining *.tbl files will be read when first needed.
+# The files read here are typically small.
+
 # up to isomorphism
-ReadPackage("RightQuasigroups", "data/left_Bol_loops.tbl");     # left Bol loops
-ReadPackage("RightQuasigroups", "data/Moufang_loops.tbl");      # Moufang loops
-ReadPackage("RightQuasigroups", "data/Paige_loops.tbl");        # Paige loops
-ReadPackage("RightQuasigroups", "data/code_loops.tbl");         # code loops
-ReadPackage("RightQuasigroups", "data/Steiner_loops.tbl");      # Steiner loops
+#ReadPackage("RightQuasigroups", "data/left_Bol_loops.tbl");     # left Bol loops
+#ReadPackage("RightQuasigroups", "data/Moufang_loops.tbl");      # Moufang loops
+#ReadPackage("RightQuasigroups", "data/Paige_loops.tbl");        # Paige loops
+#ReadPackage("RightQuasigroups", "data/code_loops.tbl");         # code loops
+#ReadPackage("RightQuasigroups", "data/Steiner_loops.tbl");      # Steiner loops
 ReadPackage("RightQuasigroups", "data/CC_loops.tbl");           # CC loops
-ReadPackage("RightQuasigroups", "data/RCC_loops.tbl");          # RCC loops (more is read upon calling RCCLoop(n,m) for the first time
-ReadPackage("RightQuasigroups", "data/small_loops.tbl");        # small loops
-ReadPackage("RightQuasigroups", "data/interesting_loops.tbl");  # interesting loops
-ReadPackage("RightQuasigroups", "data/nilpotent_loops.tbl");    # nilpotent loops
-ReadPackage("RightQuasigroups", "data/automorphic_loops.tbl");  # automorphic loops
+ReadPackage("RightQuasigroups", "data/RCC_loops.tbl");          # RCC loops (more is read upon calling RCCLoop(n,m) for the first time)
+#ReadPackage("RightQuasigroups", "data/small_loops.tbl");        # small loops
+#ReadPackage("RightQuasigroups", "data/interesting_loops.tbl");  # interesting loops
+#ReadPackage("RightQuasigroups", "data/nilpotent_loops.tbl");    # nilpotent loops
+#ReadPackage("RightQuasigroups", "data/automorphic_loops.tbl");  # automorphic loops
 ReadPackage("RightQuasigroups", "data/right_Bruck_loops.tbl");  # right Bruck loops
-ReadPackage("RightQuasigroups", "data/small_racks.tbl");       # small racks
-ReadPackage("RightQuasigroups", "data/small_quandles.tbl");    # small quandles
+ReadPackage("RightQuasigroups", "data/small_racks.tbl");        # small racks (more is read upon calling SmallRack(n,m) for the first time)
+ReadPackage("RightQuasigroups", "data/small_quandles.tbl");     # small quandles (more is read upon calling SmallQuandle(n,m) for the first time)
+#ReadPackage("RightQuasigroups", "data/connected_quandles.tbl"); # connected quandles
 
 # up to isotopism
 ReadPackage("RightQuasigroups", "data/itp_small_loops.tbl");     # small loops up to isotopism
@@ -44,24 +49,18 @@ ReadPackage("RightQuasigroups", "data/itp_small_loops.tbl");     # small loops u
 
 InstallGlobalFunction( RQ_LibraryByName, 
 function( name )
-    #up to isomorphism
-    if name = "left Bol loops" then return RQ_left_Bol_loops; 
-    elif name = "Moufang loops" then return RQ_Moufang_loops;
-    elif name = "Paige loops" then return RQ_Paige_loops;
-    elif name = "code loops" then return RQ_code_loops;
-    elif name = "Steiner loops" then return RQ_Steiner_loops;
-    elif name = "CC loops" then return RQ_CC_loops;
-    elif name = "RCC loops" then return RQ_RCC_loops;
-    elif name = "small loops" then return RQ_small_loops;
-    elif name = "interesting loops" then return RQ_interesting_loops;
-    elif name = "nilpotent loops" then return RQ_nilpotent_loops;
-    elif name = "automorphic loops" then return RQ_automorphic_loops;
-    elif name = "right Bruck loops" then return RQ_right_Bruck_loops;
-    elif name = "small racks" then return RQ_small_racks;
-    elif name = "small quandles" then return RQ_small_quandles;
-    #up to isotopism
-    elif name = "itp small loops" then return RQ_itp_small_loops;
+    local varName, fileName;
+    # reconstruct the name of the library
+    name := List( name, function( c ) if c <> ' ' then return c; else return '_'; fi; end ); # replace spaces by underscores
+    varName := Concatenation( "RQ_", name ); # add prefix "RQ_"
+    # check that the variable (library) has been loaded
+    if not IsBoundGlobal( varName ) then # load relevant file
+        fileName := Concatenation( "data/", name, ".tbl" );
+        Info( InfoRightQuasigroups, 2, "RQ: reading library file ", fileName );
+        ReadPackage( "RightQuasigroups", fileName );
     fi;
+    # return the variable (library)
+    return ValueGlobal( varName );
 end);
 
 # DisplayLibraryInfo( name ) 
@@ -101,13 +100,15 @@ function( name )
         s := "The library contains all racks of order less than 11.";
     elif name = "small quandles" then
         s := "The library contains all quandles of order less than 12.";
+    elif name = "connected quandles" then   
+        s := "The library contains all connected quandles of order less than 48.";
     # up to isotopism
     elif name = "itp small loops" then
         s := "The library contains all nonassociative loops of order less than 7 up to isotopism.";
     else
         Info( InfoRightQuasigroups, 1, Concatenation(
             "The admissible names for libraries are: \n",
-            "\"automorphic loops\", ", "\"CC loops\", ", "\"code loops\", ",  "\"interesting loops\", ", "\"itp small loops\", ",
+            "\"automorphic loops\", ", "\"CC loops\", ", "\"connected quandles\, ", "\"code loops\", ",  "\"interesting loops\", ", "\"itp small loops\", ",
             "\"LCC loops\", ", "\"left Bol loops\", ",  "\"left Bruck loops\", ", "\"Moufang loops\", ", "\"nilpotent loops\", ",
             "\"Paige loops\", ", "\"right Bol loops\", ", "\"right Bruck loops\", ", "\"RCC loops\", ", "\"small loops\", ", "\"small quandles\", ", 
             "\"small racks\", ", "and \"Steiner loops\"."
@@ -227,25 +228,25 @@ end);
 
 InstallGlobalFunction( RQ_ActivateLeftBolLoop,
 function( pos_n, m, case )
-    local rep_m, ct, perm;
+    local lib, rep_m, ct, perm;
+    lib := RQ_LibraryByName( "left Bol loops" );
     if not case=false then # p*q
         return RQ_ActivateLeftBolLoopPQ( case[1], case[2], m );
     fi;    
     # in database 
     rep_m := m;
     # searching for a Cayley table on which the loop is based
-    while not IsString( RQ_left_Bol_loops[ 3 ][ pos_n ][ rep_m ] ) do 
+    while not IsString( lib[ 3 ][ pos_n ][ rep_m ] ) do 
         rep_m := rep_m - 1;
     od;
     if rep_m = m then # loop given by encoded Cayley table
-        ct := RQ_DecodeCayleyTable( IsLoop, RQ_left_Bol_loops[ 3 ][ pos_n ][ m ] );
+        ct := RQ_DecodeCayleyTable( IsLoop, lib[ 3 ][ pos_n ][ m ] );
     else # loop given as an isotope of another loop
-        ct := RQ_DecodeCayleyTable( IsLoop, RQ_left_Bol_loops[ 3 ][ pos_n ][ rep_m ] );
-        perm := PermList( ct[ RQ_left_Bol_loops[ 3 ][ pos_n ][ m ] ] );
+        ct := RQ_DecodeCayleyTable( IsLoop, lib[ 3 ][ pos_n ][ rep_m ] );
+        perm := PermList( ct[ lib[ 3 ][ pos_n ][ m ] ] );
         ct := Set( List( ct, row -> OnTuples( row, perm^-1 ) ) );
     fi;
     return LoopByCayleyTable( ct );
-    
 end);
 
 #############################################################################
@@ -256,9 +257,10 @@ end);
 
 InstallGlobalFunction( RQ_ActivateMoufangLoop,
 function( n, pos_n, m )
-    local d, K, F, cocycle;
+    local lib, d, K, F, cocycle;
     # every loop in the library is either a Chein loop or a central extension
-    d := RQ_Moufang_loops[ 3 ][ pos_n ][ m ]; # data
+    lib := RQ_LibraryByName( "Moufang loops" );
+    d := lib[ 3 ][ pos_n ][ m ]; # data
     if Length( d ) = 2 then # Chein loop
         return CheinLoop( SmallGroup( d[1], d[2] ) );
     fi;
@@ -286,7 +288,7 @@ end);
 
 InstallGlobalFunction( RQ_ActivateSteinerLoop,
 function( n, pos_n, m )
-    local d, blocks, i, T, i_in, ij_in, j, MyInt;
+    local lib, d, blocks, i, T, i_in, ij_in, j, MyInt;
 
     #############################################################################
     ##  
@@ -300,7 +302,8 @@ function( n, pos_n, m )
         return Position( "0123456789abcdef", s ) - 1;
     end;
     
-    d := RQ_Steiner_loops[ 3 ][ pos_n ][ m ]; # data for the loop = three strings 
+    lib := RQ_LibraryByName( "Steiner loops" );
+    d := lib[ 3 ][ pos_n ][ m ]; # data for the loop = three strings 
     # creating the blocks
     blocks := []; 
     for i in [1..Length( d[ 1 ] )] do
@@ -333,9 +336,10 @@ end);
 
 InstallGlobalFunction( RQ_ActivateRCCLoop,
 function( n, pos_n, m )
-    local pos_m, g, nr_conj_classes, data, data2, next_compactified, x, i, rel_m, G, section, pos_conjugacy_classes;
+    local lib, pos_m, g, nr_conj_classes, data, data2, next_compactified, x, i, rel_m, G, section, pos_conjugacy_classes;
 
-    if  IsEmpty( RQ_RCC_transitive_groups ) then # data not read yet
+    if IsEmpty( RQ_RCC_transitive_groups ) then # read additional data
+        Info( InfoRightQuasigroups, 2, "RQ: reading data file with transitive groups for RCC loops" );
         ReadPackage( "RightQuasigroups", "data/RCC/RCC_transitive_groups.tbl" );
     fi;
     # determining the transitive group corresponding to pos_n, m
@@ -345,8 +349,9 @@ function( n, pos_n, m )
     od;
     g := RQ_RCC_loops[ 3 ][ pos_n ][ 1 ][ pos_m ]; # index of transitive group (of degree n) in GAP library
     # activating data for the group, if needed
-    if not IsBound( RQ_RCC_sections[ pos_n ][ pos_m ] ) then # PROG: IsBound( ls[ i, j ]) is not supported
+    if not IsBound( RQ_RCC_sections[ pos_n ][ pos_m ] ) then 
         # data must be read from file and decoded
+        Info( InfoRightQuasigroups, 2, "RQ: reading data file with sections for RCC loops" );
         ReadPackage( "RightQuasigroups", Concatenation( "data/RCC/sections", String(n), ".", String(g), ".tbl" ) );
         # variable RQ_aux is now read and ready to be processed
         nr_conj_classes := Length( RQ_RCC_transitive_groups[ pos_n ][ pos_m ][ 2 ] );
@@ -413,6 +418,7 @@ function( n, pos_n, m, case )
         pos_n := Position( powers[p], n );
         if not IsBound( RQ_CC_cocycles[p] ) then
             # data not read yet, activate once
+            Info( InfoRightQuasigroups, 2, "RQ: reading data file with cocycle for CC loops" );
             ReadPackage( "RightQuasigroups", Concatenation( "data/CC/CC_cocycles_", String(p), ".tbl" ) );
             # decode cocycles and separate coordinates from a long string
             for i in [1..Length(powers[p])] do
@@ -640,10 +646,11 @@ function( category, n, m )
 
     # load data file if needed
     if not IsBound( groups[ n ] ) then
-        Info( InfoRightQuasigroups, 1, " - reading data file " );
         if category = IsRack then
+            Info( InfoRightQuasigroups, 2, "RQ: reading data file with racks of size ", n );
             ReadPackage( "RightQuasigroups", Concatenation( "data/racks/racks_of_order_", String(n), ".txt" ) );
         else 
+            Info( InfoRightQuasigroups, 2, "RQ: reading data file with quandles of size ", n );
             ReadPackage( "RightQuasigroups", Concatenation( "data/quandles/quandles_of_order_", String(n), ".txt" ) );
         fi;
     fi;
@@ -669,7 +676,8 @@ function( category, n, m )
         fi;
     od;
 
-    if previous.G <> G then # new group, initialize group parameters
+    if previous.G <> G or previous.m <> m then # new parameters, initialize
+        # PROG: it's not enough to test previous.G <> G since trivial G does not keep track of m and the orbits
         previous.G := G;
         previous.orbs := Orbits( G, [1..n] );
         previous.reps := List( previous.orbs, O -> O[1] );
@@ -798,7 +806,7 @@ function( name, n, m )
         SetIsSteinerLoop( algebra, true );
     elif name = "CC loop" then
         if n in [2,3,5,7] then # use Cayley table for canonical cyclic group
-            algebra := LoopByCayleyTable( IsLoop, RQ_DecodeCayleyTable( lib[ 3 ][ pos_n ][ m ] ) );
+            algebra := LoopByCayleyTable( RQ_DecodeCayleyTable( IsLoop, lib[ 3 ][ pos_n ][ m ] ) );
         else
             algebra := RQ_ActivateCCLoop( n, pos_n, m, case );
         fi;
@@ -807,7 +815,7 @@ function( name, n, m )
         algebra := RQ_ActivateRCCLoop( n, pos_n, m );
         SetIsRCCLoop( algebra, true );
     elif name = "small loop" then
-        algebra := LoopByCayleyTable( IsLoop, RQ_DecodeCayleyTable( lib[ 3 ][ pos_n ][ m ] ) );
+        algebra := LoopByCayleyTable( RQ_DecodeCayleyTable( IsLoop, lib[ 3 ][ pos_n ][ m ] ) );
     elif name = "interesting loop" then
         if [n,m] = [96,1] then # simple Bol loop of order 96
             g := Group((1,4)(2,9)(3,10)(6,11)(7,12)(13,21)(14,22)(15,24)(16,23)(17,30)(18,29)(19,31)(20,32)(33,35)(38,40), 
@@ -816,21 +824,21 @@ function( name, n, m )
             g := Action( g, RightCosets( g, h ), OnRight );
             algebra := LoopByRightSection([1..n],Union(Filtered(ConjugacyClasses(g),c->Size(c) in [1,15,80])));
         else             
-            algebra := LoopByCayleyTable( IsLoop, RQ_DecodeCayleyTable( lib[ 3 ][ pos_n ][ m ][ 1 ] ) );
+            algebra := LoopByCayleyTable( RQ_DecodeCayleyTable( IsLoop, lib[ 3 ][ pos_n ][ m ][ 1 ] ) );
         fi;
         SetName( algebra, lib[ 3 ][ pos_n ][ m ][ 2 ] ); # special naming for interesting loops
     elif name = "nilpotent loop" then
         algebra := RQ_ActivateNilpotentLoop( lib[ 3 ][ pos_n ][ m ] );
     elif name = "automorphic loop" then
         if not n in [3, 9, 27, 81] then # use Cayley table
-            algebra := LoopByCayleyTable( IsLoop, RQ_DecodeCayleyTable( lib[ 3 ][ pos_n ][ m ] ) );
+            algebra := LoopByCayleyTable( RQ_DecodeCayleyTable( IsLoop, lib[ 3 ][ pos_n ][ m ] ) );
         else # use associated left Bruck loop
             algebra := RQ_ActivateAutomorphicLoop( n, m );
         fi;
         SetIsAutomorphicLoop( algebra, true );
     elif name = "right Bruck loop" then
         if not n in [27,81] then # use Cayley table
-            algebra := LoopByCayleyTable( IsLoop, RQ_DecodeCayleyTable( lib[ 3 ][ pos_n ][ m ] ) );
+            algebra := LoopByCayleyTable( RQ_DecodeCayleyTable( IsLoop, lib[ 3 ][ pos_n ][ m ] ) );
         else # use cocycles
             algebra := RQ_ActivateRightBruckLoop( n, m );
         fi;
@@ -841,6 +849,9 @@ function( name, n, m )
     elif name = "small quandle" then
         algebra := RQ_ActivateRackOrQuandle( IsQuandle, n, m );
         SetIsQuandle( algebra, true );
+    elif name = "connected quandle" then
+        # lib[3][pos_n][m] = [ generators_of_group, [ translation ] ]
+        algebra := QuandleByQuandleEnvelope( Group( lib[3][pos_n][m][1] ), [1], lib[3][pos_n][m][2], ConstructorStyle( true, false ) ); 
     # up to isotopism     
     elif name = "itp small loop" then
         return LibraryAlgebra( "small loops", n, lib[ 3 ][ pos_n ][ m ] );
@@ -872,6 +883,7 @@ end);
 # RightBruckLoop( n, m )
 # SmallRack( n, m )
 # SmallQuandle( n, m )
+# ConnectedQuandle( n, m )
 # ItpSmallLoop( n, m )   
 
 InstallMethod( LeftBolLoop, "for two positive integers",
@@ -1006,6 +1018,12 @@ InstallMethod( SmallQuandle, "for two positive integers",
     [ IsPosInt, IsPosInt ],
 function( n, m )
     return LibraryAlgebra( "small quandle", n, m );
+end );
+
+InstallMethod( ConnectedQuandle, "for two positive integers",
+    [ IsPosInt, IsPosInt ],
+function( n, m )
+    return LibraryAlgebra( "connected quandle", n, m );
 end );
 
 InstallMethod( ItpSmallLoop, "for two positive integers",

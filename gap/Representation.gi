@@ -20,6 +20,17 @@ function( Q )
     return IsRightQuasigroup;
 end );
 
+InstallOtherMethod( CategoryOfRightQuasigroup, "for a list of right quasigroups",
+    [ IsList ],
+function( ls )
+    if not ForAll( ls, IsRightQuasigroup ) then
+        Error( "RQ: <1> must be a list of right quasigroups." );
+    fi;
+    if ForAll( ls, IsLoop ) then return IsLoop; fi;
+    if ForAll( ls, IsQuasigroup ) then return IsQuasigroup; fi;
+    return IsRightQuasigroup;
+end );
+
 # DISPLAYING RIGHT QUASIGROUPS AND THEIR ELEMENTS
 # _____________________________________________________________________________
 
@@ -463,6 +474,15 @@ InstallOtherMethod( ParentInd, "for right quasigroup",
     Q -> ParentInd( Elements( Q ) )
 );
 
+InstallOtherMethod( ParentInd, "for mapping",
+    [ IsMapping ],
+function( m )  
+    if IsBijective( m ) and Source( m ) = Range( m ) then
+        return AsParentPerm( m );
+    fi;
+    return AsParentTransformation( m );
+end );
+
 # IsIndexBased
 
 InstallMethod( IsIndexBased, "for right quasigroup",
@@ -539,6 +559,9 @@ function( Q )
         AddSet( gens, best_gen );
         sub := best_S;
     od;
+    if Length( gens ) <= Length( GeneratorsOfRightQuasigroup( Q ) ) then
+        SetGeneratorsOfMagma( Q, gens );
+    fi;
     return gens;
 end );
 
@@ -553,7 +576,11 @@ function( Q )
         Add( gens, diff[ Length(diff) ] );
         diff := Difference( diff, RQ_Subalgebra( Q, gens ) );
     od;
-    return Set( gens );
+    gens := Set( gens );
+    if Length( gens ) <= Length( GeneratorsOfRightQuasigroup( Q ) ) then
+        SetGeneratorsOfMagma( Q, gens );
+    fi;
+    return gens;
 end );
 
 # \< (comparing two right quasigroups with common parent)
@@ -578,6 +605,9 @@ function(a,b)
     fi;
     return ga<gb;
 end );
+
+# MAPPINGS, PARENT PERMUTATIONS AND CANONICAL PERMUTATIONS
+# _____________________________________________________________________________
 
 # AUXILIARY PROGRAMMING METHODS
 # _____________________________________________________________________________

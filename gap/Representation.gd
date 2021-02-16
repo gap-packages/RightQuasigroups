@@ -122,9 +122,12 @@ DeclareCategory( "IsLoop", IsQuasigroup and IsMultiplicativeElementWithInverseCo
 
 #! @EndGroup
 
-#! @Arguments Q
-#! @Returns the smallest category from among `IsRightQuasigroup`, `IsQuasigroup` and 
-#! `IsLoop` to which the right quasigroup <Arg>Q</Arg> belongs.
+#! @Arguments obj
+#! @Returns If the argument is a right quasigroup, returns the smallest
+#! category from among `IsRightQuasigroup`, `IsQuasigroup` and `IsLoop` into which the right quasigroup belongs.
+#! If the argument is a list of right quasigroups, returns the the smallest
+#! category from among `IsRightQuasigroup`, `IsQuasigroup` and `IsLoop` into which all the right quasigroups
+#! on the list belong.
 #! @Description All declared right quasigroups, quasigroups and loops belong to the filter `IsRightQuasigroup`.
 #! It is often useful to know if a right quasigroup is in fact declared as a quasigroup or a loop,
 #! which is what the above method furnishes.
@@ -137,6 +140,8 @@ DeclareOperation( "CategoryOfRightQuasigroup", [ IsRightQuasigroup ] );
 #! [ true, true, true, false, false ]
 #! gap> CategoryOfRightQuasigroup( Q );
 #! <Category "IsQuasigroup">
+#! gap> CategoryOfRightQuasigroup( [ Q, ProjectionRightQuasigroup( 5 ) ] ); # common category
+#! <Category "IsRightQuasigroup">
 #! @EndExampleSession
 
 # DISPLAYING RIGHT QUASIGROUPS AND THEIR ELEMENTS
@@ -291,7 +296,7 @@ DeclareOperation( "ChangeUnderlyingSet", [ IsRightQuasigroup, IsCollection ] );
 
 #! <P/>The $i$th element of a right quasigroup `Q` can be obtained by `Elements( Q )[ i ]`.
 
-#! <P/>The $i$the element of the parent `Parent( Q )` or a right quasigroup `Q` can be obtained
+#! <P/>The $i$th element of the parent `Parent( Q )` or a right quasigroup `Q` can be obtained
 #! by `Q.i` (see Section <Ref Sect="Section_Parent"/>). Note that `Q.i` need not be the same element
 #! as `Elements( Q )[ i ]`, in fact, it need not even be an element of `Q`.
 
@@ -308,7 +313,7 @@ DeclareOperation( "ChangeUnderlyingSet", [ IsRightQuasigroup, IsCollection ] );
 #! In case of quasigroups, the left division is obtained via `LeftQuotient( x, y )` or `LeftDivision( x, y )`
 #! but not by `x\y` since `\` is not supported in &GAP; as a binary operation symbol.
 
-#! <P/>In each of these operations, one of the two arguments can be a list of right quasigroup elements,
+#! <P/>For each of these operations, one of the two arguments can be a list of right quasigroup elements,
 #! in which case the corresponding list is returned.
 
 #! @Arguments x,y
@@ -581,11 +586,15 @@ DeclareOperation( "Associator", [ IsRightQuasigroupElement, IsRightQuasigroupEle
 #! if it is index based, is its own parent and the underlying set is $[1..n]$.
 #! Many computationally intensive methods of &RightQuasigroups; internally work with canonical right quasigroups.
 
-#! @Arguments x 
-#! @Returns the index of the element `x`, that is, the position of `x`
-#! among the elements of the parent right quasigroup. The operation also accepts 
-#! a list of right quasigroup elements or a right quasigroup as the argument, in which
-#! case the corresponding list of indices is returned.
+#! @Arguments arg
+#! @Returns This is a function that converts a variety of objects into their indices representation.
+#! If <Arg>arg</Arg> is a right quasigroup element, returns the index of <Arg>arg</Arg>, that is,
+#! the position of <Arg>arg</Arg> among the elements of the parent right quasigroup.
+#! If the argument is a list of right quasigroup elements or a right quasigroup, returns
+#! the corresponding list of indices.
+#! Finally, if <Arg>arg</Arg> is a right quasigroup mapping with source `Q1` and range `Q2`,
+#! the function calls `AsParentPerm( `<Arg>arg</Arg>` )` if `Q1 = Q2` and <Arg>arg</Arg> is bijective,
+#! else it calls `AsParentTransformation( `<Arg>arg</Arg>` )`.
 DeclareOperation( "ParentInd", [ IsRightQuasigroupElement ] );
 
 #! @Arguments Q
@@ -673,13 +682,17 @@ DeclareSynonymAttr( "GeneratorsOfLoop", GeneratorsOfQuasigroup );
 #! <P/>The function `SmallGeneratingSet( Q )` returns a small generating set of a right quasigroup `Q` obtained by a greedy
 #! algorithm that starts with the empty set of generators and in every steps adds the first element of `Q` that enlarges
 #! the generated subalgebra the most. There is no guarantee that `SmallGeneratingSet` returns a generating set of smallest
-#! possible cardinality.
+#! possible cardinality. If the returned set `gens` of generators is smaller than the set returned by
+#! `GeneratorsOfRightQuasigroup( `<Arg>Q</Arg>` )`, the value of `GeneratorsOfRightQuasigroup( `<Arg>Q</Arg>` )`
+#! is set to `gens`.
 
 # Attribute GeneratorsSmallest already declared for groups.
 
 #! <P/>The elements of a right quasigroup inherit a linear ordering from the underlying set. The attribute
 #! `GeneratorsSmallest( Q )` returns the smallest generating set of `Q` with respect to the lexicographic
-#! ordering of elements of `Q`.
+#! ordering of elements of `Q`. If the returned set `gens` of generators is smaller than the set returned by
+#! `GeneratorsOfRightQuasigroup( `<Arg>Q</Arg>` )`, the value of `GeneratorsOfRightQuasigroup( `<Arg>Q</Arg>` )`
+#! is set to `gens`.
 
 # \< (comparing two right quasigroups with common parent)
 

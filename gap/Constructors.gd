@@ -24,9 +24,9 @@
 #! we allow the provided constructor style to be incomplete, that is, having only one (or none) of the
 #! components `indexBased` and `checkArguments`; the missing components are assumed to have default values then.
 
-#! <P/>**Note:** In regard to checking of arguments in constructors of &RightQuasigroups;, the optional
+#! <P/>**Note:** In regard to checking of arguments in right quasigroup constructors of &RightQuasigroups;, the optional
 #! component `constructorStyle.checkArguments` replaces the standard naming mechanism of &GAP; in which `FunctionNC` does not check its
-#! arguments while the corresponding `Function` does.
+#! arguments while the corresponding `Function` does. Outside of those constructors, the `NC` convention is kept.
 
 #! @Arguments index_based, check_arguments
 #! @Returns `true` and changes the default constructor style according to the bool values `index_based` and `check_arguments`.
@@ -839,21 +839,4 @@ DeclareOperation( "ProjectionRightQuasigroup", [ IsCollection ] );
 #! gap> Q := ProjectionRightQuasigroup( [1..1000] );; # 375 ms to construct
 #! gap> Q.123*Q.456;
 #! r123
-#! @EndExampleSession
-
-#! @Arguments G[, constructorStyle]
-#! @Returns the right core of a group `G`, that is, the right quasigroup on `G`
-#! with multiplication given by $x*y = yx^{-1}y$. If `G` is an additive group, the multiplication
-#! will be given by $x*y = y - x + y$ (which presumably results in $x*y = 2y-x$ under the assumption
-#! that additive groups in &GAP; are commutative).
-#! @Description Note: The value of `constructorStyle.checkArguments` of the optional argument `constructorStyle`
-#! does not come into play and need not be specified.
-DeclareOperation( "RightCoreOfGroup", [ IsGroup ] );
-
-#! @BeginExampleSession
-#! gap> G := AlternatingGroup( 5 );
-#! gap> Q := RightCoreOfGroup( G );
-#! <right quasigroup of size 60>
-#! gap> Q[(1,2,3)]*Q[(1,2,3,4,5)] = Q[(1,2,3)*(1,2,3,4,5)^(-1)*(1,2,3)];
-#! true
 #! @EndExampleSession

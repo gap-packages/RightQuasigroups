@@ -4,56 +4,6 @@
 
 #! @Chapter Associated permutation groups
 
-# PARENT PERMUTATIONS AND CANONICAL PERMUTATIONS
-# _____________________________________________________________________________
-
-#! @Section Parent permutations and canonical permutations
-
-#! <P/>Suppose that `Q` is a right quasigroup with parent `P`, let `nQ = Size(Q)` and `nP = Size(P)`.
-#! Two types of permutations can be understood as permutations of `Q`:
-#! <List>
-#! <Item>a permutation on `[1..nQ]`, which we will call
-#! **canonical permutation**<Index Subkey="canonical">permutation</Index><Index>canonical permutation</Index>, and</Item>
-#! <Item>a permuation on `[1..nP]` that only moves points within `ParentInd( Q )`, which we will call
-#! **parent permutation**<Index Subkey="parent">permutation</Index><Index>parent permutation</Index>.</Item>
-#! </List>
-#! <P/>
-
-#! <P/>Most permutations encountered in &RightQuasigroups; are parent permutations, such as all right translations,
-#! all elements of multiplication groups, etc. 
-#! However, it is often useful to work with canonical permutations, for instance while considering right translations
-#! in the context of multiplication tables (which, by definition, contain entries from `[1..nQ]`), or when
-#! dealing with isomorphisms between right quasigroups on different underlying sets.
-
-#! <P/>The following functions convert between the two types of permutations.
-
-#! @Arguments Q, f
-#! @Returns the parent permutation `g` corresponding to the canonical permutation <Arg>f</Arg>
-#! on the right quasigroup <Arg>Q</Arg>. That is, `g` fixes all points outside of `ParentInd( `<Arg>Q</Arg>` )`
-#! and if `i` is an element of `ParentInd( `<Arg>Q</Arg>` )` then `i^g = j` iff `u^`<Arg>f</Arg>` = v`,
-#! `ParentInd( Elements( `<Arg>Q</Arg>` )[ u ] ) = i` and `ParentInd( Elements( `<Arg>Q</Arg>` )[ v ] ) = j`.
-DeclareOperation( "AsParentPerm", [ IsRightQuasigroup, IsPerm ] );
-
-#! @Arguments Q, f
-#! @Returns the canonical permutation `g` corresponding to the parent permutation <Arg>f</Arg>
-#! on the parent of the right quasigroup <Arg>Q</Arg>. That is, `g` is a permutation on `[1..Size( `<Arg>Q</Arg>` )]`
-#! and if `i` is an element of `[1..Size( `<Arg>Q</Arg>` )]` then `i^g = j` iff
-#! `ParentInd( Elements( `<Arg>Q</Arg>` )[i] ) = u`, `ParentInd( Elements( `<Arg>Q</Arg>` )[ j ] ) = v` and `u^`<Arg>f</Arg>` = v`.
-#! @Description Note that the returned permutation is independent of how <Arg>f</Arg> operates outside
-#! of `ParentInd( `<Arg>Q</Arg>` )`. We therefore allow <Arg>f</Arg> to move points outside of `ParentInd( `<Arg>Q</Arg>` )`.
-DeclareOperation( "AsCanonicalPerm", [ IsRightQuasigroup, IsPerm ] );
-
-#! @BeginExampleSession
-#! gap> P := ProjectionRightQuasigroup( 10 );;
-#! gap> Q := Subrightquasigroup( P, [3,5,7] );;
-#! gap> ParentInd( Q );
-#! [ 3, 5, 7 ]
-#! gap> AsParentPerm( Q, (1,2,3) );
-#! (3,5,7)
-#! gap> AsCanonicalPerm( Q, (3,5,7)(8,9) ); # moved points outside of ParentInd( Q ) are ignored
-#! (1,2,3)
-#! @EndExampleSession
-
 # TRANSLATIONS AND SECTIONS
 # _____________________________________________________________________________
 
@@ -61,11 +11,11 @@ DeclareOperation( "AsCanonicalPerm", [ IsRightQuasigroup, IsPerm ] );
 
 #! <P/>Let `Q` be a right quasigroup with a parernt of size `nP`.
 #! Right translations of right quasigroups and left translations of quasigroups
-#! are represented as parent permutations in &RightQuasigroups;, cf. Section <Ref Sect = "Section_ParentPerms"/>.
+#! are represented as parent permutations in &RightQuasigroups;, cf. Section <Ref Sect = "Section_MappingsIntro"/>.
 #! Consequently, such translations are elements of the symmetric group on `[1..nP]`.
 
 #! <P/>A left translation of a right quasigroup `Q` is not necessarily a permutation
-#! and it is represented as a transformation on `[1..nP]` that fixes all
+#! and it is represented as transformation on `[1..nP]` that fixes all
 #! points outside of `ParentInd( Q )`. Consequently, such translations are
 #! elements of the full transformation semigroup on `[1..nP]`.
 
@@ -297,10 +247,10 @@ DeclareAttribute( "InnerMappingGroup", IsLoop );
 
 #! @Arguments Q
 #! @Returns the various right displacement groups of the right quasigroup <Arg>Q</Arg>.
-DeclareAttribute( "RightPositiveDisplacementGroup", IsRightQuasigroup );
+DeclareAttribute( "RightPosDisplacementGroup", IsRightQuasigroup );
 
 #! @Arguments Q
-DeclareAttribute( "RightNegativeDisplacementGroup", IsRightQuasigroup );
+DeclareAttribute( "RightNegDisplacementGroup", IsRightQuasigroup );
 
 #! @Arguments Q
 DeclareAttribute( "RightDisplacementGroup", IsRightQuasigroup );
@@ -312,10 +262,10 @@ DeclareAttribute( "RightDisplacementGroup", IsRightQuasigroup );
 
 #! @Arguments Q
 #! @Returns the various left displacement groups of the quasigroup <Arg>Q</Arg>.
-DeclareAttribute( "LeftPositiveDisplacementGroup", IsQuasigroup );
+DeclareAttribute( "LeftPosDisplacementGroup", IsQuasigroup );
 
 #! @Arguments Q
-DeclareAttribute( "LeftNegativeDisplacementGroup", IsQuasigroup );
+DeclareAttribute( "LeftNegDisplacementGroup", IsQuasigroup );
 
 #! @Arguments Q
 DeclareAttribute( "LeftDisplacementGroup", IsQuasigroup );
@@ -325,16 +275,23 @@ DeclareAttribute( "LeftDisplacementGroup", IsQuasigroup );
 #! @Arguments Q
 #! @Returns `true` if the quasigroup <Arg>Q</Arg> is isotopic to a group, else returns `false`.
 #! @Description Note that a quasigroup $(Q,\cdot)$ is isotopic to a group iff $\mathrm{Dis}_\ell^+(Q)$
-#! acts regularly on $Q$, in which case $(Q,\cdot)$ is isotopic to $\mathrm{Dis}_\ell^+(Q)$ (cf. Chapter <Ref Chap="Chapter_Iso"/>).
+#! acts regularly on $Q$, in which case $(Q,\cdot)$ is isotopic to $\mathrm{Dis}_\ell^+(Q)$
+#! (cf. Chapter <Ref Chap="Chapter_Morphisms"/>).
 DeclareProperty( "IsIsotopicToGroup", IsQuasigroup );
+
+#! @Arguments Q
+#! @Returns `true` if the quasigroup <Arg>Q</Arg> is isotopic to an abelian group, else returns `false`.
+DeclareProperty( "IsIsotopicToAbelianGroup", IsQuasigroup );
 
 #! @BeginExampleSession
 #! gap> Q := QuasigroupByFunction( GF(5), \- );
 #! <quasigroup of size 5>
-#! gap> RightPositiveDisplacementGroup( Q );
+#! gap> RightPosDisplacementGroup( Q );
 #! Group([ (1,4,5,3,2) ])
 #! gap> LeftDisplacementGroup( Q );
 #! Group([ (1,2,3,5,4) ])
 #! gap> IsIsotopicToGroup( Q );
+#! true
+#! gap> IsIsotopicToAbelianGroup( Q );
 #! true
 #! @EndExampleSession

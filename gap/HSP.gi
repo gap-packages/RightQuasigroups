@@ -8,36 +8,29 @@
 
 InstallGlobalFunction( RQ_DirectProduct,
 function( list )
-    local S, Q, newS, e, x, mult, rq_list, indexBased, category;
+    local S, mult, rdiv, ldiv, rq_list, indexBased, category, prod;
     # assumes that list is nonempty and consists of groups and right quasigroups, with at least one non-group
     if Length( list ) = 1 then 
         return list[ 1 ];
     fi;
     # at least two algebras
     # underlying set
-    S := [[]];
-    for Q in list do
-        newS := [];
-        for e in S do
-            for x in Q do
-                Add( newS, Concatenation( e, [x] ) );
-            od;
-        od;
-        S := ShallowCopy( newS );
-    od;
-    # multiplication function
-    mult := function( x, y )        
-        return List( [1..Length(x)], i -> x[i]*y[i] );
-    end;
+    S := Cartesian( list );
+    # multiplication and right division function
+    mult := function( x, y ) return List( [1..Length(x)], i -> x[i]*y[i] ); end;
+    rdiv := function( x, y ) return List( [1..Length(x)], i -> x[i]/y[i] ); end;
     # selecting category and whether it is index based
     rq_list := Filtered( list, IsRightQuasigroup ); # list of right quasigroups
     indexBased := ForAll( rq_list, IsIndexBased );
-    if ForAll( rq_list, IsLoop ) then category := IsLoop;
-    elif ForAll( rq_list, IsQuasigroup ) then category := IsQuasigroup;
-    else category := IsRightQuasigroup;
+    category := CategoryOfRightQuasigroup( rq_list );
+    if category in [ IsQuasigroup, IsLoop ] then
+        ldiv := function( x, y ) return List( [1..Length(x)], i -> LeftQuotient( x[i]/y[i] ) ); end;
+    else
+        ldiv := fail;
     fi;
-    return RQ_AlgebraByFunction( category, S, mult, fail, fail, fail, ConstructorStyle( indexBased, false ) );
-    # REVISIT: Return quandle/rack if all are quandles/racks? Other varieties? Seems complicated to test everything.
+    prod :=  RQ_AlgebraByFunction( category, S, mult, rdiv, ldiv, fail, ConstructorStyle( indexBased, false ) ); # REVISIT: set One for loops?
+    RQ_InheritProperties( list, prod );
+    return prod;
 end );
 
 # DirectProductOp( list, first )
@@ -136,67 +129,84 @@ end );
 InstallGlobalFunction( RQ_InheritProperties,
 function( P, Q )
     # PROG: Add more as new properties are implemented.
-    # REVISIT: Carefully check that all these are inherited by subloops and factor loops.
-    local category;
-    category := CategoryOfRightQuasigroup( P );
-    if HasIsAssociative( P ) and IsAssociative( P ) then SetIsAssociative( Q, true ); fi;
-    if HasIsCommutative( P ) and IsCommutative( P ) then SetIsCommutative( Q, true ); fi;
-    if HasIsUnipotent( P ) and IsUnipotent( P ) then SetIsUnipotent( Q, true ); fi;
-    if HasIsIdempotent( P ) and IsIdempotent( P ) then SetIsIdempotent( Q, true ); fi;
-    if HasIsRightSelfDistributive( P ) and IsRightSelfDistributive( P ) then SetIsRightSelfDistributive( Q, true ); fi;
-    if HasIsLeftSelfDistributive( P ) and IsLeftSelfDistributive( P ) then SetIsLeftSelfDistributive( Q, true ); fi;
-    if HasIsSelfDistributive( P ) and IsSelfDistributive( P ) then SetIsSelfDistributive( Q, true ); fi;
-    if HasIsFlexible( P ) and IsFlexible( P ) then SetIsFlexible( Q, true ); fi;
-    if HasIsRightAlternative( P ) and IsRightAlternative( P ) then SetIsRightAlternative( Q, true ); fi;
-    if HasIsLeftAlternative( P ) and IsLeftAlternative( P ) then SetIsLeftAlternative( Q, true ); fi;
-    if HasIsAlternative( P ) and IsAlternative( P ) then SetIsAlternative( Q, true ); fi;
-    if HasIsRack( P ) and IsRack( P ) then SetIsRack( Q, true ); fi;
-    if HasIsQuandle( P ) and IsQuandle( P ) then SetIsQuandle( Q, true ); fi;
-    if HasIsLeftQuasigroupMagma( P ) and IsLeftQuasigroupMagma( P ) then SetIsLeftQuasigroupMagma( Q, true ); fi;
-    if HasIsLatinRack( P ) and IsLatinRack( P ) then SetIsLatinRack( Q, true ); fi;
-    if HasIsLatinQuandle( P ) and IsLatinQuandle( P ) then SetIsLatinQuandle( Q, true ); fi;
+    local Ps, i, A, category;
+    if IsList( P ) then 
+        Ps := P;
+    else 
+        Ps := [ P ];
+    fi;
+    # PROG: replace groups with associative loops (possibly commutative).
+    # That way implied properties can be detected.
+    # This is safe only if no inherited property depends on the order and such.
+    for i in [1..Length(Ps)] do
+        A := Ps[i];
+        if IsGroup( A ) then
+            Ps[i] := LoopByCayleyTable([[1]]);
+            SetIsAssociative(Ps[i], true );
+            if HasIsCommutative( Ps[i] ) and IsCommutative( Ps[i] ) then
+                SetIsCommutative( Ps[i], true );
+            fi;
+        fi;
+    od;
+    # inherit properties
+    category := CategoryOfRightQuasigroup( Q );
+    if ForAll( Ps, HasIsAssociative ) and ForAll( Ps, IsAssociative ) then SetIsAssociative( Q, true ); fi;
+    if ForAll( Ps, HasIsCommutative ) and ForAll( Ps, IsCommutative ) then SetIsCommutative( Q, true ); fi;
+    if ForAll( Ps, HasIsUnipotent ) and ForAll( Ps, IsUnipotent ) then SetIsUnipotent( Q, true ); fi;
+    if ForAll( Ps, HasIsIdempotent ) and ForAll( Ps, IsIdempotent ) then SetIsIdempotent( Q, true ); fi;
+    if ForAll( Ps, HasIsRightSelfDistributive ) and ForAll( Ps, IsRightSelfDistributive ) then SetIsRightSelfDistributive( Q, true ); fi;
+    if ForAll( Ps, HasIsLeftSelfDistributive ) and ForAll( Ps, IsLeftSelfDistributive ) then SetIsLeftSelfDistributive( Q, true ); fi;
+    if ForAll( Ps, HasIsSelfDistributive ) and ForAll( Ps, IsSelfDistributive ) then SetIsSelfDistributive( Q, true ); fi;
+    if ForAll( Ps, HasIsFlexible ) and ForAll( Ps, IsFlexible ) then SetIsFlexible( Q, true ); fi;
+    if ForAll( Ps, HasIsRightAlternative ) and ForAll( Ps, IsRightAlternative ) then SetIsRightAlternative( Q, true ); fi;
+    if ForAll( Ps, HasIsLeftAlternative ) and ForAll( Ps, IsLeftAlternative ) then SetIsLeftAlternative( Q, true ); fi;
+    if ForAll( Ps, HasIsAlternative ) and ForAll( Ps, IsAlternative ) then SetIsAlternative( Q, true ); fi;
+    if ForAll( Ps, HasIsRack ) and ForAll( Ps, IsRack ) then SetIsRack( Q, true ); fi;
+    if ForAll( Ps, HasIsQuandle ) and ForAll( Ps, IsQuandle ) then SetIsQuandle( Q, true ); fi;
+    if ForAll( Ps, HasIsLeftQuasigroupMagma ) and ForAll( Ps, IsLeftQuasigroupMagma ) then SetIsLeftQuasigroupMagma( Q, true ); fi;
+    if ForAll( Ps, HasIsLatinRack ) and ForAll( Ps, IsLatinRack ) then SetIsLatinRack( Q, true ); fi;
+    if ForAll( Ps, HasIsLatinQuandle ) and ForAll( Ps, IsLatinQuandle ) then SetIsLatinQuandle( Q, true ); fi;
     if category in [ IsQuasigroup, IsLoop ] then
-        if HasIsPowerAssociative( P ) and IsPowerAssociative( P ) then SetIsPowerAssociative( Q, true ); fi;
-        if HasIsDiassociative( P ) and IsDiassociative( P ) then SetIsDiassociative( Q, true ); fi; 
-        if HasIsSemisymmetric( P ) and IsSemisymmetric( P ) then SetIsSemisymmetric( Q, true ); fi;
-        if HasIsTotallySymmetric( P ) and IsTotallySymmetric( P ) then SetIsTotallySymmetric( Q, true ); fi;
-        if HasIsEntropic( P ) and IsEntropic( P ) then SetIsEntropic( Q, true ); fi;
-        if HasIsSteinerQuasigroup( P ) and IsSteinerQuasigroup( P ) then SetIsSteinerQuasigroup( Q, true ); fi;
+        if ForAll( Ps, HasIsPowerAssociative ) and ForAll( Ps, IsPowerAssociative ) then SetIsPowerAssociative( Q, true ); fi;
+        if ForAll( Ps, HasIsDiassociative ) and ForAll( Ps, IsDiassociative ) then SetIsDiassociative( Q, true ); fi; 
+        if ForAll( Ps, HasIsSemisymmetric ) and ForAll( Ps, IsSemisymmetric ) then SetIsSemisymmetric( Q, true ); fi;
+        if ForAll( Ps, HasIsTotallySymmetric ) and ForAll( Ps, IsTotallySymmetric ) then SetIsTotallySymmetric( Q, true ); fi;
+        if ForAll( Ps, HasIsEntropic ) and ForAll( Ps, IsEntropic ) then SetIsEntropic( Q, true ); fi;
+        if ForAll( Ps, HasIsSteinerQuasigroup ) and ForAll( Ps, IsSteinerQuasigroup ) then SetIsSteinerQuasigroup( Q, true ); fi;
     fi;
     if category = IsLoop then 
-        if HasHasRightInverseProperty( P ) and HasRightInverseProperty( P ) then SetHasRightInverseProperty( Q, true ); fi; 
-        if HasHasLeftInverseProperty( P ) and HasLeftInverseProperty( P ) then SetHasLeftInverseProperty( Q, true ); fi; 
-        if HasHasInverseProperty( P ) and HasInverseProperty( P ) then SetHasInverseProperty( Q, true ); fi; 
-        if HasHasWeakInverseProperty( P ) and HasWeakInverseProperty( P ) then SetHasWeakInverseProperty( Q, true ); fi; 
-        if HasHasTwosidedInverses( P ) and HasTwosidedInverses( P ) then SetHasTwosidedInverses( Q, true ); fi;
-        if HasHasAutomorphicInverseProperty( P ) and HasAutomorphicInverseProperty( P ) then SetHasAutomorphicInverseProperty( Q, true ); fi;
-        if HasHasAntiautomorphicInverseProperty( P ) and HasAntiautomorphicInverseProperty( P ) then SetHasAntiautomorphicInverseProperty( Q, true ); fi;
-        if HasIsExtraLoop( P ) and IsExtraLoop( P ) then SetIsExtraLoop( Q, true ); fi;
-        if HasIsMoufangLoop( P ) and IsMoufangLoop( P ) then SetIsMoufangLoop( Q, true ); fi;
-        if HasIsCLoop( P ) and IsCLoop( P ) then SetIsCLoop( Q, true ); fi;
-        if HasIsRightBolLoop( P ) and IsRightBolLoop( P ) then SetIsRightBolLoop( Q, true ); fi;
-        if HasIsLeftBolLoop( P ) and IsLeftBolLoop( P ) then SetIsLeftBolLoop( Q, true ); fi;
-        if HasIsRCLoop( P ) and IsRCLoop( P ) then SetIsRCLoop( Q, true ); fi;
-        if HasIsLCLoop( P ) and IsLCLoop( P ) then SetIsLCLoop( Q, true ); fi;
-        if HasIsRightNuclearSquareLoop( P ) and IsRightNuclearSquareLoop( P ) then SetIsRightNuclearSquareLoop( Q, true ); fi;
-        if HasIsLeftNuclearSquareLoop( P ) and IsLeftNuclearSquareLoop( P ) then SetIsLeftNuclearSquareLoop( Q, true ); fi;
-        if HasIsMiddleNuclearSquareLoop( P ) and IsMiddleNuclearSquareLoop( P ) then SetIsMiddleNuclearSquareLoop( Q, true ); fi;
-        if HasIsNuclearSquareLoop( P ) and IsNuclearSquareLoop( P ) then SetIsNuclearSquareLoop( Q, true ); fi;
-        if HasIsLeftPowerAlternative( P ) and IsLeftPowerAlternative( P ) then SetIsLeftPowerAlternative( Q, true ); fi;
-        if HasIsRightPowerAlternative( P ) and IsRightPowerAlternative( P ) then SetIsRightPowerAlternative( Q, true ); fi;
-        if HasIsPowerAlternative( P ) and IsPowerAlternative( P ) then SetIsPowerAlternative( Q, true ); fi;
-        if HasIsRCCLoop( P ) and IsRCCLoop( P ) then SetIsRCCLoop( Q, true ); fi;
-        if HasIsLCCLoop( P ) and IsLCCLoop( P ) then SetIsLCCLoop( Q, true ); fi;
-        if HasIsCCLoop( P ) and IsCCLoop( P ) then SetIsCCLoop( Q, true ); fi;
-        if HasIsOsbornLoop( P ) and IsOsbornLoop( P ) then SetIsOsbornLoop( Q, true ); fi;
-        # REVISIT: Is being a code loop inherited by subloops and factor loops? 
-        if HasIsSteinerLoop( P ) and IsSteinerLoop( P ) then SetIsSteinerLoop( Q, true ); fi;
-        if HasIsRightBruckLoop( P ) and IsRightBruckLoop( P ) then SetIsRightBruckLoop( Q, true ); fi;
-        if HasIsLeftBruckLoop( P ) and IsLeftBruckLoop( P ) then SetIsLeftBruckLoop( Q, true ); fi;
-        if HasIsRightALoop( P ) and IsRightALoop( P ) then SetIsRightALoop( Q, true ); fi;
-        if HasIsMiddleALoop( P ) and IsMiddleALoop( P ) then SetIsMiddleALoop( Q, true ); fi;
-        if HasIsLeftALoop( P ) and IsLeftALoop( P ) then SetIsLeftALoop( Q, true ); fi;
-        if HasIsALoop( P ) and IsALoop( P ) then SetIsALoop( Q, true ); fi;
+        if ForAll( Ps, HasHasRightInverseProperty ) and ForAll( Ps, HasRightInverseProperty ) then SetHasRightInverseProperty( Q, true ); fi; 
+        if ForAll( Ps, HasHasLeftInverseProperty ) and ForAll( Ps, HasLeftInverseProperty ) then SetHasLeftInverseProperty( Q, true ); fi; 
+        if ForAll( Ps, HasHasInverseProperty ) and ForAll( Ps, HasInverseProperty ) then SetHasInverseProperty( Q, true ); fi; 
+        if ForAll( Ps, HasHasWeakInverseProperty ) and ForAll( Ps, HasWeakInverseProperty ) then SetHasWeakInverseProperty( Q, true ); fi; 
+        if ForAll( Ps, HasHasTwosidedInverses ) and ForAll( Ps, HasTwosidedInverses ) then SetHasTwosidedInverses( Q, true ); fi;
+        if ForAll( Ps, HasHasAutomorphicInverseProperty ) and ForAll( Ps, HasAutomorphicInverseProperty ) then SetHasAutomorphicInverseProperty( Q, true ); fi;
+        if ForAll( Ps, HasHasAntiautomorphicInverseProperty ) and ForAll( Ps, HasAntiautomorphicInverseProperty ) then SetHasAntiautomorphicInverseProperty( Q, true ); fi;
+        if ForAll( Ps, HasIsExtraLoop ) and ForAll( Ps, IsExtraLoop ) then SetIsExtraLoop( Q, true ); fi;
+        if ForAll( Ps, HasIsMoufangLoop ) and ForAll( Ps, IsMoufangLoop ) then SetIsMoufangLoop( Q, true ); fi;
+        if ForAll( Ps, HasIsCLoop ) and ForAll( Ps, IsCLoop ) then SetIsCLoop( Q, true ); fi;
+        if ForAll( Ps, HasIsRightBolLoop ) and ForAll( Ps, IsRightBolLoop ) then SetIsRightBolLoop( Q, true ); fi;
+        if ForAll( Ps, HasIsLeftBolLoop ) and ForAll( Ps, IsLeftBolLoop ) then SetIsLeftBolLoop( Q, true ); fi;
+        if ForAll( Ps, HasIsRCLoop ) and ForAll( Ps, IsRCLoop ) then SetIsRCLoop( Q, true ); fi;
+        if ForAll( Ps, HasIsLCLoop ) and ForAll( Ps, IsLCLoop ) then SetIsLCLoop( Q, true ); fi;
+        if ForAll( Ps, HasIsRightNuclearSquareLoop ) and ForAll( Ps, IsRightNuclearSquareLoop ) then SetIsRightNuclearSquareLoop( Q, true ); fi;
+        if ForAll( Ps, HasIsLeftNuclearSquareLoop ) and ForAll( Ps, IsLeftNuclearSquareLoop ) then SetIsLeftNuclearSquareLoop( Q, true ); fi;
+        if ForAll( Ps, HasIsMiddleNuclearSquareLoop ) and ForAll( Ps, IsMiddleNuclearSquareLoop ) then SetIsMiddleNuclearSquareLoop( Q, true ); fi;
+        if ForAll( Ps, HasIsNuclearSquareLoop ) and ForAll( Ps, IsNuclearSquareLoop ) then SetIsNuclearSquareLoop( Q, true ); fi;
+        if ForAll( Ps, HasIsLeftPowerAlternative ) and ForAll( Ps, IsLeftPowerAlternative ) then SetIsLeftPowerAlternative( Q, true ); fi;
+        if ForAll( Ps, HasIsRightPowerAlternative ) and ForAll( Ps, IsRightPowerAlternative ) then SetIsRightPowerAlternative( Q, true ); fi;
+        if ForAll( Ps, HasIsPowerAlternative ) and ForAll( Ps, IsPowerAlternative ) then SetIsPowerAlternative( Q, true ); fi;
+        if ForAll( Ps, HasIsRCCLoop ) and ForAll( Ps, IsRCCLoop ) then SetIsRCCLoop( Q, true ); fi;
+        if ForAll( Ps, HasIsLCCLoop ) and ForAll( Ps, IsLCCLoop ) then SetIsLCCLoop( Q, true ); fi;
+        if ForAll( Ps, HasIsCCLoop ) and ForAll( Ps, IsCCLoop ) then SetIsCCLoop( Q, true ); fi;
+        if ForAll( Ps, HasIsOsbornLoop ) and ForAll( Ps, IsOsbornLoop ) then SetIsOsbornLoop( Q, true ); fi;
+        if ForAll( Ps, HasIsSteinerLoop ) and ForAll( Ps, IsSteinerLoop ) then SetIsSteinerLoop( Q, true ); fi;
+        if ForAll( Ps, HasIsRightBruckLoop ) and ForAll( Ps, IsRightBruckLoop ) then SetIsRightBruckLoop( Q, true ); fi;
+        if ForAll( Ps, HasIsLeftBruckLoop ) and ForAll( Ps, IsLeftBruckLoop ) then SetIsLeftBruckLoop( Q, true ); fi;
+        if ForAll( Ps, HasIsRightALoop ) and ForAll( Ps, IsRightALoop ) then SetIsRightALoop( Q, true ); fi;
+        if ForAll( Ps, HasIsMiddleALoop ) and ForAll( Ps, IsMiddleALoop ) then SetIsMiddleALoop( Q, true ); fi;
+        if ForAll( Ps, HasIsLeftALoop ) and ForAll( Ps, IsLeftALoop ) then SetIsLeftALoop( Q, true ); fi;
+        if ForAll( Ps, HasIsALoop ) and ForAll( Ps, IsALoop ) then SetIsALoop( Q, true ); fi;       
     fi;
 end );
 
@@ -849,22 +859,6 @@ function( Q, gens )
     # PROG: this seems to be faster than adding 1 to gens and calculating Blocks( MultiplicationGroup(Q), [1..Size(Parent(Q))], gens )[ 1 ]
 end );
 
-# NaturalHomomorphismByNormalSubloop 
-InstallMethod( NaturalHomomorphismByNormalSubloop, "for two loops",
-    [ IsLoop, IsLoop ],
-function( Q, N )
-    local QmodN, cosets, in_coset, map;
-    QmodN := FactorLoop( Q, N, true ); # index based factor loop here
-    cosets := Set( Orbit( RightMultiplicationGroup( Q ), Elements( N ), OnSets ) ); # same cosets as in the constructor
-    in_coset := function( x )
-        return First( [1..Size( Q )/Size( N )], i -> x in cosets[ i ] );
-    end;
-    map := function( x )
-        return QmodN[ in_coset( x ) ];
-    end;
-    return MappingByFunction( Q, QmodN, map );
-end );
-
 # AllNormalSubloops
 InstallMethod( AllNormalSubloops, "for loop",
     [ IsLoop ],
@@ -1017,8 +1011,7 @@ function( Q, N, style )
     fi;
     cosets := RightCosets( Q, N );
     if style.indexBased then
-        # REVISIT: We are converting to [1..n]. Do we want to keep a different underlying set?
-        ct :=  List( cosets, x -> List( cosets, y -> First( [1..Length(cosets)], i->x[1]*y[1] in cosets[i] ) ) );
+        ct :=  List( cosets, x -> List( cosets, y -> First( cosets, c->x[1]*y[1] in c ) ) );
         factorQ := RQ_AlgebraByCayleyTable( IsLoop, ct, ConstructorStyle( true, false ) );
     else # not index based
         factorQ := RQ_AlgebraShell( IsLoop, cosets, rec( indexBased := false ) );

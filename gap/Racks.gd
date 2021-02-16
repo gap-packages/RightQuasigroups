@@ -10,31 +10,97 @@
 # IsIdempotent already declared in GAP for an element
 # DeclareProperty( "IsIdempotent", IsRightQuasigroup );
 
-#! @Section Testing for racks and quandles
+#! @Section Testing properties of racks and quandles
+
+#! @BeginGroup
+#! @GroupTitle IsRack and IsQuandle
 
 #! @Arguments Q
-#! @Returns `true` if the right quasigroup <Arg>Q</Arg> is a rack, else returns `false`.
+#! @Returns `true` if the right quasigroup <Arg>Q</Arg> is a rack/quandle, else returns `false`.
 DeclareProperty( "IsRack", IsRightQuasigroup );
 
 #! @Arguments Q
-#! @Returns `true` if the right quasigroup <Arg>Q</Arg> is a quandle, else returns `false`.
 DeclareProperty( "IsQuandle", IsRightQuasigroup );
 
-# IsConnectedRack
+#! @EndGroup
 
-# IsConnectedQuandle
-
-# IsHomogeneousRack
-
-# IsHomogeneouseQuandle
+#! @BeginGroup
+#! @GroupTitle IsHomegeneousRack and IsHomogeneousQuandle
 
 #! @Arguments Q
-#! @Returns `true` if the right quasigroup <Arg>Q</Arg> is a latin rack, else returns `false`.
+#! @Returns `true` if the right quasigroup <Arg>Q</Arg> is a homogeneous rack/quandle,
+#! that is, a rack/quandle on which the automorphism group acts transitively.
+DeclareProperty( "IsHomogeneousRack", IsRightQuasigroup );
+
+#! @Arguments Q
+DeclareProperty( "IsHomogeneousQuandle", IsRightQuasigroup );
+
+#! @EndGroup
+
+#! @BeginGroup
+#! @GroupTitle IsConnectedRack and IsConnectedQuandle
+
+#! @Arguments Q
+#! @Returns `true` if the right quasigroup <Arg>Q</Arg> is a connected rack/quandle,
+#! that is, a rack/quandle on which the right multiplication group acts transitively.
+DeclareProperty( "IsConnectedRack", IsRightQuasigroup );
+
+#! @Arguments Q
+DeclareProperty( "IsConnectedQuandle", IsRightQuasigroup );
+
+#! @EndGroup
+
+#! @BeginGroup
+#! @GroupTitle IsLatinRack and IsLatinQuandle
+
+#! @Arguments Q
+#! @Returns `true` if the right quasigroup <Arg>Q</Arg> is a latin rack/quandle, else returns `false`.
 DeclareProperty( "IsLatinRack", IsRightQuasigroup );
 
 #! @Arguments Q
-#! @Returns `true` if the right quasigroup <Arg>Q</Arg> is a latin quandle, else returns `false`.
 DeclareProperty( "IsLatinQuandle", IsRightQuasigroup );
+
+#! @EndGroup
+
+#! @BeginGroup
+#! @GroupTitle IsProjectionRack and IsProjectionQuandle
+
+#! @Arguments Q
+#! @Returns `true` if the right quasigroup <Arg>Q</Arg> is a projection rack/quandle,
+#! that is, a rack/quandle satisfying $x*y=x$.
+DeclareProperty( "IsProjectionRack", IsRightQuasigroup );
+
+#! @Arguments Q
+DeclareProperty( "IsProjectionQuandle", IsRightQuasigroup );
+
+#! @EndGroup
+
+#! @BeginGroup
+#! @GroupTitle IsPermutationalRack and IsPermutationalQuandle
+
+#! @Arguments Q
+#! @Returns `true` if the right quasigroup <Arg>Q</Arg> is a permutational rack/quandle,
+#! that is, a rack/quandle satisfying $x*y=f(x)$ for some permutation $f$ of <Arg>Q</Arg>.
+DeclareProperty( "IsPermutationalRack", IsRightQuasigroup );
+
+#! @Arguments Q
+DeclareProperty( "IsPermutationalQuandle", IsRightQuasigroup );
+
+#! @EndGroup
+
+
+#! @BeginGroup
+#! @GroupTitle IsFaithfulRack and IsFaithfulQuandle
+
+#! @Arguments Q
+#! @Returns `true` if the right quasigroup <Arg>Q</Arg> is a faithful rack/quandle,
+#! that is, a rack/quandle with $x\mapsto R_x$ injective <Arg>Q</Arg>.
+DeclareProperty( "IsFaithfulRack", IsRightQuasigroup );
+
+#! @Arguments Q
+DeclareProperty( "IsFaithfulQuandle", IsRightQuasigroup );
+
+#! @EndGroup
 
 # CONTRUCTORS FOR RACKS
 # _____________________________________________________________________________
@@ -58,15 +124,64 @@ DeclareOperation( "PermutationalRack", [ IsCollection, IsPerm ] );
 
 #! @Section Constructors for quandles
 
-#! @Arguments G, f[, constructorStyle]
-#! @Returns the affine quandle on the abelian group <Arg>G</Arg>, using its automorphism <Arg>f</Arg>.
-#! The group <Arg>G</Arg> can be additive or multiplicative. The mapping <Arg>f</Arg> must be 
-#! an element of `AutomorphismGroup( `<Arg>G</Arg>` )`. The synonym `AlexanderQuandle` is also supported.
-#! @Description With the additive notation for <Arg>G</Arg>, the multiplication in the affine
-#! quandle is given by $x*y = f(x) + y - f(y) = f(x) + (1-f)(y)$.
+# RQ_AffineQuandle( A, f, g, mult, style ) # g = 1-f to check latin property
+DeclareOperation( "RQ_AffineQuandle", [ IsDomain, IsFunction, IsFunction, IsFunction, IsRecord ] );
+
+#! @Arguments S, f[, constructorStyle]
+#! @Returns the affine quandle on <Arg>S</Arg> via <Arg>f</Arg>. Supported arguments are:
+#! <Arg>S</Arg> a group and <Arg>f</Arg> its automorphism (in which case $x*y = f(x)*y*f(y)^{-1}$ and
+#! the resulting quandle is latin iff $y\mapsto y*f(y)^{-1}$ is bijective),
+#! <Arg>S</Arg> an additive group and <Arg>f</Arg> its automorphism (in which case $x*y = f(x)+y-f(y)$ and
+#! the resulting quandle is latin iff $y\mapsto y-f(y)$ is bijective),
+#! <Arg>S</Arg> a field and <Arg>f</Arg> its nonzero element (in which case $x*y = f*x+(1-f)*y$ and
+#! the resulting quandle is latin iff $1-f$ is a nonzero element of <Arg>S</Arg>),
+#! <Arg>S</Arg> a positive integer and <Arg>f</Arg> a positive integer relatively prime to <Arg>S</Arg>
+#! (in which case $x*y = f*x+(1-f)*y$ on `[0..`<Arg>S</Arg>`]` and 
+#! the resulting quandle is latin iff $1-f$ is relatively prime modulo <Arg>S</Arg>).
+#! @Description The synonym `AlexanderQuandle` is supported.
 DeclareOperation( "AffineQuandle", [ IsGroup, IsMapping ] );
 
 DeclareSynonym( "AlexanderQuandle", AffineQuandle );
+
+#! @BeginExampleSession
+#! gap> G := CyclicGroup(5);; f := Elements(AutomorphismGroup(G))[2];
+#! [ f1 ] -> [ f1^2 ]
+#! gap> AffineQuandle( G, f );
+#! <latin quandle of size 5>
+#! gap> AffineQuandle( GF(8), One(GF(8)) );
+#! <quandle of size 8>
+#! gap> AffineQuandle( 5, 2 ); # both 2 and 1-2 are invertible mod 5
+#! <latin quandle of size 5>
+#! gap> AffineQuandle( 10, 3 ); # 1-3 is not invetible mod 10
+#! <quandle of size 10>
+#! @EndExampleSession
+
+# RQ_CoreOfAlgebra( category, G, style )
+DeclareOperation( "RQ_CoreOfAlgebra", [ IsObject, IsDomain, IsRecord ] );
+
+#! @Arguments G[, constructorStyle]
+#! @Returns the core of the group (resp. additive group) <Arg>G</Arg> defined by $x*y = (yx^{-1})y$
+#! (resp. $x*y=y-x+y$). The core is always a quandle.
+#! @Description Note: The value of `constructorStyle.checkArguments` of the optional argument `constructorStyle`
+#! does not come into play and need not be specified.
+DeclareOperation( "CoreOfGroup", [ IsGroup ] );
+
+#! @Arguments Q[, constructorStyle]
+#! @Returns the core of the right Bol loop <Arg>Q</Arg> defined by $x*y = (yx^{-1})y$.
+#! The core is always a quandle.
+#! @Description Note: The value of `constructorStyle.checkArguments` of the optional argument `constructorStyle`
+#! does not come into play and need not be specified.
+DeclareOperation( "CoreOfRightBolLoop", [ IsRightBolLoop ] );
+
+#! @BeginExampleSession
+#! gap> G := AlternatingGroup( 5 );
+#! gap> Q := CoreOfGroup( G );
+#! <quandle of size 60>
+#! gap> Q[(1,2,3)]*Q[(1,2,3,4,5)] = Q[(1,2,3)*(1,2,3,4,5)^(-1)*(1,2,3)];
+#! true
+#! gap> CoreOfRightBolLoop( RightBolLoop(8,1) );
+#! <quandle of size 8>
+#! @EndExampleSession
 
 #! @BeginGroup
 #! @GroupTitle GalkinQuandle and HomogeneousQuandle
@@ -93,10 +208,25 @@ DeclareSynonym( "HomogeneousQuandle", GalkinQuandle );
 
 #! @EndGroup
 
-#! @Arguments G[, constructorStyle]
-#! @Returns the conjugatoion quandle defined on the group <Arg>G</Arg>, that is, the quandle on <Arg>G</Arg>
-#! with multiplication $x*y = y^{-1}xy$.
-DeclareOperation( "ConjugationQuandle", [ IsGroup ] );
+# RQ_ConjugationQuandle( category, S, m, style )
+DeclareOperation( "RQ_ConjugationQuandle", [ IsObject, IsCollection, IsInt, IsRecord ] );
+
+#! @Arguments G[, m[, constructorStyle] ]
+#! @Returns the conjugation quandle on <Arg>G</Arg> defined by $x*y = y^{-m}*x*y^m$.
+#! The argument <Arg>G</Arg> can either be a group or a collection of group elements closed under
+#! the above operation.
+#! If the optional argument <Arg>m</Arg> is omitted, the multiplication is given by $x*y=y^{-1}*x*y$.
+DeclareGlobalFunction( "ConjugationQuandle" ); # PROG: too many possibilities of arguments
+
+#! @BeginExampleSession
+#! gap> G := SymmetricGroup( 3 );; 
+#! gap> ConjugationQuandle( G ); # y^-1*x*y on G
+#! <quandle of size 6>
+#! gap> ConjugationQuandle( ConjugacyClass( G, (1,2,3) ) ); # y^-1*x*y on [ (1,2,3), (1,3,2) ]
+#! <quandle of size 2>
+#! gap> ConjugationQuandle( G, 2 ); # y^-2*x*y^2 on G
+#! <quandle of size 6>
+#! @EndExampleSession
 
 # RACK AND QUANDLE ENVELOPES (JOYCE-BLACKBURN REPRESENTATION)
 # _____________________________________________________________________________
@@ -130,7 +260,8 @@ DeclareOperation( "ConjugationQuandle", [ IsGroup ] );
 # PROG: the permutations need not be canonical
 DeclareOperation( "RQ_IsRackOrQuandleEnvelope", [ IsObject, IsGroup, IsList, IsList, IsBool ] );
 
-#! @BeginGroup IsRackEnvelope and IsQuandleEnvelope
+#! @BeginGroup
+#! @GroupTitle IsRackEnvelope and IsQuandleEnvelope
 
 #! @Arguments G, reps, perms 
 #! @Returns `true` if <Arg>G</Arg>, <Arg>reps</Arg>, <Arg>perms</Arg> is a rack envelope (resp. quandle envelope).
@@ -146,7 +277,8 @@ DeclareOperation( "IsQuandleEnvelope", [ IsGroup, IsList, IsList ] );
 
 #! @EndGroup
 
-#! @BeginGroup RackEnvelop and QuandleEnvelope
+#! @BeginGroup
+#! @GroupTitle RackEnvelope and QuandleEnvelope
 
 #! @Arguments Q
 #! @Returns the rack envelope (quandle envelope) of the rack (quandle) as a list `[G,reps,perms]`.
@@ -167,6 +299,7 @@ DeclareOperation( "RQ_RackOrQuandleByEnvelope", [ IsObject, IsGroup, IsList, IsL
 #! @Returns the rack (quandle) corresponding to the rack envelope (quandle envelope)
 #! `[`<Arg>G</Arg>`,`<Arg>reps</Arg>`,`<Arg>perms</Arg>`]`. The underlying set will be
 #! the union of the orbits of <Arg>G</Arg> on the representatives <Arg>reps</Arg>.
+#! The resulting rack (quandle) is connected if <Arg>G</Arg> has a single orbit.
 #! A version with a single non-optional argument `[`<Arg>G</Arg>`,`<Arg>reps</Arg>`,`<Arg>perms</Arg>`]`
 #! is also supported.
 DeclareOperation( "RackByRackEnvelope", [ IsGroup, IsList, IsList ] );
@@ -307,5 +440,20 @@ InstallTrueMethod( IsQuandle, IsRack and IsIdempotent );
 InstallTrueMethod( IsRack, IsQuandle );
 InstallTrueMethod( IsIdempotent, IsQuandle );
 InstallTrueMethod( IsLatinRack, IsRack and IsLeftQuasigroupMagma );
+InstallTrueMethod( IsQuandle, IsLatinRack );
 InstallTrueMethod( IsLatinQuandle, IsQuandle and IsLeftQuasigroupMagma );
 InstallTrueMethod( IsLeftQuasigroupMagma, IsQuasigroup ); # PROG: Dangerous if one wants to test something?
+InstallTrueMethod( IsConnectedRack, IsLatinRack );
+InstallTrueMethod( IsConnectedQuandle, IsLatinQuandle );
+InstallTrueMethod( IsHomogeneousRack, IsConnectedRack );
+InstallTrueMethod( IsHomogeneousQuandle, IsConnectedRack );
+InstallTrueMethod( IsProjectionRack, IsProjectionRightQuasigroup and IsRack );
+InstallTrueMethod( IsProjectionQuandle, IsProjectionRightQuasigroup and IsQuandle );
+InstallTrueMethod( IsProjectionRack, IsProjectionQuandle );
+InstallTrueMethod( IsPermutationalQuandle, IsPermutationalRack and IsQuandle );
+InstallTrueMethod( IsPermutationalRack, IsProjectionRack );
+InstallTrueMethod( IsAssociative, IsPermutationalRack );
+InstallTrueMethod( IsFaithfulRack, IsRack and IsFaithfulRightQuasigroup );
+InstallTrueMethod( IsFaithfulQuandle, IsQuandle and IsFaithfulRightQuasigroup );
+InstallTrueMethod( IsFaithfulRack, IsLatinRack );
+InstallTrueMethod( IsFaithfulQuandle, IsLatinQuandle );

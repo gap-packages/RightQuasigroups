@@ -18,13 +18,14 @@ DeclareGlobalFunction( "RQ_DirectProduct" );
 #! <P/>`DirectProduct(Q1,...,Qn)` returns the direct product of right quasigroups
 #! `Q1`, ..., `Qn`. We allow groups to be among the arguments.
 
-#! <P/>If all arguments are groups then  the standard &GAP; method is called and a group is returned.
+#! <P/>If all arguments are groups then the standard &GAP; method is called and a group is returned.
 
 #! <P/>Otherwise, if all non-group arguments are loops then a loop is returned,
 #! else if all non-group arguments are quasigroups then a quasigroup is returned,
 #! else a right quasigroup is returned. The underlying set is the carthesian product
 #! of elements of `Q1`, ..., `Qn`. The restulting algebra is index based if and only if
-#! all non-group arguments are index based. 
+#! all non-group arguments are index based. An effort is made to inherit common
+#! properties of `Q1`, ...,. `Qn`.
 
 #! @BeginExampleSession
 #! gap> G := Group((1,2));;
@@ -120,6 +121,7 @@ DeclareOperation( "IsSubloop", [ IsLoop, IsLoop ] );
 # RQ_InheritProperties( P, Q )
 # auxiliary function
 # sets properties for Q inherited from P 
+# we also allow P to be a list of algebras
 DeclareGlobalFunction( "RQ_InheritProperties" ); # P, Q
 
 # RQ_Subalgebra( Q, gens )
@@ -544,11 +546,6 @@ InParentFOA( "IsNormal", IsLoop, IsLoop, DeclareProperty );  # already declared 
 # NormalClosure( Q, S )
 InParentFOA( "NormalClosure", IsLoop, IsLoop, DeclareAttribute );
 
-#! @Arguments Q, S
-#! @Returns the natural projection from `Q` to the factor loop `Q/S`, where `Q` is a loop
-#! and `S` is a normal subloop of `Q`.
-DeclareOperation( "NaturalHomomorphismByNormalSubloop", [ IsLoop, IsLoop ] );
-
 #! @Arguments Q
 #! @Returns a list of all normal subloops of a loop `Q`. Normal subloops
 #! correspond to blocks of the multiplication group of `Q` that contain the neutral element.
@@ -677,6 +674,8 @@ DeclareOperation( "FactorLoop", [ IsEquivalenceRelation ] );
 #! gap> CayleyTable( H );
 #! [ [ {r1}, {r1}, {r1} ], [ {r3}, {r3}, {r3} ], [ {r6}, {r6}, {r6} ] ]
 #! @EndExampleSession
+
+#! <P/>See Section <Ref Sect="Section_Homomorphisms"/> for natural projections onto factor algebras.
 
 #! @EndGroup
 
