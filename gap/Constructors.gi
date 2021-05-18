@@ -82,18 +82,19 @@ InstallMethod( IsLoopMagma, "for magma",
 # _____________________________________________________________________________
 
 # RQ_AsAlgebra
+# PROG: constructor OK 
 InstallMethod( RQ_AsAlgebra, "for category, domain and record", 
     [ IsObject, IsDomain, IsRecord ],
 function( category, M, style )
-    local Q;
+    local Q, ct;
     RQ_CompleteConstructorStyle( style );
     if IsAdditiveGroup( M ) then
-        Q := RQ_AlgebraByFunction( category, M, \+, \-, function(x,y) return -x+y; end, Zero( M ), style );
+        Q := RQ_AlgebraByFunction( category, M, \+, [ \-, function(x,y) return -x+y; end, Zero( M ), style ] );
         SetIsAssociative( Q, true );
         return Q;
     fi;
     if IsGroup( M ) then
-        Q := RQ_AlgebraByFunction( category, M, \*, \/, function(x,y) return x^(-1)*y; end, One( M ), style );
+        Q := RQ_AlgebraByFunction( category, M, \*, [ \/, function(x,y) return x^(-1)*y; end, One( M ), style ] );
         SetIsAssociative( Q, true );
         return Q;
     fi;
@@ -102,17 +103,15 @@ function( category, M, style )
         # The difficulty is that the multiplication in M might depend on all kinds of data specified under F!.mult
         # or in Parent(M). We therefore resort to a Cayley table constructor.
         
-        # The following is necessary to prevent undesirable nesting of elements.
+        # The following is helpful in preventing undesirable nesting of elements.
         # For instance, if M is a declared right quasigroup and category = IsQuasigroup, then
         # the call RQ_AlgebraByFunction produces a quasigroup with elements q:r:<object> rather than q:<object>
-
-        # REVISIT: Unnesting procedure in general?
-        
-        if style.checkArguments and not RQ_IsAlgebraCayleyTable( category, CayleyTable( M ), false ) then
-            # we set the third argument to false so that errors are not reported
+       
+        ct := CayleyTable( M );
+        if style.checkArguments and not RQ_IsAlgebraCayleyTable( category, ct, false ) then
             return fail;
         fi;
-        Q := RQ_AlgebraByCayleyTable( category, CayleyTable( M ), style ); 
+        Q := RQ_AlgebraByCayleyTable( category, ct, ConstructorStyle( style.indexBased, false ) ); # no need to check again
         RQ_InheritProperties( M, Q ); # isomorphic copy inherits everything
         return Q;
     fi; 
@@ -120,7 +119,7 @@ function( category, M, style )
         if style.checkArguments and not RQ_AreAlgebraFunctions( category, M, \*, fail, fail, fail, false ) then
             return fail;
         fi; 
-        return RQ_AlgebraByFunction( category, M, \*, fail, fail, fail, style );
+        return RQ_AlgebraByFunction( category, M, \*, [ ConstructorStyle( style.indexBased, false ) ] );
     fi;
     return fail;    
 end );
@@ -166,6 +165,8 @@ end );
 # _____________________________________________________________________________
 
 # RQ_AlgebraShell
+# PROG: constructor OK
+# PROG: Called by every other constructor.
 # PROG: We support the optional argument here because the function appears in the documentation.
 # In general, auxiliary RQ_ functions do not support optional arguments.
 InstallMethod( RQ_AlgebraShell, "for category and collection",
@@ -225,19 +226,22 @@ function( Q )
     F := FamilyObj( Q.1 ); 
     if F!.indexBased then # index based, assumes that F!.multTable is bound
         # the operation functions will not be used in \*, \/ and LeftQuotient, but it does not hurt to have them
-        F!.mult := function( i, j ) return F!.multTable[ i, j ]; end;
-        SetMultiplicationTable( Q, F!.multTable );
-        F!.rdiv := function( i, j ) return F!.rdivTable[ i, j ]; end;
-        # F!.rdivTable := RightDivisionTableFromMultiplicationTable( F!.multTable );
-        # SetRightDivisionTable( Q, F!.rdivTable );
-        if category <> IsRightQuasigroup then
-            F!.ldiv := function( i, j ) return F!.ldivTable[ i, j ]; end;
-            # F!.ldivTable := LeftDivisionTableFromMultiplicationTable( F!.multTable );
-            # SetLeftDivisionTable( Q, F!.ldivTable );
+        if not IsBound( F!.mult ) then
+            F!.mult := function( i, j ) return F!.multTable[ i, j ]; end;
         fi;
-    else # not index based
-        F!.rdiv := function(x,y) return First( F!.uSet, z -> x = F!.mult(z,y) ); end;
-        if category <> IsRightQuasigroup then
+        # right division. Note that F!.rdivTable will be calculated at first usage of right division.
+        if not IsBound( F!.rdiv ) then
+            F!.rdiv := function( i, j ) return F!.rdivTable[ i, j ]; end;
+        fi;
+        # left division. Note that F!.ldivTable will be calculated at first usage of left division.
+        if category <> IsRightQuasigroup and not IsBound( F!.ldiv ) then
+            F!.ldiv := function( i, j ) return F!.ldivTable[ i, j ]; end;
+        fi;
+    else # not index based, assumes that F!.mult is bound
+        if not IsBound( F!.rdiv ) then
+            F!.rdiv := function(x,y) return First( F!.uSet, z -> x = F!.mult(z,y) ); end;
+        fi;
+        if category <> IsRightQuasigroup and not IsBound( F!.ldiv ) then
             F!.ldiv := function(x,y) return First( F!.uSet, z -> y = F!.mult(x,z)); end;
         fi;
     fi;
@@ -448,6 +452,7 @@ InstallMethod( NormalizedQuasigroupCayleyTable, "for square table",
 );
 
 # RQ_AlgebraByCayleyTable
+# PROG: constructor OK
 InstallMethod( RQ_AlgebraByCayleyTable, "for category, Cayley table and record",
     [ IsObject, IsRectangularTable, IsRecord ],
 function( category, ct, style ) 
@@ -515,11 +520,23 @@ end );
 # _____________________________________________________________________________
 
 # RQ_AreAlgebraFunctions
-InstallGlobalFunction( RQ_AreAlgebraFunctions,
-function( category, S, mult, rdiv, ldiv, one, reportErrors )
-    local e;
+InstallMethod( RQ_AreAlgebraFunctions, "for category, collection, function, list optional functions and bool",
+    [ IsObject, IsCollection, IsFunction, IsList, IsBool ],
+function( category, S, mult, ops, reportErrors )
+    local rdiv, ldiv, one, e;
+    # PROCESSING ARGUMENTS
+    # right division
+    rdiv := First( ops, IsFunction );
+    # left division
+    if category <> IsRightQuasigroup and not rdiv = fail then
+        ldiv := First( ops{[Position( ops, rdiv )+1..Length(ops)]}, IsFunction ); # second "IsFunction"
+    else
+        ldiv := fail;
+    fi;
+    # one
+    one := First( ops, x -> x in S );
+    # CHECKING ARGUMENTS
     if not IsSet( S ) then S := Set(S); fi;
-    # checking multiplication and divisions
     if rdiv = fail then # only mult given
         if not ForAll( S, y -> RQ_IsBijectiveFunction( S, function( x ) return mult(x,y); end ) ) then
             return RQ_OptionalError( reportErrors, "RQ: The multiplication does not give rise to right division." );
@@ -555,29 +572,17 @@ end );
 
 InstallGlobalFunction( IsRightQuasigroupFunction,
 function( S, mult, arg... )
-    local functions, rdiv;
-    functions := Filtered( arg, IsFunction );   
-    rdiv := First( functions ); # returns fail if functions is empty 
-    return RQ_AreAlgebraFunctions( IsRightQuasigroup, S, mult, rdiv, fail, fail, false );
+    return RQ_AreAlgebraFunctions( IsRightQuasigroup, S, mult, arg, false );
 end );
 
 InstallGlobalFunction( IsQuasigroupFunction,
 function( S, mult, arg... )
-    local functions, rdiv, ldiv;
-    functions := Filtered( arg, IsFunction );    
-    rdiv := First( functions );
-    if Length( functions ) > 1 then ldiv := functions[ 2 ]; else ldiv := fail; fi;
-    return RQ_AreAlgebraFunctions( IsQuasigroup, S, mult, rdiv, ldiv, fail, false );
+    return RQ_AreAlgebraFunctions( IsQuasigroup, S, mult, arg, false );
 end );
 
 InstallGlobalFunction( IsLoopFunction,
 function( S, mult, arg... )
-    local functions, rdiv, ldiv, one;
-    functions := Filtered( arg, IsFunction );    
-    rdiv := First( functions );
-    if Length( functions ) > 1 then ldiv := functions[ 2 ]; else ldiv := fail; fi;
-    one := First( arg, x -> not IsFunction( x ) );
-    return RQ_AreAlgebraFunctions( IsLoop, S, mult, rdiv, ldiv, one, false );
+    return RQ_AreAlgebraFunctions( IsLoop, S, mult, arg, false );
 end );
 
 # MultiplicationFunction
@@ -620,36 +625,53 @@ function( Q )
 end );
 
 # RQ_AlgebraByFunction
-InstallGlobalFunction( RQ_AlgebraByFunction,
-function( category, S, mult, rdiv, ldiv, one, style ) 
-    local n, ct, Q, F;
+# PROF: constructor OK. There is no point in making shallow copies of functions
+InstallMethod( RQ_AlgebraByFunction, "for category, collection, function and list",
+    [ IsObject, IsCollection, IsFunction, IsList ],
+function( category, S, mult, rest ) 
+    local rdiv, ldiv, one, style, ct, Q, F;
+    # PROCESSING ARGUMENTS
+    # right division
+    rdiv := First( rest, IsFunction );
+    # left division
+    if category <> IsRightQuasigroup and not rdiv = fail then
+        ldiv := First( rest{[Position( rest, rdiv )+1..Length(rest)]}, IsFunction ); # second "IsFunction"
+    else
+        ldiv := fail;
+    fi;
+    # one
+    one := First( rest, x -> x in S );
+    # style
+    style := Last( rest ); 
+    if not IsRecord( style ) then 
+        style := RQ_defaultConstructorStyle;
+    fi;
     RQ_CompleteConstructorStyle( style );
-    # checking functions
+    # CHECKING ARGUMENTS
     if not IsSet( S ) then S := Set( S ); fi;
     if style.checkArguments then 
-        RQ_AreAlgebraFunctions( category, S, mult, rdiv, ldiv, one, true ); # will halt with an error message if there is a problem
+        RQ_AreAlgebraFunctions( category, S, mult, [rdiv, ldiv, one], true ); # will halt with an error message if there is a problem
     fi;
-    n := Size( S );
+    # CONSTRUCTING THE ALGEBRA
     if style.indexBased then # forget everything except multiplication
-        ct := List( [1..n], i -> List( [1..n], j -> mult(S[i],S[j]) ) );
+        ct := List( [1..Size(S)], i -> List( [1..Size(S)], j -> mult(S[i],S[j]) ) );
         return RQ_AlgebraByCayleyTable( category, ct, ConstructorStyle( true, false ) ); # do not check again
     fi;
     # not index based
     Q := RQ_AlgebraShell( category, S, style );
     F := FamilyObj( Q.1 );
     F!.mult := mult;
-    if one<>fail and category = IsLoop then
-        F!.one := Q[one];
+    if rdiv <> fail then
+        F!.rdiv := rdiv;
+    fi;
+    if category <> IsRightQuasigroup and ldiv <> fail then
+        F!.ldiv := ldiv;
+    fi;
+    if category = IsLoop and one <> fail then
+        F!.one := Q[ one ];
         SetOne( Q, F!.one );
     fi;
-    if rdiv = fail then 
-        RQ_AddDefaultOperations( Q ); # "one" will not be added if it has already been set
-    else         
-        F!.rdiv := rdiv;
-        if category <> IsRightQuasigroup then
-            F!.ldiv := ldiv;
-        fi;
-    fi;
+    RQ_AddDefaultOperations( Q ); # only unbound operations will be added
     return Q;
 end );
 
@@ -659,41 +681,17 @@ end );
 
 InstallGlobalFunction( RightQuasigroupByFunction,
 function( S, mult, arg... )
-    local functions, rdiv, style;
-    functions := Filtered( arg, IsFunction );
-    rdiv := First( functions );
-    style := Last( arg ); # capturing constructorStyle
-    if style = fail or not IsRecord( style ) then 
-        style := RQ_defaultConstructorStyle;
-    fi;
-    return RQ_AlgebraByFunction( IsRightQuasigroup, S, mult, rdiv, fail, fail, style );
+    return RQ_AlgebraByFunction( IsRightQuasigroup, S, mult, arg );
 end );
 
 InstallGlobalFunction( QuasigroupByFunction,
 function( S, mult, arg... )
-    local functions, rdiv, ldiv, style;
-    functions := Filtered( arg, IsFunction );
-    rdiv := First( functions ); # PROG: returns fail if functions is empty
-    if Length( functions ) > 1 then ldiv := functions[ 2 ]; else ldiv := fail; fi;
-    style := Last( arg ); 
-    if style = fail or not IsRecord( style ) then 
-        style := RQ_defaultConstructorStyle;
-    fi;
-    return RQ_AlgebraByFunction( IsQuasigroup, S, mult, rdiv, ldiv, fail, style );
+    return RQ_AlgebraByFunction( IsQuasigroup, S, mult, arg );
 end );
 
 InstallGlobalFunction( LoopByFunction,
 function( S, mult, arg... )
-    local functions, rdiv, ldiv, one, style;
-    functions := Filtered( arg, IsFunction );
-    rdiv := First( functions );
-    if Length( functions ) > 1 then ldiv := functions[ 2 ]; else ldiv := fail; fi;
-    one := First( arg, x -> x in S );
-    style := Last( arg ); 
-    if style = fail or not IsRecord( style ) then 
-        style := RQ_defaultConstructorStyle;
-    fi;
-    return RQ_AlgebraByFunction( IsLoop, S, mult, rdiv, ldiv, one, style );
+    return RQ_AlgebraByFunction( IsLoop, S, mult, arg );
 end );
 
 # CONSTRUCTORS BY RIGHT SECTION
@@ -735,7 +733,7 @@ function( S, section )
     return RQ_IsAlgebraRightSection( IsRightQuasigroup, S, section, false );
 end );
 
-InstallOtherMethod( IsRightSection, "for collection of pemutations",
+InstallOtherMethod( IsRightSection, "for collection of permutations",
     [ IsCollection ],
 function( section )
     return RQ_IsAlgebraRightSection( IsRightQuasigroup, [1..Length(section)], section, false );
@@ -747,7 +745,7 @@ function( S, section )
     return RQ_IsAlgebraRightSection( IsQuasigroup, S, section, false );
 end );
 
-InstallOtherMethod( IsQuasigroupRightSection, "for collection of pemutations",
+InstallOtherMethod( IsQuasigroupRightSection, "for collection of permutations",
     [ IsCollection ],
 function( section )
     return RQ_IsAlgebraRightSection( IsQuasigroup, [1..Length(section)], section, false );
@@ -759,13 +757,14 @@ function( S, section )
     return RQ_IsAlgebraRightSection( IsLoop, S, section, false );
 end );
 
-InstallOtherMethod( IsLoopRightSection, "for collection of pemutations",
+InstallOtherMethod( IsLoopRightSection, "for collection of permutations",
     [ IsCollection ],
 function( section )
     return RQ_IsAlgebraRightSection( IsLoop, [1..Length(section)], section, false );
 end );
 
 # RQ_AlgebraByRightSection
+# PROG: constructor OK
 InstallMethod( RQ_AlgebraByRightSection, "for category, two collections and record",
     [ IsObject, IsCollection, IsCollection, IsRecord ],
 function( category, S, section, style )
@@ -778,14 +777,12 @@ function( category, S, section, style )
     if style.indexBased then
         n := Size( S );
         if IsPerm( section[1] ) and not IsPosInt( S[1] ) then # implicit permutation action
-            ct := List([1..n], i -> List([1..n], j -> S[ i^section[j]] ) );
+            ct := List( [1..n], i -> List( [1..n], j -> S[ i^section[j] ] ) );
         else
-            ct := List(S, x -> List([1..n], j -> x^section[j] ) );
+            ct := List( S, x -> List( section, f -> x^f ) );
         fi;
         Q := RQ_AlgebraByCayleyTable( category, ct, ConstructorStyle( true, false ) ); # not checking again
-        F := FamilyObj( Q.1 );
-        F!.rSection := ShallowCopy( section ); # REVISIT: Should we store it?
-     else # not index based
+    else # not index based
         Q := RQ_AlgebraShell( category, S, style );
         F := FamilyObj( Q.1 );
         F!.rSection := ShallowCopy( section ); # will refer to it in mult function
@@ -797,7 +794,7 @@ function( category, S, section, style )
         fi;
         RQ_AddDefaultOperations( Q );
     fi;
-    SetRightSection( Q, F!.rSection );
+    SetRightSection( Q, ShallowCopy( section ) );
     return Q;
 end );
 
@@ -950,6 +947,7 @@ function( G, H, T )
 end );
 
 # RQ_AlgebraByRightFolder
+# PROG: constructor OK, calls RQ_AlgbraByRightSection
 InstallMethod( RQ_AlgebraByRightFolder, "for category, group, subgroup, right transversal and record",
     [ IsObject, IsGroup, IsGroup, IsList, IsRecord ],
 function( category, G, H, T, style ) 
@@ -1042,6 +1040,7 @@ end );
 # _____________________________________________________________________________
 
 # ProjectionRightQuasigroup
+# PROG: constructor OK
 InstallMethod( ProjectionRightQuasigroup, "for collection",
     [ IsCollection ],
     S -> ProjectionRightQuasigroup( S, RQ_defaultConstructorStyle )
@@ -1055,7 +1054,7 @@ function( S, style )
     if not IsSet( S ) then S := Set( S ); fi;
     mult := function(x,y) return x; end; # right projection
 	# multiplication and right division are the same here, and there is nothing to check
-    Q := RQ_AlgebraByFunction( IsRightQuasigroup, S, mult, mult, fail, fail, ConstructorStyle( style.indexBased, false ) );
+    Q := RQ_AlgebraByFunction( IsRightQuasigroup, S, mult, [ mult, ConstructorStyle( style.indexBased, false ) ] );
     # setting implied properties
     SetIsProjectionRightQuasigroup( Q, true );
     SetIsQuandle( Q, true );
@@ -1064,7 +1063,7 @@ end );
 
 InstallOtherMethod( ProjectionRightQuasigroup, "for positive integer",
     [ IsPosInt ],
-    n -> ProjectionRightQuasigroup( [1..n] )
+    n -> ProjectionRightQuasigroup( [1..n], RQ_defaultConstructorStyle )
 );
 
 InstallOtherMethod( ProjectionRightQuasigroup, "for positive integer abd record",

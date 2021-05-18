@@ -28,12 +28,12 @@
 #! component `constructorStyle.checkArguments` replaces the standard naming mechanism of &GAP; in which `FunctionNC` does not check its
 #! arguments while the corresponding `Function` does. Outside of those constructors, the `NC` convention is kept.
 
-#! @Arguments index_based, check_arguments
-#! @Returns `true` and changes the default constructor style according to the bool values `index_based` and `check_arguments`.
+#! @Arguments indexBased, checkArguments
+#! @Returns `true` and changes the default constructor style according to the bool values <Arg>indexBased</Arg> and <Arg>checkArguments</Arg>.
 DeclareOperation( "SetDefaultConstructorStyle", [ IsBool, IsBool ] );
 
-#! @Arguments index_based, check_arguments
-#! @Returns the record with elements named `indexBased` and `checkArguments` set to bool values `index_based` and `check_arguments`,
+#! @Arguments indexBased, checkArguments
+#! @Returns the record with elements named `indexBased` and `checkArguments` set to bool values <Arg>indexBased</Arg> and <Arg>checkArguments</Arg>,
 #! respectively. The returned record can then be used as an optional argument in constructors.
 DeclareOperation( "ConstructorStyle", [ IsBool, IsBool ] );
 
@@ -111,10 +111,10 @@ DeclareOperation( "AsQuasigroup", [ IsDomain ] );
 
 #! @Arguments M[, constructorStyle ]
 #! @Returns the right quasigroup, quasigroup or loop, respectively, corresponding
-#! to the magma or additive group `M` that is mathematically a right quasigroup, quasigroup or loop,
-#! else returns `fail`. If `M` is an additive group, the additive operation is used
+#! to the magma or additive group <Arg>M</Arg> that is mathematically a right quasigroup, quasigroup or loop,
+#! else returns `fail`. If <Arg>M</Arg> is an additive group, the additive operation is used
 #! as multiplication.
-#! See Section <Ref Sect="Section_OptionalArguments"/> for the optional argument `constructorStyle`.
+#! See Section <Ref Sect="Section_OptionalArguments"/> for the optional argument <Arg>constructorStyle</Arg>.
 DeclareOperation( "AsLoop", [ IsDomain ]);
 
 #! @BeginExampleSession
@@ -131,7 +131,7 @@ DeclareOperation( "AsLoop", [ IsDomain ]);
 #! false
 #! gap> AsQuasigroup( M ); # arguments of constructors are by default not checked!
 #! <quasigroup of size 2>
-#! gap> AsQuasigroup( M, ConstructorStyle( true, true ) ); # the second optional argument will force a check
+#! gap> AsQuasigroup( M, rec( checkArguments := true ) ); # the optional argument will force a check
 #! fail
 #! gap> G := Group((1,2,3));; IsLoopMagma( G );
 #! true
@@ -162,19 +162,19 @@ DeclareOperation( "AsLoop", [ IsDomain ]);
 #! in the second step can point to the stored data.
 
 #! @Arguments category, S[, constructorStyle]
-#! @Returns an algebra shell of the appropriate category on the underlying set `S`.
-#! The value of `category` must be `IsRightQuasigroup`, `IsQuasigroup` or `IsLoop`.
-#! @Description Note: The value of `constructorStyle.checkArguments` of the optional argument `constructorStyle`
+#! @Returns an algebra shell of the appropriate category on the underlying set <Arg>S</Arg>.
+#! The value of <Arg>category</Arg> must be `IsRightQuasigroup`, `IsQuasigroup` or `IsLoop`.
+#! @Description Note: The value of <Arg>constructorStyle</Arg>`.checkArguments` of the optional argument <Arg>constructorStyle</Arg>
 #! does not come into play and need not be specified.
 DeclareOperation( "RQ_AlgebraShell", [ IsObject, IsCollection ] ); 
 
 #! @Arguments Q 
 #! @Returns `true`
-#! @Description This method adds all required unary and binary operations to the right quasigroup shell `Q`.
-#! The implied right division is always added. The implied left division is added if `Q` is a declared quasigroup.
-#! The implied neutral element is added if `Q` is a declared loop.
-#! Let F = FamilyObj( Q.1 ). If `Q` is indexBased, it is assumed that F!.multTable is bound.
-#! If `Q` is not index based, it is assumed that F!.mult is bound.
+#! @Description This method adds all required unary and binary operations to the right quasigroup shell <Arg>Q</Arg>.
+#! The implied right division is always added. The implied left division is added if <Arg>Q</Arg> is a declared quasigroup.
+#! The implied neutral element is added if <Arg>Q</Arg> is a declared loop.
+#! Let `F = FamilyObj( `<Arg>Q</Arg>`.1 )`. If <Arg>Q</Arg> is index based, it is assumed that `F!.multTable` is bound.
+#! If <Arg>Q</Arg> is not index based, it is assumed that `F!.mult` is bound.
 DeclareOperation( "RQ_AddDefaultOperations", [ IsRightQuasigroup ] );
 
 #! <P/>The following simple examples illustrates the approach, first for non-index based algebras
@@ -242,16 +242,16 @@ DeclareOperation( "RQ_AddDefaultOperations", [ IsRightQuasigroup ] );
 #! @BeginGroup
 #! @GroupTitle Cayley tables and multiplication tables of right quasigroups
 
-#! PROG: We do not store Cayley tables are as attributes since
-#! a) they are typically cheap to calculate, and
-#! b) they would have to be recalculated when the underlying set is changed by the user.
+# PROG: We do not store Cayley tables are as attributes since
+# a) they are typically cheap to calculate, and
+# b) they would have to be recalculated when the underlying set is changed by the user.
 
 #! @Arguments Q
 #! @Returns the multiplication table, Cayley table, right division table,
-#! right division Cayley table, left division table and left division Cayley table of right quasigroup `Q`,
-#! respectively. For the left divisions, `Q` must be a declared quasigroup.
+#! right division Cayley table, left division table and left division Cayley table of right quasigroup <Arg>Q</Arg>,
+#! respectively. For the left divisions, <Arg>Q</Arg> must be a declared quasigroup.
 #! @Description Note that the Cayley tables are not stored as attributes since they are cheap to 
-#! calculate and they are affected by a possible change of the underlying set of `Q`.
+#! calculate and they are affected by a possible change of the underlying set of <Arg>Q</Arg>.
 DeclareAttribute( "MultiplicationTable", IsRightQuasigroup );
 
 #! @Arguments Q
@@ -283,10 +283,10 @@ DeclareOperation( "RightDivisionTableFromMultiplicationTable", [ IsRectangularTa
 DeclareOperation( "LeftDivisionTableFromMultiplicationTable", [ IsRectangularTable ] );
 
 #! <P/>It is possible to construct a right division table from the multiplication table
-#! of a right quasigroup `Q` of size $n$ in $O(n^2)$, rather than naively in $O(n^3)$.
-#! The quick algorithm is used in the above two methods which 
-#! return the right division table and the left division table of a right quasigroup `Q`, respectively.
-#! For the left division, `Q` must be a declared quasigroup.
+#! of a right quasigroup <Arg>Q</Arg> of size $n$ in $O(n^2)$, rather than naively in $O(n^3)$.
+#! The fast algorithm is used in the above two methods which 
+#! return the right division table and the left division table of a right quasigroup <Arg>Q</Arg>, respectively.
+#! For the left division, <Arg>Q</Arg> must be a declared quasigroup.
 
 #! @EndGroup
 
@@ -294,8 +294,8 @@ DeclareOperation( "LeftDivisionTableFromMultiplicationTable", [ IsRectangularTab
 #! @GroupTitle Testing Cayley tables
 
 # RQ_IsAlgebraCayleyTable( category, ct, reportErrors )
-# returns true if ct is a Cayley table for an algebra in the given category
-# The underlying set it understood to be the ordered set of elements contained in the firts column of `ct`.
+# returns true if <Arg>ct</Arg> is a Cayley table for an algebra in the given category
+# The underlying set it understood to be the ordered set of elements contained in the firts column of <Arg>ct</Arg>.
 DeclareOperation( "RQ_IsAlgebraCayleyTable", [ IsObject, IsRectangularTable, IsBool ] );
 
 #! @Arguments ct
@@ -305,9 +305,9 @@ DeclareOperation( "IsRightQuasigroupCayleyTable", [ IsRectangularTable ] );
 DeclareOperation( "IsQuasigroupCayleyTable", [ IsRectangularTable ] );
 
 #! @Arguments ct
-#! @Returns `true` if `ct` is a Cayley table of a right quasigroup, quasigroup or loop, respectively,
+#! @Returns `true` if <Arg>ct</Arg> is a Cayley table of a right quasigroup, quasigroup or loop, respectively,
 #! otherwise returns `false`.
-#! The underlying set it understood to be the ordered set of elements contained in the first column of `ct`.
+#! The underlying set it understood to be the ordered set of elements contained in the first column of <Arg>ct</Arg>.
 #! This is a logical choice for right quasigroups.
 DeclareOperation( "IsLoopCayleyTable", [ IsRectangularTable ] );
 
@@ -325,7 +325,7 @@ DeclareOperation( "IsLoopCayleyTable", [ IsRectangularTable ] );
 #! Every right quasigroup Cayley table can be normalized by permuting its rows and columns.
 
 #! @Arguments ct
-#! @Returns a normalized version of the (right) quasigroup Cayley table `ct`.
+#! @Returns a normalized version of the (right) quasigroup Cayley table <Arg>ct</Arg>.
 DeclareOperation( "NormalizedRightQuasigroupCayleyTable", [ IsRectangularTable ] );
 
 #! @Arguments ct
@@ -356,8 +356,8 @@ DeclareOperation( "RightQuasigroupByCayleyTable", [ IsRectangularTable ] );
 DeclareOperation( "QuasigroupByCayleyTable", [ IsRectangularTable ] );
 
 #! @Arguments ct[, constructorStyle]
-#! @Returns the right quasigroup, quasigroup or loop with Cayley table `ct`, respectively.
-#! See Section <Ref Sect="Section_OptionalArguments"/> for the optional argument `constructorStyle`.
+#! @Returns the right quasigroup, quasigroup or loop with Cayley table <Arg>ct</Arg>, respectively.
+#! See Section <Ref Sect="Section_OptionalArguments"/> for the optional argument <Arg>constructorStyle</Arg>.
 DeclareOperation( "LoopByCayleyTable", [ IsRectangularTable ] );
 
 #! @BeginExampleSession
@@ -442,28 +442,24 @@ DeclareOperation( "LoopByCayleyTable", [ IsRectangularTable ] );
 #! right quasigroup, quasigroup or loop function(s), except that the constructor style 
 #! is void and the missing operations are not automatically inferred from the multiplication.
 
-# RQ_AreAlgebraFunctions( category, S, mult, rdiv, ldiv, one, reportErrors )
-# checks if the four operations are valid for the given category on S
-# Accepts various subsets of operations, with other operations set to "fail", and only checks what is needed for category.
-# Example 1: If all mult, rdiv, ldiv are given and catefory = IsQuasigroup, it checks
-# whether mult(rdiv(x,y),y)=x and rdiv(mult(x,y),y)=x hold on S.
-# Example 2: If only mult is given and category=IsLoop, it checks that the 
-# multiplication gives rise to a loop.
-DeclareGlobalFunction( "RQ_AreAlgebraFunctions" );
+# RQ_AreAlgebraFunctions( category, S, mult, ops, reportErrors ) 
+# checks if the operations are valid for the given category on S
+# ops can be any sublist of [rdiv,ldiv,one]
+DeclareOperation( "RQ_AreAlgebraFunctions", [ IsObject, IsCollection, IsFunction, IsList, IsBool ] );
 
 #! @Arguments S, mult[, rdiv]
-#! @Returns `true` if `mult` is a right quasigroup function on `S`, else returns `false`.
+#! @Returns `true` if <Arg>mult</Arg> is a right quasigroup function on <Arg>S</Arg>, else returns `false`.
 #! (See Subsection <Ref Subsect="Subsection_ConstructorArguments"/> for how the optional arguments are treated.)
-#! If `rdiv` is given, it is checked that it is the right division on `S` corresponding
-#! to the multiplication `mult`.
+#! If <Arg>rdiv</Arg> is given, it is checked that it is the right division on <Arg>S</Arg> corresponding
+#! to the multiplication <Arg>mult</Arg>.
 DeclareGlobalFunction( "IsRightQuasigroupFunction" );
 
 #! @Arguments S, mult[, rdiv, ldiv]
-#! @Returns `true` if `mult` is a quasigroup function on `S`, else returns `false`.
+#! @Returns `true` if <Arg>mult</Arg> is a quasigroup function on <Arg>S</Arg>, else returns `false`.
 #! (See Subsection <Ref Subsect="Subsection_ConstructorArguments"/> for how the optional arguments are treated.) 
-#! If `rdiv` is given, it is checked that it is the right division
-#! on `S` corresponding to the multiplication `mult`. If `ldiv` is given,
-#! it is checked that it is the left division on `S` corresponding to the multiplication `mult`.
+#! If <Arg>rdiv</Arg> is given, it is checked that it is the right division
+#! on <Arg>S</Arg> corresponding to the multiplication <Arg>mult</Arg>. If <Arg>ldiv</Arg> is given,
+#! it is checked that it is the left division on <Arg>S</Arg> corresponding to the multiplication <Arg>mult</Arg>.
 DeclareGlobalFunction( "IsQuasigroupFunction");
 
 #! @BeginExampleSession
@@ -476,12 +472,12 @@ DeclareGlobalFunction( "IsQuasigroupFunction");
 #! @EndExampleSession
 
 #! @Arguments S, mult[, rdiv, ldiv, one]
-#! @Returns `true` if `mult` is a loop function on `S`, else returns `false`.
+#! @Returns `true` if <Arg>mult</Arg> is a loop function on <Arg>S</Arg>, else returns `false`.
 #! (See Subsection <Ref Subsect="Subsection_ConstructorArguments"/> for how the optional arguments are treated.) 
-#! If `rdiv` is given, it is checked that it is the right division
-#! on `S` corresponding to the multiplication `mult`. If `ldiv` is given,
-#! it is checked that it is the left division on `S` corresponding to the multiplication `mult`.
-#! If `one` is given, it is checked that it is is the neutral element with respect to `mult`.
+#! If <Arg>rdiv</Arg> is given, it is checked that it is the right division
+#! on <Arg>S</Arg> corresponding to the multiplication <Arg>mult</Arg>. If <Arg>ldiv</Arg> is given,
+#! it is checked that it is the left division on <Arg>S</Arg> corresponding to the multiplication <Arg>mult</Arg>.
+#! If <Arg>one</Arg> is given, it is checked that it is is the neutral element with respect to <Arg>mult</Arg>.
 DeclareGlobalFunction( "IsLoopFunction" );
 
 #! @BeginExampleSession
@@ -516,33 +512,31 @@ DeclareOperation( "RightDivisionFunction", [ IsRightQuasigroup ] );
 
 #! @Arguments Q
 #! @Description Returns, respectively, the multiplication function, right division function and left division function
-#! of right quasigroup `Q` as a &GAP; function. For the left division, `Q` must be a declared
+#! of right quasigroup <Arg>Q</Arg> as a &GAP; function. For the left division, <Arg>Q</Arg> must be a declared
 #! quasigroup. If the requested function is not bound, returns `fail`. See Section <Ref Sect="Section_IndexBased"/> for 
 #! more details on multiplication and division functions in index based and non-index based right quasigroups.
 DeclareOperation( "LeftDivisionFunction", [ IsQuasigroup ] );
 
 #! @EndGroup
 
-# RQ_AlgebraByFunction( category, S, mult, rdiv, ldiv, one, arg ), where typically arg = [indexBased, checkArgs]
+# RQ_AlgebraByFunction( category, S, mult, rest )
 # returns algebra in the appropriate category based on the specified (subset of) operations
-# PROG: Declaring this as a global function because we often use `fail` as the value of unspecified parameters,
-# so type checking is difficult.
-DeclareGlobalFunction( "RQ_AlgebraByFunction" ); 
-
+# rest is any subset of [rdiv,ldiv,one,style]
+DeclareOperation( "RQ_AlgebraByFunction", [ IsObject, IsCollection, IsFunction, IsList ] );
 
 #! @Arguments S, mult[, rdiv][, constructorStyle]
-#! @Returns a right quasigroup with underlying set `S` and multiplication function `mult`.
-#! If `rdiv` is given, it becomes the right division function, else the right division function
-#! is automatically inferred from `mult`. 
-#! See Subsection <Ref Subsect="Subsection_ConstructorArguments"/> for the optional argument `contructorStyle`.
-DeclareGlobalFunction( "RightQuasigroupByFunction" ); # S, mult [, rdiv, indexBased, checkArgs ]
+#! @Returns a right quasigroup with underlying set <Arg>S</Arg> and multiplication function <Arg>mult</Arg>.
+#! If <Arg>rdiv</Arg> is given, it becomes the right division function, else the right division function
+#! is automatically inferred from <Arg>mult</Arg>. 
+#! See Subsection <Ref Subsect="Subsection_ConstructorArguments"/> for the optional argument <Arg>constructorStyle</Arg>.
+DeclareGlobalFunction( "RightQuasigroupByFunction" ); 
 
 #! @Arguments S, mult[, rdiv, ldiv][, constructorStyle]
-#! @Returns a quasigroup with underlying set `S` and multiplication function `mult`.
-#! If `rdiv` (resp. `ldiv`) is given, it is set as the right (resp. left) division function,
-#! else the right (resp. left) division function is automatically inferred from `mult`.
-#! See Subsection <Ref Subsect="Subsection_ConstructorArguments"/> for the optional argument `contructorStyle`.
-DeclareGlobalFunction( "QuasigroupByFunction" ); # S, mult [, rdiv, ldiv, indexBased, checkArgs ]
+#! @Returns a quasigroup with underlying set <Arg>S</Arg> and multiplication function <Arg>mult</Arg>.
+#! If <Arg>rdiv</Arg> (resp. <Arg>ldiv</Arg>) is given, it is set as the right (resp. left) division function,
+#! else the right (resp. left) division function is automatically inferred from <Arg>mult</Arg>.
+#! See Subsection <Ref Subsect="Subsection_ConstructorArguments"/> for the optional argument <Arg>constructorStyle</Arg>.
+DeclareGlobalFunction( "QuasigroupByFunction" ); 
 
 #! @BeginExampleSession
 #! gap> S := GF(5);;
@@ -556,12 +550,12 @@ DeclareGlobalFunction( "QuasigroupByFunction" ); # S, mult [, rdiv, ldiv, indexB
 #! @EndExampleSession
 
 #! @Arguments S, mult[, rdiv, ldiv, one][, constructorStyle]
-#! @Returns a loop with underlying set `S` and multiplication function `mult`.
-#! If `rdiv` (resp. `ldiv`) is given, it is set as the right (resp. left) division function,
-#! else the right (resp. left) division function is automatically inferred from `mult`. 
-#! If `one` is given, it is set as the neutral element, else it is automatically inferred from `mult`.
-#! See Subsection <Ref Subsect="Subsection_ConstructorArguments"/> for the optional argument `contructorStyle`.
-DeclareGlobalFunction( "LoopByFunction" ); # S, mult [, rdiv, ldiv, one, indexBased, checkArgs ]
+#! @Returns a loop with underlying set <Arg>S</Arg> and multiplication function <Arg>mult</Arg>.
+#! If <Arg>rdiv</Arg> (resp. <Arg>ldiv</Arg>) is given, it is set as the right (resp. left) division function,
+#! else the right (resp. left) division function is automatically inferred from <Arg>mult</Arg>. 
+#! If <Arg>one</Arg> is given, it is set as the neutral element, else it is automatically inferred from <Arg>mult</Arg>.
+#! See Subsection <Ref Subsect="Subsection_ConstructorArguments"/> for the optional argument <Arg>constructorStyle</Arg>.
+DeclareGlobalFunction( "LoopByFunction" ); 
 
 #! <P/>The following constructor produces a loop of size just over 1 million near instantaneously since nothing is checked.
 
@@ -616,9 +610,9 @@ DeclareOperation( "IsRightSection", [ IsCollection, IsCollection ] );
 DeclareOperation( "IsQuasigroupRightSection", [ IsCollection, IsCollection ] );
 
 #! @Arguments [S,] section
-#! @Returns `true` if `section` is a right section (resp. quasigroup right section,
-#! loop right section) on `S`, else returns `false`. If `S` is omitted, `section` must be
-#! a list of permutations; the underlying set is then understood to be `[1..Length(section)]`.
+#! @Returns `true` if <Arg>section</Arg> is a right section (resp. quasigroup right section,
+#! loop right section) on <Arg>S</Arg>, else returns `false`. If <Arg>S</Arg> is omitted, <Arg>section</Arg> must be
+#! a list of permutations; the underlying set is then understood to be `[1..Length(`<Arg>section</Arg>`)]`.
 DeclareOperation( "IsLoopRightSection", [ IsCollection, IsCollection ] );
 
 #! @EndGroup
@@ -637,10 +631,10 @@ DeclareOperation( "RightQuasigroupByRightSection", [ IsCollection, IsCollection 
 DeclareOperation( "QuasigroupByRightSection", [ IsCollection, IsCollection ] );
 
 #! @Arguments [S,] section[, constructorStyle]
-#! @Returns a right quasigroup, quasigroup or loop on `S` with right section `section`, respectively.
-#! If `S` is omitted, `section` must be a list of permutations; the underlying set is then understood
-#! to be `[1..Length(section)]`.
-#! See Section <Ref Sect="Section_OptionalArguments"/> for the optional argument `constructorStyle`.
+#! @Returns a right quasigroup, quasigroup or loop on <Arg>S</Arg> with right section <Arg>section</Arg>, respectively.
+#! If <Arg>S</Arg> is omitted, <Arg>section</Arg> must be a list of permutations; the underlying set is then understood
+#! to be `[1..Length(`<Arg>section</Arg>`)]`.
+#! See Section <Ref Sect="Section_OptionalArguments"/> for the optional argument <Arg>constructorStyle</Arg>.
 DeclareOperation( "LoopByRightSection", [ IsCollection, IsCollection ] );
 
 #! <P/>Here is an example of a right quasigroup constructed by a right section consisting of permutations.
@@ -753,7 +747,7 @@ DeclareOperation( "IsQuasigroupRightFolder", [ IsRightTransversal ]); # T or G,H
 
 #! @Arguments arg
 #! @Returns `true` if the argument is a right folder (resp. quasigroup right folder, loop right folder).
-#! See above for the two possible formats of the argument `arg`, that is, `T` or `G,H,T`.
+#! See above for the two possible formats of the argument <Arg>arg</Arg>, that is, `T` or `G,H,T`.
 DeclareOperation( "IsLoopRightFolder", [ IsRightTransversal ] ); # T or G,H,T
 
 #! @EndGroup
@@ -774,8 +768,8 @@ DeclareOperation( "QuasigroupByRightFolder", [ IsRightTransversal ] ); # T or G,
 #! @Arguments arg[, constructorStyle]
 #! @Returns a right quasigroup (resp. quasigroup or loop) from the given right folder
 #! (resp. quasigroup right folder, loop right folder). See above for the two possible
-#! formats of the argument `arg`, that is, `T` or `G,H,T`.
-#! See Section <Ref Sect="Section_OptionalArguments"/> for the optional argument `constructorStyle`.
+#! formats of the argument <Arg>arg</Arg>, that is, `T` or `G,H,T`.
+#! See Section <Ref Sect="Section_OptionalArguments"/> for the optional argument <Arg>constructorStyle</Arg>.
 DeclareOperation( "LoopByRightFolder", [ IsRightTransversal ] ); # T or G,H,T, then [, constructorStyle ]
 
 #! <P/>Here is an example of a right quasigroup constructed from a right folder.
@@ -828,9 +822,9 @@ DeclareOperation( "LoopByRightFolder", [ IsRightTransversal ] ); # T or G,H,T, t
 #! Here we collect a few constructors for special types of right quasigroups.
 
 #! @Arguments S[, constructorStyle]
-#! @Returns the projection right quasigroup on the set `S`, that is, a magma on `S` with mutliplication `x*y=x`.
-#! We also allow `S` to be a positive integer `n`, in which case the underlying set will be `[1..n]`.
-#! @Description Note: The value of `constructorStyle.checkArguments` of the optional argument `constructorStyle`
+#! @Returns the projection right quasigroup on the set <Arg>S</Arg> that is, a magma on <Arg>S</Arg> with mutliplication `x*y=x`.
+#! We also allow <Arg>S</Arg> to be a positive integer `n`, in which case the underlying set will be `[1..n]`.
+#! @Description Note: The value of <Arg>constructorStyle</Arg>`.checkArguments` of the optional argument <Arg>constructorStyle</Arg>
 #! does not come into play and need not be specified.
 DeclareOperation( "ProjectionRightQuasigroup", [ IsCollection ] );
 

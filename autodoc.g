@@ -20,12 +20,12 @@
 #! @Section Main features of the package
 #! @SectionLabel MainFeatures
 
-#! <P/><File>Representation</File><Br/>
+#! <P/>**Representation**<Br/>
 #! Right quasigroups, quasigroups and loops are represented as a subcategory of magmas in &GAP;.
 #! See Section <Ref Sect="Section_Categories"/> for more technical details and Section <Ref Sect="Section_Displaying"/>
 #! for how right quasigroups and their elements are displayed.
 
-#! <P/><File>Underlying set</File><Br/>
+#! <P/>**Underlying set**<Br/>
 #! Every right quasigroup has &GAP; elements and also has an underlying set.
 #! The underlying set is used to display &GAP; elements nicely and in Cayley tables. Furthermore,
 #! the underlying set plays an important role in right quasigroups that are not index based (see below)
@@ -33,12 +33,12 @@
 #! For index based right quasigroups, the underlying set is cosmetic and can be changed.
 #! See Section <Ref Sect="Section_UnderlyingSet"/>.
 
-#! <P/><File>Arithmetic operations</File><Br/>
+#! <P/>**Arithmetic operations**<Br/>
 #! Right quasigroups come equipped with the arithmetic operations of multiplication and right division.
 #! Quasigroups have additionally a left division operation, and loops have also a neutral element with respect
 #! to multiplication. See Section <Ref Sect="Section_Elementwise"/>.
 
-#! <P/><File>Index based and non-index based right quasigroups</File><Br/>
+#! <P/>**Index based and non-index based right quasigroups**<Br/>
 #! Every right quasigroup is constructed either as an <Index>index based right quasigroup</Index>
 #! **index based** right quasigroup or as a right quasigroup that is not index based. Generally speaking,
 #! index based right quasigroups take longer to construct, cannot be very large (thousands of
@@ -52,16 +52,16 @@
 #! quasigroup will be index based and whether arguments will be checked. By default, the resulting right quasigroups
 #! will be index based and arguments will not be checked (!). See Chapter <Ref Chap="Chapter_Constructors"/>.
 
-#! <P/><File>Parent</File><Br/>
+#! <P/>**Parent**<Br/>
 #! The parent mechanism is employed in &GAP; and in &RightQuasigroups; to save memory and to take advantage of
 #! the containment of subalgebras in their enveloping algebras. An element of a right quasigroup `Q` knows into
 #! which parent right quasigroup it belongs and it therefore has access to all data stored in the parent quasigroup.
 #! See Sections <Ref Sect="Section_Parent"/> and <Ref Sect="Section_Direct"/>.
 
-#! <P/><File>Mappings</File><Br/>
+#! <P/>**Mappings**<Br/>
 #! &RightQuasigroups; uses three kinds of mappings: &GAP; mappings, transformations, and
 #! permutations. Transformations that represent mappings between two right quasigroups, as well as permutations
-#! that represent bijective mappings on a right quasigroup, are indexed either with respect to the order of elemenets in the
+#! that represent bijective mappings on a right quasigroup, are indexed either with respect to the order of elements in the
 #! source and range quasigroups (so called **canonical tranformations** and **canonical permutations**)
 #! or with respect to their parents (so called **parent tranformations** and **parent permutations**).
 #! See Chapter <Ref Chap="Chapter_Mappings"/>.
@@ -70,14 +70,14 @@
 #! But canonical permutations are useful in the context of multiplication tables, and transformations are useful for left translations
 #! of right quasigroups, for instance. 
 
-#! <P/><File>Info class</File><Br/>
+#! <P/>**Info class**<Br/>
 #! The info class for the package is called `InfoRightQuasigroups` and its initial value is set to 1,
 #! which will only print information on tasks that are assumed to take a long time to execute, such as reading
 #! and initializing a large data file. The user can prevent all messages from &RightQuasigroups; by calling
 #! `SetInfoLevel( InfoRightQuasigroups, 0 )`. On the other hand, setting the info level higher for
 #! `InfoRightQuasigroups` might result in additional messages.
 
-#! <P/><File>Global variables</File><Br/>
+#! <P/>**Global variables**<Br/>
 #! Finally, global variables and auxiliary functions in &RightQuasigroups; start with the prefix `RQ_`
 #! and they are not fully documented in this manual. More information on these functions
 #! can be found in the declaration files `gap\*.gd`.
@@ -250,10 +250,13 @@
 #! @Chapter Homomorphisms, isomorphisms and automorphisms
 #! @ChapterLabel Morphisms
 
-#! @Section Homomorphisms of right quasigroups
+#! @Section Homomorphisms, isomorphisms and automorphisms of right quasigroups
 #! @SectionLabel Homomorphisms
 
-#! @Section Isomorphisms of right quasigroups
+#! @Section Isomorphs of right quasigroups
+#! @SectionLabel Isomorphs
+
+#! @Section Right quasigroups up to isomorphisms
 
 #! @Section Automorphism groups of right quasigroups
 
@@ -262,15 +265,19 @@
 #! @Chapter Homotopisms, isotopisms and autotopisms
 #! @ChapterLabel Topisms
 
-#! @Section Homotopisms of right quasigroups
+#! @Section Homotopisms, isotopism and autotopisms of right quasigroups
 
-#! @Section Isotopisms of right quasigroups
+#! @Section Twists of right quasigroups
+#! @SectionLabel Twists
 
 #! @Section Isotopes of right quasigroups
 
 #! @Section Affine right quasigroups
 #! @SectionLabel Affine
 
+#! @Section Right quasigroups up to isotopism
+
+#! @Section Autotopism groups of right quasigroups
 
 
 
@@ -303,7 +310,7 @@
 #! If a rack/quandle is declared as a right quasigroup, it is displayed as `&lt;rack...&gt;` or `&lt;quandle...&gt;`,
 #! while if it is declared as a quasigroup, it is displayed as `&lt;latin rack...&gt;` or `&lt;latin quandle...&gt;`.
 
-#! @Section Testing for racks and quandles
+#! @Section Testing properties of racks and quandles
 
 #! @Section Constructors for racks
 

@@ -22,12 +22,12 @@
  or by inserting the record returned by <Code>ConstructorStyle</Code>. Furthermore, in the former case
  we allow the provided constructor style to be incomplete, that is, having only one (or none) of the
  components <Code>indexBased</Code> and <Code>checkArguments</Code>; the missing components are assumed to have default values then.
- <P/><Emph>Note:</Emph> In regard to checking of arguments in constructors of &RightQuasigroups;, the optional
+ <P/><Emph>Note:</Emph> In regard to checking of arguments in right quasigroup constructors of &RightQuasigroups;, the optional
  component <Code>constructorStyle.checkArguments</Code> replaces the standard naming mechanism of &GAP; in which <Code>FunctionNC</Code> does not check its
- arguments while the corresponding <Code>Function</Code> does.
+ arguments while the corresponding <Code>Function</Code> does. Outside of those constructors, the <Code>NC</Code> convention is kept.
 <ManSection>
-  <Oper Arg="index_based, check_arguments" Name="SetDefaultConstructorStyle" Label="for IsBool, IsBool"/>
- <Returns><Code>true</Code> and changes the default constructor style according to the bool values <Code>index_based</Code> and <Code>check_arguments</Code>.
+  <Oper Arg="indexBased, checkArguments" Name="SetDefaultConstructorStyle" Label="for IsBool, IsBool"/>
+ <Returns><Code>true</Code> and changes the default constructor style according to the bool values <Arg>indexBased</Arg> and <Arg>checkArguments</Arg>.
 </Returns>
  <Description>
 <P/>
@@ -36,8 +36,8 @@
 
 
 <ManSection>
-  <Oper Arg="index_based, check_arguments" Name="ConstructorStyle" Label="for IsBool, IsBool"/>
- <Returns>the record with elements named <Code>indexBased</Code> and <Code>checkArguments</Code> set to bool values <Code>index_based</Code> and <Code>check_arguments</Code>,  respectively. The returned record can then be used as an optional argument in constructors.
+  <Oper Arg="indexBased, checkArguments" Name="ConstructorStyle" Label="for IsBool, IsBool"/>
+ <Returns>the record with elements named <Code>indexBased</Code> and <Code>checkArguments</Code> set to bool values <Arg>indexBased</Arg> and <Arg>checkArguments</Arg>,  respectively. The returned record can then be used as an optional argument in constructors.
 </Returns>
  <Description>
 <P/>
@@ -80,10 +80,10 @@
   <Oper Arg="M[, constructorStyle ]" Name="AsRightQuasigroup" Label="for IsDomain"/>
   <Oper Arg="M[, constructorStyle ]" Name="AsQuasigroup" Label="for IsDomain"/>
   <Oper Arg="M[, constructorStyle ]" Name="AsLoop" Label="for IsDomain"/>
- <Returns>the right quasigroup, quasigroup or loop, respectively, corresponding  to the magma or additive group <Code>M</Code> that is mathematically a right quasigroup, quasigroup or loop,
-  else returns <Code>fail</Code>. If <Code>M</Code> is an additive group, the additive operation is used
+ <Returns>the right quasigroup, quasigroup or loop, respectively, corresponding  to the magma or additive group <Arg>M</Arg> that is mathematically a right quasigroup, quasigroup or loop,
+  else returns <Code>fail</Code>. If <Arg>M</Arg> is an additive group, the additive operation is used
   as multiplication.
-  See Section <Ref Sect="Section_OptionalArguments"/> for the optional argument <Code>constructorStyle</Code>.
+  See Section <Ref Sect="Section_OptionalArguments"/> for the optional argument <Arg>constructorStyle</Arg>.
 </Returns>
  <Description>
 <P/>
@@ -105,7 +105,7 @@ gap> IsQuasigroupMagma( R ); # synonym of IsLatinMagma
 false
 gap> AsQuasigroup( M ); # arguments of constructors are by default not checked!
 <quasigroup of size 2>
-gap> AsQuasigroup( M, ConstructorStyle( true, true ) ); # the second optional argument will force a check
+gap> AsQuasigroup( M, rec( checkArguments := true ) ); # the optional argument will force a check
 fail
 gap> G := Group((1,2,3));; IsLoopMagma( G );
 true
@@ -135,10 +135,10 @@ gap> AsRightQuasigroup(GF(7)^2); # additive group
  in the second step can point to the stored data.
 <ManSection>
   <Oper Arg="category, S[, constructorStyle]" Name="RQ_AlgebraShell" Label="for IsObject, IsCollection"/>
- <Returns>an algebra shell of the appropriate category on the underlying set <Code>S</Code>.  The value of <Code>category</Code> must be <Code>IsRightQuasigroup</Code>, <Code>IsQuasigroup</Code> or <Code>IsLoop</Code>.
+ <Returns>an algebra shell of the appropriate category on the underlying set <Arg>S</Arg>.  The value of <Arg>category</Arg> must be <Code>IsRightQuasigroup</Code>, <Code>IsQuasigroup</Code> or <Code>IsLoop</Code>.
 </Returns>
  <Description>
-Note: The value of <Code>constructorStyle.checkArguments</Code> of the optional argument <Code>constructorStyle</Code>
+Note: The value of <Arg>constructorStyle</Arg><Code>.checkArguments</Code> of the optional argument <Arg>constructorStyle</Arg>
  does not come into play and need not be specified.
  </Description>
 </ManSection>
@@ -149,11 +149,11 @@ Note: The value of <Code>constructorStyle.checkArguments</Code> of the optional 
  <Returns><Code>true</Code>
 </Returns>
  <Description>
-This method adds all required unary and binary operations to the right quasigroup shell <Code>Q</Code>.
- The implied right division is always added. The implied left division is added if <Code>Q</Code> is a declared quasigroup.
- The implied neutral element is added if <Code>Q</Code> is a declared loop.
- Let F = FamilyObj( Q.1 ). If <Code>Q</Code> is indexBased, it is assumed that F!.multTable is bound.
- If <Code>Q</Code> is not index based, it is assumed that F!.mult is bound.
+This method adds all required unary and binary operations to the right quasigroup shell <Arg>Q</Arg>.
+ The implied right division is always added. The implied left division is added if <Arg>Q</Arg> is a declared quasigroup.
+ The implied neutral element is added if <Arg>Q</Arg> is a declared loop.
+ Let <Code>F = FamilyObj( </Code><Arg>Q</Arg><Code>.1 )</Code>. If <Arg>Q</Arg> is index based, it is assumed that <Code>F!.multTable</Code> is bound.
+ If <Arg>Q</Arg> is not index based, it is assumed that <Code>F!.mult</Code> is bound.
  </Description>
 </ManSection>
 
@@ -229,15 +229,12 @@ r0*Z(5)
   <Oper Arg="Q" Name="RightDivisionCayleyTable" Label="for IsRightQuasigroup"/>
   <Attr Arg="Q" Name="LeftDivisionTable" Label="for IsQuasigroup"/>
   <Oper Arg="Q" Name="LeftDivisionCayleyTable" Label="for IsQuasigroup"/>
- <Returns>the multiplication table, Cayley table, right division table,  right division Cayley table, left division table and left division Cayley table of right quasigroup <Code>Q</Code>,
-  respectively. For the left divisions, <Code>Q</Code> must be a declared quasigroup.
+ <Returns>the multiplication table, Cayley table, right division table,  right division Cayley table, left division table and left division Cayley table of right quasigroup <Arg>Q</Arg>,
+  respectively. For the left divisions, <Arg>Q</Arg> must be a declared quasigroup.
 </Returns>
  <Description>
- PROG: We do not store Cayley tables are as attributes since
- a) they are typically cheap to calculate, and
- b) they would have to be recalculated when the underlying set is changed by the user.
 Note that the Cayley tables are not stored as attributes since they are cheap to
- calculate and they are affected by a possible change of the underlying set of <Code>Q</Code>.
+ calculate and they are affected by a possible change of the underlying set of <Arg>Q</Arg>.
 <P/>
  </Description>
 </ManSection>
@@ -254,17 +251,17 @@ Note that the Cayley tables are not stored as attributes since they are cheap to
 
 
  <P/>It is possible to construct a right division table from the multiplication table
- of a right quasigroup <Code>Q</Code> of size <Math>n</Math> in <Math>O(n^2)</Math>, rather than naively in <Math>O(n^3)</Math>.
- The quick algorithm is used in the above two methods which 
- return the right division table and the left division table of a right quasigroup <Code>Q</Code>, respectively.
- For the left division, <Code>Q</Code> must be a declared quasigroup.
+ of a right quasigroup <Arg>Q</Arg> of size <Math>n</Math> in <Math>O(n^2)</Math>, rather than naively in <Math>O(n^3)</Math>.
+ The fast algorithm is used in the above two methods which 
+ return the right division table and the left division table of a right quasigroup <Arg>Q</Arg>, respectively.
+ For the left division, <Arg>Q</Arg> must be a declared quasigroup.
 <ManSection Label="AutoDoc_generated_group6">
 <Heading>Testing Cayley tables</Heading>
   <Oper Arg="ct" Name="IsRightQuasigroupCayleyTable" Label="for IsRectangularTable"/>
   <Oper Arg="ct" Name="IsQuasigroupCayleyTable" Label="for IsRectangularTable"/>
   <Oper Arg="ct" Name="IsLoopCayleyTable" Label="for IsRectangularTable"/>
- <Returns><Code>true</Code> if <Code>ct</Code> is a Cayley table of a right quasigroup, quasigroup or loop, respectively,  otherwise returns <Code>false</Code>.
-  The underlying set it understood to be the ordered set of elements contained in the first column of <Code>ct</Code>.
+ <Returns><Code>true</Code> if <Arg>ct</Arg> is a Cayley table of a right quasigroup, quasigroup or loop, respectively,  otherwise returns <Code>false</Code>.
+  The underlying set it understood to be the ordered set of elements contained in the first column of <Arg>ct</Arg>.
   This is a logical choice for right quasigroups.
 </Returns>
  <Description>
@@ -277,7 +274,7 @@ Note that the Cayley tables are not stored as attributes since they are cheap to
 <Heading>Normalizing Cayley tables</Heading>
   <Oper Arg="ct" Name="NormalizedRightQuasigroupCayleyTable" Label="for IsRectangularTable"/>
   <Oper Arg="ct" Name="NormalizedQuasigroupCayleyTable" Label="for IsRectangularTable"/>
- <Returns>a normalized version of the (right) quasigroup Cayley table <Code>ct</Code>.
+ <Returns>a normalized version of the (right) quasigroup Cayley table <Arg>ct</Arg>.
 </Returns>
  <Description>
  <P/>A right quasigroup Cayley table is <Index>normalized right quasigroup Cayley table</Index><Emph>normalized</Emph>
@@ -306,7 +303,7 @@ gap> NormalizedQuasigroupCayleyTable( ct );
   <Oper Arg="ct[, constructorStyle]" Name="RightQuasigroupByCayleyTable" Label="for IsRectangularTable"/>
   <Oper Arg="ct[, constructorStyle]" Name="QuasigroupByCayleyTable" Label="for IsRectangularTable"/>
   <Oper Arg="ct[, constructorStyle]" Name="LoopByCayleyTable" Label="for IsRectangularTable"/>
- <Returns>the right quasigroup, quasigroup or loop with Cayley table <Code>ct</Code>, respectively.  See Section <Ref Sect="Section_OptionalArguments"/> for the optional argument <Code>constructorStyle</Code>.
+ <Returns>the right quasigroup, quasigroup or loop with Cayley table <Arg>ct</Arg>, respectively.  See Section <Ref Sect="Section_OptionalArguments"/> for the optional argument <Arg>constructorStyle</Arg>.
 </Returns>
  <Description>
 <P/>
@@ -392,9 +389,9 @@ l0
 
 <ManSection>
   <Func Arg="S, mult[, rdiv]" Name="IsRightQuasigroupFunction" />
- <Returns><Code>true</Code> if <Code>mult</Code> is a right quasigroup function on <Code>S</Code>, else returns <Code>false</Code>.  (See Subsection <Ref Subsect="Subsection_ConstructorArguments"/> for how the optional arguments are treated.)
-  If <Code>rdiv</Code> is given, it is checked that it is the right division on <Code>S</Code> corresponding
-  to the multiplication <Code>mult</Code>.
+ <Returns><Code>true</Code> if <Arg>mult</Arg> is a right quasigroup function on <Arg>S</Arg>, else returns <Code>false</Code>.  (See Subsection <Ref Subsect="Subsection_ConstructorArguments"/> for how the optional arguments are treated.)
+  If <Arg>rdiv</Arg> is given, it is checked that it is the right division on <Arg>S</Arg> corresponding
+  to the multiplication <Arg>mult</Arg>.
 </Returns>
  <Description>
 <P/>
@@ -404,10 +401,10 @@ l0
 
 <ManSection>
   <Func Arg="S, mult[, rdiv, ldiv]" Name="IsQuasigroupFunction" />
- <Returns><Code>true</Code> if <Code>mult</Code> is a quasigroup function on <Code>S</Code>, else returns <Code>false</Code>.  (See Subsection <Ref Subsect="Subsection_ConstructorArguments"/> for how the optional arguments are treated.) 
-  If <Code>rdiv</Code> is given, it is checked that it is the right division
-  on <Code>S</Code> corresponding to the multiplication <Code>mult</Code>. If <Code>ldiv</Code> is given,
-  it is checked that it is the left division on <Code>S</Code> corresponding to the multiplication <Code>mult</Code>.
+ <Returns><Code>true</Code> if <Arg>mult</Arg> is a quasigroup function on <Arg>S</Arg>, else returns <Code>false</Code>.  (See Subsection <Ref Subsect="Subsection_ConstructorArguments"/> for how the optional arguments are treated.) 
+  If <Arg>rdiv</Arg> is given, it is checked that it is the right division
+  on <Arg>S</Arg> corresponding to the multiplication <Arg>mult</Arg>. If <Arg>ldiv</Arg> is given,
+  it is checked that it is the left division on <Arg>S</Arg> corresponding to the multiplication <Arg>mult</Arg>.
 </Returns>
  <Description>
 <P/>
@@ -427,11 +424,11 @@ false
 
 <ManSection>
   <Func Arg="S, mult[, rdiv, ldiv, one]" Name="IsLoopFunction" />
- <Returns><Code>true</Code> if <Code>mult</Code> is a loop function on <Code>S</Code>, else returns <Code>false</Code>.  (See Subsection <Ref Subsect="Subsection_ConstructorArguments"/> for how the optional arguments are treated.) 
-  If <Code>rdiv</Code> is given, it is checked that it is the right division
-  on <Code>S</Code> corresponding to the multiplication <Code>mult</Code>. If <Code>ldiv</Code> is given,
-  it is checked that it is the left division on <Code>S</Code> corresponding to the multiplication <Code>mult</Code>.
-  If <Code>one</Code> is given, it is checked that it is is the neutral element with respect to <Code>mult</Code>.
+ <Returns><Code>true</Code> if <Arg>mult</Arg> is a loop function on <Arg>S</Arg>, else returns <Code>false</Code>.  (See Subsection <Ref Subsect="Subsection_ConstructorArguments"/> for how the optional arguments are treated.) 
+  If <Arg>rdiv</Arg> is given, it is checked that it is the right division
+  on <Arg>S</Arg> corresponding to the multiplication <Arg>mult</Arg>. If <Arg>ldiv</Arg> is given,
+  it is checked that it is the left division on <Arg>S</Arg> corresponding to the multiplication <Arg>mult</Arg>.
+  If <Arg>one</Arg> is given, it is checked that it is is the neutral element with respect to <Arg>mult</Arg>.
 </Returns>
  <Description>
 <P/>
@@ -469,7 +466,7 @@ false
  <Description>
 <P/>
 Returns, respectively, the multiplication function, right division function and left division function
- of right quasigroup <Code>Q</Code> as a &GAP; function. For the left division, <Code>Q</Code> must be a declared
+ of right quasigroup <Arg>Q</Arg> as a &GAP; function. For the left division, <Arg>Q</Arg> must be a declared
  quasigroup. If the requested function is not bound, returns <Code>fail</Code>. See Section <Ref Sect="Section_IndexBased"/> for 
  more details on multiplication and division functions in index based and non-index based right quasigroups.
  </Description>
@@ -478,9 +475,9 @@ Returns, respectively, the multiplication function, right division function and 
 
 <ManSection>
   <Func Arg="S, mult[, rdiv][, constructorStyle]" Name="RightQuasigroupByFunction" />
- <Returns>a right quasigroup with underlying set <Code>S</Code> and multiplication function <Code>mult</Code>.  If <Code>rdiv</Code> is given, it becomes the right division function, else the right division function
-  is automatically inferred from <Code>mult</Code>. 
-  See Subsection <Ref Subsect="Subsection_ConstructorArguments"/> for the optional argument <Code>contructorStyle</Code>.
+ <Returns>a right quasigroup with underlying set <Arg>S</Arg> and multiplication function <Arg>mult</Arg>.  If <Arg>rdiv</Arg> is given, it becomes the right division function, else the right division function
+  is automatically inferred from <Arg>mult</Arg>. 
+  See Subsection <Ref Subsect="Subsection_ConstructorArguments"/> for the optional argument <Arg>constructorStyle</Arg>.
 </Returns>
  <Description>
 <P/>
@@ -490,9 +487,9 @@ Returns, respectively, the multiplication function, right division function and 
 
 <ManSection>
   <Func Arg="S, mult[, rdiv, ldiv][, constructorStyle]" Name="QuasigroupByFunction" />
- <Returns>a quasigroup with underlying set <Code>S</Code> and multiplication function <Code>mult</Code>.  If <Code>rdiv</Code> (resp. <Code>ldiv</Code>) is given, it is set as the right (resp. left) division function,
-  else the right (resp. left) division function is automatically inferred from <Code>mult</Code>.
-  See Subsection <Ref Subsect="Subsection_ConstructorArguments"/> for the optional argument <Code>contructorStyle</Code>.
+ <Returns>a quasigroup with underlying set <Arg>S</Arg> and multiplication function <Arg>mult</Arg>.  If <Arg>rdiv</Arg> (resp. <Arg>ldiv</Arg>) is given, it is set as the right (resp. left) division function,
+  else the right (resp. left) division function is automatically inferred from <Arg>mult</Arg>.
+  See Subsection <Ref Subsect="Subsection_ConstructorArguments"/> for the optional argument <Arg>constructorStyle</Arg>.
 </Returns>
  <Description>
 <P/>
@@ -514,10 +511,10 @@ gap> QuasigroupByFunction( S, mult, rdiv, ldiv );
 
 <ManSection>
   <Func Arg="S, mult[, rdiv, ldiv, one][, constructorStyle]" Name="LoopByFunction" />
- <Returns>a loop with underlying set <Code>S</Code> and multiplication function <Code>mult</Code>.  If <Code>rdiv</Code> (resp. <Code>ldiv</Code>) is given, it is set as the right (resp. left) division function,
-  else the right (resp. left) division function is automatically inferred from <Code>mult</Code>. 
-  If <Code>one</Code> is given, it is set as the neutral element, else it is automatically inferred from <Code>mult</Code>.
-  See Subsection <Ref Subsect="Subsection_ConstructorArguments"/> for the optional argument <Code>contructorStyle</Code>.
+ <Returns>a loop with underlying set <Arg>S</Arg> and multiplication function <Arg>mult</Arg>.  If <Arg>rdiv</Arg> (resp. <Arg>ldiv</Arg>) is given, it is set as the right (resp. left) division function,
+  else the right (resp. left) division function is automatically inferred from <Arg>mult</Arg>. 
+  If <Arg>one</Arg> is given, it is set as the neutral element, else it is automatically inferred from <Arg>mult</Arg>.
+  See Subsection <Ref Subsect="Subsection_ConstructorArguments"/> for the optional argument <Arg>constructorStyle</Arg>.
 </Returns>
  <Description>
 <P/>
@@ -564,8 +561,8 @@ lZmodpZObj( 300001, 1000003 )
   <Oper Arg="[S,] section" Name="IsRightSection" Label="for IsCollection, IsCollection"/>
   <Oper Arg="[S,] section" Name="IsQuasigroupRightSection" Label="for IsCollection, IsCollection"/>
   <Oper Arg="[S,] section" Name="IsLoopRightSection" Label="for IsCollection, IsCollection"/>
- <Returns><Code>true</Code> if <Code>section</Code> is a right section (resp. quasigroup right section,  loop right section) on <Code>S</Code>, else returns <Code>false</Code>. If <Code>S</Code> is omitted, <Code>section</Code> must be
-  a list of permutations; the underlying set is then understood to be <Code>[1..Length(section)]</Code>.
+ <Returns><Code>true</Code> if <Arg>section</Arg> is a right section (resp. quasigroup right section,  loop right section) on <Arg>S</Arg>, else returns <Code>false</Code>. If <Arg>S</Arg> is omitted, <Arg>section</Arg> must be
+  a list of permutations; the underlying set is then understood to be <Code>[1..Length(</Code><Arg>section</Arg><Code>)]</Code>.
 </Returns>
  <Description>
 <P/>
@@ -578,9 +575,9 @@ lZmodpZObj( 300001, 1000003 )
   <Oper Arg="[S,] section[, constructorStyle]" Name="RightQuasigroupByRightSection" Label="for IsCollection, IsCollection"/>
   <Oper Arg="[S,] section[, constructorStyle]" Name="QuasigroupByRightSection" Label="for IsCollection, IsCollection"/>
   <Oper Arg="[S,] section[, constructorStyle]" Name="LoopByRightSection" Label="for IsCollection, IsCollection"/>
- <Returns>a right quasigroup, quasigroup or loop on <Code>S</Code> with right section <Code>section</Code>, respectively.  If <Code>S</Code> is omitted, <Code>section</Code> must be a list of permutations; the underlying set is then understood
-  to be <Code>[1..Length(section)]</Code>.
-  See Section <Ref Sect="Section_OptionalArguments"/> for the optional argument <Code>constructorStyle</Code>.
+ <Returns>a right quasigroup, quasigroup or loop on <Arg>S</Arg> with right section <Arg>section</Arg>, respectively.  If <Arg>S</Arg> is omitted, <Arg>section</Arg> must be a list of permutations; the underlying set is then understood
+  to be <Code>[1..Length(</Code><Arg>section</Arg><Code>)]</Code>.
+  See Section <Ref Sect="Section_OptionalArguments"/> for the optional argument <Arg>constructorStyle</Arg>.
 </Returns>
  <Description>
 <P/>
@@ -676,7 +673,7 @@ l2
   <Oper Arg="arg" Name="IsRightFolder" Label="for IsRightTransversal"/>
   <Oper Arg="arg" Name="IsQuasigroupRightFolder" Label="for IsRightTransversal"/>
   <Oper Arg="arg" Name="IsLoopRightFolder" Label="for IsRightTransversal"/>
- <Returns><Code>true</Code> if the argument is a right folder (resp. quasigroup right folder, loop right folder).  See above for the two possible formats of the argument <Code>arg</Code>, that is, <Code>T</Code> or <Code>G,H,T</Code>.
+ <Returns><Code>true</Code> if the argument is a right folder (resp. quasigroup right folder, loop right folder).  See above for the two possible formats of the argument <Arg>arg</Arg>, that is, <Code>T</Code> or <Code>G,H,T</Code>.
 </Returns>
  <Description>
 <P/>
@@ -690,8 +687,8 @@ l2
   <Oper Arg="arg[, constructorStyle]" Name="QuasigroupByRightFolder" Label="for IsRightTransversal"/>
   <Oper Arg="arg[, constructorStyle]" Name="LoopByRightFolder" Label="for IsRightTransversal"/>
  <Returns>a right quasigroup (resp. quasigroup or loop) from the given right folder  (resp. quasigroup right folder, loop right folder). See above for the two possible
-  formats of the argument <Code>arg</Code>, that is, <Code>T</Code> or <Code>G,H,T</Code>.
-  See Section <Ref Sect="Section_OptionalArguments"/> for the optional argument <Code>constructorStyle</Code>.
+  formats of the argument <Arg>arg</Arg>, that is, <Code>T</Code> or <Code>G,H,T</Code>.
+  See Section <Ref Sect="Section_OptionalArguments"/> for the optional argument <Arg>constructorStyle</Arg>.
 </Returns>
  <Description>
 <P/>
@@ -748,10 +745,10 @@ gap> Elements( last );
  Here we collect a few constructors for special types of right quasigroups.
 <ManSection>
   <Oper Arg="S[, constructorStyle]" Name="ProjectionRightQuasigroup" Label="for IsCollection"/>
- <Returns>the projection right quasigroup on the set <Code>S</Code>, that is, a magma on <Code>S</Code> with mutliplication <Code>x*y=x</Code>.  We also allow <Code>S</Code> to be a positive integer <Code>n</Code>, in which case the underlying set will be <Code>[1..n]</Code>.
+ <Returns>the projection right quasigroup on the set <Arg>S</Arg> that is, a magma on <Arg>S</Arg> with mutliplication <Code>x*y=x</Code>.  We also allow <Arg>S</Arg> to be a positive integer <Code>n</Code>, in which case the underlying set will be <Code>[1..n]</Code>.
 </Returns>
  <Description>
-Note: The value of <Code>constructorStyle.checkArguments</Code> of the optional argument <Code>constructorStyle</Code>
+Note: The value of <Arg>constructorStyle</Arg><Code>.checkArguments</Code> of the optional argument <Arg>constructorStyle</Arg>
  does not come into play and need not be specified.
  </Description>
 </ManSection>
@@ -762,28 +759,6 @@ gap> ProjectionRightQuasigroup( [1..1000], rec( indexBased := false ) );; # 16 m
 gap> Q := ProjectionRightQuasigroup( [1..1000] );; # 375 ms to construct
 gap> Q.123*Q.456;
 r123
-]]></Example>
-
-
-<ManSection>
-  <Oper Arg="G[, constructorStyle]" Name="RightCoreOfGroup" Label="for IsGroup"/>
- <Returns>the right core of a group <Code>G</Code>, that is, the right quasigroup on <Code>G</Code>  with multiplication given by <Math>x*y = yx^{-1}y</Math>. If <Code>G</Code> is an additive group, the multiplication
-  will be given by <Math>x*y = y - x + y</Math> (which presumably results in <Math>x*y = 2y-x</Math> under the assumption
-  that additive groups in &GAP; are commutative).
-</Returns>
- <Description>
-Note: The value of <Code>constructorStyle.checkArguments</Code> of the optional argument <Code>constructorStyle</Code>
- does not come into play and need not be specified.
- </Description>
-</ManSection>
-
-
-<Example><![CDATA[
-gap> G := AlternatingGroup( 5 );
-gap> Q := RightCoreOfGroup( G );
-<right quasigroup of size 60>
-gap> Q[(1,2,3)]*Q[(1,2,3,4,5)] = Q[(1,2,3)*(1,2,3,4,5)^(-1)*(1,2,3)];
-true
 ]]></Example>
 
 
@@ -805,22 +780,22 @@ true
  the random latin square in the last step. 
 <ManSection>
   <Oper Arg="S[, constructorStyle ]" Name="RandomRightQuasigroup" Label="for IsCollection"/>
- <Returns>a random right quasigroup on the underlying set <Code>S</Code>. We also allow <Code>S</Code> to be a positive integer <Code>n</Code>,  in which case the underlying set will be <Code>[1..n]</Code>.
+ <Returns>a random right quasigroup on the underlying set <Arg>S</Arg>. We also allow <Arg>S</Arg> to be a positive integer <Code>n</Code>,  in which case the underlying set will be <Code>[1..n]</Code>.
 </Returns>
  <Description>
-Note: The value of <Code>constructorStyle.checkArguments</Code> of the optional argument <Code>constructorStyle</Code>
+Note: The value of <Arg>constructorStyle</Arg><Code>.checkArguments</Code> of the optional argument <Arg>constructorStyle</Arg>
  does not come into play and need not be specified.
  </Description>
 </ManSection>
 
 
-<ManSection Label="AutoDoc_generated_group63">
+<ManSection Label="AutoDoc_generated_group79">
 <Heading>Random quasigroups and loops</Heading>
   <Oper Arg="S[, iter]" Name="RandomQuasigroup" Label="for IsCollection"/>
   <Oper Arg="S[, iter]" Name="RandomLoop" Label="for IsCollection"/>
- <Returns>a random quasigroup (loop) on the underlying set <Code>S</Code>, using <Code>iter</Code> number of  random steps to move into an initial position in the Jacobson and Matthews algorithm.
-  We also allow <Code>S</Code> to be a positive integer <Code>n</Code>, in which case the underlying set will be <Code>[1..n]</Code>.
-  If the optional argument <Code>iter</Code> is not given, its value will be set to <Math>n^3</Math>.
+ <Returns>a random quasigroup (loop) on the underlying set <Arg>S</Arg>, using <Arg>iter</Arg> number of  random steps to move into an initial position in the Jacobson and Matthews algorithm.
+  We also allow <Arg>S</Arg> to be a positive integer <Code>n</Code>, in which case the underlying set will be <Code>[1..n]</Code>.
+  If the optional argument <Arg>iter</Arg> is not given, its value will be set to <Math>n^3</Math>.
   The resulting quasigroup or loop will be always index based (since the algorithm constructs
   a multiplication table anyway).
 </Returns>

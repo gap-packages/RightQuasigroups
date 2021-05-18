@@ -2,7 +2,7 @@
 # Homomorphisms, isomorphisms and automorphisms of right quasigroups
 # =============================================================================
 
-# HOMOMORPHISMS OF RIGHT QUASIGROUPS
+# HOMOMORPHISMS, ISOMORPHISMS AND AUTOMORPHISMS OF RIGHT QUASIGROUPS
 # _____________________________________________________________________________
 
 # IsRightQuasigroupHomomorphism
@@ -209,6 +209,7 @@ function( f )
 end );
 
 # KernelOfLoopHomomorphism
+# PROG: constructor OK, calls Subloop
 
 InstallMethod( KernelOfLoopHomomorphism, "for loop homomorphism",
     [ IsMapping ],
@@ -278,73 +279,51 @@ function( Q, S )
     return RightQuasigroupHomomorphismByImages( Q, F, gens, imgs );
 end );
 
-# ISOMORPHISMS OF RIGHT QUASIGROUPS
+# ISOMORPHS OF RIGHT QUASIGROUPS
 # _____________________________________________________________________________
 
-# IsomorphicCopyByPerm
+# RQ_AlgebraIsomorph
+# PROG: constructor OK, calls RQ_AlgebraTwist
 
-InstallMethod( IsomorphicCopyByPerm, "for right quasigroup an permutation",
-    [ IsRightQuasigroup, IsPerm ],
-function( Q, f )
-    local style;
-    style := rec( indexBased := IsIndexBased( Q ), checkArguments := RQ_defaultConstructorStyle.checkArguments );
-    return IsomorphicCopyByPerm( Q, f, style );
-end );
-
-InstallOtherMethod( IsomorphicCopyByPerm, "for right quasigroup, permutation and record",
-    [ IsRightQuasigroup, IsPerm, IsRecord ],
-function( Q, f, style )
-    local copyQ;
-    copyQ := RQ_AlgebraIsotopeByPerms( CategoryOfRightQuasigroup( Q ), Q, f, f, f, style );
-    RQ_InheritProperties( Parent( Q ), copyQ ); 
-    return copyQ;
+InstallMethod( RQ_AlgebraIsomorph, "for category and list of arguments",
+    [ IsObject, IsList ],
+function( category, data )
+    local ls, Q;
+    # expects data to be Q, f ...
+    # PROG: the multiplication will be given by x*y = f(f^{-1}(x)f^{-1}(y)), so call twist (f^{-1},f^{-1},f)
+    ls := [];
+    ls[1] := data[1];
+    ls[2] := Inverse( data[2] );
+    ls[3] := Inverse( data[2] );
+    ls[4] := data[2];
+    ls := Concatenation( ls, data{[3..Length(data)]} );
+    Q := RQ_AlgebraTwist( category, ls );
+    # inherit properties
+    RQ_InheritProperties( ls[1], Q );
+    return Q;
 end );
 
 # RightQuasigroupIsomorph 
 # QuasigroupIsomorph
 # LoopIsomorph
 
-InstallMethod( RightQuasigroupIsomorph, "for right quasigroup and permutation",
-    [ IsRightQuasigroup, IsPerm ],
-function( Q, f )
-    local style;
-    style := rec( indexBased := IsIndexBased( Q ), checkArguments := RQ_defaultConstructorStyle.checkArguments );
-    return IsomorphicCopyByPerm( Q, f, style );
-end );
+InstallGlobalFunction( RightQuasigroupIsomorph,
+function( arg )
+    return RQ_AlgebraIsomorph( IsRightQuasigroup, arg );
+end);
 
-InstallOtherMethod( RightQuasigroupIsomorph, "for right quasigroup, permutation and record",
-    [ IsRightQuasigroup, IsPerm, IsRecord ],
-function( Q, f, style )
-    return IsomorphicCopyByPerm( Q, f, style );
-end );
+InstallGlobalFunction( QuasigroupIsomorph,
+function( arg )
+    return RQ_AlgebraIsomorph( IsQuasigroup, arg );
+end);
 
-InstallMethod( QuasigroupIsomorph, "for quasigroup and permutation",
-    [ IsQuasigroup, IsPerm ],
-function( Q, f )
-    local style;
-    style := rec( indexBased := IsIndexBased( Q ), checkArguments := RQ_defaultConstructorStyle.checkArguments );
-    return IsomorphicCopyByPerm( Q, f, style );
-end );
+InstallGlobalFunction( LoopIsomorph,
+function( arg )
+    return RQ_AlgebraIsomorph( IsLoop, arg );
+end);
 
-InstallOtherMethod( QuasigroupIsomorph, "for quasigroup, permutation and record",
-    [ IsQuasigroup, IsPerm, IsRecord ],
-function( Q, f, style )
-    return IsomorphicCopyByPerm( Q, f, style );
-end );
-
-InstallMethod( LoopIsomorph, "for loop and permutation",
-    [ IsLoop, IsPerm ],
-function( Q, f )
-    local style;
-    style := rec( indexBased := IsIndexBased( Q ), checkArguments := RQ_defaultConstructorStyle.checkArguments );
-    return IsomorphicCopyByPerm( Q, f, style );
-end );
-
-InstallOtherMethod( LoopIsomorph, "for loop, permutation and record",
-    [ IsLoop, IsPerm, IsRecord ],
-function( Q, f, style )
-    return IsomorphicCopyByPerm( Q, f, style );
-end );
+# RIGHT QUASIGROUPS UP TO ISOMORPHISM
+# _____________________________________________________________________________
 
 # IsomorphismDiscriminator
 
@@ -508,17 +487,14 @@ function( dis1, dis2 )
       return dis1[ 1 ] = dis2[ 1 ];
 end );
 
-# EXTENDING MAPPINGS (AUXILIARY)
+# RQ_ExtendIsomorphismByClosingSource
 
-# RQ_ExtendHomomorphismByClosingSource
-
-InstallMethod( RQ_ExtendHomomorphismByClosingSource, "for a list and two tables",
+InstallMethod( RQ_ExtendIsomorphismByClosingSource, "for a list and two tables",
     [ IsList, IsRectangularTable, IsRectangularTable ],
 function( f, t1, t2 )
     local oldS, newS, pairs, x, y, newNow, p, z, fz;    
     oldS := [ ];
-    newS := f[ 2 ];
-
+    newS := Filtered( [1..Length(f)], i -> f[i]<>0 ); # domain of f
     repeat  
         pairs := [];
         for x in oldS do for y in newS do 
@@ -533,12 +509,13 @@ function( f, t1, t2 )
             x := p[ 1 ];
             y := p[ 2 ];
             z := t1[ x, y ];
-            fz := t2[ f[ 1, x ], f[ 1, y ] ];
-            if f[ 1, z ] = 0 then
-                f[ 1, z ] := fz; AddSet( f[ 2 ], z ); AddSet( f[ 3 ], fz );
+            fz := t2[ f[ x ], f[ y ] ];
+            if f[ z ] <> 0 then # already defined
+                if f[ z ] <> fz then return fail; fi; # not well defined
+            else # not yet defined
+                if fz in f then return fail; fi; # not 1-1
+                f[ z ] := fz; 
                 Add( newNow, z );
-            else 
-                if not f[ 1, z ] = fz then return fail; fi;
             fi;
         od;
         oldS := Union( oldS, newS );
@@ -563,16 +540,16 @@ InstallMethod( RQ_ExtendIsomorphism, "for a list, rectangular table, two lists, 
     [ IsList, IsRectangularTable, IsList, IsList, IsRectangularTable, IsList ],
 function( f, Q1, gen1, dis1, Q2, dis2 )
     local x, possible_images, y, g;
-    f := RQ_ExtendHomomorphismByClosingSource( f, Q1, Q2 );
-    if f = fail or Length( f[ 2 ] ) > Length( f[ 3 ] ) then return fail; fi;
-    if Length( f[ 2 ] ) = Length( Q1 ) then return f; fi; #isomorphism found
-    
+    f := RQ_ExtendIsomorphismByClosingSource( f, Q1, Q2 );
+    if f = fail then return fail; fi;
+    if not (0 in f) then return f; fi; #isomorphism found
+    # partial isomorphism
     x := gen1[ 1 ];
     gen1 := gen1{[2..Length(gen1)]}; 
-    possible_images := Filtered( dis2[ RQ_SublistPosition( dis1, x ) ], y -> not y in f[ 3 ] );    
+    possible_images := Filtered( dis2[ RQ_SublistPosition( dis1, x ) ], y -> not y in f );    
     for y in possible_images do
-        g := StructuralCopy( f );
-        g[ 1, x ] := y; AddSet( g[ 2 ], x ); AddSet( g[ 3 ], y );
+        g := ShallowCopy( f );
+        g[ x ] := y; 
         g := RQ_ExtendIsomorphism( g, Q1, gen1, dis1, Q2, dis2 );
         if not g = fail then return g; fi; #isomorphism found
     od;
@@ -580,16 +557,17 @@ function( f, Q1, gen1, dis1, Q2, dis2 )
 end );
 
 # RQ_IsomorphismAlgebrasWithPrecalculatedData
+# PROG: The isomorphism is represented as a list of length n
+# with f[i]=0 indicating that f is not defined at i.
 
 InstallMethod( RQ_IsomorphismAlgebrasWithPrecalculatedData,
     "for category, right quasigroups, generators, discriminator, right quasigroup and discriminator",
     [ IsObject, IsRightQuasigroup, IsList, IsList, IsRightQuasigroup, IsList ],
 function( category, Q1, gen1, dis1, Q2, dis2 ) # PROG: category is never used
-    local map, iso;
-    map := 0 * [ 1.. Size( Q1 ) ]; # empty mapping
-    iso := RQ_ExtendIsomorphism( [ map, [ ], [ ] ], MultiplicationTable( Q1 ), gen1, dis1[2], MultiplicationTable( Q2 ), dis2[2] );
+    local f, iso;
+    iso := RQ_ExtendIsomorphism( 0*[1..Size(Q1)], MultiplicationTable( Q1 ), gen1, dis1[2], MultiplicationTable( Q2 ), dis2[2] );
     if not iso = fail then
-        return SortingPerm( iso[ 1 ] );
+        return SortingPerm( iso );
     fi;
     return fail;
 end );
@@ -761,7 +739,7 @@ function( Q )
     DisQ := IsomorphismDiscriminator( Q );
     GenQ := RQ_EfficientGenerators( Q, DisQ );
     gens := RQ_AutomorphismsFixingSet( [ ], Q, GenQ, DisQ[2] ); # using only the disciminator blocks 
-    if IsEmpty( gens ) then return Group( () ); fi; # no notrivial automorphism
+    if IsEmpty( gens ) then return Group( () ); fi; # no nontrivial automorphism
     gens := List( gens, p -> SortingPerm( p ) ); # canonical perms
     gens := List( gens, g -> AsParentPerm( origQ, g ) ); # convert to parent perms
     return RQ_GroupByGenerators( SmallGeneratingSet( Group( gens ) ) );

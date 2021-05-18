@@ -25,7 +25,7 @@ DeclareProperty( "IsQuandle", IsRightQuasigroup );
 #! @EndGroup
 
 #! @BeginGroup
-#! @GroupTitle IsHomegeneousRack and IsHomogeneousQuandle
+#! @GroupTitle IsHomogeneousRack and IsHomogeneousQuandle
 
 #! @Arguments Q
 #! @Returns `true` if the right quasigroup <Arg>Q</Arg> is a homogeneous rack/quandle,
@@ -94,7 +94,7 @@ DeclareProperty( "IsPermutationalQuandle", IsRightQuasigroup );
 
 #! @Arguments Q
 #! @Returns `true` if the right quasigroup <Arg>Q</Arg> is a faithful rack/quandle,
-#! that is, a rack/quandle with $x\mapsto R_x$ injective <Arg>Q</Arg>.
+#! that is, a rack/quandle with $x\mapsto R_x$ injective on <Arg>Q</Arg>.
 DeclareProperty( "IsFaithfulRack", IsRightQuasigroup );
 
 #! @Arguments Q
@@ -113,48 +113,112 @@ DeclareProperty( "IsFaithfulQuandle", IsRightQuasigroup );
 DeclareSynonym( "ProjectionRack", ProjectionRightQuasigroup );
 DeclareSynonym( "ProjectionQuandle", ProjectionRightQuasigroup );
 
-#! @Arguments S, f[, constructorStyle]
-#! @Returns the permutational rack on <Arg>S</Arg> via the permutation <Arg>f</Arg>, that is, the
-#! rack on <Arg>S</Arg> with multiplication `x*y = x^f`. The permutation <Arg>f</Arg> must restrict
-#! to <Arg>S</Arg>.
-DeclareOperation( "PermutationalRack", [ IsCollection, IsPerm ] );
+#! @Arguments n, f[, constructorStyle]
+#! @Returns the permutational rack on `[1..`<Arg>n</Arg>`]` via the permutation <Arg>f</Arg>, that is, the
+#! rack on `[1..`<Arg>n</Arg>`]` with multiplication `x*y = x^f`. The permutation <Arg>f</Arg> must restrict
+#! to `[1..`<Arg>n</Arg>`]`.
+#! @Description Note that for index based right quasigroups it is possible to change the underlying set
+#! via `ChangeUnderlyingSet`, cf. Section <Ref Sect="Section_UnderlyingSet"/>.
+DeclareOperation( "PermutationalRack", [ IsPosInt, IsPerm ] );
+
+#! @BeginExampleSession
+#! gap> PermutationalRack( 10, (3,4,5) );
+#! <rack of size 10>
+#! gap> Q := PermutationalRack( 100000, (1,100000), ConstructorStyle( false, true ) );
+#! <rack of size 100000>
+#! gap> Q[1]*Q[2];
+#! r100000
+#! @EndExampleSession
+
+#! @Arguments  n [, constructorStyle]
+#! @Returns the cyclic rack on `[1..`<Arg>n</Arg>`]`, that is, the
+#! rack on `[1..`<Arg>n</Arg>`]` with multiplication `x*y = x+1`, where the addition is with wraparound. 
+#! This is the same as permutational rack via the <Arg>n</Arg>-cycle `(1,2,...,`<Arg>n</Arg>`)`.
+DeclareOperation( "CyclicRack", [ IsPosInt ] );
+
+#! <P/>A rack is **affine**<Index>affine rack</Index> if it is an affine right quasigroup over an abelian group
+#! (that happens to be a rack). See Section <Ref Sect="Section_Affine"/> for affine right quasigroups
+#! and their arithmetic forms. For affine racks, we allow only arithmetic forms `(n,f,g,c)`, `(F,f,g,c)` and `(G,f,g,c)`.
+
+#! <P/>If $G$ is an (additive) abelian group, $f$ an automorphism of $G$, $g$ an endomorphism of $G$ and $c\in G$,
+#! then the affine right quasigroup on $G$ with arithmetic form $(G,f,g,c)$ and multiplication $x*y = f(x)+g(y)+c$
+#! is a rack iff $g(c)=0$, $fg = gf$ and $g(f+g-I)$ is the zero mapping, where $I$ is the identity mapping on $G$.
+
+#! <P/>In particular, if $n$ is a positive integer, $f$ is an integer relatively prime to $n$, and $g$, $c$ are integers,
+#! then the affine right quasigroup on $[0..n-1]$ with arithmetic form $(n,f,g,c)$ and
+#! multiplication $x*y = (f*x+g*y+c)\mod n$ is a rack iff $gc\equiv 0\pmod n$ and $g(f+g-1)\equiv 0\pmod n$.
+
+#! @Arguments arg
+#! @Returns `true` if <Arg>arg</Arg> is an arithmetic form of an affine rack. See above for allowed
+#! arithmetic forms.
+DeclareOperation( "IsAffineRackArithmeticForm", [ IsPosInt, IsInt, IsInt, IsInt ] );
+
+#! @Arguments arg[, constructorStyle]
+#! @Returns the affine rack with arithmetic form <Arg>arg</Arg>. See above for allowed
+#! arithmetic forms.
+DeclareGlobalFunction( "AffineRack" );
+
+#! @BeginExampleSession
+#! gap> # affine rack on [0..11]
+#! gap> [ IsAffineRackArithmeticForm( 12, 5, 2, 6 ), AffineRack( 12, 5, 2, 6 ) ];
+#! [ true, <rack of size 12> ]
+#! gap> # affine rack on GF(9)
+#! gap> F := GF(9);; f := 2*Z(9);; g := Z(9)+One(F);; c := Zero(F);;
+#! gap> [ IsAffineRackArithmeticForm( F, f, g, c ), AffineRack( F, f, g, c ) ]; # latin racks are quandles
+#! [ true, <latin quandle of size 9> ] 
+#! gap> # affine rack on cyclic group of order 4
+#! gap> x := (1,2,3,4);; G := Group( x );;
+#! gap> f := GroupHomomorphismByImages( G, G, [x], [x^-1] );;
+#! gap> g := GroupHomomorphismByImages( G, G, [x], [x^2] );;
+#! gap> c := x^2;;
+#! gap> [ IsAffineRackArithmeticForm( G, f, g, c ), AffineRack( G, f, g, c ) ];
+#! [ true, <rack of size 4> ]
+#! @EndExampleSession
 
 # CONTRUCTORS FOR QUANDLES
 # _____________________________________________________________________________
 
 #! @Section Constructors for quandles
 
-# RQ_AffineQuandle( A, f, g, mult, style ) # g = 1-f to check latin property
-DeclareOperation( "RQ_AffineQuandle", [ IsDomain, IsFunction, IsFunction, IsFunction, IsRecord ] );
+#! <P/>A quandle is **affine**<Index>affine quandle</Index> if it is an affine right quasigroup over an abelian group
+#! (that happens to be a quandle). See Section <Ref Sect="Section_Affine"/> for affine right quasigroups
+#! and their arithmetic forms. 
 
-#! @Arguments S, f[, constructorStyle]
-#! @Returns the affine quandle on <Arg>S</Arg> via <Arg>f</Arg>. Supported arguments are:
-#! <Arg>S</Arg> a group and <Arg>f</Arg> its automorphism (in which case $x*y = f(x)*y*f(y)^{-1}$ and
-#! the resulting quandle is latin iff $y\mapsto y*f(y)^{-1}$ is bijective),
-#! <Arg>S</Arg> an additive group and <Arg>f</Arg> its automorphism (in which case $x*y = f(x)+y-f(y)$ and
-#! the resulting quandle is latin iff $y\mapsto y-f(y)$ is bijective),
-#! <Arg>S</Arg> a field and <Arg>f</Arg> its nonzero element (in which case $x*y = f*x+(1-f)*y$ and
-#! the resulting quandle is latin iff $1-f$ is a nonzero element of <Arg>S</Arg>),
-#! <Arg>S</Arg> a positive integer and <Arg>f</Arg> a positive integer relatively prime to <Arg>S</Arg>
-#! (in which case $x*y = f*x+(1-f)*y$ on `[0..`<Arg>S</Arg>`]` and 
-#! the resulting quandle is latin iff $1-f$ is relatively prime modulo <Arg>S</Arg>).
-#! @Description The synonym `AlexanderQuandle` is supported.
-DeclareOperation( "AffineQuandle", [ IsGroup, IsMapping ] );
+#! <P/>If $G$ is an (additive) abelian group, $f$ an automorphism of $G$, $g$ an endomorphism of $G$ and $c\in G$,
+#! then the affine right quasigroup on $G$ with arithmetic form $(G,f,g,c)$ and multiplication $x*y = f(x)+g(y)+c$
+#! is a quandle iff $c=0$ and $g=I-f$, where $I$ is the identity mapping on $G$.
+#! Therefore, for affine quandles, we allow only "shortened" arithmetic forms `(n,f)`, `(F,f)` and `(G,f)`.
+
+#! @Arguments arg
+#! @Returns `true` if <Arg>arg</Arg> is an arithmetic form of an affine quandle. See above for allowed
+#! arithmetic forms.
+DeclareOperation( "IsAffineQuandleArithmeticForm", [ IsPosInt, IsInt ] );
+
+#! @Arguments arg[, constructorStyle]
+#! @Returns the affine quande with arithmetic form <Arg>arg</Arg>. See above for allowed
+#! arithmetic forms. The synonym `AlexanderQuandle` is also supported.
+DeclareGlobalFunction( "AffineQuandle" );
 
 DeclareSynonym( "AlexanderQuandle", AffineQuandle );
 
 #! @BeginExampleSession
-#! gap> G := CyclicGroup(5);; f := Elements(AutomorphismGroup(G))[2];
+#! gap> # affine quandle on [0..9]
+#! gap> [ IsAffineQuandleArithmeticForm( 10, 3 ), AffineQuandle( 10, 3 ) ];
+#! [ true, <quandle of size 10> ]
+#! gap> # affine quandle on GF(9)
+#! gap> [ IsAffineQuandleArithmeticForm( GF(9), 2*Z(9) ), AffineQuandle( GF(9), 2*Z(9) ) ];
+#! [ true, <latin quandle of size 9> ]
+#! gap> # affine quandle on cyclic group of order 5
+#! gap> G := CyclicGroup(5);; f := Elements( AutomorphismGroup( G ) )[2];
 #! [ f1 ] -> [ f1^2 ]
-#! gap> AffineQuandle( G, f );
-#! <latin quandle of size 5>
-#! gap> AffineQuandle( GF(8), One(GF(8)) );
-#! <quandle of size 8>
-#! gap> AffineQuandle( 5, 2 ); # both 2 and 1-2 are invertible mod 5
-#! <latin quandle of size 5>
-#! gap> AffineQuandle( 10, 3 ); # 1-3 is not invetible mod 10
-#! <quandle of size 10>
+#! gap> [ IsAffineQuandleArithmeticForm( G, f ), AffineQuandle( G, f ) ];
+#! [ true, <latin quandle of size 5> ]
 #! @EndExampleSession
+
+#! @Arguments n[, constructorstyle ]
+#! @Returns the dihedral quandle of size <Arg>n</Arg>, that is, the quandle on `[0..`<Arg>n</Arg>`-1]`
+#! with multiplication `x*y = (-x+2y) mod `<Arg>n</Arg>.
+DeclareOperation( "DihedralQuandle", [ IsPosInt ] );
 
 # RQ_CoreOfAlgebra( category, G, style )
 DeclareOperation( "RQ_CoreOfAlgebra", [ IsObject, IsDomain, IsRecord ] );
@@ -183,23 +247,23 @@ DeclareOperation( "CoreOfRightBolLoop", [ IsRightBolLoop ] );
 #! <quandle of size 8>
 #! @EndExampleSession
 
+#! <P/>Given a group $G$, subgroup $H$ and an automorphism $f$ of $G$ that centralizes $H$, 
+#! the **Galkin quandle**<Index>Galkin quandle</Index> (aka **coset quandle** or **homogeneous quandle**)
+#! is defined on the right cosets $\{Hx:x\in G\}$ by $Hx*Hy = H f(xy^{-1})y$. 
+
 #! @BeginGroup
 #! @GroupTitle GalkinQuandle and HomogeneousQuandle
 
 #! @Arguments G, H, f[, constructorStyle]
 #! @Returns the Galkin quandle constructed from the group <Arg>G</Arg>, subgroup <Arg>H</Arg>
-#! and automorphism <Arg>f</Arg> of <Arg>G</Arg> that fixes <Arg>H</Arg> pointwise.
-#! The underlying set of the returned quandle is a right transversal to <Arg>H</Arg> in <Arg>G</Arg>. 
-#! @Description The Galkin quandle is defined on the right cosets $\{Hx:x\in G\}$ by
-#! $Hx*Hy = H f(xy^{-1})y$. We also support the synonym `HomogeneousQuandle` since Galkin quandles
-#! are precisely homogeneous quandles, that is, quandles with a transitive automorphism group.
+#! and automorphism <Arg>f</Arg> of <Arg>G</Arg> that centralizes <Arg>H</Arg>.
+#! The synonym `HomogeneousQuandle` is also supported.
 DeclareOperation( "GalkinQuandle", [ IsGroup, IsGroup, IsMapping ] );
 
 DeclareSynonym( "HomogeneousQuandle", GalkinQuandle );
 
 #! @BeginExampleSession
-#! gap> G := SymmetricGroup( 4 );;
-#! gap> H := Subgroup( G, [(1,2)] );;
+#! gap> G := SymmetricGroup( 4 );; H := Subgroup( G, [(1,2)] );;
 #! gap> f := Filtered( AutomorphismGroup( G ), g -> (1,2)^g = (1,2) )[3];
 #! ^(3,4)
 #! gap> Q := GalkinQuandle( G, H, f );
@@ -319,7 +383,9 @@ DeclareOperation( "QuandleByQuandleEnvelope", [ IsGroup, IsList, IsList ] );
 #! gap> Q2 := QuandleByQuandleEnvelope( env );
 #! <quandle of size 10>
 #! gap> IsomorphismQuandles( Q, Q2 );
-#! ()
+#! MappingByFunction( <small quandle 10/1000>, <quandle of size 10>, function( x ) ... end )
+#! gap> AsParentTransformation( last );
+#! IdentityTransformation
 #! gap> QuandleByQuandleEnvelope( env[1], env[2], env[3] ); # separate arguments also supported for envelopes
 #! <quandle of size 10>
 #! @EndExampleSession
@@ -355,6 +421,14 @@ DeclareOperation( "Subrack", [ IsRack, IsCollection ] );
 #! <Arg>Q</Arg> is index based. 
 DeclareOperation( "Subquandle", [IsQuandle, IsCollection ] );
 
+#! @BeginExampleSession
+#! gap> Q := AffineRack( 12, 5, 2, 6 );;
+#! gap> S := Subrack( Q, [ Q[2] ] );
+#! <rack of size 2>
+#! gap> IsSubrack( Q, S );
+#! true
+#! @EndExampleSession
+
 #! @EndGroup
 
 #! @BeginGroup
@@ -366,6 +440,12 @@ DeclareOperation( "AllSubracks", [ IsRack ] );
 #! @Arguments Q
 #! @Returns a list of all subracks (subquandles) of a rack (quandle) <Arg>Q</Arg>.
 DeclareOperation( "AllSubquandles", [ IsQuandle ] );
+
+#! @BeginExampleSession
+#! gap> Q := ConjugationQuandle( SymmetricGroup( 3 ) );;
+#! gap> List( AllSubquandles( Q ), Size );
+#! [ 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 5, 2, 4, 6, 3 ]
+#! @EndExampleSession
 
 #! @EndGroup
 
@@ -391,6 +471,14 @@ DeclareGlobalFunction( "RackWithGenerators" );
 
 #! @Arguments gens...
 DeclareGlobalFunction( "QuandleWithGenerators" );
+
+#! @BeginExampleSession
+#! gap> Q := ConjugationQuandle( SymmetricGroup( 3 ) );;
+#! gap> S := QuandleWithGenerators( [ Q[(1,2)], Q[(1,2,3)] ] );
+#! <quandle of size 5>
+#! gap> GeneratorsOfMagma( S );
+#! [ r(1,2), r(1,2,3) ]
+#! @EndExampleSession
 
 #! @EndGroup
 

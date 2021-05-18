@@ -6,6 +6,8 @@
 # DIRECT PRODUCT OF RIGHT QUASIGROUPS
 # _____________________________________________________________________________
 
+# RQ_DirectProduct
+# PROG: constructor OK, builds function from elements and calls RQ_AlgebraByFunction
 InstallGlobalFunction( RQ_DirectProduct,
 function( list )
     local S, mult, rdiv, ldiv, rq_list, indexBased, category, prod;
@@ -28,7 +30,7 @@ function( list )
     else
         ldiv := fail;
     fi;
-    prod :=  RQ_AlgebraByFunction( category, S, mult, rdiv, ldiv, fail, ConstructorStyle( indexBased, false ) ); # REVISIT: set One for loops?
+    prod :=  RQ_AlgebraByFunction( category, S, mult, [ rdiv, ldiv, ConstructorStyle( indexBased, false ) ] ); # REVISIT: set One for loops?
     RQ_InheritProperties( list, prod );
     return prod;
 end );
@@ -74,6 +76,7 @@ end );
 # _____________________________________________________________________________
 
 # RQ_OppositeAlgebra
+# PROG: constructor OK
 InstallGlobalFunction( RQ_OppositeAlgebra, 
 function( category, Q )
     local old_mult, mult;
@@ -85,7 +88,8 @@ function( category, Q )
     mult := function( x, y )
         return old_mult( y, x );
     end;
-    return RQ_AlgebraByFunction( category, UnderlyingSet( Q ), mult, fail, fail, fail, ConstructorStyle( false, false ) );
+    return RQ_AlgebraByFunction( category, UnderlyingSet( Q ), mult, [ ConstructorStyle( false, false ) ] );
+    # REVISIT: inherit dual properties?
 end );
 
 # OppositeQuasigroup
@@ -211,7 +215,7 @@ function( P, Q )
 end );
 
 # RQ_Subalgebra
-
+# PROG: constructor OK, the operations reside in the parent
 InstallGlobalFunction( RQ_Subalgebra,
 function( Q, gens ) 
     local category, initial_gens, x, elms, transl, relmultgr, Qtype, subqg, P;
@@ -407,7 +411,7 @@ end );
 # _____________________________________________________________________________
 
 # RQ_AlgebraByGenerators
-# This is the main constructor here.
+# PROG: constructor OK, calls RQ_Subalgebra
 InstallMethod( RQ_AlgebraByGenerators, "for category/property and list",
     [ IsObject, IsList ],
 function( category, gens )
@@ -426,8 +430,10 @@ function( category, gens )
     if not ForAll( gens, x -> x in F!.set ) then
         Error( "RQ: <1> must consists of elements in the same parent algebra") ;
     fi;
-    if category in [ IsRack, IsQuandle ] and not category( F!.parent ) then
-        Error( "RQ: The generators do not lie in a rack/quandle. ");
+    if category in [ IsRack, IsQuandle ] then
+        if not category( F!.parent ) then
+            Error( "RQ: The generators do not lie in a rack/quandle. ");
+        fi;
     elif not category = CategoryOfRightQuasigroup( F!.parent ) then
         Error( "RQ: The algebra must be of the same type as the parent of the generators." );
     fi;
@@ -507,6 +513,8 @@ end );
 
 # INTERSECTIONS AND JOINS
 # _____________________________________________________________________________
+
+# PROG: constructor OK, calls RQ_Subalgebra
 
 # Intersection2
 InstallOtherMethod( Intersection2, "for two right quasigroups",
@@ -845,6 +853,7 @@ function( Q, S )
 end );
 
 # NormalClosure
+# PROG: constructor OK, calls Subloop
 InstallOtherMethod( NormalClosure, "for loop and collection of its elements",
     [ IsLoop, IsCollection ],
 function( Q, gens )
@@ -933,7 +942,7 @@ InstallOtherMethod( IsSimple, "for loop", [ IsLoop ], 2, IsSimpleLoop );
 # _____________________________________________________________________________
 
 # RQ_FactorAlgebra
-
+# PROG: constructor OK, all needed info is in F!.uSet
 InstallMethod( RQ_FactorAlgebra, "for equivalence relation and record",
     [ IsEquivalenceRelation, IsRecord ],
 function( C, style )
@@ -948,7 +957,7 @@ function( C, style )
         ct := List( classes, A -> List( classes, B -> EquivalenceClassOfElement(C,Elements(A)[1]*Elements(B)[1]) ) );
         factorQ := RQ_AlgebraByCayleyTable( category, ct, style );
     else # not index based
-        factorQ := RQ_AlgebraShell( category, classes, rec( indexBased := false ) );
+        factorQ := RQ_AlgebraShell( category, classes, ConstructorStyle( false, false ) );
         F := FamilyObj( factorQ.1 );
         F!.mult := function( A, B )
             return First( F!.uSet, class -> Elements(A)[1]*Elements(B)[1] in class ); # since the equivalence relation is not stored
@@ -1001,6 +1010,7 @@ function( Q, N )
     return FactorLoop( Q, N, RQ_defaultConstructorStyle );
 end );
 
+# PROG: constructor OK, relies on F!.cosets
 InstallOtherMethod( FactorLoop, "for loop, normal subloop and record",
     [ IsLoop, IsLoop, IsRecord ],
 function( Q, N, style )
@@ -1014,7 +1024,7 @@ function( Q, N, style )
         ct :=  List( cosets, x -> List( cosets, y -> First( cosets, c->x[1]*y[1] in c ) ) );
         factorQ := RQ_AlgebraByCayleyTable( IsLoop, ct, ConstructorStyle( true, false ) );
     else # not index based
-        factorQ := RQ_AlgebraShell( IsLoop, cosets, rec( indexBased := false ) );
+        factorQ := RQ_AlgebraShell( IsLoop, cosets, ConstructorStyle( false, false ) );
         F := FamilyObj( factorQ.1 );
         F!.cosets := ShallowCopy( cosets );
         F!.mult := function( x, y ) return First( F!.cosets, c -> x[1]*y[1] in c ); end;

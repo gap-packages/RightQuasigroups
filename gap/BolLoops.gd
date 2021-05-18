@@ -27,6 +27,12 @@ DeclareAttribute( "AssociatedRightBruckLoop", IsRightBolLoop );
 #! @Arguments Q
 DeclareAttribute( "AssociatedLeftBruckLoop", IsLeftBolLoop );
 
+#! @BeginExampleSession
+#! gap> Q := RightBolLoop(21,1);;
+#! gap> AssociatedRightBruckLoop( Q );
+#! <right Bruck loop of size 21>
+#! @EndExampleSession
+
 #! @EndGroup
 
 #! <P/>A triple $G$, $H_1$, $H_2$ is an <Index>exact group factorization</Index>**exact group factorization**

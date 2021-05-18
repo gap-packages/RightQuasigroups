@@ -6,6 +6,7 @@
 # _____________________________________________________________________________
 
 # RandomRightQuasigroup
+# PROG: constructor OK, calls RQ_AlgebraBySection
 InstallMethod( RandomRightQuasigroup, "for collection",
     [ IsCollection ],
     S -> RandomRightQuasigroup( S, RQ_defaultConstructorStyle )
@@ -34,6 +35,7 @@ function( n, style )
 end );
 
 # RQ_RandomAlgebra
+# PROG: constructor OK, calls RQ_AlgebraByCayleyTable
 InstallMethod( RQ_RandomAlgebra, "for category, collection, positive integer and record",
     [ IsObject, IsCollection, IsPosInt ], 
 function( category, S, iter )
@@ -173,8 +175,8 @@ function( n, iter )
     return RQ_RandomAlgebra( IsLoop, [1..n], iter );
 end);
 
-# RandomNilpotentLoop( lst ) 
-
+# RandomNilpotentLoop
+# PROG: constructor OK, calls LoopByCentralExtension
 InstallMethod( RandomNilpotentLoop, "for a list of abelian groups and positive integers",
     [ IsList ],
 function( lst )                

@@ -4,19 +4,21 @@
 
 #! @Chapter Homomorphisms, isomorphisms and automorphisms
 
-
-# HOMOMORPHISMS OF RIGHT QUASIGROUPS
+# HOMOMORPHISMS, ISOMORPHISMS AND AUTOMORPHISMS OF RIGHT QUASIGROUPS
 # _____________________________________________________________________________
 
-#! @Section Homomorphisms of right quasigroups
+#! @Section Homomorphisms, isomorphisms and automorphisms of right quasigroups
 
 #! <P/>A mapping $f:(Q_1,\cdot)\to (Q_2,*)$ between (right) quasigroups is a **homomorphism**
 #! <Index Subkey="of right quasigroups">homomorphis</Index> if $f(x)*f(y) = f(x\cdot y)$
 #! for every $x,y\in Q_1$. The homomorphism $f$ then automatically preserves divisons.
 #! If $f$ is also a bijection, it is an **isomorphism**<Index Subkey="of right quasigroups">isomorphism</Index>.
+#! If $(Q_1,\cdot)=(Q_2,*)$ then $f$ is an **endomorphism**<Index Subkey="of right quasigroups">endomorphism</Index>.
+#! A bijective endomorphism is an **automorphism**<Index Subkey="of right quasigroups">automorphism</Index>.
 
-#! <P/>In &RightQuasigroups;, homomorphisms are represented as right quasigroup mappings.
-#! See Chapter <Ref Chap="Chapter_Mappings"/> for creating right quasigroup mappings from
+#! <P/>In &RightQuasigroups;, homomorphisms and isomorphisms are represented as right quasigroup mappings,
+#! while automorphisms are represented as parent permutations. 
+#! See Chapter <Ref Chap="Chapter_Mappings"/> for conversions between right quasigroup mappings,
 #! permutations and transformations.
 
 #! @BeginGroup
@@ -221,40 +223,62 @@ DeclareOperation( "NaturalHomomorphismByNormalSubloopNC", [ IsLoop, IsLoop ] );
 
 #! @EndGroup
 
-# ISOMORPHISMS OF RIGHT QUASIGROUPS
+# ISOMORPHS OF RIGHT QUASIGROUPS
 # _____________________________________________________________________________
 
-#! @Section Isomorphisms of right quasigroups
+#! @Section Isomorphs of right quasigroups
 
-#! <P/>If $f:(Q_1,\cdot)\to (Q_2,*)$ is an isomorphism, then $x*y = f(f^{-1}(x)\cdot f^{-1}(y))$ for
-#! all $x,y\in Q_1$, and $(Q_2,*)$ is called an **isomorphic copy**<Index>isomorphic copy</Index>
-#! or an **isomorph**<Index>isomorph</Index> of $(Q_1,\cdot)$ via $f$.
+#! <P/>If $f:(Q,\cdot)\to (Q,*)$ is an isomorphism, then $x*y = f(f^{-1}(x)\cdot f^{-1}(y))$ for
+#! all $x,y\in Q$, and $(Q,*)$ is called an **isomorph**<Index>isomorph</Index> of $(Q,\cdot)$ via $f$.
 
-#! In &RightQuasigroups;, all isomorphisms between two right quasigroups of size $n$ are returned
-#! as right quasigroup mappings, while all automorphisms of a right quasigroup are return as
-#! parent permutations, cf. Section <Ref Sect="Section_MappingsIntro"/>.
+#! <P/>For the convenience of the reader, functions that construct isomorphs accept a wide variety
+#! of arguments representing mappings:
+#! <List>
+#! <Item>There are two mandatory arguments <Arg>Q</Arg> and <Arg>f</Arg> and two
+#! optional arguments <Arg>isCanonical</Arg> and <Arg>constructorStyle</Arg>. Any subset of the
+#! optional arguments can be given.</Item>
+#! <Item>The argument <Arg>Q</Arg> must be a right quasigroup, quasigroup or loop. The returned 
+#! algebra will have the same underlying set as <Arg>Q</Arg>.</Item>
+#! <Item>The argument <Arg>f</Arg> can be given as a right quasigroup mapping
+#! from <Arg>Q</Arg> to <Arg>Q</Arg> or as a canonical or parent permutation of <Arg>Q</Arg> or 
+#! as a bijective canonical or parent transformation of <Arg>Q</Arg>. (See Chapter <Ref Chap="Chapter_Mappings"/>.)</Item>
+#! <Item>If the optional argument <Arg>isCanonical</Arg> is given and set to `true`, the permutation/transformation
+#! <Arg>f</Arg> is interpreted as a canonical permutation/transformation,
+#! else it is by default interpreted as parent permutation/tranformation.</Item>
+#! <Item>See Section <Ref Sect="Section_OptionalArguments"/> for the optional argument <Arg>constructorStyle</Arg>.</Item>
+#! </List>
 
 #! @BeginGroup
 #! @GroupTitle Isomorphs
 
-#! @Arguments Q, f[, constructorStyle]
-#! @Returns an isomorphic copy of the right quasigroups `Q` via the permutation `f`.
-#! If `Q` has size `n`, the permutation `f` must be a permutation on `[1..n]`.
-#! The resulting right quasigroup will have the same underlying set as `Q` and will be
-#! index based iff `Q` is index based (unless the optional argument `constructorStyle`
-#! dictates otherwise). An effort is made for the copy to inherit properties from `Q`.
-DeclareOperation( "IsomorphicCopyByPerm", [ IsRightQuasigroup, IsPerm ] );
+# RQ_AlgebraIsomorh( category, data )
+DeclareOperation( "RQ_AlgebraIsomorph", [ IsObject, IsList ] );
 
-#! @Arguments Q, f[, constructorStyle]
-DeclareOperation( "RightQuasigroupIsomorph", [ IsRightQuasigroup, IsPerm ] );
+#! @Arguments Q, f[, isCanonical, constructorStyle]
+#! @Returns the isomorph of the right quasigroup (quasigroup, loop) <Arg>Q</Arg> via <Arg>f</Arg>.
+#! See above for conventions on the arguments. 
+#! An effort is made for the isomorph to inherit properties from `Q`.
+DeclareGlobalFunction( "RightQuasigroupIsomorph" );
 
-#! @Arguments Q, f[, constructorStyle]
-DeclareOperation( "QuasigroupIsomorph", [ IsQuasigroup, IsPerm ] );
+#! @Arguments Q, f[, isCanonical, constructorStyle]
+DeclareGlobalFunction( "QuasigroupIsomorph" );
 
-#! @Arguments Q, f[, constructorStyle]
-DeclareOperation( "LoopIsomorph", [ IsLoop, IsPerm ] );
+#! @Arguments Q, f[, isCanonical, constructorStyle]
+DeclareGlobalFunction( "LoopIsomorph" );
+
+#! @BeginExampleSession
+#! gap> Q1 := MoufangLoop( 12, 1 );;
+#! <Moufang loop of size 12>
+#! gap> Q2 := LoopIsomorph( Q1, (3,4,5) ); # Other kinds of mappings are accepted. Note inherited properties.
+#! <Moufang loop of size 12>
+#! @EndExampleSession
 
 #! @EndGroup
+
+# RIGHT QUASIGROUPS UP TO ISOMORPHISM
+# _____________________________________________________________________________
+
+#! @Section Right quasigroups up to isomorphisms
 
 #! <P/>To decide if two right quasigroups are isomorphic, &RightQuasigroups; first
 #! calculates some isomorphism invariants and a partition invariant under isomorphisms,
@@ -288,7 +312,7 @@ DeclareOperation( "AreEqualIsomorphismDiscriminators", [ IsList, IsList ] );
 # from a subset of elements of <t1> to a subset of elements of <t2>. 
 # This function attempts to extend <f> into a homomorphism of right quasigroups by 
 # extending the source of <f> into (the smallest possible) subrightqusigroup of <t1>.
-DeclareOperation( "RQ_ExtendHomomorphismByClosingSource", [ IsList, IsRectangularTable, IsRectangularTable ] );
+DeclareOperation( "RQ_ExtendIsomorphismByClosingSource", [ IsList, IsRectangularTable, IsRectangularTable ] );
 
 # Auxiliary function ( S, x )
 # input: list of lists <S>, element <x>
@@ -328,16 +352,16 @@ DeclareOperation( "IsomorphismQuasigroups", [ IsQuasigroup, IsQuasigroup ] );
 DeclareOperation( "IsomorphismLoops", [ IsLoop, IsLoop ] );
 
 #! @BeginExampleSession
-#! gap> Q1 := CheinLoop( SymmetricGroup( 3 ) );
-#! <Moufang loop of size 12>
-#! gap> Q2 := IsomorphicCopyByPerm( Q1, (1,5,6)(4,8) ); # properties are inherited
-#! <Moufang loop of size 12>
-#! gap> f := IsomorphismLoops( Q1, Q2 ); 
-#! MappingByFunction( <Moufang loop of size 12>, <Moufang loop of size 12>, function( x ) ... end )
-#! gap> AsCanonicalTransformation( f );
-#! Transformation( [ 5, 1, 3, 6, 8, 2, 4, 11, 10, 12, 9, 7 ] ) # transformation on [1..12]
-#! gap> PermutationOfImage( last ); # as permutation
-#! (1,5,8,11,9,10,12,7,4,6,2)
+#! gap> Q1 := RightQuasigroupByFunction( [0..9], function(x,y) return (x+2*y) mod 10; end );
+#! <right quasigroup of size 10>
+#! gap> Q2 := RightQuasigroupIsomorph( Q1, (3,4,5) );
+#! <right quasigroup of size 10>
+#! gap> IsomorphismRightQuasigroups( Q1, Q2 );
+#! MappingByFunction( <right quasigroup of size 10>, <right quasigroup of size 10>, function( x ) ... end )
+#! gap> AsCanonicalTransformation( last );
+#! Transformation( [ 1, 2, 4, 5, 3 ] )
+#! gap> AsPermutation( last );
+#! (3,4,5)
 #! @EndExampleSession
 
 #! @EndGroup
@@ -376,7 +400,6 @@ DeclareOperation( "LoopsUpToIsomorphism", [ IsList ] );
 # _____________________________________________________________________________
 
 #! @Section Automorphism groups of right quasigroups
-
 
 # auxiliary function
 # Arguments list S, right quasigroup Q, list GenQ, list DisQ

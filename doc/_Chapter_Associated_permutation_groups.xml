@@ -4,16 +4,79 @@
 <Chapter Label="Chapter_Associated_permutation_groups">
 <Heading>Associated permutation groups</Heading>
 
-<Section Label="Chapter_Associated_permutation_groups_Section_Translations_and_sections">
+<Section Label="Section_ParentPerms">
+<Heading>Parent permutations and canonical permutations</Heading>
+
+ <P/>Suppose that <Code>Q</Code> is a right quasigroup with parent <Code>P</Code>, let <Code>nQ = Size(Q)</Code> and <Code>nP = Size(P)</Code>.
+ Two types of permutations can be understood as permutations of <Code>Q</Code>:
+ <List>
+ <Item>a permutation on <Code>[1..nQ]</Code>, which we will call
+ <Emph>canonical permutation</Emph><Index Subkey="canonical">permutation</Index><Index>canonical permutation</Index>, and</Item>
+ <Item>a permuation on <Code>[1..nP]</Code> that only moves points within <Code>ParentInd( Q )</Code>, which we will call
+ <Emph>parent permutation</Emph><Index Subkey="parent">permutation</Index><Index>parent permutation</Index>.</Item>
+ </List>
+ <P/>
+ <P/>Most permutations encountered in &RightQuasigroups; are parent permutations, such as all right translations,
+ all elements of multiplication groups, etc. 
+ However, it is often useful to work with canonical permutations, for instance while considering right translations
+ in the context of multiplication tables (which, by definition, contain entries from <Code>[1..nQ]</Code>), or when
+ dealing with isomorphisms between right quasigroups on different underlying sets.
+ <P/>The following functions convert between the two types of permutations.
+<ManSection>
+  <Oper Arg="Q, f" Name="AsParentPerm" Label="for IsRightQuasigroup, IsPerm"/>
+ <Returns>the parent permutation <Code>g</Code> corresponding to the canonical permutation <Arg>f</Arg>  on the right quasigroup <Arg>Q</Arg>. That is, <Code>g</Code> fixes all points outside of <Code>ParentInd( </Code><Arg>Q</Arg><Code> )</Code>
+  and if <Code>i</Code> is an element of <Code>ParentInd( </Code><Arg>Q</Arg><Code> )</Code> then <Code>i^g = j</Code> iff <Code>u^</Code><Arg>f</Arg><Code> = v</Code>,
+  <Code>ParentInd( Elements( </Code><Arg>Q</Arg><Code> )[ u ] ) = i</Code> and <Code>ParentInd( Elements( </Code><Arg>Q</Arg><Code> )[ v ] ) = j</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="Q, f" Name="AsCanonicalPerm" Label="for IsRightQuasigroup, IsPerm"/>
+ <Returns>the canonical permutation <Code>g</Code> corresponding to the parent permutation <Arg>f</Arg>  on the parent of the right quasigroup <Arg>Q</Arg>. That is, <Code>g</Code> is a permutation on <Code>[1..Size( </Code><Arg>Q</Arg><Code> )]</Code>
+  and if <Code>i</Code> is an element of <Code>[1..Size( </Code><Arg>Q</Arg><Code> )]</Code> then <Code>i^g = j</Code> iff
+  <Code>ParentInd( Elements( </Code><Arg>Q</Arg><Code> )[i] ) = u</Code>, <Code>ParentInd( Elements( </Code><Arg>Q</Arg><Code> )[ j ] ) = v</Code> and <Code>u^</Code><Arg>f</Arg><Code> = v</Code>.
+</Returns>
+ <Description>
+Note that the returned permutation is independent of how <Arg>f</Arg> operates outside
+ of <Code>ParentInd( </Code><Arg>Q</Arg><Code> )</Code>. We therefore allow <Arg>f</Arg> to move points outside of <Code>ParentInd( </Code><Arg>Q</Arg><Code> )</Code>.
+ </Description>
+</ManSection>
+
+
+<Example><![CDATA[
+gap> P := ProjectionRightQuasigroup( 10 );;
+gap> Q := Subrightquasigroup( P, [3,5,7] );;
+gap> ParentInd( Q );
+[ 3, 5, 7 ]
+gap> AsParentPerm( Q, (1,2,3) );
+(3,5,7)
+gap> AsCanonicalPerm( Q, (3,5,7)(8,9) ); # moved points outside of ParentInd( Q ) are ignored
+(1,2,3)
+]]></Example>
+
+
+</Section>
+
+
+<Section Label="Section_Translations">
 <Heading>Translations and sections</Heading>
 
-<ManSection Label="AutoDoc_generated_group22">
-<Heading>Translations</Heading>
+ <P/>Let <Code>Q</Code> be a right quasigroup with a parernt of size <Code>nP</Code>.
+ Right translations of right quasigroups and left translations of quasigroups
+ are represented as parent permutations in &RightQuasigroups;, cf. Section <Ref Sect = "Section_ParentPerms"/>.
+ Consequently, such translations are elements of the symmetric group on <Code>[1..nP]</Code>.
+ <P/>A left translation of a right quasigroup <Code>Q</Code> is not necessarily a permutation
+ and it is represented as a transformation on <Code>[1..nP]</Code> that fixes all
+ points outside of <Code>ParentInd( Q )</Code>. Consequently, such translations are
+ elements of the full transformation semigroup on <Code>[1..nP]</Code>.
+<ManSection>
   <Oper Arg="Q, x" Name="RightTranslation" Label="for IsRightQuasigroup, IsObject"/>
-  <Oper Arg="Q, x" Name="LeftTranslation" Label="for IsQuasigroup, IsObject"/>
- <Returns>the right (resp. left) translation by the element <Code>x</Code> in the right quasigroup  <Code>Q</Code>. For the left translation, <Code>Q</Code> must be a quasigroup.
-  We allow <Code>x</Code> to be an element of <Code>Q</Code> or an element of the underlying set of <Code>Q</Code>.
-  The translation is returned as a permutation of <Code>[1..Size(Parent(Q))]</Code>, cf. 
+ <Returns>the right translation by the element <Arg>x</Arg> in the right quasigroup <Arg>Q</Arg>.  We allow <Arg>x</Arg> to be an element of <Arg>Q</Arg> or an element of the underlying set of <Arg>Q</Arg>.
+  The right translation is returned as a parent permutation, cf. 
   Section <Ref Sect="Section_Parent"/>.
 </Returns>
  <Description>
@@ -22,11 +85,25 @@
 </ManSection>
 
 
-<ManSection Label="AutoDoc_generated_group23">
+<ManSection>
+  <Oper Arg="Q, x" Name="LeftTranslation" Label="for IsRightQuasigroup, IsObject"/>
+ <Returns>the left translation by the element <Arg>x</Arg> in the right quasigroup <Arg>Q</Arg>.  We allow <Arg>x</Arg> to be an element of <Arg>Q</Arg> or an element of the underlying set of <Arg>Q</Arg>.
+  If <Arg>Q</Arg> is a quasigroup, the translation is returned as a parent permutation,
+  cf. Section <Ref Sect="Section_Parent"/>. If <Arg>Q</Arg> is merely 
+  a right quasigroup, the left translation is returned as a transformation on <Code>[1..Size( Parent( </Code><Arg>Q</Arg><Code> ) )]</Code>,
+  even if the left translation happens to be a permutation.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection Label="AutoDoc_generated_group36">
 <Heading>Sections</Heading>
   <Attr Arg="Q" Name="RightSection" Label="for IsRightQuasigroup"/>
-  <Attr Arg="Q" Name="LeftSection" Label="for IsQuasigroup"/>
- <Returns>the right (left) section of a right quasigroup <Code>Q</Code>, i.e., the list  of all right (left) translations by elements of <Code>Q</Code>. For the left translations, <Code>Q</Code> must be a quasigroup.
+  <Attr Arg="Q" Name="LeftSection" Label="for IsRightQuasigroup"/>
+ <Returns>the right (left) section of a right quasigroup <Code>Q</Code>, i.e., the list  of all right (left) translations by elements of <Code>Q</Code>.
 </Returns>
  <Description>
 <P/>
@@ -54,7 +131,7 @@
  The <Index>relative left multiplication group</Index><Emph>relative left multiplication group</Emph>
  and the <Index>relative multiplication group</Index><Emph>relative multiplication group</Emph>
  of <Math>S</Math> in <Math>Q</Math> are defined analogously.
-<ManSection Label="AutoDoc_generated_group24">
+<ManSection Label="AutoDoc_generated_group37">
 <Heading>Multiplication groups</Heading>
   <Attr Arg="Q" Name="RightMultiplicationGroup" Label="for IsRightQuasigroup"/>
   <Attr Arg="Q" Name="LeftMultiplicationGroup" Label="for IsQuasigroup"/>
@@ -69,7 +146,18 @@
 </ManSection>
 
 
-<ManSection Label="AutoDoc_generated_group25">
+<ManSection>
+  <Attr Arg="Q" Name="LeftMultiplicationSemigroup" Label="for IsRightQuasigroup"/>
+ <Returns>the left multiplication semigroup of the right quasigoup <Code>Q</Code>  as a subsemigroup of the full transformation semigroup on the set <Code>[1..Size(Parent(Q))]</Code>.
+  If <Code>Q</Code> is a quasigorup, the function returns the group <Code>LeftMultiplicationGroup( Q )</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection Label="AutoDoc_generated_group38">
 <Heading>Relative multiplication groups</Heading>
   <Oper Arg="Q, S" Name="RelativeRightMultiplicationGroup" Label="for IsRightQuasigroup, IsRightQuasigroup"/>
   <Oper Arg="Q, S" Name="RelativeLeftMultiplicationGroup" Label="for IsQuasigroup, IsQuasigroup"/>
@@ -88,7 +176,7 @@ gap> Q := AsQuasigroup( Group( (1,2,3,4,5,6 ) ) );;
 gap> Size( RightMultiplicationGroup( Q ) );
 6
 gap> S := Subquasigroup( Q, [ Q[(1,3,5)(2,4,6)] ] );
-<quasigroup of size 3>
+<associative quasigroup of size 3>
 gap> RightTranslation( S, (1,3,5)(2,4,6) );
 (1,3,5)
 gap> LeftTranslation( S, (1,3,5)(2,4,6) );
@@ -135,7 +223,7 @@ gap> Size( MultiplicationGroup( Q ) );
  subroup of the multiplication group <Math>\textrm{Mlt}(Q)</Math> of <Math>Q</Math> generated by all right, middle and left
  inner mappings. When <Math>Q</Math> is a loop, the inner mapping group is the stabilizer of the
  neutral element of <Math>Q</Math> in <Math>\textrm{Mlt}(Q)</Math>.
-<ManSection Label="AutoDoc_generated_group26">
+<ManSection Label="AutoDoc_generated_group39">
 <Heading>Inner mappings</Heading>
   <Oper Arg="Q, x, y" Name="RightInnerMapping" Label="for IsRightQuasigroup, IsRightQuasigroupElement, IsRightQuasigroupElement"/>
   <Oper Arg="Q, x" Name="MiddleInnerMapping" Label="for IsQuasigroup, IsQuasigroupElement"/>
@@ -149,7 +237,7 @@ gap> Size( MultiplicationGroup( Q ) );
 </ManSection>
 
 
-<ManSection Label="AutoDoc_generated_group27">
+<ManSection Label="AutoDoc_generated_group40">
 <Heading>Inner mapping groups</Heading>
   <Attr Arg="Q" Name="RightInnerMappingGroup" Label="for IsRightQuasigroup"/>
   <Attr Arg="Q" Name="MiddleInnerMappingGroup" Label="for IsQuasigroup"/>
@@ -185,6 +273,112 @@ gap> LInn = RInn;
 true
 gap> Size( MiddleInnerMappingGroup( Q ) );
 12
+]]></Example>
+
+
+</Section>
+
+
+<Section Label="Chapter_Associated_permutation_groups_Section_Realizing_permutation_groups_as_multiplication_groups_of_loops">
+<Heading>Realizing permutation groups as multiplication groups of loops</Heading>
+
+ <P/>The multiplication group <Math>\mathrm{Mlt}(Q)</Math> of a loop <Math>Q</Math> is the permutation
+ group generated by all left and right translations of <Math>Q</Math>, cf. <Ref Sect="Section_Mlt"/>.
+ It is a difficult question in loop theory to determine which permutation groups
+ can be realized as multiplication groups of loops.
+ The following functions search for loops such that their multiplication group
+ is contained in or equal to a given permutation group <Code>G</Code>.
+ <P/>Since the emphasis here is on the multiplication groups, the results
+ are returned as right sections of loops, cf. <Ref Sect="Section_Translations"/>.
+ A right section <Code>sec</Code> contained in the symmetric group on <Code>[1..n]</Code> can then be
+ converted to a loop by the command <Code>LoopByRightSection( [1..n], sec )</Code>.
+ <P/>There are two optional parameters in the searches.
+ <List>
+ <Item>One can speed up the search by setting the argument <Code>depth</Code> higher;
+ the price is a much bigger memory consumption. The value of <Code>depth</Code>
+ is automatically and optimally chosen if in the permutation group <Code>G</Code>
+ there are "not many" permutations fixing <Code>depth</Code> elements. The optional
+ argument <Code>depth</Code> can be ommmitted, or set to <Code>depth=2</Code> with no harm.</Item>
+ <Item>The second optional argument <Code>infolevel</Code> determines the amount of information
+ reported during the search. With <Code>infolevel=0</Code>, no information is reported.
+ With <Code>infolevel=1</Code>, information on timing and hits is reported.
+ With <Code>infolevel=2</Code>, intermediate results are printed as well.</Item>
+ </List>
+<ManSection>
+  <Oper Arg="G[, depth[, infolevel]]" Name="AllLoopsWithMltInGroup" Label="for IsGroup"/>
+ <Returns>a (possibly empty) list of right sections of all loops <Math>Q</Math> such that <Math>\mathrm{Mlt}(Q)\le G</Math>.  Returns <Code>fail</Code> is something is wrong with the arguments.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="G[, depth[, infolevel]]" Name="AllNonassociativeLoopsWithMltInGroup" Label="for IsGroup"/>
+ <Returns>a (possibly empty) list of right sections of all nonassociative loops <Math>Q</Math> such that <Math>\mathrm{Mlt}(Q)\le G</Math>.  Returns <Code>fail</Code> if something is wrong with the arguments.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="G[, depth[, infolevel]]" Name="OneLoopWithMltInGroup" Label="for IsGroup"/>
+ <Returns>a list that is either empty or contains the right section of a loop <Math>Q</Math> such that <Math>\mathrm{Mlt}(Q)\le G</Math>.  Returns <Code>fail</Code> if something is wrong with the arguments.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="G[, depth[, infolevel]]" Name="OneNonassociativeLoopWithMltInGroup" Label="for IsGroup"/>
+ <Returns>a list that is either empty or contains the right section of a nonassociative loop <Math>Q</Math> such that <Math>\mathrm{Mlt}(Q)\le G</Math>.  Returns <Code>fail</Code> if something is wrong with the arguments.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="G[, depth[, infolevel]]" Name="AllLoopsWithMltGroup" Label="for IsGroup"/>
+ <Returns>a (possibly empty) list of right sections of all loops <Math>Q</Math> such that <Math>\mathrm{Mlt}(Q)=G</Math>.  Returns <Code>fail</Code> if something is wrong with the arguments.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="G[, depth[, infolevel]]" Name="OneLoopWithMltGroup" Label="for IsGroup"/>
+ <Returns>a list that is either empty or contains the right section of a loop <Math>Q</Math> such that <Math>\mathrm{Mlt}(Q)=G</Math>.  Returns <Code>fail</Code> if something is wrong with the arguments.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<Example><![CDATA[
+gap> G := AlternatingGroup( 6 );;
+gap> OneLoopWithMltGroup( G, 2, 0 );
+[ [ (), (1,2)(3,4,5,6), (1,3)(2,4,6,5), (1,4)(2,5,3,6), (1,5)(2,6,4,3), (1,6)(2,3,5,4) ] ]
+gap> Q := LoopByRightSection( [1..6], last[ 1 ] );
+<loop of size 6>
+gap> MultiplicationGroup( Q ) = G;
+true
+gap> AllLoopsWithMltInGroup( SymmetricGroup( 4 ), 2, 0);
+[ [ (), (1,2)(3,4), (1,3)(2,4), (1,4)(2,3) ], [ (), (1,2)(3,4), (1,3,2,4), (1,4,2,3) ],
+  [ (), (1,2,3,4), (1,3)(2,4), (1,4,3,2) ] ]
+gap> a := AllLoopsWithMltInGroup( PGL(3,3), 3, 0 );; Size(a);
+56
+gap> a := AllLoopsWithMltGroup(PGL(3,3), 3, 0);; Size(a);
+52
 ]]></Example>
 
 

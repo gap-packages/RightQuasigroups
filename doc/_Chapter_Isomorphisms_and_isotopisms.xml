@@ -7,11 +7,35 @@
 <Section Label="Chapter_Isomorphisms_and_isotopisms_Section_Isomorphisms_of_right_quasigroups">
 <Heading>Isomorphisms of right quasigroups</Heading>
 
+ <P/>A mapping <Math>f:(Q_1,\cdot)\to (Q_2,*)</Math> between (right) quasigroups is a <Emph>homomorphism</Emph>
+ <Index Subkey="of right quasigroups">homomorphis</Index> if <Math>f(x)*f(y) = f(x\cdot y)</Math>
+ for every <Math>x,y\in Q_1</Math>. The homomorphism <Math>f</Math> then automatically preserves divisons.
+ If <Math>f</Math> is also a bijection, it is an <Emph>isomorphism</Emph><Index Subkey="of right quasigroups">isomorphism</Index>.
+ <P/>If <Math>f:(Q_1,\cdot)\to (Q_2,*)</Math> is an isomorphism, then <Math>x*y = f(f^{-1}(x)\cdot f^{-1}(y))</Math> for
+ all <Math>x,y\in Q_1</Math>, and <Math>(Q_2,*)</Math> is called an <Emph>isomorphic copy</Emph><Index>isomorphic copy</Index>
+ or an <Emph>isomorph</Emph><Index>isomorph</Index> of <Math>(Q_1,\cdot)</Math> via <Math>f</Math>.
+ In &RightQuasigroups;, all isomorphisms between two right quasigroups of size <Math>n</Math> are returned
+ as permutations of <Math>[1..n]</Math>, that is, an analog of canonical permutations, cf. Section <Ref Sect="Section_ParentPerms"/>.
+<ManSection Label="AutoDoc_generated_group26">
+<Heading>Isomorphs</Heading>
+  <Oper Arg="Q, f[, constructorStyle]" Name="IsomorphicCopyByPerm" Label="for IsRightQuasigroup, IsPerm"/>
+  <Oper Arg="Q, f[, constructorStyle]" Name="RightQuasigroupIsomorph" Label="for IsRightQuasigroup, IsPerm"/>
+  <Oper Arg="Q, f[, constructorStyle]" Name="QuasigroupIsomorph" Label="for IsQuasigroup, IsPerm"/>
+  <Oper Arg="Q, f[, constructorStyle]" Name="LoopIsomorph" Label="for IsLoop, IsPerm"/>
+ <Returns>an isomorphic copy of the right quasigroups <Code>Q</Code> via the permutation <Code>f</Code>.  If <Code>Q</Code> has size <Code>n</Code>, the permutation <Code>f</Code> must be a permutation on <Code>[1..n]</Code>.
+  The resulting right quasigroup will have the same underlying set as <Code>Q</Code> and will be
+  index based iff <Code>Q</Code> is index based (unless the optional argument <Code>constructorStyle</Code>
+  dictates otherwise). An effort is made for the copy to inherit properties from <Code>Q</Code>.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
  <P/>To decide if two right quasigroups are isomorphic, &RightQuasigroups; first
  calculates some isomorphism invariants and a partition invariant under isomorphisms,
  and then determines if there is an isomorphisms that respects the partition.
- All isomorphisms between two right quasigroups of size <Math>n</Math> are returned
- as permutations of <Math>[1..n]</Math>. 
 <ManSection>
   <Oper Arg="Q" Name="IsomorphismDiscriminator" Label="for IsRightQuasigroup"/>
  <Returns>a data structure suitable for isomorphism searches from a right quasigroup <Code>Q</Code>.
@@ -23,8 +47,8 @@
 
 
 <ManSection>
-  <Oper Arg="D1, D2" Name="AreEqualIsomorphismDiscriminators" Label="for IsList, IsList"/>
- <Returns><Code>true</Code> if the two isomorphism discriminators <Code>D1</Code>, <Code>D2</Code> (each returned by <Code>IsomorphismDiscriminator</Code>)  are equal as discriminators, else returns <Code>false</Code>. If <Code>false</Code> is returned, the two
+  <Oper Arg="dis1, dis2" Name="AreEqualIsomorphismDiscriminators" Label="for IsList, IsList"/>
+ <Returns><Code>true</Code> if the two isomorphism discriminators <Code>dis1</Code>, <Code>dis2</Code> (each returned by <Code>IsomorphismDiscriminator</Code>)  are equal as discriminators, else returns <Code>false</Code>. If <Code>false</Code> is returned, the two
   disriminators correspond to right quasigroups that are not isomorphic. If <Code>true</Code> is returned,
   the corresponding right quasigroups might be isomorphic.
 </Returns>
@@ -34,7 +58,7 @@
 </ManSection>
 
 
-<ManSection Label="AutoDoc_generated_group14">
+<ManSection Label="AutoDoc_generated_group27">
 <Heading>IsomorphismRightQuasigroups, IsomophismQuasigroups, IsomorphismLoops</Heading>
   <Oper Arg="Q1, Q2" Name="IsomorphismRightQuasigroups" Label="for IsRightQuasigroup, IsRightQuasigroup"/>
   <Oper Arg="Q1, Q2" Name="IsomorphismQuasigroups" Label="for IsQuasigroup, IsQuasigroup"/>
@@ -48,7 +72,17 @@
 </ManSection>
 
 
-<ManSection Label="AutoDoc_generated_group15">
+<Example><![CDATA[
+gap> Q1 := CheinLoop( SymmetricGroup( 3 ) );
+<Moufang loop of size 12>
+gap> Q2 := IsomorphicCopyByPerm( Q1, (1,5,6)(4,8) ); # properties are inherited
+<Moufang loop of size 12>
+gap> IsomorphismLoops( Q1, Q2 ); # different isomorphism might be found
+(1,5,10,8,12,11,4,6,3,2)
+]]></Example>
+
+
+<ManSection Label="AutoDoc_generated_group28">
 <Heading>Right quasigroups up to isomorphism</Heading>
   <Oper Arg="ls" Name="RightQuasigroupsUpToIsomorphism" Label="for IsList"/>
   <Oper Arg="ls" Name="QuasigroupsUpToIsomorphism" Label="for IsList"/>
@@ -61,24 +95,16 @@
 </ManSection>
 
 
- <P/>It is sometimes useful to work with specific isomorphic copies of algebras.
- Given a right quasigoup <Math>(Q,\cdot)</Math> and a permutation <Math>f</Math> of <Math>Q</Math>,
- the isomorphic copy <Math>f(Q,\cdot) = (Q,*)</Math> is obtained by setting <Math>x*y = f(f^{-1}(x)f^{-1}y)</Math>.
- Any isomorphic copy of <Code>Q</Code> is also called <Index>isomorph</Index><Emph>isomorph</Emph> of <Math>Q</Math>.
-<ManSection Label="AutoDoc_generated_group16">
-<Heading>Isomorphic copies</Heading>
-  <Oper Arg="Q, f" Name="IsomorphicCopyByPerm" Label="for IsRightQuasigroup, IsPerm"/>
-  <Oper Arg="Q, f" Name="RightQuasigroupIsomorph" Label="for IsRightQuasigroup, IsPerm"/>
-  <Oper Arg="Q, f" Name="QuasigroupIsomorph" Label="for IsQuasigroup, IsPerm"/>
-  <Oper Arg="Q, f" Name="LoopIsomorph" Label="for IsLoop, IsPerm"/>
- <Returns>an isomorphic copy of the right quasigroups <Code>Q</Code> via the permutation <Code>f</Code>.  If <Code>Q</Code> has size <Code>n</Code>, the permutation <Code>f</Code> must be a permutation of <Code>[1..n]</Code>.
-  The resulting right quasigroup will have the same underlying set as <Code>Q</Code> and will be
-  index based iff <Code>Q</Code> is index based. 
-</Returns>
- <Description>
-<P/>
- </Description>
-</ManSection>
+<Example><![CDATA[
+gap> Q1 := CheinLoop( SymmetricGroup( 3 ) );;
+gap> Q2 := LoopIsomorph( Q1, (1,2) );;
+gap> Q3 := AsLoop( CyclicGroup( 12 ) );;
+gap> lps := LoopsUpToIsomorphism( [ Q1, Q2, Q3 ] );
+[ <Moufang loop of size 12>, <associative loop of size 12> ]
+gap> lps[1] = Q1; lps[2] = Q3;
+true
+true
+]]></Example>
 
 
 </Section>
@@ -97,24 +123,52 @@
 </ManSection>
 
 
+<Example><![CDATA[
+gap> Q := CheinLoop( SymmetricGroup( 3 ) );;
+gap> AutomorphismGroup( Q );
+Group([ (2,3,4)(5,6,10,11,12,8)(7,9), (2,12,10,6,8,4)(3,11,5) ])
+gap> Size( last );
+108
+]]></Example>
+
+
 </Section>
 
 
-<Section Label="Chapter_Isomorphisms_and_isotopisms_Section_Isotopisms_of_quasigroups_and_loops">
-<Heading>Isotopisms of quasigroups and loops</Heading>
 
- <P/>An <Index>isotopism</Index><Emph>isotopism</Emph> or right quasigroups <Math>(Q_1,\cdot)</Math>, <Math>(Q_2,*)</Math> is a triple
- of bijections <Math>\alpha,\beta,\gamma:Q_1\to Q_2</Math> such that <Math>\alpha(x)*\beta(y)=\gamma(x\cdot y)</Math>
- for all <Math>x,y\in Q_1</Math>.
- <P/>Given a quasigroup <Math>(Q,\cdot,/,\backslash)</Math> and <Math>f,g\in Q</Math>, the <Index>principal loop isotope</Index>
- <Emph>principal loop isotope</Emph> via <Math>f,g</Math> is defined as <Math>(Q,\circ)</Math>, where <Math>x\circ y = (x/f)\cdot(g\backslash y)</Math>.
- The principal loop isotope is automatically a loop with neutral element <Math>g\cdot f</Math>.
- <P/>Every isotopism of loop can be written as the composition of a principal loop isotopism and an isomorphism.
+<Section Label="Chapter_Isomorphisms_and_isotopisms_Section_Isotopisms_of_right_quasigroups">
+<Heading>Isotopisms of right quasigroups</Heading>
+
+ <P/>A triple of mappings <Math>f,g,h:(Q_1,\cdot)\to (Q_2,*)</Math> between (right) quasigroups is an <Emph>homotopism</Emph>
+ <Index Subkey="of right quasigroups">homotopism</Index> if <Math>f(x)*g(y) = h(x\cdot y)</Math>
+ for every <Math>x,y\in Q_1</Math>. If <Math>f</Math>, <Math>g</Math>, <Math>h</Math> are also bijection, the triple is
+ an <Emph>isotopism</Emph><Index Subkey="of right quasigroups">isotopism</Index>.
+ <P/>If <Math>f,g,h:(Q_1,\cdot)\to (Q_2,*)</Math> is an isotopism, then <Math>x*y = h(f^{-1}(x)\cdot g^{-1}(y))</Math> for
+ all <Math>x,y\in Q</Math>, and <Math>(Q_2,*)</Math> is called an <Emph>isotope</Emph><Index>isotope</Index> of <Math>(Q_1,\cdot)</Math> via <Math>f</Math>, <Math>g</Math>, <Math>h</Math>.
+ The isotope <Math>(Q,\circ)</Math> is a (right) quasigroup iff <Math>(Q,\cdot)</Math> is a (right) quasigroup, but an isotope
+ of a loop might not be a loop. 
+ <P/>Given a quasigroup <Math>(Q,\cdot,/,\backslash)</Math> and <Math>a,b\in Q</Math>, the <Index>principal loop isotope</Index>
+ <Emph>principal loop isotope</Emph> via <Math>a,b</Math> is defined as <Math>(Q,\circ)</Math>, where <Math>x\circ y = (x/a)\cdot(b\backslash y)</Math>.
+ The principal loop isotope is automatically a loop with neutral element <Math>b\cdot a</Math>.
+ <P/>Every isotopism of loops can be written as the composition of a principal loop isotopism and an isomorphism.
 <ManSection>
-  <Oper Arg="Q, f, g" Name="PrincipalLoopIsotope" Label="for IsQuasigroup, IsQuasigroupElement, IsQuasigroupElement"/>
- <Returns>the loop isotope with multiplication <Math>x\circ y = (x/f)\cdot(g\backslash y)</Math>, where <Code>Q</Code> is a quasigroup  with multiplication <Math>\cdot</Math> and divisions <Math>/</Math>, <Math>\backslash</Math>. The resulting loop will have
-  the same underlying set as <Code>Q</Code>, will have neutral element <Math>g\cdot f</Math>, and will be index based
-  iff <Code>Q</Code> is index based.
+  <Oper Arg="Q, f, g, h[, constructorStyle ]" Name="RightQuasigroupIsotope" Label="for IsRightQuasigroup, IsPerm, IsPerm, IsPerm"/>
+ <Returns>a right quasigroup that is an isotope of the right quasigroup <Code>Q</Code> via the permutations <Code>f</Code>, <Code>g</Code>, <Code>h</Code>.  The permutations must belong to the symmetric group <Code>[1..Size(Q)]</Code>.
+  The resulting right quasigroup will have the same underlying set as <Code>Q</Code> and will be index based
+  iff <Code>Q</Code> is index based (unless the optional argument <Code>constructorStyle</Code> dictates otherwise).
+</Returns>
+ <Description>
+We do not provide a function <Code>IsotopicCopyByPerms</Code> (in analogy to <Code>IsotopicCopyByPerm</Code>)
+ since the category of the resulting algebra is not necessarily preserved.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="Q, f, g, h[, constructorStyle ]" Name="QuasigroupIsotope" Label="for IsQuasigroup, IsPerm, IsPerm, IsPerm"/>
+ <Returns>a quasigroup that is an isotope of the quasigroup <Code>Q</Code> via the permutations <Code>f</Code>, <Code>g</Code>, <Code>h</Code>.  The permutations must belong to the symmetric group <Code>[1..Size(Q)]</Code>.
+  The resulting quasigroup will have the same underlying set as <Code>Q</Code> and will be index based
+  iff <Code>Q</Code> is index based (unless the optional argument <Code>constructorStyle</Code> dictates otherwise).
 </Returns>
  <Description>
 <P/>
@@ -122,26 +176,75 @@
 </ManSection>
 
 
-<ManSection Label="AutoDoc_generated_group17">
-<Heading>IsotopismQuasigroups, IsotopismLoops</Heading>
+<ManSection>
+  <Oper Arg="Q, f, g, h[, constructorStyle ]" Name="LoopIsotope" Label="for IsQuasigroup, IsPerm, IsPerm, IsPerm"/>
+ <Returns>a loop that is an isotope of the quasigroup <Code>Q</Code> via the permutations <Code>f</Code>, <Code>g</Code>, <Code>h</Code>.  The permutations must belong to the symmetric group <Code>[1..Size(Q)]</Code>.
+  The resulting loop will have the same underlying set as <Code>Q</Code> and will be index based
+  iff <Code>Q</Code> is index based (unless the optional argument <Code>constructorStyle</Code> dictates otherwise).
+  If the arguments <Code>Q</Code>, <Code>f</Code>, <Code>g</Code>, <Code>h</Code> do not give a rise to a loop (but merely a quasigroup)
+  and if the arguments are checked, an error is generated.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="Q, a, b" Name="PrincipalLoopIsotope" Label="for IsQuasigroup, IsQuasigroupElement, IsQuasigroupElement"/>
+ <Returns>the loop isotope of a quasigroup <Arg>Q</Arg> via its elements <Arg>a</Arg>, <Arg>b</Arg>.  The resulting loop will have the same underlying set as <Arg>Q</Arg>,
+  will have neutral element <Arg>b</Arg><Code>*</Code><Arg>a</Arg>, 
+  and will be index based iff <Arg>Q</Arg> is index based.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection Label="AutoDoc_generated_group29">
+<Heading>IsotopismRightQuasigroups, IsotopismQuasigroups, IsotopismLoops</Heading>
+  <Oper Arg="Q1, Q2" Name="IsotopismRightQuasigroups" Label="for IsRightQuasigroup, IsRightQuasigroup"/>
   <Oper Arg="Q1, Q2" Name="IsotopismQuasigroups" Label="for IsQuasigroup, IsQuasigroup"/>
   <Oper Arg="Q1, Q2" Name="IsotopismLoops" Label="for IsLoop, IsLoop"/>
- <Returns>an isotopism from the quasigroup (loop) <Code>Q1</Code> onto the quasigroup (loop) <Code>Q2</Code>, if it exists,  else returns <Code>fail</Code>. The isotopism is returned as a triple of permutations on <Math>[1..n]</Math>, where <Math>n</Math>
+ <Returns>an isotopism from the right quasigroup (quasigroup, loop) <Code>Q1</Code> onto  the right quasigroup (quasigroup, loop) <Code>Q2</Code>, if it exists, else returns <Code>fail</Code>.
+  The isotopism is returned as a triple of permutations on <Math>[1..n]</Math>, where <Math>n</Math>
   is the size of <Code>Q1</Code> (and hence also the size of <Code>Q2</Code>).
 </Returns>
  <Description>
+NOTE: THERE IS NO METHOD FOR RIGHT QUASIGROUPS AND QUASIGROUPS YET.
 <P/>
  </Description>
 </ManSection>
 
 
-<ManSection Label="AutoDoc_generated_group18">
-<Heading>Quasigroups and loops up to isotopism</Heading>
+<Example><![CDATA[
+gap> t := [ [1,2,3,4,5,6], [2,1,6,5,3,4], [3,4,5,2,6,1], [4,6,1,3,2,5], [5,3,4,6,1,2], [6,5,2,1,4,3] ];;
+gap> Q1 := LoopByCayleyTable( t );;
+gap> RightQuasigroupIsotope( Q1, (1,2), (), (3,4) );
+<right quasigroup of size 6>
+gap> QuasigroupIsotope( Q1, (1,2), (), (3,4) ); # LoopIsotope with arguments checked will return an error 
+<quasigroup or size 6>
+gap> Q2 := LoopIsomorph( Q1, (3,4) );;
+gap> Q3 := PrincipalLoopIsotope( Q2, Q2.5, Q2.6 );; # a loop isotopic to Q1
+gap> IsomorphismLoops( Q1, Q2 );
+(3,4)
+gap> IsomorphismLoops( Q1, Q3 );
+fail
+gap> IsotopismLoops( Q1, Q3 );
+[ (2,4,6,3), (1,3,4)(2,5,6), (2,4,6,3) ]
+]]></Example>
+
+
+<ManSection Label="AutoDoc_generated_group30">
+<Heading>Right quasigroups up to isotopism</Heading>
+  <Oper Arg="ls" Name="RightQuasigroupsUpToIsotopism" Label="for IsList"/>
   <Oper Arg="ls" Name="QuasigroupsUpToIsotopism" Label="for IsList"/>
   <Oper Arg="ls" Name="LoopsUpToIsotopism" Label="for IsList"/>
- <Returns>a sublist of <Code>ls</Code> consisting of all quasigroups (loops) in <Code>ls</Code> up to isotopism.
+ <Returns>a sublist of <Code>ls</Code> consisting of all right quasigroups (quasigroups, loops) in <Code>ls</Code> up to isotopism.
 </Returns>
  <Description>
+NOTE: THERE IS NO METHOD FOR RIGHT QUASIGROUPS AND QUASIGROUPS YET.
 <P/>
  </Description>
 </ManSection>

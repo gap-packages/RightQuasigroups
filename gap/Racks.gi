@@ -103,27 +103,116 @@ InstallMethod( IsFaithfulQuandle, "for right quasigroup",
 # CONTRUCTORS FOR RACKS
 # _____________________________________________________________________________
 
-InstallMethod( PermutationalRack, "for collection and permutation",
-    [ IsCollection, IsPerm ],
-function( S, f )
-    return PermutationalRack( S, f, RQ_defaultConstructorStyle );
+# PermutationalRack
+# PROG: constructor OK, data saved
+
+InstallMethod( PermutationalRack, "for positive integer and permutation",
+    [ IsPosInt, IsPerm ],
+function( n, f )
+    return PermutationalRack( n, f, RQ_defaultConstructorStyle );
 end );
 
-InstallOtherMethod( PermutationalRack, "for collection, permutation and record",
-    [ IsCollection, IsPerm, IsRecord ],
-function( S, f, style )
-    local mult, Q;
+InstallOtherMethod( PermutationalRack, "for positive integer, permutation and record",
+    [ IsPosInt, IsPerm, IsRecord ],
+function( n, f, style )
+    local mult, Q, F;
     RQ_CompleteConstructorStyle( style );
     if style.checkArguments then
-        if not ForAll( S, x -> x^f in S ) then
-            Error( "RQ: <2> must be a permutation the restricts to <1>." );
+        if not ForAll( [1..n], x -> x^f in [1..n] ) then
+            Error( "RQ: <2> must be a permutation that restricts to [1..<1>]." );
         fi;
     fi;
-    f := RestrictedPerm( f, S );
-    mult := function( x, y )
-        return x^f;
-    end;
-    Q := RightQuasigroupByFunction( S, mult, ConstructorStyle( style.indexBased, false ) );
+    if style.indexBased then
+        Q := RightQuasigroupByFunction( [1..n], function(x,y) return x^f; end, ConstructorStyle( true, false ) );
+    else
+        Q := RQ_AlgebraShell( IsRightQuasigroup, [1..n], ConstructorStyle( false, false ) );
+        F := FamilyObj( Q.1 );
+        F!.f := RestrictedPerm( f, [1..n] );
+        F!.mult := function( x, y ) return x^(F!.f); end;
+        RQ_AddDefaultOperations( Q );
+    fi;
+    SetIsRack( Q, true );
+    return Q;
+end );
+
+# CyclicRack
+# PROG: constructor OK, calls PermutationalRack
+
+InstallMethod( CyclicRack, "for positive integer",
+    [ IsPosInt ],
+function( n )
+    return CyclicRack( n, RQ_defaultConstructorStyle );
+end );
+
+InstallOtherMethod( CyclicRack, "for positive integer and record",
+    [ IsPosInt, IsRecord ],
+function( n, style )
+    return PermutationalRack( n, PermList( Concatenation( [2..n], [1] ) ), style );  
+end );
+
+# IsAffineRackArithmeticForm
+
+InstallMethod( IsAffineRackArithmeticForm, "for four integers",
+    [ IsPosInt, IsInt, IsInt, IsInt ],
+function( n, f, g, c )
+    return IsAffineRightQuasigroupArithmeticForm( n, f, g, c ) and (g*c) mod n = 0 and (g*(f+g-1)) mod n = 0;
+end );
+
+InstallOtherMethod( IsAffineRackArithmeticForm, "for group, two mappings and multiplicative element",
+    [ IsGroup, IsMapping, IsMapping, IsMultiplicativeElement ],
+function( G, f, g, c )
+    return IsAffineRightQuasigroupArithmeticForm( G, f, g, c ) # this checks that G is abelian
+        and c^g = One( G ) # g(c)=1
+        and ForAll( G, x -> (x^f)^g = (x^g)^f ) # fg = gf
+        and ForAll( G, x -> x^g = (x^g)^f * (x^g)^g ); # g(x) = fg(x)*g^2(x)
+end );
+
+InstallOtherMethod( IsAffineRackArithmeticForm, "for additive group, two mappings and additive element",
+    [ IsGroup, IsMapping, IsMapping, IsAdditiveElement ],
+function( G, f, g, c )
+    return IsAffineRightQuasigroupArithmeticForm( G, f, g, c )
+        and c^g = Zero( G )
+        and ForAll( G, x -> (x^f)^g = (x^g)^f )
+        and ForAll( G, x -> x^g = (x^g)^f + (x^g)^g );
+end );
+
+InstallOtherMethod( IsAffineRackArithmeticForm, "for field and three field elements",
+    [ IsField, IsMultiplicativeElement, IsMultiplicativeElement, IsMultiplicativeElement ],
+function( F, f, g, c )
+    return IsAffineRightQuasigroupArithmeticForm( F, f, g, c )
+        and g*c = Zero( F )
+        and g*(f+g-One(F))=Zero(F);
+end );
+
+# AffineRack
+# PROG: constructor OK, calls RQ_AffineAlgebra
+
+InstallGlobalFunction( AffineRack, 
+function( arg )
+    local style, isLatin, Q;
+    if not Length( arg ) in [4,5] then
+        Error( "RQ: There must be 4 or 5 arguments." );
+    fi;
+    if not IsRecord( Last( arg ) ) then
+        style := RQ_defaultConstructorStyle;
+    else
+        style := Last( arg );
+        Remove( arg );
+    fi;
+    RQ_CompleteConstructorStyle( style );
+    if style.checkArguments and not IsAffineRackArithmeticForm( arg[1], arg[2], arg[3], arg[4] ) then
+        Error( "RQ: The arguments do not define an arithmetic form for affine rack." );
+    fi;
+    # bijectivity test without much testing
+    if IsPosInt( arg[1] ) then isLatin := Gcd( arg[1], arg[3] ) = 1;
+    elif IsField( arg[1] ) then isLatin := arg[3] <> Zero( arg[1] );
+    elif IsGroup( arg[1] ) or IsAdditiveGroup( arg[1] ) then isLatin := IsBijective( arg[3] );
+    fi;
+    if isLatin then # latin 
+        Q := RQ_AffineAlgebra( IsQuasigroup, arg, style );
+    else
+        Q := RQ_AffineAlgebra( IsRightQuasigroup, arg, style );
+    fi;
     SetIsRack( Q, true );
     return Q;
 end );
@@ -131,97 +220,93 @@ end );
 # CONTRUCTORS FOR QUANDLES
 # _____________________________________________________________________________
 
-# REVISIT: Are these constructors safe in the non-index based case? If so, can we use this approach elsewhere?
+# IsAffineQuandleArithmeticForm
 
-# RQ_AffineQuandle
-InstallMethod( RQ_AffineQuandle, "for abelian group, two functions and record",
-    [ IsDomain, IsFunction, IsFunction, IsFunction, IsRecord ],
-function( A, f, g, mult, style ) # g = 1-f
-    local category, Q;
-    RQ_CompleteConstructorStyle( style );
-    if style.checkArguments then
-        if ( IsGroup( A ) or IsAdditiveGroup( A ) ) and not IsCommutative( A ) then
-            Error( "RQ: The group <1> must be commutative." );
-        fi;
-        if IsGroup( A ) and not ForAll( A, x -> ForAll( A, y -> x^f*y^f = (x*y)^f ) ) then
-            Error( "RQ: <2> must be an automorphism of <1>." );
-        fi;
-        if IsAdditiveGroup( A ) and ( not IsField( A ) ) and not ForAll( A, x -> ForAll( A, y -> x^f+y^f = (x+y)^f ) ) then 
-            Error( "RQ: <2> must be an automorphism of <1>." );
-        fi;
+InstallMethod( IsAffineQuandleArithmeticForm, "for two integers",
+    [ IsPosInt, IsInt ],
+function( n, f )
+    return Gcd( n, f ) = 1;
+end );
+
+InstallOtherMethod( IsAffineQuandleArithmeticForm, "for group and mapping",
+    [ IsGroup, IsMapping ],
+function( G, f )
+    return IsGroupHomomorphism( f ) and Source( f ) = G and Range( f ) = G and IsBijective( f );
+end );
+
+InstallOtherMethod( IsAffineQuandleArithmeticForm, "for additive group and mapping",
+    [ IsAdditiveGroup, IsMapping ],
+function( G, f )
+    return IsAdditiveGroupHomomorphism( f ) and Source( f ) = G and Range( f ) = G and IsBijective( f );
+end );
+
+InstallOtherMethod( IsAffineQuandleArithmeticForm, "for field and field element",
+    [ IsField, IsMultiplicativeElement ],
+function( F, f )
+    return f in F and f <> Zero( F );
+end );
+
+# AffineQuandle
+# PROG: constructor OK, ultimately calls RQ_AlgebraIsotope
+
+InstallGlobalFunction( AffineQuandle, 
+function( arg )
+    local style, g, isLatin, Q;
+    if not Length( arg ) in [2,3] then
+        Error( "RQ: There must be 2 or 3 arguments." );
     fi;
-    # check bijectivity in all cases since it is cheap
-    if not RQ_IsBijectiveFunction( A, f ) then
-        Error( "RQ: <2> must be a bijection." );
-    fi;
-    # quandle or latin quandle?
-    if RQ_IsBijectiveFunction( A, g ) then # latin quandle
-        category := IsQuasigroup; 
+    if not IsRecord( Last( arg ) ) then
+        style := RQ_defaultConstructorStyle;
     else
-        category := IsRightQuasigroup;
+        style := Last( arg );
+        Remove( arg );
     fi;
-    Q := RQ_AlgebraByFunction( category, A, mult, fail, fail, fail, ConstructorStyle( style.indexBased, false ) ); # REVISIT: provide rdiv, ldiv?
+    RQ_CompleteConstructorStyle( style );
+    if style.checkArguments and not IsAffineQuandleArithmeticForm( arg[1], arg[2] ) then
+        Error( "RQ: The arguments do not define an arithmetic form for affine quandle." );
+    fi;
+    if IsPosInt( arg[1] ) then
+        arg[3] := 1-arg[2]; arg[4] := 0;
+    elif IsField( arg[1] ) then
+        arg[3] := One(arg[1])-arg[2]; arg[4] := Zero( arg[1] );
+    elif IsGroup( arg[1] ) then
+        g := MappingByFunction( arg[1], arg[1], x -> (x^arg[2])^-1*x );
+        arg[3] := g; arg[4] := One( arg[1] );
+    else # additive group, not field
+        g := MappingByFunction( arg[1], arg[1], x -> x - x^arg[2] );
+        arg[3] := g; arg[4] := Zero( arg[1] );
+    fi;
+    # latin test
+    if IsPosInt( arg[1] ) then isLatin := Gcd( arg[1], arg[3] ) = 1;
+    elif IsField( arg[1] ) then isLatin := arg[3] <> Zero( arg[1] );
+    elif IsGroup( arg[1] ) or IsAdditiveGroup( arg[1] ) then isLatin := IsBijective( arg[3] );
+    fi;
+    if isLatin then # latin 
+        Q := RQ_AffineAlgebra( IsQuasigroup, arg, style );
+    else
+        Q := RQ_AffineAlgebra( IsRightQuasigroup, arg, style );
+    fi;
     SetIsQuandle( Q, true );
     return Q;
 end );
 
-# AffineQuandle
+# DihedralQuandle
+# PROG: constructor OK, calls AffineQuandle
 
-InstallMethod( AffineQuandle, "for abelian group and automorphism",
-    [ IsGroup, IsMapping ],
-function( A, f )
-    return AffineQuandle( A, f, RQ_defaultConstructorStyle );
-end );
+InstallMethod( DihedralQuandle, "for positive integer",
+    [ IsPosInt ],
+    n -> DihedralQuandle( n, RQ_defaultConstructorStyle )
+);
 
-InstallOtherMethod( AffineQuandle, "for abelian group, automorphism and record",
-    [ IsGroup, IsMapping, IsRecord ],
-function( A, f, style )
-    return RQ_AffineQuandle( A, x -> x^f, y -> y*((y^f)^-1), function(x,y) return x^f*y*((y^f)^-1); end, style );
-end );
-
-InstallOtherMethod( AffineQuandle, "for additive abelian group and automorphism",
-    [ IsAdditiveGroup, IsMapping ], 1, # PROG: to choose it before [ IsField, IsMultiplicativeElement ] in case `A` is a field and `f` is its automorphism
-function( A, f )
-    return AffineQuandle( A, f, RQ_defaultConstructorStyle );
-end );
-
-InstallOtherMethod( AffineQuandle, "for additive abelian group, automorphism and record",
-    [ IsAdditiveGroup, IsMapping, IsRecord ], 1, 
-function( A, f, style )
-    return RQ_AffineQuandle( A, x -> x^f, y -> y - y^f, function(x,y) return x^f + y - y^f; end, style );
-end );
-
-InstallOtherMethod( AffineQuandle, "for field and nonzero element",
-    [ IsField, IsMultiplicativeElement ],
-function( F, t )
-    return AffineQuandle( F, t, RQ_defaultConstructorStyle );
-end );
-
-InstallOtherMethod( AffineQuandle, "for field, nonzero element and record",
-    [ IsField, IsMultiplicativeElement, IsRecord ],
-function( F, t, style )
-    return RQ_AffineQuandle( F, x -> t*x, y -> y - t*y, function(x,y) return t*x+y-t*y; end, style );
-end );
-
-InstallOtherMethod( AffineQuandle, "for two positive integers",
-    [ IsPosInt, IsPosInt ],
-function( n, t )
-    return AffineQuandle( n, t, RQ_defaultConstructorStyle );
-end );
-
-InstallOtherMethod( AffineQuandle, "for two positive integers and record",
-    [ IsPosInt, IsPosInt, IsRecord ],
-function( n, t, style )
-    return RQ_AffineQuandle(
-        Domain([0..n-1]),
-        x -> (t*x) mod n,
-        y -> ((1-t)*y) mod n,
-        function(x,y) return (t*x+(1-t)*y) mod n; end,
-        style
-    );
+InstallOtherMethod( DihedralQuandle, "for positive integer and record",
+    [ IsPosInt, IsRecord ],
+function( n, style )
+    return AffineQuandle( n, -1, style );
 end );
 
 # RQ_CoreOfAlgebra
+# PROG: constructor OK, mult function needs no external data
+
 InstallMethod( RQ_CoreOfAlgebra, "for category, (group, additive group or right Bol loop) and record",
     [ IsObject, IsDomain, IsRecord ],
 function( category, G, style )
@@ -239,7 +324,7 @@ function( category, G, style )
     else
         rdiv := fail;
     fi;
-    Q := RQ_AlgebraByFunction( IsRightQuasigroup, G, mult, mult, fail, fail, ConstructorStyle( style.indexBased, false ) );# nothing to check
+    Q := RQ_AlgebraByFunction( IsRightQuasigroup, G, mult, [ rdiv, ConstructorStyle( style.indexBased, false ) ] ); # nothing to check
     SetIsQuandle( Q, true );
     return Q;
 end );
@@ -292,7 +377,7 @@ end );
 InstallOtherMethod( GalkinQuandle, "for group, subgroup, automorphism and record",
     [ IsGroup, IsGroup, IsMapping, IsRecord ],
 function( G, H, f, style )
-    local S, mult, Q;
+    local S, Q, F;
     RQ_CompleteConstructorStyle( style );
     if style.checkArguments then # check arguments
         if not IsSubgroup( G, H ) then
@@ -306,30 +391,45 @@ function( G, H, f, style )
         fi;
     fi; 
     S := Set( RightTransversal( G, H ) );
-    mult := function( x, y )
-        return First( S, z -> (x*y^-1)^f*y in H*z );
-    end;
-    Q := RightQuasigroupByFunction( S, mult, ConstructorStyle( style.indexBased, false ) );
+    if style.indexBased then
+        Q := RightQuasigroupByFunction( S, function( x, y ) return First( S, z -> (x*y^-1)^f*y in H*z ); end, ConstructorStyle( true, false ) );
+    else # not index based
+        Q := RQ_AlgebraShell( IsRightQuasigroup, S, ConstructorStyle( false, false ) );
+        F := FamilyObj( Q.1 );
+        F!.H := ShallowCopy( H );
+        F!.f := ShallowCopy( f );
+        F!.mult := function( x, y )
+            return First( F!.uSet, z -> ((x*y^-1)^F!.f)*y in (F!.H)*z );
+        end;
+        RQ_AddDefaultOperations( Q );
+    fi;
     SetIsQuandle( Q, true );
     SetIsHomogeneousQuandle( Q, true );
     return Q;
 end );
 
 # RQ_ConjugationQuandle
+# PROG: constructor OK, external data for mult stored
+
 InstallOtherMethod( RQ_ConjugationQuandle, "for category, collection of group elements, integer and record",
     [ IsObject, IsCollection, IsInt, IsRecord ],
 function( category, S, m, style )
-    local mult, Q;
+    local Q, F;
     RQ_CompleteConstructorStyle( style );
     if category = IsCollection and style.checkArguments then # no need to check when S is a group
         if not ForAll( S, x -> ForAll( S, y -> y^-m*x*y^m in S and y^m*x*y^-m in S ) ) then
             Error( "RQ: The set is not closed under the operation x*y = y^-m * x * y^m. ");
         fi;
     fi;
-    mult := function( x, y )
-        return y^-m*x*y^m;
-    end;
-    Q := RightQuasigroupByFunction( S, mult, style ); # check if asked since S can consist of who knows what
+    if style.indexBased then
+        Q := RightQuasigroupByFunction( S, function(x,y) return y^-m*x*y^m; end, style ); # check if asked since S can consist of who knows what
+    else # not index based
+        Q := RQ_AlgebraShell( IsRightQuasigroup, S, style );
+        F := FamilyObj( Q.1 );
+        F!.m := m;
+        F!.mult := function( x, y ) return y^(-F!.m)*x*y^(F!.m); end;
+        RQ_AddDefaultOperations( Q );    
+    fi;
     SetIsQuandle( Q, true );
     return Q;
 end );
@@ -439,6 +539,7 @@ InstallMethod( QuandleEnvelope, "for quandle",
 );
 
 # RQ_RackOrQuandleByEnvelope
+# PROG: constructor OK, calls RightQuasigroupByRightSection
 
 InstallMethod( RQ_RackOrQuandleByEnvelope, "for category, group, list, list and record",
     [ IsObject, IsGroup, IsList, IsList, IsRecord ],

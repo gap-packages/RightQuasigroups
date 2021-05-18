@@ -3,6 +3,7 @@
 # =============================================================================
 
 # CheinLoop
+# PROG: constructor OK, mult function needs no outer data
 
 InstallMethod( CheinLoop, "for group",
     [ IsGroup ],
@@ -14,7 +15,7 @@ InstallOtherMethod( CheinLoop, "for group and record",
 function( G, style )    
     local S, mult, Q;
     RQ_CompleteConstructorStyle( style );
-    S := Union( List( Elements( G ), x -> [ [0,x],[1,x] ] ) );
+    S := Cartesian( [0,1], Elements( G ) );
     mult := function( x, y )
         if x[1]=0 and y[1]=0 then return [ 0, x[2]*y[2] ];      # x*y = xy
         elif x[1]=0 and y[1]=1 then return [ 1, y[2]*x[2] ];    # x*yu = (yx)u
@@ -22,10 +23,7 @@ function( G, style )
         else return [ 0, y[2]^-1*x[2] ];                        # xu*yu = y^{-1}x
         fi;
     end;
-    Q := LoopByFunction( S, mult, ConstructorStyle( false, false ) );    
-    if style.indexBased then
-        Q := IndexBasedCopy( Q );
-    fi;
+    Q := LoopByFunction( S, mult, ConstructorStyle( style.indexBased, false ) );    
     SetIsMoufangLoop( Q, true );
     if IsCommutative( G ) then
         SetIsAssociative( Q, true );

@@ -170,10 +170,10 @@ DeclareOperation( "CentralExtensionByNormalSubloop", [ IsLoop, IsLoop ] );
 #! from $\mathrm{Coc}_V(F,\mathbb Z_p)$ must be transformed into a square matrix to be suitable as an argument
 #! for `LoopByCentralExtension`.)
 
-#! @Arguments F, p, equational_basis
+#! @Arguments F, p, equationalBasis
 #! @Returns a basis of the vector space of cocycles $\mathrm{Coc}_V(F,\mathbb Z_p)$, where <Arg>F</Arg> is a loop,
 #! <Arg>p</Arg> is a prime and $V$ is a variety of loops defined by the list of loop identities
-#! <Arg>equational_basis</Arg>. It is checked that all identities of <Arg>equational_basis</Arg> hold in the
+#! <Arg>equationalBasis</Arg>. It is checked that all identities of <Arg>equationalBasis</Arg> hold in the
 #! (multiplicative) cyclic group of order <Arg>p</Arg> and in the loop <Arg>F</Arg>, else en error message is generated.
 DeclareOperation( "LoopCocyclesInVariety", [ IsLoop, IsPosInt, IsList ] );
 
@@ -213,18 +213,18 @@ DeclareOperation( "LoopCoboundaries", [ IsLoop, IsPosInt ] );
 #! by $\mathbb F$ up to isomorphism (with possible duplications).
 DeclareOperation( "LoopCocyclesModAction", [ IsLoop, IsPosInt, IsList, IsList ] );
 
-#! @Arguments F, p, equational_basis
+#! @Arguments F, p, equationalBasis
 #! @Returns Given a loop <Arg>F</Arg>, prime <Arg>p</Arg> and a list of loop identities 
-#! <Arg>equational_basis</Arg> defining a variety $V$, returns a list of cocycles from $\mathrm{Coc}_V(F,\mathbb Z_p)$
+#! <Arg>equationalBasis</Arg> defining a variety $V$, returns a list of cocycles from $\mathrm{Coc}_V(F,\mathbb Z_p)$
 #! modulo coboundaries and modulo the action described in `LoopCocyclesModAction`.
 DeclareOperation( "AllLoopCocyclesInVariety", [ IsLoop, IsPosInt, IsList ] );
 
-#! @Arguments F, p, equational_basis
+#! @Arguments F, p, equationalBasis
 #! @Returns a list of loops constructed as central extensions of the cyclic group of order <Arg>p</Arg>
 #! by the loop <Arg>F</Arg> via the cocycles obtained by
-#! `AllLoopCocyclesInVariety( `<Arg>F</Arg>`, `<Arg>p</Arg>`, `<Arg>equational_basis</Arg>` )`.
+#! `AllLoopCocyclesInVariety( `<Arg>F</Arg>`, `<Arg>p</Arg>`, `<Arg>equationalBasis</Arg>` )`.
 #! The returned list is guaranteed to contain all central extensions of the cyclic group of order <Arg>p</Arg>
-#! by the loop <Arg>F</Arg> in the variety of loops defined by the identities <Arg>equational_basis</Arg>,
+#! by the loop <Arg>F</Arg> in the variety of loops defined by the identities <Arg>equationalBasis</Arg>,
 #! but it might contain duplicate loops of the same isomorphism type. (See `LoopsUpToIsomorphism`.)
 DeclareOperation( "AllLoopCentralExtensionsInVariety", [ IsLoop, IsPosInt, IsList ] );
 

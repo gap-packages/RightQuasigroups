@@ -218,10 +218,19 @@ end );
 # \=
 
 InstallMethod( \=, "for two elements of a right quasigroup",
-    IsIdenticalObj,
+    IsIdenticalObj, # REVISIT: Why is this here? Does it only check that the families are the same?
     [ IsRightQuasigroupElement, IsRightQuasigroupElement ],
 function( x, y )
     return x![ 1 ] = y![ 1 ] and FamilyObj( x ) = FamilyObj( y );
+end );
+
+# PROG: Faster method for checking equality of two right quasigroups, avoiding generating sets.
+# Rank is higher to be called (setting it to 2 does not do the trick).
+# It's not clear what is called otherwise if the rank is low.
+InstallOtherMethod( \=, "for two right quasigroups",
+	[ IsRightQuasigroup, IsRightQuasigroup ], 10,
+function( Q1, Q2 )
+	return FamilyObj( Q1.1 ) = FamilyObj( Q2.1 ) and Size( Q1 ) = Size( Q2 ) and ForAll( Q1, x -> x in Q2 );
 end );
 
 # \<
@@ -235,19 +244,24 @@ end );
 
 # \[\]
 
+# PROG: Speed test
+# call Q.100 one million times on Q = ProjectionRightQuasigroup([1..1000], ConstructorStyle(false,false))
+
 InstallOtherMethod( \[\], "for right quasigroup and element of the underlying set",
 	[ IsRightQuasigroup, IsObject ],
 function( Q, x )
     # this allows Q[x] for x in the underlying set of the parent of Q (so Q[x] need not be in Q)
-    local F;
+    local F, pos;
     F := FamilyObj( Q.1 );
-    if not x in F!.uSet then
+    pos := PositionSorted( F!.uSet, x );
+    if pos = fail then
         Error("RQ: <2> must be en element of the underlying set of <1>");
     fi; 
-    if F!.indexBased then
-        return Objectify( TypeObj( Q.1 ), [ PositionSorted( F!.uSet, x) ] );
-    fi;
-    return Objectify( TypeObj( Q.1 ), [ x ] ); 
+    return F!.set[ pos ]; # 750ms
+    #if F!.indexBased then
+    #    #return Objectify( TypeObj( Q.1 ), [ PositionSorted( F!.uSet, x) ] ); # 1406ms
+    #fi;
+    #return Objectify( TypeObj( Q.1 ), [ x ] ); # 1172ms
 end ); 
 
 # \.
@@ -256,10 +270,11 @@ end );
 InstallMethod( \., "for right quasigroup and positive integer",
 	[ IsRightQuasigroup, IsPosInt ], 10, 
 function( Q, i )
-    # (PROG) the HasParent( Q ) test is necessary since Objectify in constructors
-    # calls this for some reason and Parent( Q ) is not yet set at that point
-    if HasParent( Q ) then 
-        return Elements( Parent( Q ) )[  Int( NameRNam( i ) ) ];
+    # PROG: the HasParent( Q ) test is necessary since Objectify in constructors
+    # calls this for some reason and Parent( Q ) is not yet set at that point.
+    if HasParent( Q ) then  
+        return AsList( Parent( Q ) )[ Int( NameRNam( i ) ) ]; # 359 ms 
+        #return Elements( Parent( Q ) )[  Int( NameRNam( i ) ) ]; # 469ms 
     fi;
     return fail;
 end );
@@ -272,7 +287,7 @@ InstallMethod( \*, "for two right quasigroup elements",
 function( x, y )
     local F;
     F := FamilyObj( x );
-    # SPEEDUP: compare running times on 10 million products in an index based right quasigroup of size 100
+    # Speed test: compare running times on 10 million products in an index based right quasigroup of size 100
     if F!.indexBased then 
         return F!.set[ F!.multTable[ x![ 1 ], y![ 1 ] ] ]; # 1.7s
         #return Objectify( TypeObj( x ), [ F!.multTable[ x![ 1 ], y![ 1 ] ] ] ); # 3.8s
@@ -453,7 +468,25 @@ end);
 
 # ParentInd
 
-InstallMethod( ParentInd, "for right quasigroup element",
+InstallMethod( ParentInd, "for right quasigroup",
+    [ IsRightQuasigroup ],
+function( Q )
+    # PROG: Attempting to make this fast.
+    # For some reason it is slower than ParentInd( Elements( Q ) ), even without saving the attribute.
+    # The test IsIdenticalObj( Q, Parent( Q ) ) is fast.
+    # It looks like just calling a method for IsRightQuasigroup is slower than calling one for IsList.
+    local F;
+    if IsIdenticalObj( Q, Parent( Q ) ) then
+        return [1..Size(Q)];
+    fi;
+    F := FamilyObj( Q.1 );
+    if F!.indexBased then
+        return List( Q, x -> x![1] );
+    fi;
+    return List( Q, x -> PositionSorted( F!.uSet, x![1] ) );
+end );
+
+InstallOtherMethod( ParentInd, "for right quasigroup element",
     [ IsRightQuasigroupElement ],
 function( x )
     local F;
@@ -461,17 +494,12 @@ function( x )
     if F!.indexBased then # fast
         return x![1];
     fi;
-    return PositionSorted( F!.set, x );
+    return PositionSorted( F!.uSet, x![1] ); # PROG: much faster than PositionSorted( F!.set, x )
 end );
 
 InstallOtherMethod( ParentInd, "for list of right quasigroup elements",
     [ IsList ],
     ls -> List( ls, ParentInd )
-);
-
-InstallOtherMethod( ParentInd, "for right quasigroup",
-    [ IsRightQuasigroup ],
-    Q -> ParentInd( Elements( Q ) )
 );
 
 InstallOtherMethod( ParentInd, "for mapping",
@@ -492,16 +520,12 @@ function( Q )
 end );
 
 # IndexBasedCopy
-
+# PROG: constructor OK, calls RQ_AlgebraByCayleyTable
 InstallMethod( IndexBasedCopy, "for right quasigroup",
     [ IsRightQuasigroup ],
 function( Q )
-    local style, copyQ;
-    style := ConstructorStyle( true, false );
-    if IsLoop( Q ) then copyQ := LoopByCayleyTable( CayleyTable( Q ), style ); 
-    elif IsQuasigroup( Q ) then copyQ := QuasigroupByCayleyTable( CayleyTable( Q ), style ); 
-    else copyQ := RightQuasigroupByCayleyTable( CayleyTable( Q ), style );
-    fi;
+    local copyQ;
+    copyQ := RQ_AlgebraByCayleyTable( CategoryOfRightQuasigroup( Q ), CayleyTable( Q ), ConstructorStyle( true, false ) );
     RQ_InheritProperties( Q, copyQ );
     return copyQ;
 end );
@@ -517,16 +541,12 @@ function( Q )
 end );
 
 # CanonicalCopy
-
+# PROG: constructor OK, calls RQ_AlgebraByCayleyTable
 InstallMethod( CanonicalCopy, "for right quasigroup",
     [ IsRightQuasigroup ],
 function( Q )
-    local style, copyQ;
-    style := ConstructorStyle( true, false );
-    if IsLoop( Q ) then copyQ := LoopByCayleyTable( MultiplicationTable( Q ), style );
-    elif IsQuasigroup( Q ) then copyQ :=  QuasigroupByCayleyTable( MultiplicationTable( Q ), style );
-    else copyQ := RightQuasigroupByCayleyTable( MultiplicationTable( Q ), style );
-    fi;
+    local copyQ;
+    copyQ := RQ_AlgebraByCayleyTable( CategoryOfRightQuasigroup( Q ), MultiplicationTable( Q ), ConstructorStyle( true, false ) );
     RQ_InheritProperties( Q, copyQ );
     return copyQ;
 end );
@@ -559,8 +579,10 @@ function( Q )
         AddSet( gens, best_gen );
         sub := best_S;
     od;
-    if Length( gens ) <= Length( GeneratorsOfRightQuasigroup( Q ) ) then
-        SetGeneratorsOfMagma( Q, gens );
+    if Length( gens ) < Length( GeneratorsOfRightQuasigroup( Q ) ) then
+        # PROG: Value cannot be reset. Must unbind first.
+        Unbind( Q!.GeneratorsOfMagma );
+        Q!.GeneratorsOfMagma := ShallowCopy( gens );
     fi;
     return gens;
 end );
@@ -577,8 +599,9 @@ function( Q )
         diff := Difference( diff, RQ_Subalgebra( Q, gens ) );
     od;
     gens := Set( gens );
-    if Length( gens ) <= Length( GeneratorsOfRightQuasigroup( Q ) ) then
-        SetGeneratorsOfMagma( Q, gens );
+    if Length( gens ) < Length( GeneratorsOfMagma( Q ) ) then
+        Unbind( Q!.GeneratorsOfMagma );
+        Q!.GeneratorsOfMagma := ShallowCopy( gens );
     fi;
     return gens;
 end );

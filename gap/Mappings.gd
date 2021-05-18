@@ -24,12 +24,13 @@
 #! <Item>**Canonical permutations**<Index Subkey="canonical">permutation</Index>,
 #! whose indexing is based on the position of elements among elements of `Q`. More precisely,
 #! a permutation `f` is a canonical permutation on `Q` if it restricts to a permutation 
-#! on `[1..Size(Q)]`.</Item>
+#! on `[1..Size(Q)]`. (Note that it is not required for `f` to fix all points outside of `[1..Size(Q)]`,
+#! not even to fix all points outside of `[1..Size(Parent(Q))]`.)</Item>
 #! <Item>**Parent permutations**<Index Subkey="parent">permutation</Index>, 
 #! whose indexing is based on the parent indices of elements of `Q`. More precisely,
 #! a permutation `f` is a parent permutation of `Q` if it restricts to a permutation of `ParentInd( Q )`.
-#! (Note that it is not required for `f` to fix all points outside of `[1..Size(Q)]`,
-#! not even to fix all points outside of `[1..Size(Parent(Q))]`.)</Item>
+#! (Note that it is not required for `f` to fix all points outside of `ParentInd( Q )`.)
+#! </Item>
 #! </List>
 #! Note that a permutation does not keep track of `Q`, of course. The right quasigroup `Q` must therefore
 #! be provided in order to interpret a given permutation as a bijection from `Q` to `Q`.
@@ -100,15 +101,16 @@ DeclareOperation( "IsLoopMapping", [ IsMapping ] );
 #! @EndGroup
 
 #! @Arguments Q1, Q2, f[, isCanonical]
-#! @Returns With these arguments, returns a right quasigroup mapping with source <Arg>Q1</Arg>
+#! @Returns In this form, returns a right quasigroup mapping with source <Arg>Q1</Arg>
 #! and range <Arg>Q2</Arg> determined by the transformation <Arg>f</Arg>.
 #! If the optional argument is not given, it is checked that <Arg>f</Arg> is a parent transformation
 #! from `Q1` to `Q2`, and then the returned mapping `m` satisfies `(Q1.i)^m = Q2.j` iff `i^f=j`.
 #! If the optional argument is set to `true`, is it checked that <Arg>f</Arg> is a canonical
 #! transformation, and then the returned mapping `m` satisfies
 #! `(Elements(Q1)[i])^m = Elements(Q2)[j]` iff `i^f=j`.
-#! With arguments `Q`, `f[, isCanonical]`, returns a right quasigroup mapping with source and range
-#! equal to <Arg>Q</Arg>, determined by the permutation <Arg>f</Arg>.
+#! @Description In the form `AsRightQuasigroupMapping( Q, f[, isCanonical] )`,
+#! returns a right quasigroup mapping with source and range equal to <Arg>Q</Arg>,
+#! determined by the permutation <Arg>f</Arg>.
 DeclareOperation( "AsRightQuasigroupMapping", [ IsRightQuasigroup, IsRightQuasigroup, IsTransformation ] );
 
 # CANONICAL PERMUTATIONS AND PARENT PERMUTATIONS

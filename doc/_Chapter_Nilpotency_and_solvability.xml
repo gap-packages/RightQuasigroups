@@ -21,7 +21,7 @@
  <P/>The <Index>center</Index><Emph>center</Emph> of a right quasigroup is the
  intersection of the nucleus and the commutant. In the case of loops, the
  center is always a normal subloop.
-<ManSection Label="AutoDoc_generated_group38">
+<ManSection Label="AutoDoc_generated_group45">
 <Heading>Nuclei</Heading>
   <Attr Arg="Q" Name="RightNucleus" Label="for IsRightQuasigroup"/>
   <Attr Arg="Q" Name="MiddleNucleus" Label="for IsRightQuasigroup"/>
@@ -465,9 +465,9 @@ gap> IsomorphismLoops( Q, copyQ );
  from <Math>\mathrm{Coc}_V(F,\mathbb Z_p)</Math> must be transformed into a square matrix to be suitable as an argument
  for <Code>LoopByCentralExtension</Code>.)
 <ManSection>
-  <Oper Arg="F, p, equational_basis" Name="LoopCocyclesInVariety" Label="for IsLoop, IsPosInt, IsList"/>
+  <Oper Arg="F, p, equationalBasis" Name="LoopCocyclesInVariety" Label="for IsLoop, IsPosInt, IsList"/>
  <Returns>a basis of the vector space of cocycles <Math>\mathrm{Coc}_V(F,\mathbb Z_p)</Math>, where <Arg>F</Arg> is a loop,  <Arg>p</Arg> is a prime and <Math>V</Math> is a variety of loops defined by the list of loop identities
-  <Arg>equational_basis</Arg>. It is checked that all identities of <Arg>equational_basis</Arg> hold in the
+  <Arg>equationalBasis</Arg>. It is checked that all identities of <Arg>equationalBasis</Arg> hold in the
   (multiplicative) cyclic group of order <Arg>p</Arg> and in the loop <Arg>F</Arg>, else en error message is generated.
 </Returns>
  <Description>
@@ -524,8 +524,8 @@ true
 
 
 <ManSection>
-  <Oper Arg="F, p, equational_basis" Name="AllLoopCocyclesInVariety" Label="for IsLoop, IsPosInt, IsList"/>
- <Returns>Given a loop <Arg>F</Arg>, prime <Arg>p</Arg> and a list of loop identities  <Arg>equational_basis</Arg> defining a variety <Math>V</Math>, returns a list of cocycles from <Math>\mathrm{Coc}_V(F,\mathbb Z_p)</Math>
+  <Oper Arg="F, p, equationalBasis" Name="AllLoopCocyclesInVariety" Label="for IsLoop, IsPosInt, IsList"/>
+ <Returns>Given a loop <Arg>F</Arg>, prime <Arg>p</Arg> and a list of loop identities  <Arg>equationalBasis</Arg> defining a variety <Math>V</Math>, returns a list of cocycles from <Math>\mathrm{Coc}_V(F,\mathbb Z_p)</Math>
   modulo coboundaries and modulo the action described in <Code>LoopCocyclesModAction</Code>.
 </Returns>
  <Description>
@@ -535,11 +535,11 @@ true
 
 
 <ManSection>
-  <Oper Arg="F, p, equational_basis" Name="AllLoopCentralExtensionsInVariety" Label="for IsLoop, IsPosInt, IsList"/>
+  <Oper Arg="F, p, equationalBasis" Name="AllLoopCentralExtensionsInVariety" Label="for IsLoop, IsPosInt, IsList"/>
  <Returns>a list of loops constructed as central extensions of the cyclic group of order <Arg>p</Arg>  by the loop <Arg>F</Arg> via the cocycles obtained by
-  <Code>AllLoopCocyclesInVariety( </Code><Arg>F</Arg><Code>, </Code><Arg>p</Arg><Code>, </Code><Arg>equational_basis</Arg><Code> )</Code>.
+  <Code>AllLoopCocyclesInVariety( </Code><Arg>F</Arg><Code>, </Code><Arg>p</Arg><Code>, </Code><Arg>equationalBasis</Arg><Code> )</Code>.
   The returned list is guaranteed to contain all central extensions of the cyclic group of order <Arg>p</Arg>
-  by the loop <Arg>F</Arg> in the variety of loops defined by the identities <Arg>equational_basis</Arg>,
+  by the loop <Arg>F</Arg> in the variety of loops defined by the identities <Arg>equationalBasis</Arg>,
   but it might contain duplicate loops of the same isomorphism type. (See <Code>LoopsUpToIsomorphism</Code>.)
 </Returns>
  <Description>

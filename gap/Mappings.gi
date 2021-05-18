@@ -186,21 +186,25 @@ end );
 InstallMethod( AsCanonicalTransformation, "for right quasigroup mapping",
     [ IsMapping ],
 function( m )
-    local Q;
+    local Q, range;
     if not IsRightQuasigroupMapping( m ) then
         return Error( "RQ: <1> must be a right quasigroup mapping." );
     fi;
     Q := Source( m );
-    return Transformation( [1..Size(Q)], List( [1..Size(Q)], i -> Position( Elements( Range(m) ), Elements(Q)[i]^m ) ) );
+    range := Elements( Range( m ) );
+    return Transformation( [1..Size(Q)], List( Q, x -> PositionSorted( range, x^m ) ) );
 end );
 
 InstallOtherMethod( AsCanonicalTransformation, "for two right quasigroups and parent transformation",
     [ IsRightQuasigroup, IsRightQuasigroup, IsTransformation ],
 function( Q1, Q2, t )
     local ind2;
+    if Parent( Q1 ) = Q1 and Parent( Q2 ) = Q2 then
+        return t; # canonical = parent
+    fi;
     RQ_IsTransformation( Q1, Q2, t, false, true ); # isCanonical, reportErrors
     ind2 := ParentInd( Q2 );
-    return Transformation( [1..Size(Q1)], List( ParentInd( Q1 ), i -> Position( ind2, i^t ) ) );
+    return Transformation( [1..Size(Q1)], List( ParentInd( Q1 ), i -> PositionSorted( ind2, i^t ) ) );
 end );
 
 InstallOtherMethod( AsCanonicalTransformation, "for right quasigroup and parent permutation",
@@ -227,6 +231,9 @@ InstallOtherMethod( AsParentTransformation, "for two right quasigroups and canon
 function( Q1, Q2, t )
     local ind2;
     RQ_IsTransformation( Q1, Q2, t, true, true ); # isCanonical, reportErrors
+    if Parent( Q1 ) = Q1 and Parent( Q2 ) = Q2 then
+        return t; # canonical = parent
+    fi;
     ind2 := ParentInd( Q2 );
     return Transformation( ParentInd( Q1 ), List( [1..Size(Q1)], i -> ind2[ i^t ] ) );
 end );
@@ -238,7 +245,7 @@ function( Q, f )
 end );
 
 # IsCanonicalPerm
-InstallMethod( IsCanonicalPerm, "for right quasigroup and permuation",
+InstallMethod( IsCanonicalPerm, "for right quasigroup and permutation",
     [ IsRightQuasigroup, IsPerm ],
 function( Q, f )
     return RQ_IsTransformation( Q, Q, AsTransformation( f ), true, false ); # isCanonical, reportErrors

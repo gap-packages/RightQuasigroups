@@ -4,10 +4,12 @@
 <#Include SYSTEM "_Chapter_Introduction.xml">
 <#Include SYSTEM "_Chapter_Constructors.xml">
 <#Include SYSTEM "_Chapter_Direct_products_subalgebras_and_factor_algebras.xml">
+<#Include SYSTEM "_Chapter_Mappings.xml">
 <#Include SYSTEM "_Chapter_PermGroups.xml">
 <#Include SYSTEM "_Chapter_Nilpotency_and_solvability.xml">
 <#Include SYSTEM "_Chapter_Properties_of_right_quasigroups_quasigroups_and_loops.xml">
-<#Include SYSTEM "_Chapter_Iso.xml">
+<#Include SYSTEM "_Chapter_Morphisms.xml">
+<#Include SYSTEM "_Chapter_Topisms.xml">
 <#Include SYSTEM "_Chapter_Bol_loops_Bruck_loops_and_Moufang_loops.xml">
 <#Include SYSTEM "_Chapter_Racks_and_quandles.xml">
 <#Include SYSTEM "_Chapter_Libraries_of_loops_racks_and_quandles.xml">

@@ -2,6 +2,8 @@
 # Nilpotency and solvability for right quasigroups.
 # =============================================================================
 
+# PROG: constructor OK, all rely on Subloop, NormalClosure, etc.
+
 # NUCLEI, COMMUTANT, CENTER
 # _____________________________________________________________________________
 

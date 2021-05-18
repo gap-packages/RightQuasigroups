@@ -5,6 +5,8 @@
 \def\rmlt#1{\mathrm{Mlt}_r(#1)}
 \def\mlt#1{\mathrm{Mlt}(#1)}
 \def\inn#1{\mathrm{Inn}(#1)}
+\def\isordiv{/^*}
+\def\isoldiv{\backslash^*}
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[section]
@@ -221,16 +223,26 @@ because $(Q,*)$ is a group. Hence $D$ is a conjugate of $\langle L_{\alpha^{-1}(
 A quasigroup $Q$ is isotopic to a group iff $|\mathrm{Dis}_\ell^+(Q)|=|Q|$.
 \end{corollary}
 
+\section{Twists of right quasigroups}
+
+Given a magma $Q$ and three mappings $f,g,h:Q\to Q$, the \emph{twist} $\mathrm{Tw}(Q,f,g,h)$ of $Q$ via $(f,g,h)$ is defined to be the magma $(Q,*)$ with multiplication $x*y = h(f(x)g(y))$.
+
+If $Q$ is a right quasigroup, the twist $\mathrm{Tw}(Q,f,g,h)$ is a right quasigroup iff both $f$ and $h$ are bijections of $Q$. Moreover, the twist $\mathrm{Tw}(Q,f,g,h)$ is a quasigroup iff all three $f$, $g$ and $h$ are bijections of $Q$. Finally, if $\mathrm{Tw}(Q,f,g,h)$ is a quasigroup then it is a loop iff $g^{-1}(f(x)\backslash h^{-1}(x))$ is equal to $f^{-1}(h^{-1}(x)/g(x))$ and independent of $x$.
+
+Isotopes and affine constructions can be realized as twists.
+
 \section{Affine right quasigroups}
 
-Given a loop $(Q,\cdot)$, its automorphism $f$, endomorphism $g$ and a central element $c$, define $\mathrm{Aff}(Q,\cdot,f,g,c)=(Q,*)$ by $x*y = f(x)g(y)c$. Then $(Q,*)$ is \emph{affine} over $(Q,\cdot)$ and $(Q,\cdot,f,g,c)$ is the \emph{arithmetic form} of $(Q,*)$.
+Given a loop $(Q,\cdot)$, its automorphism $f$, endomorphism $g$ and two elements $u$, $v$, define $\mathrm{Aff}(Q,\cdot,f,u,g,v)=(Q,*)$ by $x*y = (f(x)u)(g(y)v)$. (We also allow variations with $uf(x)$, $vg(y)$ and any combinations. For instance, $\mathrm{Aff}(Q,\cdot,u,f,g,v)$ has multiplication $x*y = (uf(x))(g(y)v)$.) Then $(Q,*)$ is \emph{affine} over $(Q,\cdot)$ and $(Q,\cdot,f,u,g,v)$ is the \emph{arithmetic form} of $(Q,*)$.
 
 \begin{lemma}
 $(Q,*)$ is a right quasigroup. $(Q,*)$ is a quasigroup iff $g$ is an automorphism.
 \end{lemma}
 \begin{proof}
-Solving $x*y = f(x)g(y)c=z$ for $x$ yields $x = f^{-1}((z/c)/g(y))$. Solving $x*y=f(x)g(y)c=z$ for $y$ is equivalent to solving $g(y) = f(x)\ldiv (z/c)$.
+Solving $x*y = (f(x)u)(g(y)v)=z$ for $x$ yields $x = f^{-1}((z/(g(y)v))/u)$ and similarly in the other three cases. Solving $x*y=(f(x)u)(g(y)v)=z$ for $y$ is equivalent to solving $g(y) = ((f(x)u)\ldiv z)\rdiv v$.
 \end{proof}
+
+If $(Q,\cdot)$ is an abelian group, the formula $x*y = (f(x)u)(g(y)v)$ becomes $f(x)g(y)uv$ and it therefore suffices to consider only arithmetic forms $(Q,\cdot,f,g,c)$ with automorphism $f$, endomorphism $g$ and central element $c$, and define the multiplication by $x*y =f(x)g(y)c$. In general this is a special case of the affine construction. From now on we assume that we are dealing with the special case $(Q,f,g,c)$.
 
 \begin{lemma}\label{Lm:AffineRack}
 $(Q,*)$ is a rack iff $g(c)=1$, $fg=gf$, $g(x)=fg(x)g^2(x)$ and $xfg(y)\cdot g(z) = xfg(z)\cdot fg(y)g^2(z)$ for all $x,y,z\in Q$.
@@ -270,5 +282,27 @@ Suppose that $g(x)=fg(x)g^2(x)$ for all $x\in Q$. Then $xfg(y)\cdot g(z) = xfg(y
 Suppose that $(Q,\cdot)$ is an abelian group. Then $(Q,*)$ is a quandle iff $c=1$ and $g(x)=f(x)\ldiv x = xf(x)^{-1}$.
 \end{corollary}
 
+\section{Calculating isotopisms and autotopisms}
+
+Let $Q_1 = (Q_1,\cdot,\ldiv,\rdiv)$, $Q_2=(Q_2,*,\isoldiv,\isordiv)$ be quasigroups. The triple $(f,g,h)$ of mappings $Q_1\to Q_2$ is a homotopism if $f(x)*g(y) = h(x\cdot y)$ for all $x,y\in Q_1$.
+
+\begin{lemma}
+Let $c$ be a fixed element of $Q_1$. A homotopism $(f,g,h)$ from $Q_1$ to $Q_2$ is determined by the values of one of the three mappings on $Q_1$ and by the value on $c$ of one of the two remaining mappings.
+\end{lemma}
+\begin{proof}
+We will give a proof when $h(x)$ is known for all $x\in Q_1$ and $f(c)$ is known. The remaining five cases are similar.
+We have $f(c)*g(c\ldiv x) = h(c(c\ldiv x)) = h(x)$ and hence $g(c\ldiv x) = g(c)\isoldiv h(x)$. This shows that $g(x)$ is determined for all $x\in Q_1$. We also have $f(x\rdiv c)*g(c) = h((x\rdiv c)c) = h(x)$ and hence $f(x\rdiv c) = h(x)\isordiv g(c)$. This shows that $f(x)$ is determined for all $x\in Q_1$.
+\end{proof}
+
+The following result shows how the domain of a partially defined homotopism must be extended (iteratively) whenever a new image of $f$, $g$ or $h$ has been chosen. The domain of a mapping $f$ is denoted by $D(f)$.
+
+\begin{lemma}
+Let $(f,g,h)$ be a partial homotopism $Q_1\to Q_2$.
+\begin{enumerate}
+\item[(i)] If $x\in D(f)$ then $g(x\ldiv y) = f(x)\isoldiv h(y)$ for all $y\in D(h)$ and $h(xy) = f(x)*g(y)$ for all $y\in D(g)$.
+\item[(ii)] If $x\in D(g)$ then $f(y\rdiv x) = h(y)\isordiv g(x)$ for all $y\in D(h)$ and $h(yx) = f(y)*g(x)$ for all $y\in D(f)$.
+\item[(iii)] If $x\in D(h)$ then $g(y\ldiv x) =f(y)\isoldiv h(x)$ for all $y\in D(f)$ and $f(x\rdiv y) = h(x)\isordiv g(y)$ for all $y\in D(g)$.
+\end{enumerate}
+\end{lemma}
 
 \end{document} 

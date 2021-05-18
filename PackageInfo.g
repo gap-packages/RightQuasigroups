@@ -5,8 +5,8 @@ SetPackageInfo( rec(
 
 PackageName := "RightQuasigroups",
 Subtitle := "Computing with one-sided quasigroups in GAP.",
-Version := "0.8",
-Date := "15/02/2021", # dd/mm/yyyy format
+Version := "0.821",
+Date := "16/03/2021", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [

@@ -1,0 +1,75 @@
+# these constructions investigate how functions behaves with respect to arguments
+
+# 1) if function depends on global variable and that variable changes, the function changes
+
+gap> dat := [1];;
+gap> f := function( x ) return dat[x]; end;;
+gap> f(1);
+1
+gap> dat := [2];;
+gap f(1);
+2
+
+# 2) if function depends on argument, the function might still change
+
+gap> dat := [1];;
+gap> makef := function( mydat ) return function( x ) return mydat[x]; end; end;;
+gap> f := makef( dat );;
+gap> f(1);
+1
+gap> dat := [2];;
+gap> f(1);
+1
+# no change because the original value of dat was not overwriten and the local 
+# variable mydat still points to it. Calling dat := [2]; created a new value
+# for dat elsewhere in memory
+
+gap> dat := [1];;
+gap> makef := function( mydat ) return function( x ) return mydat[x]; end; end;;
+gap> f := makef( dat );;
+gap> f(1);
+1
+gap> dat[1] := 2;;
+gap> f(1);
+2
+# change because dat[1] := 2 replaced the value of dat[1] in the same place 
+# in memory, and mydat pointed to that place
+
+# 3) ShallowCopy on data helps
+
+gap> dat := [1];;
+gap> makef := function( mydat ) local locdat; locdat := ShallowCopy( mydat ); return function( x ) return locdat[x]; end; end;;
+gap> f := makef( dat );;
+gap> f(1);
+1
+gap> dat := [2];;
+gap> f(1);
+1
+# the shallow copy copied the value of mydat (that is, the value of dat) to a new location to which locdat points.
+# No change to dat can now change locdat and hence the function.
+
+# 4) ShallowCopy on functions does not help
+
+gap> dat := [1];;
+gap> makef := function( mydat ) return function( x ) return mydat[x]; end; end;;
+gap> f := makef( dat );;
+gap> f(1);
+1
+gap> g := ShallowCopy( f );;
+gap> dat[1] := 2;;
+gap> g(1);
+2
+
+# 5) StructuralCopy on functions also does not help
+
+gap> dat := [1];;
+gap> makef := function( mydat ) return function( x ) return mydat[x]; end; end;;
+gap> f := makef( dat );;
+gap> f(1);
+1
+gap> g := StructuralCopy( f );;
+gap> dat[1] := 2;;
+gap> g(1);
+2
+
+# MORAL: Before a function is created, call ShallowCopy on all data on which it depends.

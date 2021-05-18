@@ -23,9 +23,9 @@
 #! the random latin square in the last step. 
 
 #! @Arguments S[, constructorStyle ]
-#! @Returns a random right quasigroup on the underlying set `S`. We also allow `S` to be a positive integer `n`, 
+#! @Returns a random right quasigroup on the underlying set <Arg>S</Arg>. We also allow <Arg>S</Arg> to be a positive integer `n`, 
 #! in which case the underlying set will be `[1..n]`.
-#! @Description Note: The value of `constructorStyle.checkArguments` of the optional argument `constructorStyle`
+#! @Description Note: The value of <Arg>constructorStyle</Arg>`.checkArguments` of the optional argument <Arg>constructorStyle</Arg>
 #! does not come into play and need not be specified.
 DeclareOperation( "RandomRightQuasigroup", [ IsCollection ] );
 
@@ -39,10 +39,10 @@ DeclareOperation( "RandomRightQuasigroup", [ IsCollection ] );
 DeclareOperation( "RQ_RandomAlgebra", [ IsObject, IsCollection, IsPosInt ] );
 
 #! @Arguments S[, iter]
-#! @Returns a random quasigroup (loop) on the underlying set `S`, using `iter` number of
+#! @Returns a random quasigroup (loop) on the underlying set <Arg>S</Arg>, using <Arg>iter</Arg> number of
 #! random steps to move into an initial position in the Jacobson and Matthews algorithm.
-#! We also allow `S` to be a positive integer `n`, in which case the underlying set will be `[1..n]`.
-#! If the optional argument `iter` is not given, its value will be set to $n^3$.
+#! We also allow <Arg>S</Arg> to be a positive integer `n`, in which case the underlying set will be `[1..n]`.
+#! If the optional argument <Arg>iter</Arg> is not given, its value will be set to $n^3$.
 #! The resulting quasigroup or loop will be always index based (since the algorithm constructs
 #! a multiplication table anyway).
 DeclareOperation( "RandomQuasigroup", [ IsCollection ] );

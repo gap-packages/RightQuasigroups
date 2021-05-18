@@ -6,19 +6,31 @@
 InstallMethod( AssociatedRightBruckLoop,
     [ IsRightBolLoop ],
 function( Q )
-    local n, t, squares, roots, new_t, elms, L;
+    local n, elms, squares, roots, uSet, t, ct, L, F;
     n := Size( Q );
-    t := MultiplicationTable( Q );
-    squares := List( [ 1..n ], i -> t[i,i] );
+    elms := Elements( Q );
+    squares := List( Q, x -> PositionSorted( elms, x*x ) );
     if not Size( Set( squares ) ) = n then
         Error( "RQ: <1> must be a right Bol loop in which squaring is a bijection." );
     fi;
-    roots := Inverse( PermList( squares ) ); # square roots
-    new_t := List( [1..n], i -> List( [1..n], j -> (t[t[j,t[i,i]],j])^roots ) ); # ((y*(x*x))*y)^(1/2)
-    # t[t[j^roots][i]][j^roots];      # (y^(1/2)*x)*y^(1/2)
-    elms := Elements( Q );
-    new_t := List( t, row -> List( row, i -> elms[i] ) );
-    L := LoopByCayleyTable( new_t, rec( indexBased := IsIndexBased( Q ), checkArguments := false ) );   # the associated right Bruck loop
+    roots := Inverse( PermList( squares ) );
+    uSet := UnderlyingSet( Q );
+    if IsIndexBased( Q ) then
+        t := MultiplicationTable( Q );
+        ct := List( [1..n], i -> List( [1..n], j -> uSet[ (t[t[j,t[i,i]],j])^roots ] ) ); # ((y*(x*x))*y)^(1/2)
+        L := LoopByCayleyTable( ct, ConstructorStyle( true, false ) );
+    else # not index based
+        L := RQ_AlgebraShell( IsLoop, uSet, ConstructorStyle( false, false ) );
+        F := FamilyObj( L.1 );
+        F!.roots := roots;
+        F!.origElms := ShallowCopy( elms );
+        F!.mult := function( x, y )
+            x := F!.origElms[ PositionSorted( F!.uSet, x ) ];
+            y := F!.origElms[ PositionSorted( F!.uSet, y ) ];
+            return F!.uSet[ PositionSorted( F!.origElms, (y*(x*x))*y )^F!.roots ];           
+        end;
+        RQ_AddDefaultOperations( L );
+    fi;
     SetIsRightBruckLoop( L, true );
     return L;
 end );
@@ -26,20 +38,33 @@ end );
 # AssociatedLeftBruckLoop
 InstallMethod( AssociatedLeftBruckLoop,
     [ IsLeftBolLoop ],
-function( Q )
-    local n, t, squares, roots, new_t, elms, L;
+function( Q ) 
+    # REVISIT: we could also call OppositeLoop( AssociatedRightBruckLoop( OppositeLoop( Q ) ) )
+    local n, elms, squares, roots, uSet, t, ct, L, F;
     n := Size( Q );
-    t := MultiplicationTable( Q );
-    squares := List( [ 1..n ], i -> t[i,i] );
+    elms := Elements( Q );
+    squares := List( Q, x -> PositionSorted( elms, x*x ) );
     if not Size( Set( squares ) ) = n then
         Error( "RQ: <1> must be a right Bol loop in which squaring is a bijection." );
     fi;
-    roots := Inverse( PermList( squares ) ); # square roots
-    new_t := List( [1..n], i -> List( [1..n], j -> (t[i,t[t[j,j],i]])^roots ) ); # (x*((y*y)*x))^(1/2)
-    # t[i^roots][t[ j ][ i^roots ]]; # x^(1/2)*(y*x^(1/2))
-    elms := Elements( Q );
-    new_t := List( t, row -> List( row, i -> elms[i] ) );
-    L := LoopByCayleyTable( new_t, rec( indexBased := IsIndexBased( Q ), checkArguments := false ) );   # the associated right Bruck loop
+    roots := Inverse( PermList( squares ) );
+    uSet := UnderlyingSet( Q );
+    if IsIndexBased( Q ) then
+        t := MultiplicationTable( Q );
+        ct := List( [1..n], i -> List( [1..n], j -> uSet[ (t[i,t[t[j,j],i]])^roots  ] ) ); # (x*((y*y)*x))^(1/2)
+        L := LoopByCayleyTable( ct, ConstructorStyle( true, false ) );
+    else # not index based
+        L := RQ_AlgebraShell( IsLoop, uSet, ConstructorStyle( false, false ) );
+        F := FamilyObj( L.1 );
+        F!.roots := roots;
+        F!.origElms := ShallowCopy( elms );
+        F!.mult := function( x, y )
+            x := F!.origElms[ PositionSorted( F!.uSet, x ) ];
+            y := F!.origElms[ PositionSorted( F!.uSet, y ) ];
+            return F!.uSet[ PositionSorted( F!.origElms, x*((y*y)*x) )^F!.roots ];           
+        end;
+        RQ_AddDefaultOperations( L );
+    fi;
     SetIsLeftBruckLoop( L, true );
     return L;
 end );
@@ -52,6 +77,7 @@ function( G, H1, H2 )
 end);
 
 # RightBolLoopByExactGroupFactorization
+# PROG: constructor OK, calls LoopByRightFolder
 InstallMethod( RightBolLoopByExactGroupFactorization, "for group and two subgroups",
     [IsGroup, IsGroup, IsGroup ],
 function( g, h1, h2 )

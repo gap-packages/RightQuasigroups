@@ -185,7 +185,7 @@ end );
 
 InstallMethod( LoopCocyclesInVariety, "for loop, prime and equational basis",
     [ IsLoop, IsPosInt, IsList ],
-function( Q, p, equational_basis )
+function( Q, p, equationalBasis )
 
     local ct, ld, rd, n, one,
         empty_vec, ret, row,
@@ -196,10 +196,10 @@ function( Q, p, equational_basis )
     if not IsPrime( p ) then
         Error( "RQ: <2> must be a prime number." );
     fi;
-    if not ForAll( equational_basis, id -> LoopSatisfiesIdentity( AsLoop( CyclicGroup( p ) ), id )=true ) then
+    if not ForAll( equationalBasis, id -> LoopSatisfiesIdentity( AsLoop( CyclicGroup( p ) ), id )=true ) then
         Error( "RQ: One of the identities of <3> does not hold in the cyclic group of order <2>.");
     fi;
-    if not ForAll( equational_basis, id -> LoopSatisfiesIdentity( Q, id ) = true ) then
+    if not ForAll( equationalBasis, id -> LoopSatisfiesIdentity( Q, id ) = true ) then
         Error( "RQ: One of the identities of <3> does not hold in the loop <1>.");
     fi;
 
@@ -212,7 +212,7 @@ function( Q, p, equational_basis )
     one := Position( Elements( Q ), One( Q ) );
        
     # add normalizing identities
-    equational_basis := Concatenation( [ "1*x=x", "x*1=x" ], equational_basis );
+    equationalBasis := Concatenation( [ "1*x=x", "x*1=x" ], equationalBasis );
     
     # preparing the vector representing the cocycle
     empty_vec := 0*Z(p)*[1..n^2];
@@ -247,7 +247,7 @@ function( Q, p, equational_basis )
     end;
 
     # adding linear equations for each identity
-    for id in equational_basis do
+    for id in equationalBasis do
         varNames := Intersection( RQ_parserVarNames, id ); # variables present in the identity
         varPos := List( varNames, x -> Position( RQ_parserVarNames, x ) ); # their positions among all potential variables
         nVars := Length( varNames );
@@ -372,14 +372,14 @@ end );
 # AllLoopCocyclesInVariety
 InstallMethod( AllLoopCocyclesInVariety, "for loop, prime and list of loop identities",
     [ IsLoop, IsPosInt, IsList ],
-function( Q, p, equational_basis )
+function( Q, p, equationalBasis )
     local cob, coc; 
     if not IsCanonical( Q ) then Q := CanonicalCopy( Q ); fi;
     Info( InfoRightQuasigroups, 1, "RQ: Calculating coboundaries");
     cob := LoopCoboundaries( Q, p );
     Info( InfoRightQuasigroups, 1, "RQ: Coboundaries have dimension ", Length(cob) );
     Info( InfoRightQuasigroups, 1, "RQ: Calculating cocycles");
-    coc := LoopCocyclesInVariety( Q, p, equational_basis );	
+    coc := LoopCocyclesInVariety( Q, p, equationalBasis );	
     Info( InfoRightQuasigroups, 1, "RQ: Cocycles have dimension ", Length(coc) );
     return LoopCocyclesModAction( Q, p, coc, cob );
 end );
@@ -387,9 +387,9 @@ end );
 # AllLoopCentralExtensionsInVariety
 InstallMethod( AllLoopCentralExtensionsInVariety, "for loop, prime and list of loop identities",
     [ IsLoop, IsPosInt, IsList ],
-function( Q, p, equational_basis )
+function( Q, p, equationalBasis )
     local coc, Zp;
-    coc := AllLoopCocyclesInVariety( Q, p, equational_basis );
+    coc := AllLoopCocyclesInVariety( Q, p, equationalBasis );
     # convert cocycle entries to integers 1,...,p
     coc := List( coc, f -> List( f, x -> IntFFE(x)+1 ) );
     # convert cocycles to square tables
