@@ -462,7 +462,7 @@ DeclareOperation( "LoopsUpToIsotopism", [ IsList ] );
 
 #!
 DeclareCategory( "IsRightQuasigroupAutotopismObject", IsMultiplicativeElementWithInverse );
-DeclareRepresentation( "IsRightQuasigroupAutotopismObjectRep", IsPositionalObjectRep and IsMultiplicativeElement, [3] );
+DeclareRepresentation( "IsRightQuasigroupAutotopismObjectRep", IsPositionalObjectRep and IsMultiplicativeElement, [4] );
 IsRightQuasigroupAutotopismObjectFamily := NewFamily( "IsRightQuasigroupAutotopismObjectFam" );
 
 #! @Arguments Q,f,g,h
@@ -475,6 +475,12 @@ DeclareAttribute( "AmbientRightQuasigroup", IsRightQuasigroupAutotopismObject );
 #! <loop of size 5>
 #! gap> f:=[(1,5,4), (2,4,3), (1,5,4)];
 #! [ (1,5,4), (2,4,3), (1,5,4) ]
-#! gap> maps:=List(f,x->AsRightQuasigroupMapping(q,x));;
-#! gap> IsRightQuasigroupAutotopism(maps[1],maps[2],maps[3]);
+#! gap> atop:=AutotopismObject@RightQuasigroups(q,f[1],f[2],f[3]);
+#! IsRightQuasigroupAutotopismObject((1,5,4), (2,4,3), (1,5,4))
+#! gap> AmbientRightQuasigroup(atop);
+#! <loop of size 5>
+#! gap> One(atop);
+#! IsRightQuasigroupAutotopismObject((), (), ())
+#! gap> atop^-4;
+#! IsRightQuasigroupAutotopismObject((1,4,5), (2,3,4), (1,4,5))
 #! @EndExampleSession

@@ -802,9 +802,14 @@ function( Q, f, g, h )
 		NewType(
             IsRightQuasigroupAutotopismObjectFamily, 
             IsRightQuasigroupAutotopismObject and IsRightQuasigroupAutotopismObjectRep
-        ), [ f, g, h ] ); 
-    SetAmbientRightQuasigroup( alpha, Q );
+        ), [ f, g, h, Q ] ); 
     return alpha;
+end);
+
+InstallMethod( AmbientRightQuasigroup, "for an autotopism object",
+    [ IsRightQuasigroupAutotopismObject ],
+function( atop )
+    return atop![4];
 end);
 
 #############################################################################
@@ -820,7 +825,7 @@ end );
 InstallMethod( Display, "for an autotopism object",
 	[ IsRightQuasigroupAutotopismObject ],
 function( obj )
-	Print( "Autotopism object on a right quasigroup of order ", Size( AmbientRightQuasigroup( obj ) ) );
+	Print( "Autotopism object on a right quasigroup of order ", Size( obj![4] ) );
 end );
 
 InstallMethod( PrintObj, "for an autotopism object",
@@ -833,7 +838,7 @@ InstallMethod( \=, "for two autotopism objects",
 	IsIdenticalObj,
 	[ IsRightQuasigroupAutotopismObject, IsRightQuasigroupAutotopismObject ],
 function( atop1, atop2 )
-	return AmbientRightQuasigroup( atop1 ) = AmbientRightQuasigroup( atop2 ) and 
+	return atop1![4] = atop2![4] and 
         [ atop1![1], atop1![2], atop1![3] ] = [ atop2![1], atop2![2], atop2![3] ];
 end );
 
@@ -853,9 +858,9 @@ InstallMethod( \*, "for two autotopism objects",
 	IsIdenticalObj,
 	[ IsRightQuasigroupAutotopismObject, IsRightQuasigroupAutotopismObject ],
 function( atop1, atop2 )
-	if AmbientRightQuasigroup( atop1 ) = AmbientRightQuasigroup( atop2 ) then 
+	if atop1![4] = atop2![4] then 
 		return AutotopismObject@( 
-            AmbientRightQuasigroup( atop1 ),
+            atop1![4],
             atop1![1] * atop2![1],
             atop1![2] * atop2![2],
             atop1![3] * atop2![3]
@@ -869,10 +874,21 @@ InstallMethod( OneMutable, "for an autotopism object",
 	[ IsRightQuasigroupAutotopismObject ],
 function( atop )
 	return AutotopismObject@( 
-            AmbientRightQuasigroup( atop ),
+            atop![4],
             One( atop![1] ),
             One( atop![2] ),
             One( atop![3] )
+        );
+end );
+
+InstallMethod( InverseMutable, "for an autotopism object",
+	[ IsRightQuasigroupAutotopismObject ],
+function( atop )
+	return AutotopismObject@( 
+            atop![4],
+            InverseMutable( atop![1] ),
+            InverseMutable( atop![2] ),
+            InverseMutable( atop![3] )
         );
 end );
 
