@@ -772,3 +772,116 @@ end );
 
 # AUTOTOPISM GROUPS OF RIGHT QUASIGROUPS
 # _____________________________________________________________________________
+
+#############################################################################
+##  CONSTRUCTORS
+##  -------------------------------------------------------------------------
+
+InstallGlobalFunction( AutotopismObject@,
+function( Q, f, g, h ) 
+    local alpha;
+    if ( IsMapping( f ) and ( Range( f ) <> Q or Source( f ) <> Q ) )
+        or ( IsMapping( g ) and ( Range( g ) <> Q or Source( g ) <> Q ) )
+        or ( IsMapping( h ) and ( Range( h ) <> Q or Source( h ) <> Q ) )
+    then 
+        Error( "RQ: wrong mappings given.");
+    fi; 
+    if ( IsTransformation(f) and not IsParentTransformation( Q, Q, f ) ) 
+        or ( IsTransformation(g) and not IsParentTransformation( Q, Q, g ) ) 
+        or ( IsTransformation(h) and not IsParentTransformation( Q, Q, h ) ) 
+    then 
+        Error( "RQ: wrong transformations given.");
+    fi;
+    if ( IsPerm(f) and not IsParentPerm( Q, f ) ) 
+        or ( IsPerm(g) and not IsParentPerm( Q, g ) ) 
+        or ( IsPerm(h) and not IsParentPerm( Q, h ) ) 
+    then 
+        Error( "RQ: wrong parent permutations given.");
+    fi;
+	alpha := Objectify(
+		NewType(
+            IsRightQuasigroupAutotopismObjectFamily, 
+            IsRightQuasigroupAutotopismObject and IsRightQuasigroupAutotopismObjectRep
+        ), [ f, g, h ] ); 
+    SetAmbientRightQuasigroup( alpha, Q );
+    return alpha;
+end);
+
+#############################################################################
+##  DISPLAYING AND COMPARING ELEMENTS
+##  -------------------------------------------------------------------------
+
+InstallMethod( ViewObj, "for an autotopism object",
+	[ IsRightQuasigroupAutotopismObject ],
+function( obj )
+	Print( "IsRightQuasigroupAutotopismObject(", obj![1], ", ", obj![2], ", ", obj![3], ")" );
+end );
+
+InstallMethod( Display, "for an autotopism object",
+	[ IsRightQuasigroupAutotopismObject ],
+function( obj )
+	Print( "Autotopism object on a right quasigroup of order ", Size( AmbientRightQuasigroup( obj ) ) );
+end );
+
+InstallMethod( PrintObj, "for an autotopism object",
+	[ IsRightQuasigroupAutotopismObject ],
+function( obj )
+	Print( "IsRightQuasigroupAutotopismObject(", obj![1], ", ", obj![2], ", ", obj![3], ")" );
+end );
+
+InstallMethod( \=, "for two autotopism objects",
+	IsIdenticalObj,
+	[ IsRightQuasigroupAutotopismObject, IsRightQuasigroupAutotopismObject ],
+function( atop1, atop2 )
+	return AmbientRightQuasigroup( atop1 ) = AmbientRightQuasigroup( atop2 ) and 
+        [ atop1![1], atop1![2], atop1![3] ] = [ atop2![1], atop2![2], atop2![3] ];
+end );
+
+InstallMethod( \<, "for two autotopism objects",
+	IsIdenticalObj,
+	[ IsRightQuasigroupAutotopismObject, IsRightQuasigroupAutotopismObject ],
+function( atop1, atop2 )
+	return [ atop1![1], atop1![2], atop1![3] ] < [ atop2![1], atop2![2], atop2![3] ];
+end );
+
+
+#############################################################################
+##  MULTIPLICATION
+##  -------------------------------------------------------------------------
+
+InstallMethod( \*, "for two autotopism objects",
+	IsIdenticalObj,
+	[ IsRightQuasigroupAutotopismObject, IsRightQuasigroupAutotopismObject ],
+function( atop1, atop2 )
+	if AmbientRightQuasigroup( atop1 ) = AmbientRightQuasigroup( atop2 ) then 
+		return AutotopismObject@( 
+            AmbientRightQuasigroup( atop1 ),
+            atop1![1] * atop2![1],
+            atop1![2] * atop2![2],
+            atop1![3] * atop2![3]
+        );
+	else
+		Error("RQ: Two autotopism objects must have the same ambient right quasigroup.");
+	fi;
+end );
+
+InstallMethod( OneMutable, "for an autotopism object",
+	[ IsRightQuasigroupAutotopismObject ],
+function( atop )
+	return AutotopismObject@( 
+            AmbientRightQuasigroup( atop ),
+            One( atop![1] ),
+            One( atop![2] ),
+            One( atop![3] )
+        );
+end );
+
+#############################################################################
+##  ACTIONS
+##  -------------------------------------------------------------------------
+
+# InstallMethod( \^, "for an autotopism object and ...",
+# 	[ ..., IsRightQuasigroupAutotopismObject ],
+# function( x, atop )
+# end );
+

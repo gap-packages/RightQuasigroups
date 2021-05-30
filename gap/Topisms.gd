@@ -459,3 +459,22 @@ DeclareOperation( "LoopsUpToIsotopism", [ IsList ] );
 #! @Section Autotopism groups of right quasigroups.
 
 #! <P/>NOT IMPLEMENTED YET.
+
+#!
+DeclareCategory( "IsRightQuasigroupAutotopismObject", IsMultiplicativeElementWithInverse );
+DeclareRepresentation( "IsRightQuasigroupAutotopismObjectRep", IsPositionalObjectRep and IsMultiplicativeElement, [3] );
+IsRightQuasigroupAutotopismObjectFamily := NewFamily( "IsRightQuasigroupAutotopismObjectFam" );
+
+#! @Arguments Q,f,g,h
+DeclareGlobalFunction( "AutotopismObject@" );
+#! @Arguments atop
+DeclareAttribute( "AmbientRightQuasigroup", IsRightQuasigroupAutotopismObject );
+
+#! @BeginExampleSession
+#! gap> q:=LoopByCayleyTable([[1,2,3,4,5 ],[2,1,4,5,3],[3,4,5,1,2],[4,5,2,3,1],[5,3,1,2,4]]);
+#! <loop of size 5>
+#! gap> f:=[(1,5,4), (2,4,3), (1,5,4)];
+#! [ (1,5,4), (2,4,3), (1,5,4) ]
+#! gap> maps:=List(f,x->AsRightQuasigroupMapping(q,x));;
+#! gap> IsRightQuasigroupAutotopism(maps[1],maps[2],maps[3]);
+#! @EndExampleSession
