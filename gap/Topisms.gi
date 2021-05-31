@@ -901,3 +901,9 @@ end );
 # function( x, atop )
 # end );
 
+# InstallMethod( AutotopismFromPrincipalLoopIsotope, "for loops", 
+#     [ IsLoop, IsLoopElement, IsLoopElement ],
+# function( Q, f, g )
+#     local ;
+#     alpha := (1,)
+# end );
