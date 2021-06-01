@@ -303,9 +303,8 @@ DeclareOperation( "RQ_EfficientGenerators", [ IsRightQuasigroup, IsList ] );
 DeclareOperation( "AreEqualIsomorphismDiscriminators", [ IsList, IsList ] );
 
 # EXTENDING MAPPINGS (AUXILIARY)
-# We identity the map f: A --> B  with the triple [ m, a, b ], 
-# where a is a subset of A, b[ i ] is the image of a[ i ], and m[ i ] > 0
-# if and only if i is in a.
+# We identify the map f: A --> B  with the list m, where m[i]=j means that f maps A[i] to B[j],
+# and where m[i]=0 means that f is not defined on A[i]. 
 
 # Auxiliary function (f,t1,t2)
 # <t1>, <t2> are multiplication tables of quasigroups, <f> is a partial map
