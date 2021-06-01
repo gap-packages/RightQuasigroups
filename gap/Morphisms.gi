@@ -717,7 +717,6 @@ function( S, Q, GenQ, DisQ )
         map := 0*[1..n];
         for i in [1..n] do if i in S then map[ i ] := i; fi; od;
         map[ x ] := y;
-        g := [ map, Union( S, [ x ] ), Union( S, [ y ] ) ];
         # extending map
         map := RQ_ExtendIsomorphism( map, MultiplicationTable( Q ), GenQ, DisQ, MultiplicationTable( Q ), DisQ );
         if not map = fail then AddSet( A, ShallowCopy( map ) ); fi;
