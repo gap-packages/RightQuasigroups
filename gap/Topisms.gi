@@ -798,11 +798,7 @@ function( Q, f, g, h )
     then 
         Error( "RQ: wrong parent permutations given.");
     fi;
-	alpha := Objectify(
-		NewType(
-            IsRightQuasigroupAutotopismObjectFamily, 
-            IsRightQuasigroupAutotopismObject and IsRightQuasigroupAutotopismObjectRep
-        ), [ f, g, h, Q ] ); 
+	alpha := Objectify( RQAtopType, [ f, g, h, Q ] ); 
     return alpha;
 end);
 

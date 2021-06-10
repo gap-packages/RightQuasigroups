@@ -461,9 +461,19 @@ DeclareOperation( "LoopsUpToIsotopism", [ IsList ] );
 #! <P/>NOT IMPLEMENTED YET.
 
 #!
-DeclareCategory( "IsRightQuasigroupAutotopismObject", IsMultiplicativeElementWithInverse );
-DeclareRepresentation( "IsRightQuasigroupAutotopismObjectRep", IsPositionalObjectRep and IsMultiplicativeElement, [4] );
-IsRightQuasigroupAutotopismObjectFamily := NewFamily( "IsRightQuasigroupAutotopismObjectFam" );
+DeclareCategory( "IsRightQuasigroupAutotopismObject", IsPositionalObjectRep and IsMultiplicativeElementWithInverse );
+DeclareCategoryCollections( "IsRightQuasigroupAutotopismObject" );
+InstallTrueMethod( IsGeneratorsOfMagmaWithInverses, IsRightQuasigroupAutotopismObjectCollection );
+
+DeclareRepresentation( "IsRightQuasigroupAutotopismObjectRep", IsRightQuasigroupAutotopismObject, [4] );
+
+BindGlobal( "RQAtopFamily",
+            NewFamily( "RQAtopFamily",IsObject,IsRightQuasigroupAutotopismObject) );
+BindGlobal( "RQAtopCollFamily",
+            CollectionsFamily(RQAtopFamily) );
+BindGlobal( "RQAtopType",
+     NewType( RQAtopFamily,
+              IsRightQuasigroupAutotopismObject and IsRightQuasigroupAutotopismObjectRep) );
 
 #! @Arguments Q,f,g,h
 DeclareGlobalFunction( "AutotopismObject@" );
