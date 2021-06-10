@@ -901,9 +901,18 @@ end );
 # function( x, atop )
 # end );
 
-# InstallMethod( AutotopismFromPrincipalLoopIsotope, "for loops", 
-#     [ IsLoop, IsLoopElement, IsLoopElement ],
-# function( Q, f, g )
-#     local ;
-#     alpha := (1,)
-# end );
+InstallMethod( AutotopismFromPrincipalLoopIsotope, "for loops", 
+    [ IsLoop, IsLoopElement, IsLoopElement ],
+function( Q, a, b )
+    local S, iso, f, g, h;
+    S := PrincipalLoopIsotope( Q, a, b );                                
+    iso := IsomorphismLoops( Q, S );
+    if iso = fail then
+        return fail;
+    fi;                           
+    h := PermList( List( Elements(Q), x -> Position( Elements(S), x^iso ) ) );
+    f := h / RightTranslation( Q, a );
+    g := h / LeftTranslation( Q, b );
+    #ForAll( Q, x -> ForAll( Q, y -> x^f * y^g = (x * y)^u ) );
+    return AutotopismObject@( Q, f, g, h );
+end );
