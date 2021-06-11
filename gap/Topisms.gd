@@ -495,27 +495,30 @@ DeclareAttribute( "AmbientRightQuasigroup", IsRightQuasigroupAutotopismObject );
 #! IsRightQuasigroupAutotopismObject((1,4,5), (2,3,4), (1,4,5))
 #! @EndExampleSession
 
-#! @Arguments (Q,f,g)
+#! @Arguments Q,f,g
 DeclareOperation( "AutotopismFromPrincipalLoopIsotope", [ IsLoop, IsLoopElement, IsLoopElement ] );
 
-#! @Arguments (i,atop)
+#! @Arguments i,atop
 DeclareOperation( "AtopOn3nElms@", [ IsPosInt, IsRightQuasigroupAutotopismObject ] );
 
-#! @Arguments (p,atop)
+#! @Arguments p,atop
 DeclareOperation( "AtopOnnSquare@", [ IsList, IsRightQuasigroupAutotopismObject ] );
 
-#! @Arguments (gens)
+#! @Arguments gens
 DeclareOperation( "AutotopismGroupByGenerators", [ IsList and IsRightQuasigroupAutotopismObjectCollection ] );
+
+#! @Arguments Q, gens, green, yellow, red
+DeclareGlobalFunction( "ExtendAtopGrp" );
+
+#! @Arguments Q
+DeclareAttribute( "AutotopismGroup", IsLoop );
 
 #! @BeginExampleSession
 #! gap> Q := RightBolLoop(8,1);
 #! <right Bol loop 8/1>
 #! gap> AutotopismFromPrincipalLoopIsotope( Q, Q.4, Q.3 );
 #! IsRightQuasigroupAutotopismObject((1,3)(2,4)(5,7)(6,8), (1,4)(2,3)(5,8), (1,2)(3,4)(5,6)(7,8))
+#! gap> AutotopismGroup( Q );
+#! <autotopism group of size 128 with 5 generators>
 #! @EndExampleSession
 
-#! @Arguments ( Q, gens, green, yellow, red )
-DeclareGlobalFunction( "ExtendAtopGrp" );
-
-#! @Arguments (Q)
-DeclareAttribute( "AutotopismGroup", IsLoop );
