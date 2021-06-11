@@ -67,4 +67,6 @@ c := Center( g );
 UntraceAllMethods();
 
 Size(c);
+c;
+TrivialSubgroup(g);
 

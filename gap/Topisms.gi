@@ -892,6 +892,23 @@ end );
 ##  ACTIONS
 ##  -------------------------------------------------------------------------
 
+InstallMethod( ViewObj, "for an autotopism group",
+    [ IsAutotopismGroup ],
+function( g )
+    if IsTrivial( g ) then
+        Print( "<trivial autotopism group>" );
+    elif HasSize(g) then
+        if HasGeneratorsOfGroup( g ) then 
+            Print( "<autotopism group of size ", Size(g), 
+                " with ", Length(gens), " generators>" );
+        else
+            Print( "<autotopism group of size ", Size(g), ">" );
+        fi;
+    else
+        Print( "<autotopism group>" );
+    fi;
+end );
+
 # InstallMethod( \^, "for an autotopism object and ...",
 # 	[ ..., IsRightQuasigroupAutotopismObject ],
 # function( x, atop )

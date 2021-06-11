@@ -468,12 +468,12 @@ InstallTrueMethod( IsGeneratorsOfMagmaWithInverses, IsRightQuasigroupAutotopismO
 DeclareRepresentation( "IsRightQuasigroupAutotopismObjectRep", IsRightQuasigroupAutotopismObject, [4] );
 
 BindGlobal( "RQAtopFamily",
-            NewFamily( "RQAtopFamily",IsObject,IsRightQuasigroupAutotopismObject) );
-BindGlobal( "RQAtopCollFamily",
-            CollectionsFamily(RQAtopFamily) );
+            NewFamily( "RQAtopFamily", IsObject, IsRightQuasigroupAutotopismObject ) );
+BindGlobal( "RQAtopCollFamily", CollectionsFamily( RQAtopFamily ) );
 BindGlobal( "RQAtopType",
-     NewType( RQAtopFamily,
-              IsRightQuasigroupAutotopismObject and IsRightQuasigroupAutotopismObjectRep) );
+     NewType( RQAtopFamily, IsRightQuasigroupAutotopismObject and IsRightQuasigroupAutotopismObjectRep ) );
+
+DeclareSynonym( "IsAutotopismGroup", IsGroup and IsRightQuasigroupAutotopismObjectCollection );
 
 #! @Arguments Q,f,g,h
 DeclareGlobalFunction( "AutotopismObject@" );
