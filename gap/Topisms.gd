@@ -501,6 +501,9 @@ DeclareOperation( "AutotopismFromPrincipalLoopIsotope", [ IsLoop, IsLoopElement,
 #! @Arguments (i,atop)
 DeclareOperation( "AtopOn3nElms@", [ IsPosInt, IsRightQuasigroupAutotopismObject ] );
 
+#! @Arguments (p,atop)
+DeclareOperation( "AtopOnnSquare@", [ IsList, IsRightQuasigroupAutotopismObject ] );
+
 #! @Arguments (gens)
 DeclareOperation( "AutotopismGroupByGenerators", [ IsList and IsRightQuasigroupAutotopismObjectCollection ] );
 
@@ -511,3 +514,8 @@ DeclareOperation( "AutotopismGroupByGenerators", [ IsList and IsRightQuasigroupA
 #! IsRightQuasigroupAutotopismObject((1,3)(2,4)(5,7)(6,8), (1,4)(2,3)(5,8), (1,2)(3,4)(5,6)(7,8))
 #! @EndExampleSession
 
+#! @Arguments ( Q, gens, green, yellow, red )
+DeclareGlobalFunction( "ExtendAtopGrp" );
+
+#! @Arguments (Q)
+DeclareAttribute( "AutotopismGroup", IsLoop );

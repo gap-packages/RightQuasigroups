@@ -16,21 +16,6 @@
 
 LoadPackage("right");
 
-AtopOnnSquare := function( x, atop )
-    if Length( x ) = 2 then
-        return [ x[1]^atop![1], x[2]^atop![2] ];
-    elif Length( x ) = 3 then 
-        return [ x[1]^atop![1], x[2]^atop![2], x[3]^atop![3] ];
-    else
-        Error( "RQ: <1> must have length 2 or 3." );
-    fi;
-end;
-
-ExtendAtopGrp := function( Q, gens, green, yellow, red )
-    local g;
-    g := 0;
-end;
-
 Q := RightBolLoop(8,1);
 gens := [];
 for a in Q do 
@@ -58,3 +43,27 @@ Size(c);
 c;
 TrivialSubgroup(g);
 
+AtopGr_allinone := function( Q )
+    local ag, gens, green, yellow, red, g, pt, newgen;
+    ag := AutomorphismGroup(Q);
+    gens := List( GeneratorsOfGroup( ag ), u -> AutotopismObject@RightQuasigroups( Q, u, u, u ) );
+    green := []; red := []; yellow := Cartesian( Q, Q );
+    while yellow <> [] do
+        pt := yellow[1];
+        newgen := AutotopismFromPrincipalLoopIsotope( Q, pt[2], pt[1] );
+        if newgen <> fail then
+            Add( gens, newgen );
+            Add( green, pt );
+        else
+            Add( red, pt );
+        fi;
+        g := AutotopismGroupByGenerators( gens );
+        yellow := Difference( Cartesian( Q, Q ),
+            Union( List( Concatenation( green, red ), x -> Orbit( g, x, AtopOnnSquare@RightQuasigroups) ) ) 
+        );
+    od;
+    return g;
+end;
+
+at := AutotopismGroup( Q );
+at = g;

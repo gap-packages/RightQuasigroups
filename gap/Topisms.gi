@@ -946,6 +946,18 @@ function( i, atop )
     fi;
 end );
 
+InstallMethod( AtopOnnSquare@, "for an element of QxQ(xQ) and an autotopism",
+    [ IsList, IsRightQuasigroupAutotopismObject ],
+ function( x, atop )
+    if Length( x ) = 2 then
+        return [ x[1]^atop![1], x[2]^atop![2] ];
+    elif Length( x ) = 3 then 
+        return [ x[1]^atop![1], x[2]^atop![2], x[3]^atop![3] ];
+    else
+        Error( "RQ: <1> must have length 2 or 3." );
+    fi;
+end );
+
 InstallMethod( AutotopismGroupByGenerators, "for a collection of autotopisms",
     [ IsList and IsRightQuasigroupAutotopismObjectCollection ],
 function( gens )
@@ -961,4 +973,38 @@ function( gens )
     SetIsHandledByNiceMonomorphism( g, true );
     SetGeneratorsOfGroup( g, gens );
     return g;
+end );
+
+InstallGlobalFunction( ExtendAtopGrp,
+function( Q, gens, green, yellow, red )
+    local g, pt, newgen;
+    if yellow = [] then
+        return fail;
+    fi;
+    pt := yellow[1];
+    newgen := AutotopismFromPrincipalLoopIsotope( Q, pt[2], pt[1] );
+    if newgen <> fail then
+        Add( gens, newgen );
+        Add( green, pt );
+    else
+        Add( red, pt );
+    fi;
+    g := AutotopismGroupByGenerators( gens );
+    yellow := Difference( Cartesian( Q, Q ),
+        Union( List( Concatenation( green, red ), x -> Orbit( g, x, AtopOnnSquare@) ) ) 
+    );
+    return yellow;
+end );
+
+InstallMethod( AutotopismGroup, "for a loop",
+    [ IsLoop ],
+function( Q )
+    local ag, gens, green, yellow, red;
+    ag := AutomorphismGroup(Q);
+    gens := List( GeneratorsOfGroup( ag ), u -> AutotopismObject@( Q, u, u, u ) );
+    green := []; red := []; yellow := Cartesian( Q, Q );
+    while yellow <> [] do
+        yellow := ExtendAtopGrp( Q, gens, green, yellow, red );
+    od;
+    return AutotopismGroupByGenerators( gens );
 end );
