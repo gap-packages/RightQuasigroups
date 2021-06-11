@@ -498,15 +498,16 @@ DeclareAttribute( "AmbientRightQuasigroup", IsRightQuasigroupAutotopismObject );
 #! @Arguments (Q,f,g)
 DeclareOperation( "AutotopismFromPrincipalLoopIsotope", [ IsLoop, IsLoopElement, IsLoopElement ] );
 
+#! @Arguments (i,atop)
+DeclareOperation( "AtopOn3nElms@", [ IsPosInt, IsRightQuasigroupAutotopismObject ] );
+
+#! @Arguments (gens)
+DeclareOperation( "AutotopismGroupByGenerators", [ IsList and IsRightQuasigroupAutotopismObjectCollection ] );
+
 #! @BeginExampleSession
-#! gap> q:=LoopByCayleyTable([[1,2,3,4,5 ],[2,1,4,5,3],[3,4,5,1,2],[4,5,2,3,1],[5,3,1,2,4]]);
-#! <loop of size 5>
-#! gap> a:=q.3;; b:=q.4;;
-#! gap> s1:=PrincipalLoopIsotope(q,q.1,a);
-#! <loop of size 5>
-#! gap> s2:=PrincipalLoopIsotope(q,q.1,b);
-#! <loop of size 5>
-#! gap> iso:=IsomorphismLoops(s1,s2);
-#! MappingByFunction( <loop of size 5>, <loop of size 5>, function( x ) ... end )
+#! gap> Q := RightBolLoop(8,1);
+#! <right Bol loop 8/1>
+#! gap> AutotopismFromPrincipalLoopIsotope( Q, Q.4, Q.3 );
+#! IsRightQuasigroupAutotopismObject((1,3)(2,4)(5,7)(6,8), (1,4)(2,3)(5,8), (1,2)(3,4)(5,6)(7,8))
 #! @EndExampleSession
 

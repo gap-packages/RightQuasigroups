@@ -15,6 +15,22 @@
 # atop := AutotopismFromPrincipalLoopIsotope( Q, Q.2, Q.3 );
 
 LoadPackage("right");
+
+AtopOnnSquare := function( x, atop )
+    if Length( x ) = 2 then
+        return [ x[1]^atop![1], x[2]^atop![2] ];
+    elif Length( x ) = 3 then 
+        return [ x[1]^atop![1], x[2]^atop![2], x[3]^atop![3] ];
+    else
+        Error( "RQ: <1> must have length 2 or 3." );
+    fi;
+end;
+
+ExtendAtopGrp := function( Q, gens, green, yellow, red )
+    local g;
+    g := 0;
+end;
+
 Q := RightBolLoop(8,1);
 gens := [];
 for a in Q do 
@@ -27,40 +43,12 @@ for a in Q do
     od;
 od;
 
-atop_on_3n := function( i, atop )
-    local n;
-    n := Size( atop![4] );
-    if i <= n then 
-        return i^atop![1];
-    elif i <= 2*n then 
-        return n+(i-n)^atop![2];
-    else 
-        return 2*n+(i-2*n)^atop![3];
-    fi;
-end;
-
-g := GroupWithGenerators(gens);
-nice := ActionHomomorphism( g, [1 .. 3*Size( Q )], atop_on_3n );
-SetIsInjective( nice, true );
-SetNiceMonomorphism( g, nice );
-SetIsHandledByNiceMonomorphism( g, true );
-SetCanEasilyCompareElements( g, true );
-SetCanEasilySortElements( g, true );
+g:=AutotopismGroupByGenerators(gens);
+Size(g);
+g;
 
 elm:=Elements(g);;
 ForAll(elm,x->ForAll(elm,y->x^NiceMonomorphism(g)*y^NiceMonomorphism(g)=(x*y)^NiceMonomorphism(g)));
-
-IsSolvableGroup(g);
-IsPerfectGroup(g);    
-IsPolycyclicGroup(g);
-IsGeneratorsOfMagmaWithInverses(g);;
-KnowsHowToDecompose(g);
-Parent(g);
-
-Difference( KnownPropertiesOfObject(NiceObject(g)), KnownPropertiesOfObject(g) );
-Difference( KnownPropertiesOfObject(g), KnownPropertiesOfObject(NiceObject(g)) );
-Difference( KnownAttributesOfObject(NiceObject(g)), KnownAttributesOfObject(g) );
-Difference( KnownAttributesOfObject(g), KnownAttributesOfObject(NiceObject(g)) );
 
 TraceMethods( [ Center,Centralizer,CentralizerOp,CentralizerInParent ] );
 c := Center( g );

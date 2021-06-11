@@ -895,17 +895,19 @@ end );
 InstallMethod( ViewObj, "for an autotopism group",
     [ IsAutotopismGroup ],
 function( g )
+    local str;
     if IsTrivial( g ) then
         Print( "<trivial autotopism group>" );
-    elif HasSize(g) then
-        if HasGeneratorsOfGroup( g ) then 
-            Print( "<autotopism group of size ", Size(g), 
-                " with ", Length(gens), " generators>" );
-        else
-            Print( "<autotopism group of size ", Size(g), ">" );
-        fi;
     else
-        Print( "<autotopism group>" );
+        str := "<autotopism group";
+        if HasSize(g) then
+            str := Concatenation( str, " of size ", String( Size( g ) ) );
+        fi;
+        if HasGeneratorsOfGroup( g ) then 
+            str := Concatenation( str, " with ", 
+                String( Length( GeneratorsOfGroup( g ) ) ), " generators" );
+        fi;
+        Print( str, ">" );
     fi;
 end );
 
@@ -928,4 +930,35 @@ function( Q, a, b )
     g := h / LeftTranslation( Q, b );
     #ForAll( Q, x -> ForAll( Q, y -> x^f * y^g = (x * y)^u ) );
     return AutotopismObject@( Q, f, g, h );
+end );
+
+InstallMethod( AtopOn3nElms@, "for an integer in [1..3n] and an autotopism",
+    [ IsPosInt, IsRightQuasigroupAutotopismObject ],
+function( i, atop )
+    local n;
+    n := Size( atop![4] );
+    if i <= n then 
+        return i^atop![1];
+    elif i <= 2*n then 
+        return n+(i-n)^atop![2];
+    else 
+        return 2*n+(i-2*n)^atop![3];
+    fi;
+end );
+
+InstallMethod( AutotopismGroupByGenerators, "for a collection of autotopisms",
+    [ IsList and IsRightQuasigroupAutotopismObjectCollection ],
+function( gens )
+    local g, nice, n;
+    if gens = [] then 
+        Error( "RQ: list of generators cannot be empty." );
+    fi;
+    g := GroupWithGenerators( gens );
+    n := Size( gens[1]![4] );
+    nice := ActionHomomorphism( g, [1 .. 3*n], AtopOn3nElms@ );
+    SetIsInjective( nice, true );
+    SetNiceMonomorphism( g, nice );
+    SetIsHandledByNiceMonomorphism( g, true );
+    SetGeneratorsOfGroup( g, gens );
+    return g;
 end );
