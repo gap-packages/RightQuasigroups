@@ -906,7 +906,7 @@ function( Q, a, b )
     if iso = fail then
         return fail;
     fi;                           
-    h := PermList( List( Elements(Q), x -> Position( Elements(S), x^iso ) ) );
+    h := AsPermutation( iso!.cantraf );
     f := h / RightTranslation( Q, a );
     g := h / LeftTranslation( Q, b );
     #ForAll( Q, x -> ForAll( Q, y -> x^f * y^g = (x * y)^u ) );
