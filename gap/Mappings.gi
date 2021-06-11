@@ -42,7 +42,7 @@ InstallOtherMethod( AsRightQuasigroupMapping, "for two right quasigroups, transf
     [ IsRightQuasigroup, IsRightQuasigroup, IsTransformation, IsBool ],
 function( Q1, Q2, f, isCanonical )
     # this is the main method for AsRightQuasigroupMapping
-    local func;
+    local func, map;
     RQ_IsTransformation( Q1, Q2, f, isCanonical, true ); # true = reportErrors
     if isCanonical then
         func := function( x )
@@ -53,7 +53,9 @@ function( Q1, Q2, f, isCanonical )
             return Q2.( ParentInd( x )^f );
         end;
     fi;
-    return MappingByFunction( Q1, Q2, func );
+    map := MappingByFunction( Q1, Q2, func );
+    map!.cantraf := f;
+    return map;
 end );
 
 InstallOtherMethod( AsRightQuasigroupMapping, "for right quasigroup and permutation",

@@ -1,3 +1,4 @@
+# LoadPackage("right");
 # Q := AsLoop( DihedralGroup(6) );
 # a := Q.2; b:= Q.3;
 # Q2 := PrincipalLoopIsotope( Q, a, b );                                
