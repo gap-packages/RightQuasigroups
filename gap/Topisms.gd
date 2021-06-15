@@ -522,3 +522,14 @@ DeclareAttribute( "AutotopismGroup", IsLoop );
 #! <autotopism group of size 128 with 5 generators>
 #! @EndExampleSession
 
+#! @Arguments Q
+DeclareGlobalFunction( "LeftAtopInvariant@" );
+
+#! @Arguments Q
+DeclareGlobalFunction( "RightAtopInvariant@" );
+
+#! @Arguments Q
+DeclareAttribute( "AtopInvariant@", IsLoop );
+
+#! @Arguments Q,S,a,b
+DeclareGlobalFunction( "CheckAtopInvariant@" );

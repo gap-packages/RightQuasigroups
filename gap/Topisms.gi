@@ -920,7 +920,10 @@ InstallMethod( AutotopismFromPrincipalLoopIsotope, "for loops",
     [ IsLoop, IsLoopElement, IsLoopElement ],
 function( Q, a, b )
     local S, iso, f, g, h;
-    S := PrincipalLoopIsotope( Q, a, b );                                
+    if not CheckAtopInvariant@( Q, Q, a, b ) then
+        return fail;
+    fi;
+    S := PrincipalLoopIsotope( Q, a, b );
     iso := IsomorphismLoops( Q, S );
     if iso = fail then
         return fail;
@@ -1008,3 +1011,38 @@ function( Q )
     od;
     return AutotopismGroupByGenerators( gens );
 end );
+
+InstallGlobalFunction( LeftAtopInvariant@, 
+function( Q, a )
+    return SortedList( List( LeftTranslation( Q, a )^(-1)*LeftSection( Q ), CycleStructurePerm ) );
+end );
+
+InstallGlobalFunction( RightAtopInvariant@, 
+function( Q, a )
+    return SortedList( List( RightTranslation( Q, a )^(-1)*RightSection( Q ), CycleStructurePerm ) );
+end );
+
+InstallMethod( AtopInvariant@, "for a loop",
+    [ IsLoop ],
+function( Q )
+    local S, left,right;
+    if IsCanonical( Q ) then
+        S := Q;
+    else
+        S := CanonicalCopy( Q );
+    fi;
+    left := List( S, a -> LeftAtopInvariant@( S, a ) );
+    right := List( S, a -> RightAtopInvariant@( S, a ) );
+    return [ left, right ];
+end );
+
+InstallGlobalFunction( CheckAtopInvariant@, 
+function( Q, S, a, b )
+    local invQ, invS;
+    a := Position( Elements( S ), a );
+    b := Position( Elements( S ), b );
+    invQ := AtopInvariant@( Q );
+    invS := AtopInvariant@( S );
+    return invQ[1][1] = invS[1][b] and invQ[2][1] = invS[2][a];     
+end );
+
