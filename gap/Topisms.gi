@@ -932,7 +932,7 @@ function( i, atop )
     fi;
 end );
 
-InstallMethod( AtopOnnSquare@, "for an element of QxQ(xQ) and an autotopism",
+InstallMethod( AtopOnnSquareElms@, "for an element of QxQ(xQ) and an autotopism",
     [ IsList, IsRightQuasigroupAutotopismObject ],
  function( x, atop )
     if Length( x ) = 2 then
@@ -967,13 +967,21 @@ end );
 InstallMethod( AutotopismGroupByGenerators, "for a collection of autotopisms",
     [ IsList and IsRightQuasigroupAutotopismObjectCollection ],
 function( gens )
-    local g, nice, n;
     if gens = [] then 
         Error( "RQ: list of generators cannot be empty." );
     fi;
+    return AutotopismGroupByGenerators( AmbientRightQuasigroup( gens[1] ), gens );
+end );
+
+InstallMethod( AutotopismGroupByGenerators, "for a right quasigroup and a list",
+    [ IsRightQuasigroup, IsList ],
+function( Q, gens )
+    local g, nice;
+    if IsEmpty( gens ) then
+        gens := [ AutotopismObject@( Q, (), (), () ) ];
+    fi;
     g := GroupWithGenerators( gens );
-    n := Size( gens[1]![4] );
-    nice := ActionHomomorphism( g, [1 .. 3*n], AtopOn3nElms@ );
+    nice := ActionHomomorphism( g, [1 .. 3 * Size( Q )], AtopOn3nElms@ );
     SetIsInjective( nice, true );
     SetNiceMonomorphism( g, nice );
     SetIsHandledByNiceMonomorphism( g, true );
@@ -995,9 +1003,9 @@ function( Q, gens, green, yellow, red )
     else
         Add( red, pt );
     fi;
-    g := AutotopismGroupByGenerators( gens );
+    g := AutotopismGroupByGenerators( Q, gens );
     yellow := Difference( Cartesian( Q, Q ),
-        Union( List( Concatenation( green, red ), x -> Orbit( g, x, AtopOnnSquare@) ) ) 
+        Union( List( Concatenation( green, red ), x -> Orbit( g, x, AtopOnnSquareElms@) ) ) 
     );
     return yellow;
 end );
@@ -1012,7 +1020,7 @@ function( Q )
     while yellow <> [] do
         yellow := ExtendAtopGrp( Q, gens, green, yellow, red );
     od;
-    return AutotopismGroupByGenerators( gens );
+    return AutotopismGroupByGenerators( Q, gens );
 end );
 
 InstallGlobalFunction( LeftAtopInvariant@, 

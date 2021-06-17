@@ -41,7 +41,7 @@ IsotopismLoops( Q, Q2 ); time;
 find_isotopism := function( Q, S )
     local at, orep, pt, S0, iso;
     at := AutotopismGroup( S );
-    orep := List( Orbits( at, Cartesian(S,S), AtopOnnSquare@RightQuasigroups ), o -> o[1] );
+    orep := List( Orbits( at, Cartesian(S,S), AtopOnnSquareElms@RightQuasigroups ), o -> o[1] );
     for pt in orep do
         if CheckAtopInvariant@RightQuasigroups( Q, S, pt[2], pt[1] ) then
             S0 := PrincipalLoopIsotope( S, pt[2], pt[1] );

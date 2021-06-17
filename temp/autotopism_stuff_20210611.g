@@ -59,7 +59,7 @@ AtopGr_allinone := function( Q )
         fi;
         g := AutotopismGroupByGenerators( gens );
         yellow := Difference( Cartesian( Q, Q ),
-            Union( List( Concatenation( green, red ), x -> Orbit( g, x, AtopOnnSquare@RightQuasigroups) ) ) 
+            Union( List( Concatenation( green, red ), x -> Orbit( g, x, AtopOnnSquareElms@RightQuasigroups) ) ) 
         );
     od;
     return g;
