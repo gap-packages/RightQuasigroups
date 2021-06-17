@@ -35,7 +35,7 @@ Q2 := PrincipalLoopIsotope( Q, Q.10, Q.15 );
 S := SteinerLoop( 16, 51 );
 IsotopismLoops( Q, S ); time;
 IsotopismLoops( S, Q2 ); time;
-# IsotopismLoops( Q2, S ); # gives error!!
+# IsotopismLoops( Q2, S ); # gives error!! # fixed by Petr June 16, 2021
 IsotopismLoops( Q, Q2 ); time;
 
 find_isotopism := function( Q, S )

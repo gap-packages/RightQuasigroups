@@ -620,6 +620,7 @@ InstallMethod( RQ_IsotopismAlgebras, "for category, two right quasigroups and bo
 function( category, Q1, Q2, viaPrincipalLoopIsotopes ) 
     local origQ1, origQ2, tables1, tables2, n, gens1, i, f, g, h, fgh,
         T, Q, phi, alpha, beta, gamma;
+    # PROG: This will not work for right quasigroups.
     # making sure the quasigroups are canonical
     origQ1 := ShallowCopy( Q1 );
     origQ2 := ShallowCopy( Q2 );
@@ -634,15 +635,22 @@ function( category, Q1, Q2, viaPrincipalLoopIsotopes )
         tables1 := [ MultiplicationTable( Q1 ), RightDivisionTable( Q1 ), LeftDivisionTable( Q1 ) ];
         tables2 := [ MultiplicationTable( Q2 ), RightDivisionTable( Q2 ), LeftDivisionTable( Q2 ) ];
         n := Size( Q1 );
-        if category = IsLoop then # for loops, it suffices to know f on a generating set containing 1
+        # for loops, it suffices to know f on a generating set containing One(Q1) and g on One(Q1)
+        # for quasigroups, it suffices to know f on Q1 and g on any one element of Q1
+        if category = IsLoop then
             gens1 := ParentInd( Union( SmallGeneratingSet( Q1 ), [ One(Q1) ] ) );
         else
             gens1 := [1..n];
         fi;
         # main cycle of generic method
-        for i in [1..n] do # value of g[1]
+        for i in [1..n] do # the one value of g
             f := 0*[1..n]; # empty map
-            g := 0*[1..n]; g[1] := i;
+            g := 0*[1..n];
+            if category = IsLoop then
+                g[ ParentInd( One(Q1) ) ] := i;
+            else
+                g[ 1 ] := i;
+            fi;
             h := 0*[1..n];
             fgh := RQ_ExtendIsotopism( f, g, h, tables1, tables2, gens1 );
             if not fgh = fail then # isotopism found
