@@ -845,6 +845,24 @@ function( atop1, atop2 )
 	return [ atop1![1], atop1![2], atop1![3] ] < [ atop2![1], atop2![2], atop2![3] ];
 end );
 
+InstallMethod( ViewObj, "for an autotopism group",
+    [ IsAutotopismGroup ],
+function( g )
+    local str;
+    if IsTrivial( g ) then
+        Print( "<trivial autotopism group>" );
+    else
+        str := "<autotopism group";
+        if HasSize(g) then
+            str := Concatenation( str, " of size ", String( Size( g ) ) );
+        fi;
+        if HasGeneratorsOfGroup( g ) then 
+            str := Concatenation( str, " with ", 
+                String( Length( GeneratorsOfGroup( g ) ) ), " generators" );
+        fi;
+        Print( str, ">" );
+    fi;
+end );
 
 #############################################################################
 ##  MULTIPLICATION
@@ -892,49 +910,6 @@ end );
 ##  ACTIONS
 ##  -------------------------------------------------------------------------
 
-InstallMethod( ViewObj, "for an autotopism group",
-    [ IsAutotopismGroup ],
-function( g )
-    local str;
-    if IsTrivial( g ) then
-        Print( "<trivial autotopism group>" );
-    else
-        str := "<autotopism group";
-        if HasSize(g) then
-            str := Concatenation( str, " of size ", String( Size( g ) ) );
-        fi;
-        if HasGeneratorsOfGroup( g ) then 
-            str := Concatenation( str, " with ", 
-                String( Length( GeneratorsOfGroup( g ) ) ), " generators" );
-        fi;
-        Print( str, ">" );
-    fi;
-end );
-
-# InstallMethod( \^, "for an autotopism object and ...",
-# 	[ ..., IsRightQuasigroupAutotopismObject ],
-# function( x, atop )
-# end );
-
-InstallMethod( AutotopismFromPrincipalLoopIsotope, "for loops", 
-    [ IsLoop, IsLoopElement, IsLoopElement ],
-function( Q, a, b )
-    local S, iso, f, g, h;
-    if not CheckAtopInvariant@( Q, Q, a, b ) then
-        return fail;
-    fi;
-    S := PrincipalLoopIsotope( Q, a, b );
-    iso := IsomorphismLoops( Q, S );
-    if iso = fail then
-        return fail;
-    fi;                           
-    h := AsPermutation( iso!.cantraf );
-    f := h / RightTranslation( Q, a );
-    g := h / LeftTranslation( Q, b );
-    #ForAll( Q, x -> ForAll( Q, y -> x^f * y^g = (x * y)^u ) );
-    return AutotopismObject@( Q, f, g, h );
-end );
-
 InstallMethod( AtopOn3nElms@, "for an integer in [1..3n] and an autotopism",
     [ IsPosInt, IsRightQuasigroupAutotopismObject ],
 function( i, atop )
@@ -960,6 +935,26 @@ InstallMethod( AtopOnnSquare@, "for an element of QxQ(xQ) and an autotopism",
         Error( "RQ: <1> must have length 2 or 3." );
     fi;
 end );
+
+InstallMethod( AutotopismFromPrincipalLoopIsotope, "for loops", 
+    [ IsLoop, IsLoopElement, IsLoopElement ],
+function( Q, a, b )
+    local S, iso, f, g, h;
+    if not CheckAtopInvariant@( Q, Q, a, b ) then
+        return fail;
+    fi;
+    S := PrincipalLoopIsotope( Q, a, b );
+    iso := IsomorphismLoops( Q, S );
+    if iso = fail then
+        return fail;
+    fi;                           
+    h := AsPermutation( iso!.cantraf );
+    f := h / RightTranslation( Q, a );
+    g := h / LeftTranslation( Q, b );
+    #ForAll( Q, x -> ForAll( Q, y -> x^f * y^g = (x * y)^u ) );
+    return AutotopismObject@( Q, f, g, h );
+end );
+
 
 InstallMethod( AutotopismGroupByGenerators, "for a collection of autotopisms",
     [ IsList and IsRightQuasigroupAutotopismObjectCollection ],

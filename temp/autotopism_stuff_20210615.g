@@ -30,50 +30,37 @@ od;
 time;
 
 
+Q := SteinerLoop( 16, 50 );
+Q2 := PrincipalLoopIsotope( Q, Q.10, Q.15 );
+S := SteinerLoop( 16, 51 );
+IsotopismLoops( Q, S ); time;
+IsotopismLoops( S, Q2 ); time;
+# IsotopismLoops( Q2, S ); # gives error!!
+IsotopismLoops( Q, Q2 ); time;
 
-
-
-
-
-
-
-
-g:=AutotopismGroupByGenerators(gens);
-Size(g);
-g;
-
-elm:=Elements(g);;
-ForAll(elm,x->ForAll(elm,y->x^NiceMonomorphism(g)*y^NiceMonomorphism(g)=(x*y)^NiceMonomorphism(g)));
-
-TraceMethods( [ Center,Centralizer,CentralizerOp,CentralizerInParent ] );
-c := Center( g );
-UntraceAllMethods();
-
-Size(c);
-c;
-TrivialSubgroup(g);
-
-AtopGr_allinone := function( Q )
-    local ag, gens, green, yellow, red, g, pt, newgen;
-    ag := AutomorphismGroup(Q);
-    gens := List( GeneratorsOfGroup( ag ), u -> AutotopismObject@RightQuasigroups( Q, u, u, u ) );
-    green := []; red := []; yellow := Cartesian( Q, Q );
-    while yellow <> [] do
-        pt := yellow[1];
-        newgen := AutotopismFromPrincipalLoopIsotope( Q, pt[2], pt[1] );
-        if newgen <> fail then
-            Add( gens, newgen );
-            Add( green, pt );
-        else
-            Add( red, pt );
+find_isotopism := function( Q, S )
+    local at, orep, pt, S0, iso;
+    at := AutotopismGroup( S );
+    orep := List( Orbits( at, Cartesian(S,S), AtopOnnSquare@RightQuasigroups ), o -> o[1] );
+    for pt in orep do
+        if CheckAtopInvariant@RightQuasigroups( Q, S, pt[2], pt[1] ) then
+            S0 := PrincipalLoopIsotope( S, pt[2], pt[1] );
+            iso := IsomorphismLoops( Q, S0 );
+            if iso <> fail then 
+                return [ iso, pt ];
+            fi;
         fi;
-        g := AutotopismGroupByGenerators( gens );
-        yellow := Difference( Cartesian( Q, Q ),
-            Union( List( Concatenation( green, red ), x -> Orbit( g, x, AtopOnnSquare@RightQuasigroups) ) ) 
-        );
     od;
-    return g;
+    return fail;
 end;
 
-at := AutotopismGroup( Q );
-at = g;
+find_isotopism( Q, S ); time;
+find_isotopism( S, Q2 ); time;
+find_isotopism( Q2,S ); time;
+find_isotopism( Q, Q2 ); time;
+
+find_isotopism( Q, S ); time;
+find_isotopism( S, Q2 ); time;
+find_isotopism( Q2,S ); time;
+find_isotopism( Q, Q2 ); time;
+
