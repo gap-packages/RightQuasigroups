@@ -21,7 +21,7 @@
  <P/>The <Index>center</Index><Emph>center</Emph> of a right quasigroup is the
  intersection of the nucleus and the commutant. In the case of loops, the
  center is always a normal subloop.
-<ManSection Label="AutoDoc_generated_group45">
+<ManSection Label="AutoDoc_generated_group48">
 <Heading>Nuclei</Heading>
   <Attr Arg="Q" Name="RightNucleus" Label="for IsRightQuasigroup"/>
   <Attr Arg="Q" Name="MiddleNucleus" Label="for IsRightQuasigroup"/>

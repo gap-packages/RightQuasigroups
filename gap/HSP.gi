@@ -895,7 +895,7 @@ end );
 InstallMethod( IsSimpleRightQuasigroup, "for right quasigroup",
     [ IsRightQuasigroup ],
 function( Q )
-    local G, orbits, reps, x, C;
+    local G, pairs, orbits, reps, x, C;
     if Size( Q ) in [1,2] then # always simple
         return true;
     fi;
@@ -906,7 +906,8 @@ function( Q )
     # transitive right multiplication group
     # return Length( AllRightQuasigroupCongruences( Q ) ) = 2; # this is not bad but the following might be faster
     G := RightMultiplicationGroup( Q );
-    orbits := OrbitsDomain( G, Tuples(ParentInd(Q),2), OnPairs );;  # action of G on QxQ
+    pairs := Filtered( Tuples( ParentInd( Q ), 2 ), x -> x[1]<>x[2] ); # diagonal removed
+    orbits := OrbitsDomain( G, pairs, OnPairs );;  # action of G on QxQ
     # MATH: If (x,y), (u,v) are in the same orbit, they generate the same congruence since right translations are invertible.
     reps := List( orbits, orbit -> orbit[1] );
     for x in reps do

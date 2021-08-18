@@ -215,7 +215,7 @@ gap> Print( AsLoop( SymmetricGroup( 4 ) ) );
 </Subsection>
 
 
-<ManSection Label="AutoDoc_generated_group80">
+<ManSection Label="AutoDoc_generated_group83">
 <Heading>Changing the name of right quasigroup elements</Heading>
   <Oper Arg="Q, s" Name="SetRightQuasigroupElementsName" Label="for IsRightQuasigroup, IsString"/>
   <Oper Arg="Q, s" Name="SetQuasigroupElementsName" Label="for IsQuasigroup, IsString"/>
@@ -358,7 +358,7 @@ gap> CayleyTable( Q );
 </ManSection>
 
 
-<ManSection Label="AutoDoc_generated_group81">
+<ManSection Label="AutoDoc_generated_group84">
 <Heading>Inverses in loops</Heading>
   <Attr Arg="Q" Name="One" Label="for IsLoopElement"/>
   <Attr Arg="x" Name="RightInverse" Label="for IsLoopElement"/>

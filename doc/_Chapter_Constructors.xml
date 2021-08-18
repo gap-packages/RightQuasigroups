@@ -789,7 +789,7 @@ Note: The value of <Arg>constructorStyle</Arg><Code>.checkArguments</Code> of th
 </ManSection>
 
 
-<ManSection Label="AutoDoc_generated_group79">
+<ManSection Label="AutoDoc_generated_group82">
 <Heading>Random quasigroups and loops</Heading>
   <Oper Arg="S[, iter]" Name="RandomQuasigroup" Label="for IsCollection"/>
   <Oper Arg="S[, iter]" Name="RandomLoop" Label="for IsCollection"/>

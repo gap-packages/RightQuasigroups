@@ -29,7 +29,7 @@
  <Item>spaces are allowed and ignorred,</Item>
  <Item>no other characters are allowed.</Item>
  </List>
-<ManSection Label="AutoDoc_generated_group46">
+<ManSection Label="AutoDoc_generated_group49">
 <Heading>Building terms from strings</Heading>
   <Oper Arg="s" Name="RightQuasigroupTermFromString" Label="for IsString"/>
   <Oper Arg="s" Name="QuasigroupTermFromString" Label="for IsString"/>
@@ -50,7 +50,7 @@
  in right quasigroups, quasigroups and loops by the custom-built parser.
  Despite some effort to make the checking fast, it is about half as fast
  as the direct check using &GAP; code. 
-<ManSection Label="AutoDoc_generated_group47">
+<ManSection Label="AutoDoc_generated_group50">
 <Heading>Verifying identities</Heading>
   <Oper Arg="Q, s" Name="RightQuasigroupSatisfiesIdentity" Label="for IsRightQuasigroup, IsString"/>
   <Oper Arg="Q, s" Name="QuasigroupSatisfiesIdentity" Label="for IsQuasigroup, IsString"/>
@@ -116,7 +116,7 @@ gap> QuasigroupTermFromString("(a|b)/(c*d)"); # note the symbol | for left divis
  </List>
  <P/>Some of these methods for magmas are already available in &GAP;, e.g., <Code>IsCommutative</Code>. In such a case,
  we provide a new method for right quasigroups that takes advantage of right translations as permutations.
-<ManSection Label="AutoDoc_generated_group55">
+<ManSection Label="AutoDoc_generated_group58">
 <Heading>Testing properties of magma and right quasigroups</Heading>
   <Prop Arg="Q" Name="Is3PowerAssociative" Label="for IsMagma"/>
   <Prop Arg="Q" Name="IsAlternative" Label="for IsMagma"/>
@@ -252,7 +252,7 @@ gap> QuasigroupTermFromString("(a|b)/(c*d)"); # note the symbol | for left divis
 </ManSection>
 
 
-<ManSection Label="AutoDoc_generated_group56">
+<ManSection Label="AutoDoc_generated_group59">
 <Heading>Right and left inverse properties</Heading>
   <Prop Arg="Q" Name="HasRightInverseProperty" Label="for IsLoop"/>
   <Prop Arg="Q" Name="HasLeftInverseProperty" Label="for IsLoop"/>
@@ -283,7 +283,7 @@ A loop <Math>Q</Math> has the <Index>weak inverse property</Index><Emph>weak inv
 </ManSection>
 
 
-<ManSection Label="AutoDoc_generated_group57">
+<ManSection Label="AutoDoc_generated_group60">
 <Heading>Automorphic and antiautomorphic inverse properties</Heading>
   <Prop Arg="Q" Name="HasAutomorphicInverseProperty" Label="for IsLoop"/>
   <Prop Arg="Q" Name="HasAntiautomorphicInverseProperty" Label="for IsLoop"/>
@@ -330,7 +330,7 @@ A loop <Math>Q</Math> has the <Index>automorphic inverse property</Index><Emph>a
  <Item><Index>right Bol loops</Index><Emph>right Bol loops</Emph>: <Math>x((yz)y)=((xy)z)y</Math></Item>
  <Item><Index>right nuclear square loops</Index><Emph>right nuclear square loops</Emph>: <Math>x(y(zz))=(xy)(zz)</Math></Item>
  </List>
-<ManSection Label="AutoDoc_generated_group58">
+<ManSection Label="AutoDoc_generated_group61">
 <Heading>Testing for loops of Bol-Moufang type</Heading>
   <Prop Arg="Q" Name="IsCLoop" Label="for IsLoop"/>
   <Prop Arg="Q" Name="IsExtraLoop" Label="for IsLoop"/>
@@ -373,7 +373,7 @@ A loop <Math>Q</Math> has the <Index>automorphic inverse property</Index><Emph>a
  <Math>(xy^n)y^m = xy^{n+m}</Math> (resp. <Math>x^n(x^my) = x^{n+m}y</Math>) holds for all <Math>x,y\in Q</Math> and all integers <Math>n</Math>, <Math>m</Math>.
  A loop is <Index>power alternative loop</Index><Emph>power alternative</Emph> if it is both right and left power
  alternative.
-<ManSection Label="AutoDoc_generated_group59">
+<ManSection Label="AutoDoc_generated_group62">
 <Heading>Testing for power alternative loops</Heading>
   <Prop Arg="Q" Name="IsRightPowerAlternative" Label="for IsLoop"/>
   <Prop Arg="Q" Name="IsLeftPowerAlternative" Label="for IsLoop"/>
@@ -398,7 +398,7 @@ A loop <Math>Q</Math> has the <Index>automorphic inverse property</Index><Emph>a
  (aka <Emph>LCC</Emph>) if for all <Math>x,y\in Q</Math> the permutation <Math>L_x^{-1}L_yL_x</Math> is a left translation.
  A loop <Math>Q</Math> is <Index>conjugacy closed loop</Index><Emph>conjugacy closed</Emph> (aka <Emph>CC</Emph>)
  if it is both RCC and LCC.
-<ManSection Label="AutoDoc_generated_group60">
+<ManSection Label="AutoDoc_generated_group63">
 <Heading>Testing for conjugacy closed loops</Heading>
   <Prop Arg="Q" Name="IsRightConjugacyClosedLoop" Label="for IsLoop"/>
   <Prop Arg="Q" Name="IsLeftConjugacyClosedLoop" Label="for IsLoop"/>
@@ -450,7 +450,7 @@ The synonyms <Code>IsRCCLoop</Code>, <Code>IsLCCLoop</Code> and <Code>IsCCLoop</
 </ManSection>
 
 
-<ManSection Label="AutoDoc_generated_group61">
+<ManSection Label="AutoDoc_generated_group64">
 <Heading>Bruck loops</Heading>
   <Prop Arg="Q" Name="IsRightBruckLoop" Label="for IsLoop"/>
   <Prop Arg="Q" Name="IsLeftBruckLoop" Label="for IsLoop"/>
@@ -465,7 +465,7 @@ The synonyms <Code>IsRightKLoop</Code> and <Code>IsLeftKLoop</Code> are also sup
 </ManSection>
 
 
-<ManSection Label="AutoDoc_generated_group62">
+<ManSection Label="AutoDoc_generated_group65">
 <Heading>Automorphic loops</Heading>
   <Prop Arg="Q" Name="IsRightAutomorphicLoop" Label="for IsLoop"/>
   <Prop Arg="Q" Name="IsMiddleAutomorphicLoop" Label="for IsLoop"/>

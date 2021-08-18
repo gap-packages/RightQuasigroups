@@ -459,3 +459,77 @@ DeclareOperation( "LoopsUpToIsotopism", [ IsList ] );
 #! @Section Autotopism groups of right quasigroups.
 
 #! <P/>NOT IMPLEMENTED YET.
+
+#!
+DeclareCategory( "IsRightQuasigroupAutotopismObject", IsPositionalObjectRep and IsMultiplicativeElementWithInverse );
+DeclareCategoryCollections( "IsRightQuasigroupAutotopismObject" );
+InstallTrueMethod( IsGeneratorsOfMagmaWithInverses, IsRightQuasigroupAutotopismObjectCollection );
+
+DeclareRepresentation( "IsRightQuasigroupAutotopismObjectRep", IsRightQuasigroupAutotopismObject, [4] );
+
+BindGlobal( "RQAtopFamily",
+            NewFamily( "RQAtopFamily", IsObject, IsRightQuasigroupAutotopismObject ) );
+BindGlobal( "RQAtopCollFamily", CollectionsFamily( RQAtopFamily ) );
+BindGlobal( "RQAtopType",
+     NewType( RQAtopFamily, IsRightQuasigroupAutotopismObject and IsRightQuasigroupAutotopismObjectRep ) );
+
+DeclareSynonym( "IsAutotopismGroup", IsGroup and IsRightQuasigroupAutotopismObjectCollection );
+
+#! @Arguments Q,f,g,h
+DeclareGlobalFunction( "AutotopismObject@" );
+#! @Arguments atop
+DeclareAttribute( "AmbientRightQuasigroup", IsRightQuasigroupAutotopismObject );
+
+#! @BeginExampleSession
+#! gap> q:=LoopByCayleyTable([[1,2,3,4,5 ],[2,1,4,5,3],[3,4,5,1,2],[4,5,2,3,1],[5,3,1,2,4]]);
+#! <loop of size 5>
+#! gap> f:=[(1,5,4), (2,4,3), (1,5,4)];
+#! [ (1,5,4), (2,4,3), (1,5,4) ]
+#! gap> atop:=AutotopismObject@RightQuasigroups(q,f[1],f[2],f[3]);
+#! IsRightQuasigroupAutotopismObject((1,5,4), (2,4,3), (1,5,4))
+#! gap> AmbientRightQuasigroup(atop);
+#! <loop of size 5>
+#! gap> One(atop);
+#! IsRightQuasigroupAutotopismObject((), (), ())
+#! gap> atop^-4;
+#! IsRightQuasigroupAutotopismObject((1,4,5), (2,3,4), (1,4,5))
+#! @EndExampleSession
+
+#! @Arguments Q,f,g
+DeclareOperation( "AutotopismFromPrincipalLoopIsotope", [ IsLoop, IsLoopElement, IsLoopElement ] );
+
+#! @Arguments i,atop
+DeclareOperation( "AtopOn3nElms@", [ IsPosInt, IsRightQuasigroupAutotopismObject ] );
+
+#! @Arguments p,atop
+DeclareOperation( "AtopOnnSquare@", [ IsList, IsRightQuasigroupAutotopismObject ] );
+
+#! @Arguments gens
+DeclareOperation( "AutotopismGroupByGenerators", [ IsList and IsRightQuasigroupAutotopismObjectCollection ] );
+
+#! @Arguments Q, gens, green, yellow, red
+DeclareGlobalFunction( "ExtendAtopGrp" );
+
+#! @Arguments Q
+DeclareAttribute( "AutotopismGroup", IsLoop );
+
+#! @BeginExampleSession
+#! gap> Q := RightBolLoop(8,1);
+#! <right Bol loop 8/1>
+#! gap> AutotopismFromPrincipalLoopIsotope( Q, Q.4, Q.3 );
+#! IsRightQuasigroupAutotopismObject((1,3)(2,4)(5,7)(6,8), (1,4)(2,3)(5,8), (1,2)(3,4)(5,6)(7,8))
+#! gap> AutotopismGroup( Q );
+#! <autotopism group of size 128 with 5 generators>
+#! @EndExampleSession
+
+#! @Arguments Q
+DeclareGlobalFunction( "LeftAtopInvariant@" );
+
+#! @Arguments Q
+DeclareGlobalFunction( "RightAtopInvariant@" );
+
+#! @Arguments Q
+DeclareAttribute( "AtopInvariant@", IsLoop );
+
+#! @Arguments Q,S,a,b
+DeclareGlobalFunction( "CheckAtopInvariant@" );

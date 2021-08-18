@@ -514,6 +514,29 @@ DeclareOperation( "QuandlesUpToIsomorphism", [ IsList ] );
 
 #!@EndGroup
 
+# GROUPS ASSOCIATED WITH RACKS AND QUANDLES
+# _____________________________________________________________________________
+
+#! @Section Groups associated with racks and quandles
+
+#! @Arguments Q
+#! @Returns the adjoint group associated with the rack <Arg>Q</Arg>, that is, the free group
+#! on <Arg>Q</Arg> with relations $b^{-1}ab = a*b$, where $a*b$ is the product in the rack
+#! <Arg>Q</Arg>. The generators inherit names from the elements of <Arg>Q</Arg>.
+DeclareAttribute( "AdjointGroup", IsRack ); 
+# PROG: AdjointGroup is already declared in GAP as an attribute for finite radical algebras
+
+#! @BeginExampleSession
+#! gap> g := AdjointGroup( DihedralQuandle( 3 ) );
+#! <fp group on the generators [ q0, q1 ]>
+#! gap> GeneratorsOfGroup( g );
+#! [ q0, q1 ]
+#! gap> RelatorsOfFpGroup( g );
+#! [ q0^-1*q1^2*q0^-1, (q1^-1*q0)^3 ]
+#! gap> Size( g );
+#! infinity
+#! @EndExampleSession
+
 ##  IMPLIED FILTERS
 ##  ___________________________________________________________________________
 

@@ -72,17 +72,43 @@ DeclareOperation( "DisplayLibraryInfo", [ IsString ] );
 # _____________________________________________________________________________
 
 #! @Arguments name, n, m
-#! @Returns the <Arg>m</Arg>th algebra of order <Arg>n</Arg> from the library named <Arg>name</Arg>s.
-#! (Note that the trailing "s" is omitted from <Arg>name</Arg>, e.g., the singular "Moufang loop"
-#! is used as <Arg>name</Arg> rather than the plural "Moufang loops".)
+#! @Returns the <Arg>m</Arg>th algebra of order <Arg>n</Arg> from the library named <Arg>name</Arg>.
 #! @Description It is aso possible to access individual libraries directly, e.g., `MoufangLoop( `<Arg>n</Arg>`, `<Arg>m</Arg>` )`.
 DeclareOperation( "LibraryAlgebra", [ IsString, IsPosInt, IsPosInt ] );
 
 #! @BeginExampleSession
-#! gap> LibraryAlgebra( "Moufang loop", 64, 10 );
+#! gap> LibraryAlgebra( "Moufang loops", 64, 10 );
 #! <Moufang loop 64/10>
 #! gap> MoufangLoop( 64, 10 );
 #! <Moufang loop 64/10>
+#! @EndExampleSession
+
+#! @Arguments name, filters
+#! @Returns all algebras from the library named <Arg>name</Arg> that satisfy all the conditons specified by <Arg>filters</Arg>.
+#! The argument list <Arg>filters</Arg> consists of alternating functions and accepted values of those functions
+#! (e.g., `Size, [3..6], IsCommutative, false`), with the following conventions:
+#! <List>
+#! <Item>the first function is understood to be `Size`, whether it is given or not,</Item>
+#! <Item>if the given accepted values `v` for a function `f` form a list,
+#! then an algebra `A` passes the condition on `f` iff `f(A)` is in `v`,</Item>
+#! <Item>if the given accepted values `v` for a function `f` do not form a list,
+#! then an algebra `A` passes the condition on `f` iff `f(A)` is equal to `v`,</Item>
+#! <Item>the accepted values for `Size` must always be given,</Item>
+#! <Item>if the accepted values for a function `f` (other than `Size`) are omitted,
+#! then an algebra `A` passes the condition on `f` iff `f(A)` is `true`.</Item>
+#! </List>
+#! Note that the function delivers all algebras IN THE LIBRARY satisfying the conditions, not all algebras satisfying
+#! the conditions. For instance, requesting all Moufang loops of order 2048 will deliver an empty list because
+#! there are no such loops in the library, although there certainly are nonassociative Moufang loops of order 2048.
+#! Care must be taken especially in the situations when the library has gaps in the implemented orders.
+#! @Description It is aso possible to access individual libraries directly, e.g., `MoufangLoops( `<Arg>filters</Arg>` )`.
+DeclareGlobalFunction( "LibraryAlgebras" );
+
+#! @BeginExampleSession
+#! gap> LibraryAlgebras( "Moufang loops", Size, 81, IsCommutative, false );
+#! [ <Moufang loop 81/3>, <Moufang loop 81/4>, <Moufang loop 81/5> ]
+#! gap> MoufangLoops( [65..81], IsCommutative, Exponent, 3 ); 
+#! [ <MoufangLoop 81/1> ]
 #! @EndExampleSession
 
 # auxiliary function for the construction of various loops
@@ -117,11 +143,24 @@ DeclareGlobalFunction( "RQ_ActivateRackOrQuandle" );
 #! @GroupTitle LeftBolLoop and RightBolLoop
 
 #! @Arguments n, m
-#! @Returns the <Arg>m</Arg>th left Bol loop (right Bol loop) of order <Arg>n</Arg>. 
+#! @Returns the <Arg>m</Arg>th left Bol loop (right Bol loop) of order <Arg>n</Arg>
 DeclareOperation( "LeftBolLoop", [ IsPosInt, IsPosInt ] );
 
 #! @Arguments n, m
 DeclareOperation( "RightBolLoop", [ IsPosInt, IsPosInt ] );
+
+#! @EndGroup
+
+#! @BeginGroup
+#! @GroupTitle LeftBolLoops and RightBolLoops
+
+#! @Arguments filters
+#! @Returns all left Bol loops (right Bol loops) satisfying the conditions specified by <Arg>filters</Arg>.
+#! See `LibraryAlgebras` above for the conventions on <Arg>filters</Arg>.
+DeclareGlobalFunction( "LeftBolLoops" );
+
+#! @Arguments filters
+DeclareGlobalFunction( "RightBolLoops" );
 
 #! @EndGroup
 
@@ -144,6 +183,19 @@ DeclareOperation( "LeftBruckLoop", [ IsPosInt, IsPosInt ] );
 
 #! @Arguments n, m
 DeclareOperation( "RightBruckLoop", [ IsPosInt, IsPosInt ] );
+
+#! @EndGroup
+
+#! @BeginGroup
+#! @GroupTitle LeftBruckLoops and RightBruckLoops
+
+#! @Arguments filters
+#! @Returns all left Bruck loops (right Bruck loops) satisfying the conditions specified by <Arg>filters</Arg>.
+#! See `LibraryAlgebras` above for the conventions on <Arg>filters</Arg>.
+DeclareGlobalFunction( "LeftBruckLoops" );
+
+#! @Arguments filters
+DeclareGlobalFunction( "RightBruckLoops" );
 
 #! @EndGroup
 
@@ -174,6 +226,11 @@ DeclareOperation( "RightBruckLoop", [ IsPosInt, IsPosInt ] );
 #! @Returns the <Arg>m</Arg>th Moufang loop of order <Arg>n</Arg>. 
 DeclareOperation( "MoufangLoop", [ IsPosInt, IsPosInt ] );
 
+#! @Arguments filters
+#! @Returns all Moufang loops satisfying the conditions specified by <Arg>filters</Arg>.
+#! See `LibraryAlgebras` above for the conventions on <Arg>filters</Arg>.
+DeclareGlobalFunction( "MoufangLoops" );
+
 #! @Section Library of code loops
 
 #! <P/>The library named **code loops** contains all nonassociative code loops of order less than 65.
@@ -185,6 +242,11 @@ DeclareOperation( "MoufangLoop", [ IsPosInt, IsPosInt ] );
 #! @Arguments n, m
 #! @Returns the <Arg>m</Arg>th code loop of order <Arg>n</Arg>. 
 DeclareOperation( "CodeLoop", [ IsPosInt, IsPosInt ] );
+
+#! @Arguments filters
+#! @Returns all code loops satisfying the conditions specified by <Arg>filters</Arg>.
+#! See `LibraryAlgebras` above for the conventions on <Arg>filters</Arg>.
+DeclareGlobalFunction( "CodeLoops" );
 
 #! @Section Library of Steiner loops
 
@@ -210,6 +272,11 @@ DeclareOperation( "CodeLoop", [ IsPosInt, IsPosInt ] );
 #! @Arguments n, m
 #! @Returns the <Arg>m</Arg>th Steiner loop of order <Arg>n</Arg>. 
 DeclareOperation( "SteinerLoop", [ IsPosInt, IsPosInt ] );
+
+#! @Arguments filters
+#! @Returns all Steiner loops satisfying the conditions specified by <Arg>filters</Arg>.
+#! See `LibraryAlgebras` above for the conventions on <Arg>filters</Arg>.
+DeclareGlobalFunction( "SteinerLoops" );
 
 #! @Section Library of conjugacy closed loops
 
@@ -239,28 +306,40 @@ DeclareOperation( "SteinerLoop", [ IsPosInt, IsPosInt ] );
 #! Left conjugacy closed loops are obtained from right conjugacy closed loops via `OppositeLoop`.
 
 #! @BeginGroup
-#! @GroupTitle Right conjugacy closed loops
+#! @GroupTitle LCCLoop, LeftConjugacyClosedLoop, RCCLoop and RightConjugacyClosedLoop
 
 #! @Arguments n, m
-#! @Returns the <Arg>m</Arg>th right conjugacy closed loop of order <Arg>n</Arg>. 
+#! @Returns the <Arg>m</Arg>th left conjugacy closed loop (right conjugacy closed loop) of order <Arg>n</Arg>. 
+DeclareOperation( "LCCLoop", [ IsPosInt, IsPosInt ] );
+
+#! @Arguments n, m
+DeclareOperation( "LeftConjugacyClosedLoop", [ IsPosInt, IsPosInt ] );
+
+#! @Arguments n, m
 DeclareOperation( "RCCLoop", [ IsPosInt, IsPosInt ] );
 
 #! @Arguments n, m
-#! @Returns the <Arg>m</Arg>th right conjugacy closed loop of order <Arg>n</Arg>. 
 DeclareOperation( "RightConjugacyClosedLoop", [ IsPosInt, IsPosInt ] );
 
 #! @EndGroup
 
 #! @BeginGroup
-#! @GroupTitle Left conjugacy closed loops
+#! @GroupTitle LCCLoop, LeftConjugacyClosedLoop, RCCLoop and RightConjugacyClosedLoop
 
-#! @Arguments n, m
-#! @Returns the <Arg>m</Arg>th left conjugacy closed loop of order <Arg>n</Arg>. 
-DeclareOperation( "LCCLoop", [ IsPosInt, IsPosInt ] );
+#! @Arguments filters
+#! @Returns all left conjugacy closed loops (right conjugacy closed loops)
+#! satisfying the conditions specified by <Arg>filters</Arg>.
+#! See `LibraryAlgebras` above for the conventions on <Arg>filters</Arg>.
+DeclareGlobalFunction( "LCCLoops" );
 
-#! @Arguments n, m
-#! @Returns the <Arg>m</Arg>th left conjugacy closed loop of order <Arg>n</Arg>. 
-DeclareOperation( "LeftConjugacyClosedLoop", [ IsPosInt, IsPosInt ] );
+#! @Arguments filters
+DeclareGlobalFunction( "LeftConjugacyClosedLoops" );
+
+#! @Arguments filters
+DeclareGlobalFunction( "RCCLoops" );
+
+#! @Arguments filters
+DeclareGlobalFunction( "RightConjugacyClosedLoops" );
 
 #! @EndGroup
 
@@ -291,7 +370,7 @@ DeclareOperation( "LeftConjugacyClosedLoop", [ IsPosInt, IsPosInt ] );
 #! $(0,m)(0,n) = ( 0, m + n )$, $(0,m)(1,n) = ( 1, -m + n )$, $(1,m)(0,n) = ( 1, m + n)$, $(1,m)(1,n) = ( 0, 1 - m + n )$.
 
 #! @BeginGroup
-#! @GroupTitle Conjugacy closed loops
+#! @GroupTitle CCLoop and ConjugacyClosedLoop
 
 #! @Arguments n, m
 #! @Returns the <Arg>m</Arg>th conjugacy closed loop of order <Arg>n</Arg>. 
@@ -303,6 +382,19 @@ DeclareOperation( "ConjugacyClosedLoop", [ IsPosInt, IsPosInt ] );
 
 #! @EndGroup
 
+#! @BeginGroup
+#! @GroupTitle CCLoops and ConjugacyClosedLoops
+
+#! @Arguments filters
+#! @Returns all conjugacy closed loops satisfying the conditions specified by <Arg>filters</Arg>.
+#! See `LibraryAlgebras` above for the conventions on <Arg>filters</Arg>.
+DeclareGlobalFunction( "CCLoops" );
+
+#! @Arguments filters
+DeclareGlobalFunction( "ConjugacyClosedLoops" );
+
+#! @EndGroup
+
 #! @Section Library of small loops
 
 #! <P/>The library named **small loops** contains all nonassociative loops of order 5 and 6.
@@ -311,6 +403,11 @@ DeclareOperation( "ConjugacyClosedLoop", [ IsPosInt, IsPosInt ] );
 #! @Arguments n, m
 #! @Returns the <Arg>m</Arg>th small loop of order <Arg>n</Arg>. 
 DeclareOperation( "SmallLoop", [ IsPosInt, IsPosInt ] );
+
+#! @Arguments filters
+#! @Returns all small loops satisfying the conditions specified by <Arg>filters</Arg>.
+#! See `LibraryAlgebras` above for the conventions on <Arg>filters</Arg>.
+DeclareGlobalFunction( "SmallLoops" );
 
 #! @Section Library of Paige loops
 
@@ -326,6 +423,11 @@ DeclareOperation( "SmallLoop", [ IsPosInt, IsPosInt ] );
 #! @Returns the Paige loop over the finite field of order <Arg>q</Arg>. Only the case <Arg>q</Arg>`=2` is implemented.
 DeclareOperation( "PaigeLoop", [ IsPosInt ] );
 
+#! @Arguments filters
+#! @Returns all Paige loops satisfying the conditions specified by <Arg>filters</Arg>.
+#! See `LibraryAlgebras` above for the conventions on <Arg>filters</Arg>.
+DeclareGlobalFunction( "PaigeLoops" );
+
 #! @Section Library of nilpotent loops
 
 #! <P/>The library named **nilpotent loops** contains all nonassociative nilpotent loops of order less than
@@ -340,6 +442,11 @@ DeclareOperation( "PaigeLoop", [ IsPosInt ] );
 #! @Arguments n, m
 #! @Returns the <Arg>m</Arg>th nilpotent loop of order <Arg>n</Arg>. 
 DeclareOperation( "NilpotentLoop", [ IsPosInt, IsPosInt ] );
+
+#! @Arguments filters
+#! @Returns all nilpotent loops satisfying the conditions specified by <Arg>filters</Arg>.
+#! See `LibraryAlgebras` above for the conventions on <Arg>filters</Arg>.
+DeclareGlobalFunction( "NilpotentLoops" );
 
 #! @Section Library of automorphic loops
 
@@ -357,6 +464,11 @@ DeclareOperation( "NilpotentLoop", [ IsPosInt, IsPosInt ] );
 #! @Returns the <Arg>m</Arg>th automorphic loop of order <Arg>n</Arg>. 
 DeclareOperation( "AutomorphicLoop", [ IsPosInt, IsPosInt ] );
 
+#! @Arguments filters
+#! @Returns all automorphic loops satisfying the conditions specified by <Arg>filters</Arg>.
+#! See `LibraryAlgebras` above for the conventions on <Arg>filters</Arg>.
+DeclareGlobalFunction( "AutomorphicLoops" );
+
 #! @Section Library of interesting loops
 
 #! <P/>The library named **interesting loops** contains some loops that are illustrative in the theory of loops.
@@ -369,6 +481,11 @@ DeclareOperation( "AutomorphicLoop", [ IsPosInt, IsPosInt ] );
 #! @Returns the <Arg>m</Arg>th interesting loop of order <Arg>n</Arg>. 
 DeclareOperation( "InterestingLoop", [ IsPosInt, IsPosInt ] );
 
+#! @Arguments filters
+#! @Returns all interesting loops satisfying the conditions specified by <Arg>filters</Arg>.
+#! See `LibraryAlgebras` above for the conventions on <Arg>filters</Arg>.
+DeclareGlobalFunction( "InterestingLoops" );
+
 #! @Section Library of small racks
 
 #! <P/>The library named **small racks** contains all racks of order less than 11 up to isomorphism. There are
@@ -378,6 +495,11 @@ DeclareOperation( "InterestingLoop", [ IsPosInt, IsPosInt ] );
 #! @Arguments n, m 
 #! @Returns the <Arg>m</Arg>th rack of order <Arg>n</Arg>.
 DeclareOperation( "SmallRack", [ IsPosInt, IsPosInt ] );
+
+#! @Arguments filters
+#! @Returns all small racks satisfying the conditions specified by <Arg>filters</Arg>.
+#! See `LibraryAlgebras` above for the conventions on <Arg>filters</Arg>.
+DeclareGlobalFunction( "SmallRacks" );
 
 #! @Section Library of small quandles
 
@@ -389,6 +511,11 @@ DeclareOperation( "SmallRack", [ IsPosInt, IsPosInt ] );
 #! @Returns the <Arg>m</Arg>th quandle of order <Arg>n</Arg>.
 DeclareOperation( "SmallQuandle", [ IsPosInt, IsPosInt ] );
 
+#! @Arguments filters
+#! @Returns all small quandles satisfying the conditions specified by <Arg>filters</Arg>.
+#! See `LibraryAlgebras` above for the conventions on <Arg>filters</Arg>.
+DeclareGlobalFunction( "SmallQuandles" );
+
 #! @Section Library of connected quandles
 
 #! <P/>The library name **connected quandles** contains all connected quandles of order less than 48 up to isomorphism.
@@ -397,6 +524,11 @@ DeclareOperation( "SmallQuandle", [ IsPosInt, IsPosInt ] );
 #! @Arguments n, m
 #! @Returns the <Arg>m</Arg>th connected quandle of order <Arg>n</Arg>.
 DeclareOperation( "ConnectedQuandle", [ IsPosInt, IsPosInt ] );
+
+#! @Arguments filters
+#! @Returns all connected quandles satisfying the conditions specified by <Arg>filters</Arg>.
+#! See `LibraryAlgebras` above for the conventions on <Arg>filters</Arg>.
+DeclareGlobalFunction( "ConnectedQuandles" );
 
 #! @Section Library of small loops up to isotopism
 
@@ -411,7 +543,7 @@ DeclareOperation( "ConnectedQuandle", [ IsPosInt, IsPosInt ] );
 #! <small loop 6/14>
 #! gap> ItpSmallLoop( 6, 14 );
 #! <small loop 6/42>
-#! gap> LibraryAlgebra( "itp small loop", 6, 14 );
+#! gap> LibraryAlgebra( "itp small loops", 6, 14 );
 #! <small loop 6/42>
 #! @EndLogSession
 
@@ -422,3 +554,8 @@ DeclareOperation( "ConnectedQuandle", [ IsPosInt, IsPosInt ] );
 #! @Arguments n, m
 #! @Returns the <Arg>m</Arg>th small loop of order <Arg>n</Arg> up to isotopism.
 DeclareOperation( "ItpSmallLoop", [ IsPosInt, IsPosInt ] );
+
+#! @Arguments filters
+#! @Returns all small loops up to isotopism satisfying the conditions specified by <Arg>filters</Arg>.
+#! See `LibraryAlgebras` above for the conventions on <Arg>filters</Arg>.
+DeclareGlobalFunction( "ItpSmallLoops" );

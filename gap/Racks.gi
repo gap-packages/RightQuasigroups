@@ -749,3 +749,21 @@ function( ls )
     fi;
     return RightQuasigroupsUpToIsomorphism( ls );
 end );
+
+# GROUPS ASSOCIATED WITH RACKS AND QUANDLES
+# _____________________________________________________________________________
+
+# AdjointGroup
+
+InstallMethod( AdjointGroup, "for a rack",
+    [ IsRack ],
+function( Q )
+    local f, mt, relators, i, j;
+    f := FreeGroup( List( Elements( Q ), String ) );
+    mt := MultiplicationTable( Q );
+    relators := [];
+    for i in [1..Size(Q)] do for j in [1..Size(Q)] do   
+        Add( relators, f.(j)^-1*f.(i)*f.(j)*f.(mt[i][j])^-1 );
+    od; od;
+    return SimplifiedFpGroup( f/relators ); # reducing the number of generators and relators
+end );

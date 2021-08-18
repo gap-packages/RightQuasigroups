@@ -322,6 +322,7 @@
 
 #! @Section Isomorphisms and isotopisms of racks and quandles
 
+#! @Section Groups associated with racks and quandles
 
 
 #! @Chapter Libraries of loops, racks and quandles
@@ -353,12 +354,12 @@
 
 #! @Section Library of automorphic loops
 
-#! @Section Library of interesting Loops
+#! @Section Library of interesting loops
 
 #! @Section Library of small racks
 
 #! @Section Library of small quandles
 
-
+#! @Section Library of connected quandles
 
 #! @Section Library of small loops up to isotopism

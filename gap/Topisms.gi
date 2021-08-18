@@ -620,6 +620,7 @@ InstallMethod( RQ_IsotopismAlgebras, "for category, two right quasigroups and bo
 function( category, Q1, Q2, viaPrincipalLoopIsotopes ) 
     local origQ1, origQ2, tables1, tables2, n, gens1, i, f, g, h, fgh,
         T, Q, phi, alpha, beta, gamma;
+    # PROG: This will not work for right quasigroups.
     # making sure the quasigroups are canonical
     origQ1 := ShallowCopy( Q1 );
     origQ2 := ShallowCopy( Q2 );
@@ -634,15 +635,22 @@ function( category, Q1, Q2, viaPrincipalLoopIsotopes )
         tables1 := [ MultiplicationTable( Q1 ), RightDivisionTable( Q1 ), LeftDivisionTable( Q1 ) ];
         tables2 := [ MultiplicationTable( Q2 ), RightDivisionTable( Q2 ), LeftDivisionTable( Q2 ) ];
         n := Size( Q1 );
-        if category = IsLoop then # for loops, it suffices to know f on a generating set containing 1
+        # for loops, it suffices to know f on a generating set containing One(Q1) and g on One(Q1)
+        # for quasigroups, it suffices to know f on Q1 and g on any one element of Q1
+        if category = IsLoop then
             gens1 := ParentInd( Union( SmallGeneratingSet( Q1 ), [ One(Q1) ] ) );
         else
             gens1 := [1..n];
         fi;
         # main cycle of generic method
-        for i in [1..n] do # value of g[1]
+        for i in [1..n] do # the one value of g
             f := 0*[1..n]; # empty map
-            g := 0*[1..n]; g[1] := i;
+            g := 0*[1..n];
+            if category = IsLoop then
+                g[ ParentInd( One(Q1) ) ] := i;
+            else
+                g[ 1 ] := i;
+            fi;
             h := 0*[1..n];
             fgh := RQ_ExtendIsotopism( f, g, h, tables1, tables2, gens1 );
             if not fgh = fail then # isotopism found
@@ -772,3 +780,272 @@ end );
 
 # AUTOTOPISM GROUPS OF RIGHT QUASIGROUPS
 # _____________________________________________________________________________
+
+#############################################################################
+##  CONSTRUCTORS
+##  -------------------------------------------------------------------------
+
+InstallGlobalFunction( AutotopismObject@,
+function( Q, f, g, h ) 
+    local alpha;
+    if ( IsMapping( f ) and ( Range( f ) <> Q or Source( f ) <> Q ) )
+        or ( IsMapping( g ) and ( Range( g ) <> Q or Source( g ) <> Q ) )
+        or ( IsMapping( h ) and ( Range( h ) <> Q or Source( h ) <> Q ) )
+    then 
+        Error( "RQ: wrong mappings given.");
+    fi; 
+    if ( IsTransformation(f) and not IsParentTransformation( Q, Q, f ) ) 
+        or ( IsTransformation(g) and not IsParentTransformation( Q, Q, g ) ) 
+        or ( IsTransformation(h) and not IsParentTransformation( Q, Q, h ) ) 
+    then 
+        Error( "RQ: wrong transformations given.");
+    fi;
+    if ( IsPerm(f) and not IsParentPerm( Q, f ) ) 
+        or ( IsPerm(g) and not IsParentPerm( Q, g ) ) 
+        or ( IsPerm(h) and not IsParentPerm( Q, h ) ) 
+    then 
+        Error( "RQ: wrong parent permutations given.");
+    fi;
+	alpha := Objectify( RQAtopType, [ f, g, h, Q ] ); 
+    return alpha;
+end);
+
+InstallMethod( AmbientRightQuasigroup, "for an autotopism object",
+    [ IsRightQuasigroupAutotopismObject ],
+function( atop )
+    return atop![4];
+end);
+
+#############################################################################
+##  DISPLAYING AND COMPARING ELEMENTS
+##  -------------------------------------------------------------------------
+
+InstallMethod( ViewObj, "for an autotopism object",
+	[ IsRightQuasigroupAutotopismObject ],
+function( obj )
+	Print( "IsRightQuasigroupAutotopismObject(", obj![1], ", ", obj![2], ", ", obj![3], ")" );
+end );
+
+InstallMethod( Display, "for an autotopism object",
+	[ IsRightQuasigroupAutotopismObject ],
+function( obj )
+	Print( "Autotopism object on a right quasigroup of order ", Size( obj![4] ) );
+end );
+
+InstallMethod( PrintObj, "for an autotopism object",
+	[ IsRightQuasigroupAutotopismObject ],
+function( obj )
+	Print( "IsRightQuasigroupAutotopismObject(", obj![1], ", ", obj![2], ", ", obj![3], ")" );
+end );
+
+InstallMethod( \=, "for two autotopism objects",
+	IsIdenticalObj,
+	[ IsRightQuasigroupAutotopismObject, IsRightQuasigroupAutotopismObject ],
+function( atop1, atop2 )
+	return atop1![4] = atop2![4] and 
+        [ atop1![1], atop1![2], atop1![3] ] = [ atop2![1], atop2![2], atop2![3] ];
+end );
+
+InstallMethod( \<, "for two autotopism objects",
+	IsIdenticalObj,
+	[ IsRightQuasigroupAutotopismObject, IsRightQuasigroupAutotopismObject ],
+function( atop1, atop2 )
+	return [ atop1![1], atop1![2], atop1![3] ] < [ atop2![1], atop2![2], atop2![3] ];
+end );
+
+InstallMethod( ViewObj, "for an autotopism group",
+    [ IsAutotopismGroup ],
+function( g )
+    local str;
+    if IsTrivial( g ) then
+        Print( "<trivial autotopism group>" );
+    else
+        str := "<autotopism group";
+        if HasSize(g) then
+            str := Concatenation( str, " of size ", String( Size( g ) ) );
+        fi;
+        if HasGeneratorsOfGroup( g ) then 
+            str := Concatenation( str, " with ", 
+                String( Length( GeneratorsOfGroup( g ) ) ), " generators" );
+        fi;
+        Print( str, ">" );
+    fi;
+end );
+
+#############################################################################
+##  MULTIPLICATION
+##  -------------------------------------------------------------------------
+
+InstallMethod( \*, "for two autotopism objects",
+	IsIdenticalObj,
+	[ IsRightQuasigroupAutotopismObject, IsRightQuasigroupAutotopismObject ],
+function( atop1, atop2 )
+	if atop1![4] = atop2![4] then 
+		return AutotopismObject@( 
+            atop1![4],
+            atop1![1] * atop2![1],
+            atop1![2] * atop2![2],
+            atop1![3] * atop2![3]
+        );
+	else
+		Error("RQ: Two autotopism objects must have the same ambient right quasigroup.");
+	fi;
+end );
+
+InstallMethod( OneMutable, "for an autotopism object",
+	[ IsRightQuasigroupAutotopismObject ],
+function( atop )
+	return AutotopismObject@( 
+            atop![4],
+            One( atop![1] ),
+            One( atop![2] ),
+            One( atop![3] )
+        );
+end );
+
+InstallMethod( InverseMutable, "for an autotopism object",
+	[ IsRightQuasigroupAutotopismObject ],
+function( atop )
+	return AutotopismObject@( 
+            atop![4],
+            InverseMutable( atop![1] ),
+            InverseMutable( atop![2] ),
+            InverseMutable( atop![3] )
+        );
+end );
+
+#############################################################################
+##  ACTIONS
+##  -------------------------------------------------------------------------
+
+InstallMethod( AtopOn3nElms@, "for an integer in [1..3n] and an autotopism",
+    [ IsPosInt, IsRightQuasigroupAutotopismObject ],
+function( i, atop )
+    local n;
+    n := Size( atop![4] );
+    if i <= n then 
+        return i^atop![1];
+    elif i <= 2*n then 
+        return n+(i-n)^atop![2];
+    else 
+        return 2*n+(i-2*n)^atop![3];
+    fi;
+end );
+
+InstallMethod( AtopOnnSquare@, "for an element of QxQ(xQ) and an autotopism",
+    [ IsList, IsRightQuasigroupAutotopismObject ],
+ function( x, atop )
+    if Length( x ) = 2 then
+        return [ x[1]^atop![1], x[2]^atop![2] ];
+    elif Length( x ) = 3 then 
+        return [ x[1]^atop![1], x[2]^atop![2], x[3]^atop![3] ];
+    else
+        Error( "RQ: <1> must have length 2 or 3." );
+    fi;
+end );
+
+InstallMethod( AutotopismFromPrincipalLoopIsotope, "for loops", 
+    [ IsLoop, IsLoopElement, IsLoopElement ],
+function( Q, a, b )
+    local S, iso, f, g, h;
+    if not CheckAtopInvariant@( Q, Q, a, b ) then
+        return fail;
+    fi;
+    S := PrincipalLoopIsotope( Q, a, b );
+    iso := IsomorphismLoops( Q, S );
+    if iso = fail then
+        return fail;
+    fi;                           
+    h := AsPermutation( iso!.cantraf );
+    f := h / RightTranslation( Q, a );
+    g := h / LeftTranslation( Q, b );
+    #ForAll( Q, x -> ForAll( Q, y -> x^f * y^g = (x * y)^u ) );
+    return AutotopismObject@( Q, f, g, h );
+end );
+
+
+InstallMethod( AutotopismGroupByGenerators, "for a collection of autotopisms",
+    [ IsList and IsRightQuasigroupAutotopismObjectCollection ],
+function( gens )
+    local g, nice, n;
+    if gens = [] then 
+        Error( "RQ: list of generators cannot be empty." );
+    fi;
+    g := GroupWithGenerators( gens );
+    n := Size( gens[1]![4] );
+    nice := ActionHomomorphism( g, [1 .. 3*n], AtopOn3nElms@ );
+    SetIsInjective( nice, true );
+    SetNiceMonomorphism( g, nice );
+    SetIsHandledByNiceMonomorphism( g, true );
+    SetGeneratorsOfGroup( g, gens );
+    return g;
+end );
+
+InstallGlobalFunction( ExtendAtopGrp,
+function( Q, gens, green, yellow, red )
+    local g, pt, newgen;
+    if yellow = [] then
+        return fail;
+    fi;
+    pt := yellow[1];
+    newgen := AutotopismFromPrincipalLoopIsotope( Q, pt[2], pt[1] );
+    if newgen <> fail then
+        Add( gens, newgen );
+        Add( green, pt );
+    else
+        Add( red, pt );
+    fi;
+    g := AutotopismGroupByGenerators( gens );
+    yellow := Difference( Cartesian( Q, Q ),
+        Union( List( Concatenation( green, red ), x -> Orbit( g, x, AtopOnnSquare@) ) ) 
+    );
+    return yellow;
+end );
+
+InstallMethod( AutotopismGroup, "for a loop",
+    [ IsLoop ],
+function( Q )
+    local ag, gens, green, yellow, red;
+    ag := AutomorphismGroup(Q);
+    gens := List( GeneratorsOfGroup( ag ), u -> AutotopismObject@( Q, u, u, u ) );
+    green := []; red := []; yellow := Cartesian( Q, Q );
+    while yellow <> [] do
+        yellow := ExtendAtopGrp( Q, gens, green, yellow, red );
+    od;
+    return AutotopismGroupByGenerators( gens );
+end );
+
+InstallGlobalFunction( LeftAtopInvariant@, 
+function( Q, a )
+    return SortedList( List( LeftTranslation( Q, a )^(-1)*LeftSection( Q ), CycleStructurePerm ) );
+end );
+
+InstallGlobalFunction( RightAtopInvariant@, 
+function( Q, a )
+    return SortedList( List( RightTranslation( Q, a )^(-1)*RightSection( Q ), CycleStructurePerm ) );
+end );
+
+InstallMethod( AtopInvariant@, "for a loop",
+    [ IsLoop ],
+function( Q )
+    local S, left,right;
+    if IsCanonical( Q ) then
+        S := Q;
+    else
+        S := CanonicalCopy( Q );
+    fi;
+    left := List( S, a -> LeftAtopInvariant@( S, a ) );
+    right := List( S, a -> RightAtopInvariant@( S, a ) );
+    return [ left, right ];
+end );
+
+InstallGlobalFunction( CheckAtopInvariant@, 
+function( Q, S, a, b )
+    local invQ, invS;
+    a := Position( Elements( S ), a );
+    b := Position( Elements( S ), b );
+    invQ := AtopInvariant@( Q );
+    invS := AtopInvariant@( S );
+    return invQ[1][1] = invS[1][b] and invQ[2][1] = invS[2][a];     
+end );
+

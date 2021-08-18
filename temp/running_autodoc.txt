@@ -1,0 +1,17 @@
+packagedir/
+  doc/
+  lib/
+  tst/
+  CHANGES
+  LICENSE
+  README
+  PackageInfo.g
+  init.g
+  read.g
+
+LoadPackage("RightQuasigroups");
+SetInfoLevel(InfoRightQuasigroups, 2);
+
+ChangeDirectoryCurrent("/opt/gap-4.11.1/pkg/RightQuasigroups");
+LoadPackage("AutoDoc");
+AutoDoc( rec( scaffold := rec( bib := "bib.xml.bib" ), autodoc := true, extract_examples := true  ) );

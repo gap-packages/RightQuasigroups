@@ -716,10 +716,11 @@ InstallMethod( LibraryAlgebra, "for string and two positive integers",
     [ IsString, IsPosInt, IsPosInt ],
 function( name, n, m )
 
-    local lib, implementedOrders, NOA, algebra, pos_n, p, q, divs, root, half, case, g, h;
+    local lib, singularName, implementedOrders, NOA, algebra, pos_n, p, q, divs, root, half, case, g, h;
 
     # selecting data library
-    lib := RQ_LibraryByName( Concatenation( name, "s" ) ); # adding plural 's' for the name of the library
+    lib := RQ_LibraryByName( name );
+    singularName := name{[1..Length(name)-1]};
 
     # extent of the library
     implementedOrders := lib[ 1 ];
@@ -736,24 +737,24 @@ function( name, n, m )
     # parameters for handling systematic cases, such as CCLoop( p^2, 1 )
     pos_n := fail;
     case := false; 
-    if name="left Bol loop" then
+    if name="left Bol loops" then
         divs := DivisorsInt( n );
         if Length( divs ) = 4 and not IsInt( divs[3]/divs[2] ) then # case n = p*q
             q := divs[ 2 ];
             p := divs[ 3 ];
             case := [p,q];
             if not (IsOddInt( q ) and IsInt((p^2-1)/q)) then
-                Error("RQ: Nonassociative ", name, " of order p*q exist only for primes p>q>2 such that q divides p^2-1.");
+                Error("RQ: Nonassociative ", singularName, " of order p*q exist only for primes p>q>2 such that q divides p^2-1.");
             fi;
             if IsInt((p-1)/q) and (not m in [1..(p-q)/2]) then
-                Error("RQ: There are only ", (p-q)/2, " nonassociative ", name, "s of order ", n, ".");
+                Error("RQ: There are only ", (p-q)/2, " nonassociative ", name, " of order ", n, ".");
             fi;
             if IsInt((p+1)/q) and (not m in [1..(p-q+2)/2]) then
-                Error("RQ: There are only ", (p-q+2)/2, " nonassociative ", name, "s of order ", n, ".");
+                Error("RQ: There are only ", (p-q+2)/2, " nonassociative ", name, " of order ", n, ".");
             fi;
         fi;
     fi;
-    if name="CC loop" then 
+    if name="CC loops" then 
         divs := DivisorsInt( n );
         if Length( divs ) = 3 and divs[ 2 ] > 7 then # case p^2, p>7
             p := divs[ 2 ];
@@ -779,9 +780,9 @@ function( name, n, m )
         pos_n := Position( implementedOrders, n );
         if NOA[ pos_n ] < m then 
             if NOA[ pos_n ] = 1 then
-                Error("RQ: There is only ", NOA[ pos_n ], " ", name, " of order ", n, " in the library."); 
+                Error("RQ: There is only ", NOA[ pos_n ], " ", singularName, " of order ", n, " in the library."); 
             else
-                Error("RQ: There are only ", NOA[ pos_n ], " ", name, "s of order ", n, " in the library."); 
+                Error("RQ: There are only ", NOA[ pos_n ], " ", name, " of order ", n, " in the library."); 
             fi;
         fi; 
     fi;                                     
@@ -789,34 +790,34 @@ function( name, n, m )
     # ACTIVATING THE DESIRED ALGEBRA (treat cases separately below)
     
     # up to isomorphism
-    if name = "left Bol loop" then 
+    if name = "left Bol loops" then 
         algebra := RQ_ActivateLeftBolLoop( pos_n, m, case );
         SetIsLeftBolLoop( algebra, true );
-    elif name = "Moufang loop" then
+    elif name = "Moufang loops" then
         algebra := RQ_ActivateMoufangLoop( n, pos_n, m );
         SetIsMoufangLoop( algebra, true );
-    elif name = "Paige loop" then
+    elif name = "Paige loops" then
         algebra := LoopByCayleyTable( lib[ 3 ][ 1 ][ 1 ] ); #only one loop there at this point
         SetIsMoufangLoop( algebra, true );
-    elif name = "code loop" then
-        algebra := LibraryAlgebra( "Moufang", n, lib[ 3 ][ pos_n ][ m ] ); 
+    elif name = "code loops" then
+        algebra := LibraryAlgebra( "Moufang loops", n, lib[ 3 ][ pos_n ][ m ] ); 
         SetIsCodeLoop( algebra, true );
-    elif name = "Steiner loop" then
+    elif name = "Steiner loops" then
         algebra := RQ_ActivateSteinerLoop( n, pos_n, m );
         SetIsSteinerLoop( algebra, true );
-    elif name = "CC loop" then
+    elif name = "CC loops" then
         if n in [2,3,5,7] then # use Cayley table for canonical cyclic group
             algebra := LoopByCayleyTable( RQ_DecodeCayleyTable( IsLoop, lib[ 3 ][ pos_n ][ m ] ) );
         else
             algebra := RQ_ActivateCCLoop( n, pos_n, m, case );
         fi;
         SetIsCCLoop( algebra, true );
-    elif name = "RCC loop" then
+    elif name = "RCC loops" then
         algebra := RQ_ActivateRCCLoop( n, pos_n, m );
         SetIsRCCLoop( algebra, true );
-    elif name = "small loop" then
+    elif name = "small loops" then
         algebra := LoopByCayleyTable( RQ_DecodeCayleyTable( IsLoop, lib[ 3 ][ pos_n ][ m ] ) );
-    elif name = "interesting loop" then
+    elif name = "interesting loops" then
         if [n,m] = [96,1] then # simple Bol loop of order 96
             g := Group((1,4)(2,9)(3,10)(6,11)(7,12)(13,21)(14,22)(15,24)(16,23)(17,30)(18,29)(19,31)(20,32)(33,35)(38,40), 
                 (1,2,4,6,8,7,5,3)(9,13,25,18,10,14,26,17)(11,15,27,20,12,16,28,19)(21,30,38,34,23,31,40,35)(22,32,39,36,24,29,37,33));
@@ -827,69 +828,162 @@ function( name, n, m )
             algebra := LoopByCayleyTable( RQ_DecodeCayleyTable( IsLoop, lib[ 3 ][ pos_n ][ m ][ 1 ] ) );
         fi;
         SetName( algebra, lib[ 3 ][ pos_n ][ m ][ 2 ] ); # special naming for interesting loops
-    elif name = "nilpotent loop" then
+    elif name = "nilpotent loops" then
         algebra := RQ_ActivateNilpotentLoop( lib[ 3 ][ pos_n ][ m ] );
-    elif name = "automorphic loop" then
+    elif name = "automorphic loops" then
         if not n in [3, 9, 27, 81] then # use Cayley table
             algebra := LoopByCayleyTable( RQ_DecodeCayleyTable( IsLoop, lib[ 3 ][ pos_n ][ m ] ) );
         else # use associated left Bruck loop
             algebra := RQ_ActivateAutomorphicLoop( n, m );
         fi;
         SetIsAutomorphicLoop( algebra, true );
-    elif name = "right Bruck loop" then
+    elif name = "right Bruck loops" then
         if not n in [27,81] then # use Cayley table
             algebra := LoopByCayleyTable( RQ_DecodeCayleyTable( IsLoop, lib[ 3 ][ pos_n ][ m ] ) );
         else # use cocycles
             algebra := RQ_ActivateRightBruckLoop( n, m );
         fi;
         SetIsRightBruckLoop( algebra, true );
-    elif name = "small rack" then
+    elif name = "small racks" then
         algebra := RQ_ActivateRackOrQuandle( IsRack, n, m );
         SetIsRack( algebra, true );
-    elif name = "small quandle" then
+    elif name = "small quandles" then
         algebra := RQ_ActivateRackOrQuandle( IsQuandle, n, m );
         SetIsQuandle( algebra, true );
-    elif name = "connected quandle" then
+    elif name = "connected quandles" then
         # lib[3][pos_n][m] = [ generators_of_group, [ translation ] ]
         algebra := QuandleByQuandleEnvelope( Group( lib[3][pos_n][m][1] ), [1], lib[3][pos_n][m][2], ConstructorStyle( true, false ) ); 
     # up to isotopism     
-    elif name = "itp small loop" then
+    elif name = "itp small loops" then
         return LibraryAlgebra( "small loops", n, lib[ 3 ][ pos_n ][ m ] );
     fi;
     
     # setting the name
-    SetName( algebra, Concatenation( "<", name, " ", String( n ), "/", String( m ), ">" ) ); # PROG: SetName will not rename an already named object
+    SetName( algebra, Concatenation( "<", singularName, " ", String( n ), "/", String( m ), ">" ) ); # PROG: SetName will not rename an already named object
 
     # returning the algebra
     return algebra;
 end);
+
+# LibraryAlgebras( name, filters )
+
+InstallGlobalFunction( LibraryAlgebras, 
+function( arg )
+    local name, filters, sizes, conditions, func, algebras, lib, implementedOrders, NOA, n, m, Q;
+    # PROCESSING ARGUMENTS
+    if IsEmpty( arg ) or not IsString( arg[1] ) then  
+        Error("RQ: The first argument must be a string, the name of a library.");
+    fi;
+    filters := arg;
+    name := Remove( filters, 1 );
+    if IsEmpty( filters ) then
+        Error("RQ: No filters given. At least the values of Size must be specified.");
+    fi;
+    # checking if Size is given as the first argument
+    if IsFunction( filters[1] ) then
+        if not filters[1] = Size then 
+            Error("RQ: The first filter must be Size.");
+        fi;
+        Remove( filters, 1 );
+    fi;
+    # checking if size values are given
+    if IsEmpty( filters ) then
+        Error("RQ: The accepted values for Size must be given.");      
+    fi;
+    sizes := [];
+    # checking if size values are positive integers
+    if IsPosInt( filters[1] ) then 
+        sizes := [ Remove( filters, 1 ) ];
+    elif IsList( filters[1] ) and ForAll( filters[1], IsPosInt ) then
+        sizes := Remove( filters, 1 );
+    else
+        Error("RQ: The accepted values for Size must be positive integers.");
+    fi;
+    # processing all other filters
+    conditions := []; # will be formatted as [ [ func1, vals1 ], [ func2, vals2 ], ... ]
+    while not IsEmpty( filters ) do
+        if not IsFunction( filters[1] ) then
+            Error("RQ: Expecting a function as an argument.");
+        fi;
+        func := Remove( filters, 1 );
+        if IsEmpty( filters ) or IsFunction( filters[1] ) then # implicit true value
+            Add( conditions, [ func, [ true ] ] );
+        elif IsList( filters[1] ) then
+            Add( conditions, [ func, filters[1] ] ); # list of values given
+        else 
+            Add( conditions, [ func, [ filters[1] ] ] ); # a single value given
+        fi;
+        if not IsEmpty( filters ) and not IsFunction( filters[1] ) then
+            Remove( filters, 1 );
+        fi;
+    od;
+    # FILTERING ALGEBRAS
+    algebras := [];
+    lib := RQ_LibraryByName( name ); # data library
+    implementedOrders := lib[ 1 ]; # extent of the library
+    NOA := lib[ 2 ]; # number of algebras of given order in the library
+    sizes := Intersection( sizes, implementedOrders );    
+    # main loop of filtering
+    for n in sizes do
+        for m in [1..NOA[ Position( implementedOrders, n ) ] ] do
+            Q := LibraryAlgebra( name, n, m );
+            # checking properties
+            if ForAll( conditions, C -> CallFuncList( C[1], [Q] ) in C[2] ) then
+                Add( algebras, ShallowCopy( Q ) );
+            fi;
+        od;
+    od;
+    return algebras;
+end );
 
 #############################################################################
 ##  READING LOOPS FROM THE LIBRARY - SPECIFIC CALLS
 ##  -------------------------------------------------------------------------
 
 # LeftBolLoop( n, m ) 
+# LeftBolLoops( filters )
 # RightBolLoop( n, m )
+# RightBolLoops( filters )
 # MoufangLoop( n, m ) 
+# MoufangLoops( filters )
 # PaigeLoop( q )
+# PaigeLoops( filters )
 # CodeLoop( n, m ) 
+# CodeLoops( filters )
 # SteinerLoop( n, m ) 
+# SteinerLoops( filters )
 # CCLoop( n, m ) 
+# CCLoops( filters )
 # SmallLoop( n, m ) 
+# SmallLoops( filters )
 # InterestingLoop( n, m ) 
+# InterestingLoops( filters )
 # NilpotentLoop( n, m ) 
+# NilpotentLoops( filters )
 # AutomorphicLoop( n, m )
+# AutomorphicLoops( filters )
 # LeftBruckLoop( n, m )
+# LeftBruckLoops( filters )
 # RightBruckLoop( n, m )
+# RightBruckLoops( filters )
 # SmallRack( n, m )
+# SmallRacks( filters )
 # SmallQuandle( n, m )
+# SmallQuandles( filters )
 # ConnectedQuandle( n, m )
+# ConnectedQuandles( filters )
 # ItpSmallLoop( n, m )   
+# ItpSmallLoops( filters )
 
 InstallMethod( LeftBolLoop, "for two positive integers",
     [ IsPosInt, IsPosInt ],
 function( n, m )
-    return LibraryAlgebra( "left Bol loop", n, m );
+    return LibraryAlgebra( "left Bol loops", n, m );
+end);
+
+InstallGlobalFunction( LeftBolLoops,
+function( arg )
+    return CallFuncList( LibraryAlgebras, Concatenation( ["left Bol loops"], arg ) );
 end);
 
 InstallMethod( RightBolLoop, "for two positive integers",
@@ -902,6 +996,11 @@ function( n, m )
     return loop;
 end);
 
+InstallGlobalFunction( RightBolLoops,
+function( arg )
+    return CallFuncList( LibraryAlgebras, Concatenation( ["right Bol loops"], arg ) );
+end);
+
 InstallMethod( LeftBruckLoop, "for two positive integers",
     [ IsPosInt, IsPosInt ],
 function( n, m )
@@ -912,16 +1011,31 @@ function( n, m )
     return loop;
 end);
 
+InstallGlobalFunction( LeftBruckLoops,
+function( arg )
+    return CallFuncList( LibraryAlgebras, Concatenation( ["left Bruck loops"], arg ) );
+end);
+
 InstallMethod( RightBruckLoop, "for two positive integers",
     [ IsPosInt, IsPosInt ],
 function( n, m )
-    return LibraryAlgebra( "right Bruck loop", n, m );
+    return LibraryAlgebra( "right Bruck loops", n, m );
+end);
+
+InstallGlobalFunction( RightBruckLoops,
+function( arg )
+    return CallFuncList( LibraryAlgebras, Concatenation( ["right Bruck loops"], arg ) );
 end);
 
 InstallMethod( MoufangLoop, "for two positive integers",
     [ IsPosInt, IsPosInt ],
 function( n, m )
-    return LibraryAlgebra( "Moufang loop", n, m );
+    return LibraryAlgebra( "Moufang loops", n, m );
+end);
+
+InstallGlobalFunction( MoufangLoops,
+function( arg )
+    return CallFuncList( LibraryAlgebras, Concatenation( ["Moufang loops"], arg ) );
 end);
 
 InstallMethod( PaigeLoop, "for prime power",
@@ -929,43 +1043,78 @@ InstallMethod( PaigeLoop, "for prime power",
 function( q )
     # Paige loop over GF(q)
     if not q=2 then return Error("RQ: Only q=2 is implemented."); fi;
-    return LibraryAlgebra( "Paige loop", 120, 1 );
+    return LibraryAlgebra( "Paige loops", 120, 1 );
+end);
+
+InstallGlobalFunction( PaigeLoops,
+function( arg )
+    return CallFuncList( LibraryAlgebras, Concatenation( ["Paige loops"], arg ) );
 end);
 
 InstallMethod( CodeLoop, "for two positive integers",
     [ IsPosInt, IsPosInt ],
 function( n, m )
-    return LibraryAlgebra( "code loop", n, m );
+    return LibraryAlgebra( "code loops", n, m );
+end);
+
+InstallGlobalFunction( CodeLoops,
+function( arg )
+    return CallFuncList( LibraryAlgebras, Concatenation( ["code loops"], arg ) );
 end);
 
 InstallMethod( SteinerLoop, "for two positive integers",
     [ IsPosInt, IsPosInt ],
 function( n, m )
-    return LibraryAlgebra( "Steiner loop", n, m );
+    return LibraryAlgebra( "Steiner loops", n, m );
+end);
+
+InstallGlobalFunction( SteinerLoops,
+function( arg )
+    return CallFuncList( LibraryAlgebras, Concatenation( ["Steiner loops"], arg ) );
 end);
 
 InstallMethod( CCLoop, "for two positive integers",
     [ IsPosInt, IsPosInt ],
 function( n, m )
-    return LibraryAlgebra( "CC loop", n, m );
+    return LibraryAlgebra( "CC loops", n, m );
+end);
+
+InstallGlobalFunction( CCLoops,
+function( arg )
+    return CallFuncList( LibraryAlgebras, Concatenation( ["CC loops"], arg ) );
 end);
 
 InstallMethod( ConjugacyClosedLoop, "for two positive integers",
     [ IsPosInt, IsPosInt ],
 function( n, m )
-    return LibraryAlgebra( "CC loop", n, m );
+    return LibraryAlgebra( "CC loops", n, m );
+end);
+
+InstallGlobalFunction( ConjugacyClosedLoops,
+function( arg )
+    return CallFuncList( LibraryAlgebras, Concatenation( ["CC loops"], arg ) );
 end);
 
 InstallMethod( RCCLoop, "for two positive integers",
     [ IsPosInt, IsPosInt ],
 function( n, m )
-    return LibraryAlgebra( "RCC loop", n, m );
+    return LibraryAlgebra( "RCC loops", n, m );
+end);
+
+InstallGlobalFunction( RCCLoops,
+function( arg )
+    return CallFuncList( LibraryAlgebras, Concatenation( ["RCC loops"], arg ) );
 end);
 
 InstallMethod( RightConjugacyClosedLoop, "for two positive integers",
     [ IsPosInt, IsPosInt ],
 function( n, m )
-    return LibraryAlgebra( "RCC loop", n, m );
+    return LibraryAlgebra( "RCC loops", n, m );
+end);
+
+InstallGlobalFunction( RightConjugacyClosedLoops,
+function( arg )
+    return CallFuncList( LibraryAlgebras, Concatenation( ["RCC loops"], arg ) );
 end);
 
 InstallMethod( LCCLoop, "for two positive integers",
@@ -978,56 +1127,106 @@ function( n, m )
     return loop;
 end);
 
+InstallGlobalFunction( LCCLoops,
+function( arg )
+    return CallFuncList( LibraryAlgebras, Concatenation( ["LCC loops"], arg ) );
+end);
+
 InstallMethod( LeftConjugacyClosedLoop, "for two positive integers",
     [ IsPosInt, IsPosInt ],
 function( n, m )
     return LCCLoop( n, m );
 end);
 
+InstallGlobalFunction( LeftConjugacyClosedLoops,
+function( arg )
+    return CallFuncList( LibraryAlgebras, Concatenation( ["LCC loops"], arg ) );
+end);
+
 InstallMethod( SmallLoop, "for two positive integers",
     [ IsPosInt, IsPosInt ],
 function( n, m )
-    return LibraryAlgebra( "small loop", n, m );
+    return LibraryAlgebra( "small loops", n, m );
+end);
+
+InstallGlobalFunction( SmallLoops,
+function( arg )
+    return CallFuncList( LibraryAlgebras, Concatenation( ["small loops"], arg ) );
 end);
 
 InstallMethod( InterestingLoop, "for two positive integers",
     [ IsPosInt, IsPosInt ],
 function( n, m )
-    return LibraryAlgebra( "interesting loop", n, m );
+    return LibraryAlgebra( "interesting loops", n, m );
+end);
+
+InstallGlobalFunction( InterestingLoops,
+function( arg )
+    return CallFuncList( LibraryAlgebras, Concatenation( ["interesting loops"], arg ) );
 end);
 
 InstallMethod( NilpotentLoop, "for two positive integers",
     [ IsPosInt, IsPosInt ],
 function( n, m )
-    return LibraryAlgebra( "nilpotent loop", n, m );
+    return LibraryAlgebra( "nilpotent loops", n, m );
+end);
+
+InstallGlobalFunction( NilpotentLoops,
+function( arg )
+    return CallFuncList( LibraryAlgebras, Concatenation( ["nilpotent loops"], arg ) );
 end);
 
 InstallMethod( AutomorphicLoop, "for two positive integers",
     [ IsPosInt, IsPosInt ],
 function( n, m )
-    return LibraryAlgebra( "automorphic loop", n, m );
+    return LibraryAlgebra( "automorphic loops", n, m );
+end);
+
+InstallGlobalFunction( AutomorphicLoops,
+function( arg )
+    return CallFuncList( LibraryAlgebras, Concatenation( ["automorphic loops"], arg ) );
 end);
 
 InstallMethod( SmallRack, "for two positive integers",
     [ IsPosInt, IsPosInt ],
 function( n, m )
-    return LibraryAlgebra( "small rack", n, m );
+    return LibraryAlgebra( "small racks", n, m );
 end );
+
+InstallGlobalFunction( SmallRacks,
+function( arg )
+    return CallFuncList( LibraryAlgebras, Concatenation( ["small racks"], arg ) );
+end);
 
 InstallMethod( SmallQuandle, "for two positive integers",
     [ IsPosInt, IsPosInt ],
 function( n, m )
-    return LibraryAlgebra( "small quandle", n, m );
+    return LibraryAlgebra( "small quandles", n, m );
 end );
+
+InstallGlobalFunction( SmallQuandles,
+function( arg )
+    return CallFuncList( LibraryAlgebras, Concatenation( ["small quandles"], arg ) );
+end);
 
 InstallMethod( ConnectedQuandle, "for two positive integers",
     [ IsPosInt, IsPosInt ],
 function( n, m )
-    return LibraryAlgebra( "connected quandle", n, m );
+    return LibraryAlgebra( "connected quandles", n, m );
 end );
+
+InstallGlobalFunction( ConnectedQuandles,
+function( arg )
+    return CallFuncList( LibraryAlgebras, Concatenation( ["connected quandles"], arg ) );
+end);
 
 InstallMethod( ItpSmallLoop, "for two positive integers",
     [ IsPosInt, IsPosInt ],
 function( n, m )
-    return LibraryAlgebra( "itp small loop", n, m );
+    return LibraryAlgebra( "itp small loops", n, m );
+end);
+
+InstallGlobalFunction( ItpSmallLoops,
+function( arg )
+    return CallFuncList( LibraryAlgebras, Concatenation( ["itp small loops"], arg ) );
 end);
