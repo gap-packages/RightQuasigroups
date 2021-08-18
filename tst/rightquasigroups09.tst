@@ -100,5 +100,27 @@ gap> IsotopismLoops( Q1, Q3 ); # add optional argument `true` to use a method vi
   MappingByFunction( <loop of size 6>, <loop of size 6>, function( x ) ... end ),
   MappingByFunction( <loop of size 6>, <loop of size 6>, function( x ) ... end ) ]
 
+# doc/_Chapter_Topisms.xml:494-507
+gap> q:=LoopByCayleyTable([[1,2,3,4,5 ],[2,1,4,5,3],[3,4,5,1,2],[4,5,2,3,1],[5,3,1,2,4]]);
+<loop of size 5>
+gap> f:=[(1,5,4), (2,4,3), (1,5,4)];
+[ (1,5,4), (2,4,3), (1,5,4) ]
+gap> atp:=AutotopismObject@RightQuasigroups(q,f[1],f[2],f[3]);
+IsRightQuasigroupAutotopismObject((1,5,4), (2,4,3), (1,5,4))
+gap> AmbientRightQuasigroup(atp);
+<loop of size 5>
+gap> One(atp);
+IsRightQuasigroupAutotopismObject((), (), ())
+gap> atp^-4;
+IsRightQuasigroupAutotopismObject((1,4,5), (2,3,4), (1,4,5))
+
+# doc/_Chapter_Topisms.xml:558-565
+gap> Q := RightBolLoop(8,1);
+<right Bol loop 8/1>
+gap> AutotopismFromPrincipalLoopIsotope( Q, Q.4, Q.3 );
+IsRightQuasigroupAutotopismObject((1,3)(2,4)(5,7)(6,8), (1,4)(2,3)(5,8), (1,2)(3,4)(5,6)(7,8))
+gap> AutotopismGroup( Q );
+<autotopism group of size 128 with 5 generators>
+
 #
 gap> STOP_TEST("rightquasigroups09.tst", 1 );

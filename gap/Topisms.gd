@@ -16,7 +16,7 @@
 #! $(Q_1,\cdot) = (Q_2,*)$ is an **autotopism**<Index Subkey="right quasigroups">autotopism</Index>.
 
 #! <P/>In &RightQuasigroups;, homotopisms are represented by three right quasigroup mappings,
-#! while autotopism are represented by three parent permutations. 
+#! while autotopisms are represented by three parent permutations. 
 #! See Chapter <Ref Chap="Chapter_Mappings"/> for conversions between right quasigroup mappings,
 #! permutations and transformations. Many functions working with homotopisms and autotopisms
 #! except either three arguments `f`, `g`, `h`, or a single argument `[f,g,h]`.
@@ -467,17 +467,17 @@ InstallTrueMethod( IsGeneratorsOfMagmaWithInverses, IsRightQuasigroupAutotopismO
 
 DeclareRepresentation( "IsRightQuasigroupAutotopismObjectRep", IsRightQuasigroupAutotopismObject, [4] );
 
-BindGlobal( "RQAtopFamily",
-            NewFamily( "RQAtopFamily", IsObject, IsRightQuasigroupAutotopismObject ) );
-BindGlobal( "RQAtopCollFamily", CollectionsFamily( RQAtopFamily ) );
-BindGlobal( "RQAtopType",
-     NewType( RQAtopFamily, IsRightQuasigroupAutotopismObject and IsRightQuasigroupAutotopismObjectRep ) );
+BindGlobal( "RQAtpFamily",
+            NewFamily( "RQAtpFamily", IsObject, IsRightQuasigroupAutotopismObject ) );
+BindGlobal( "RQAtpCollFamily", CollectionsFamily( RQAtpFamily ) );
+BindGlobal( "RQAtpType",
+     NewType( RQAtpFamily, IsRightQuasigroupAutotopismObject and IsRightQuasigroupAutotopismObjectRep ) );
 
 DeclareSynonym( "IsAutotopismGroup", IsGroup and IsRightQuasigroupAutotopismObjectCollection );
 
 #! @Arguments Q,f,g,h
 DeclareGlobalFunction( "AutotopismObject@" );
-#! @Arguments atop
+#! @Arguments atp
 DeclareAttribute( "AmbientRightQuasigroup", IsRightQuasigroupAutotopismObject );
 
 #! @BeginExampleSession
@@ -485,30 +485,30 @@ DeclareAttribute( "AmbientRightQuasigroup", IsRightQuasigroupAutotopismObject );
 #! <loop of size 5>
 #! gap> f:=[(1,5,4), (2,4,3), (1,5,4)];
 #! [ (1,5,4), (2,4,3), (1,5,4) ]
-#! gap> atop:=AutotopismObject@RightQuasigroups(q,f[1],f[2],f[3]);
+#! gap> atp:=AutotopismObject@RightQuasigroups(q,f[1],f[2],f[3]);
 #! IsRightQuasigroupAutotopismObject((1,5,4), (2,4,3), (1,5,4))
-#! gap> AmbientRightQuasigroup(atop);
+#! gap> AmbientRightQuasigroup(atp);
 #! <loop of size 5>
-#! gap> One(atop);
+#! gap> One(atp);
 #! IsRightQuasigroupAutotopismObject((), (), ())
-#! gap> atop^-4;
+#! gap> atp^-4;
 #! IsRightQuasigroupAutotopismObject((1,4,5), (2,3,4), (1,4,5))
 #! @EndExampleSession
 
 #! @Arguments Q,f,g
 DeclareOperation( "AutotopismFromPrincipalLoopIsotope", [ IsLoop, IsLoopElement, IsLoopElement ] );
 
-#! @Arguments i,atop
-DeclareOperation( "AtopOn3nElms@", [ IsPosInt, IsRightQuasigroupAutotopismObject ] );
+#! @Arguments i,atp
+DeclareOperation( "AtpOn3nElms@", [ IsPosInt, IsRightQuasigroupAutotopismObject ] );
 
-#! @Arguments p,atop
-DeclareOperation( "AtopOnnSquare@", [ IsList, IsRightQuasigroupAutotopismObject ] );
+#! @Arguments p,atp
+DeclareOperation( "AtpOnnSquare@", [ IsList, IsRightQuasigroupAutotopismObject ] );
 
 #! @Arguments gens
 DeclareOperation( "AutotopismGroupByGenerators", [ IsList and IsRightQuasigroupAutotopismObjectCollection ] );
 
 #! @Arguments Q, gens, green, yellow, red
-DeclareGlobalFunction( "ExtendAtopGrp" );
+DeclareGlobalFunction( "ExtendAtpGrp" );
 
 #! @Arguments Q
 DeclareAttribute( "AutotopismGroup", IsLoop );
@@ -523,13 +523,13 @@ DeclareAttribute( "AutotopismGroup", IsLoop );
 #! @EndExampleSession
 
 #! @Arguments Q
-DeclareGlobalFunction( "LeftAtopInvariant@" );
+DeclareGlobalFunction( "LeftAtpInvariant@" );
 
 #! @Arguments Q
-DeclareGlobalFunction( "RightAtopInvariant@" );
+DeclareGlobalFunction( "RightAtpInvariant@" );
 
 #! @Arguments Q
-DeclareAttribute( "AtopInvariant@", IsLoop );
+DeclareAttribute( "AtpInvariant@", IsLoop );
 
 #! @Arguments Q,S,a,b
-DeclareGlobalFunction( "CheckAtopInvariant@" );
+DeclareGlobalFunction( "CheckAtpInvariant@" );

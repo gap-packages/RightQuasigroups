@@ -146,7 +146,7 @@ DeclareOperation( "CyclicRack", [ IsPosInt ] );
 
 #! <P/>In particular, if $n$ is a positive integer, $f$ is an integer relatively prime to $n$, and $g$, $c$ are integers,
 #! then the affine right quasigroup on $[0..n-1]$ with arithmetic form $(n,f,g,c)$ and
-#! multiplication $x*y = (f*x+g*y+c)\mod n$ is a rack iff $gc\equiv 0\pmod n$ and $g(f+g-1)\equiv 0\pmod n$.
+#! multiplication $x*y = (f*x+g*y+c)\ \mathrm{mod}\ n$ is a rack iff $gc\equiv 0\pmod n$ and $g(f+g-1)\equiv 0\pmod n$.
 
 #! @Arguments arg
 #! @Returns `true` if <Arg>arg</Arg> is an arithmetic form of an affine rack. See above for allowed
