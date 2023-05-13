@@ -387,7 +387,7 @@ A loop <Math>Q</Math> has the <Index>automorphic inverse property</Index><Emph>a
   <Prop Arg="Q" Name="IsRightConjugacyClosedLoop" Label="for IsLoop"/>
   <Prop Arg="Q" Name="IsLeftConjugacyClosedLoop" Label="for IsLoop"/>
   <Prop Arg="Q" Name="IsConjugacyClosedLoop" Label="for IsLoop"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
 <P/>

@@ -112,7 +112,7 @@
   <Filt Arg="object" Name="IsQuasigroupElement" Label="for IsRightQuasigroupElement and IsQuasigroupElementAux"/>
   <Filt Arg="object" Name="IsQuasigroupElmRep" Label="for IsPositionalObjectRep and IsMultiplicativeElement"/>
   <Filt Arg="object" Name="IsQuasigroup" Label="for IsRightQuasigroup and IsQuasigroupAux"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
 <P/>
@@ -130,7 +130,7 @@
   <Filt Arg="object" Name="IsLoopElement" Label="for IsQuasigroupElement and IsMultiplicativeElementWithInverse"/>
   <Filt Arg="object" Name="IsLoopElmRep" Label="for IsPositionalObjectRep and IsMultiplicativeElementWithInverse"/>
   <Filt Arg="object" Name="IsLoop" Label="for IsQuasigroup and IsMultiplicativeElementWithInverseCollection"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
 <P/>
