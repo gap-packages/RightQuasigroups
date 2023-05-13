@@ -87,7 +87,7 @@ DeclareOperation( "LoopSatisfiesIdentity", [ IsLoop, IsString ] );
 #! gap> RightQuasigroupTermFromString("x*(y/z)");
 #! [ 24, '*', [ 25, '/', 26 ] ]
 #! gap> QuasigroupTermFromString("(a|b)/(c*d)"); # note the symbol | for left division
-#! [ [ 1, '|', 2 ], '/', [ 3, '*', 5 ] ]
+#! [ [ 1, '|', 2 ], '/', [ 3, '*', 4 ] ]
 #! @EndExampleSession
 
 #! @EndGroup

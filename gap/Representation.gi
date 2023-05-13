@@ -34,11 +34,40 @@ end );
 # DISPLAYING RIGHT QUASIGROUPS AND THEIR ELEMENTS
 # _____________________________________________________________________________
 
-# RQ_ViewObjString
-InstallMethod( RQ_ViewObjPrintObjString, "for right quasigroup",
-    [ IsRightQuasigroup ],
+# PROG: For right quasigroups, we want View, Print and Display to return results
+# dynamically, depending on what is known about them. Since String is an attribute
+# (which is calculated at first usage), while ViewString is not an attribute,
+# we DO NOT delegate to String in ViewString etc.
+
+# PROG: I do not understand how Name interacts with View, Print and Display.
+# It appears that once HasName is true, View, ViewObj, Print and PrintObj do
+# not call ViewString and PrintString but instead print the name. Display, however,
+# ignores the name.
+
+# String
+# PROG: The rank is high to beat semigroups in case of associative right quasigroups.
+# Also, GAP manual says that PrintString should approximate String. Since we struggle
+# with PrintString, we will use ViewString for now.
+InstallOtherMethod( String, "for right quasigroup",
+    [ IsRightQuasigroup ], RQ_rank,
+    Q -> ViewString( Q )
+);
+
+InstallOtherMethod( String, "for right quasigroup element",
+    [ IsRightQuasigroupElement ], 
+    x -> ViewString( x )
+);
+
+# ViewString
+# returns the string representation of a right quasigroup or right quasigroup element
+InstallMethod( ViewString, "for right quasigroup",
+    [ IsRightQuasigroup ], RQ_rank,
 function( Q )
     local category, c, v, F, s;
+    # named objects return their name
+    if HasName( Q ) then
+        return Name( Q );
+    fi;
     category := CategoryOfRightQuasigroup( Q );
     # type of algebra
     if category = IsRightQuasigroup then
@@ -90,46 +119,91 @@ function( Q )
             then s := " shell";
         fi;
     fi;
-    return Concatenation( "<", v, c, s, " of size ", String( Size( Q ) ) );
+    return Concatenation( "<", v, c, s, " of size ", String( Size( Q ) ), ">" );
 end );
 
-# ViewObj
-InstallOtherMethod( ViewObj, "for right quasigroup",
-    [ IsRightQuasigroup ],
-function( Q )
-    Print( RQ_ViewObjPrintObjString( Q ), ">" );
-end );
+# REVISITl: delete this later 
+#InstallOtherMethod( ViewString, "for right quasigroup element",
+#    [ IsRightQuasigroupElement ], 
+#function( obj )
+#    local F, s, out;
+#    F := FamilyObj( obj );
+#    s := "";
+#    out := OutputTextString( s, true ); # will Print to s
+#    PrintTo( out, F!.names );
+#    PrintTo( out, UnderlyingSetElm( obj ) );
+#    CloseStream( out );
+#    return s;
+#end );
 
-# PrintObj
-# PROG: rank is set high so that associative right quasigroups are not printed as semigroups
-InstallOtherMethod( PrintObj, "for right quasigroup",
-    [ IsRightQuasigroup ], 10, 
-function( Q )
-    local n, i;
-    Print( RQ_ViewObjPrintObjString( Q ), " on " );
-    n := Minimum( Size(Q), 5 );
-    for i in [1..n] do
-            Print( UnderlyingSetElm( Elements( Q )[ i ] ) );
-            if i<n then Print(", "); fi;
-    od;
-    if Size( Q ) > 5 then
-        Print( ", ...");
-    fi;
-    Print( ">" );
-end );
-
-# PrintObj
-
-InstallMethod( PrintObj, "for a right quasigroup element",
-    [ IsRightQuasigroupElement ],
+InstallOtherMethod( ViewString, "for right quasigroup element",
+    [ IsRightQuasigroupElement ], 
 function( obj )
-    local F, s;
+    local F;
     F := FamilyObj( obj );
-    Print( F!.names );
-    # Print( ":" );
-    Print( UnderlyingSetElm( obj ) );
+    return  Concatenation( F!.names, ViewString( UnderlyingSetElm( obj ) ) );
+end );
+
+# ViewObj (calls ViewString by default, hence not implemented)
+
+# PrintString
+# REVISIT: This is supposed to be a string that results in a machine
+# readable outout that, when read, reconstructs the object. This is
+# hard to do with so many constructors. Perhaps later.
+InstallOtherMethod( PrintString, "for right quasigroup",
+    [ IsRightQuasigroup ], RQ_rank, 
+function( Q )
+    return "LATER";
+end );
+
+InstallMethod( PrintString, "for a right quasigroup element",
+    [ IsRightQuasigroupElement ],
+    x -> ViewString( x )
+);
+
+# PrintObj
+# PROG: This calls PrintString by default, but it looks like the semigroups package
+# changed the default behavior and hence our PrintString would never be called for
+# associative right quasigroups.
+InstallOtherMethod( PrintObj, "for right quasigroup",
+    [ IsRightQuasigroup ], RQ_rank, 
+function( Q )
+    Print( PrintString( Q ) );
     return true;
 end );
+
+# DisplayString
+# PROG: This should be human readable with more info than ViewString
+InstallOtherMethod( DisplayString, "for right quasigroup",
+    [ IsRightQuasigroup], RQ_rank,
+function( Q )
+    local s, n, i;
+    if HasName( Q ) then 
+        return Name( Q );
+    fi;
+    s := ViewString( Q );
+    s := s{[1..Length(s)-1]}; # remove '>' from ViewString
+    s := Concatenation( s, " on " );
+    n := Minimum( Size(Q), 5 );
+    for i in [1..n] do
+        s := Concatenation( s, ViewString( UnderlyingSetElm( Elements( Q )[ i ] ) ) );
+        if i<n then 
+            s := Concatenation( s, ", ");
+        fi;
+    od;
+    if Size( Q ) > 5 then
+        s := Concatenation( s, ", ...");
+    fi;
+    s := Concatenation( s, ">\n" );
+    return s;
+end );
+
+InstallOtherMethod( DisplayString, "for right quasigroup element",
+    [ IsRightQuasigroupElement ], 
+    x -> Concatenation( ViewString( x ), "\n" )
+);
+
+# Display (calls DisplayString by default, hence not implemented)
 
 # SetRightQuasigroupElementsName
 # SetQuasigroupElementsName
@@ -268,7 +342,7 @@ end );
 
 # PROG: rank is set high so that associative right quasigroups do not call \. for semigroups
 InstallMethod( \., "for right quasigroup and positive integer",
-	[ IsRightQuasigroup, IsPosInt ], 10, 
+	[ IsRightQuasigroup, IsPosInt ], RQ_rank, 
 function( Q, i )
     # PROG: the HasParent( Q ) test is necessary since Objectify in constructors
     # calls this for some reason and Parent( Q ) is not yet set at that point.
@@ -306,6 +380,24 @@ InstallOtherMethod( \*, "for list of right quasigroup elements and right quasigr
     [ IsList, IsRightQuasigroupElement ],
 function( lx, y )
     return List( lx, x -> x*y );
+end );
+
+InstallOtherMethod( \*, "for right quasigroup element and a right quasigroup",
+    [ IsRightQuasigroupElement, IsRightQuasigroup ],
+function( x, Q )
+    if not x in Parent( Q ) then
+        Error( "RQ: <1> must be an element of the parent of <2>.");
+    fi;
+    return x*Elements(Q);  
+end );
+
+InstallOtherMethod( \*, "for right quasigroup and a right quasigroup element",
+    [ IsRightQuasigroup, IsRightQuasigroupElement ],
+function( Q, x )
+    if not x in Parent( Q ) then
+        Error( "RQ: <1> must be an element of the parent of <2>.");
+    fi;
+    return Elements(Q)*x;
 end );
 
 # \/ (right quotient, right division)
@@ -362,6 +454,40 @@ function( x, ls )
     return x/ls;
 end );
 
+InstallOtherMethod( \/, "for right quasigroup element and a right quasigroup",
+    [ IsRightQuasigroupElement, IsRightQuasigroup ],
+    0,
+function( x, Q )
+    if not x in Parent( Q ) then
+        Error( "RQ: <1> must be an element of the parent of <2>.");
+    fi;
+    return x/Elements(Q);  
+end );
+
+InstallOtherMethod( RightQuotient, "for right quasigroup element and a right quasigroup",
+    [ IsRightQuasigroupElement, IsRightQuasigroup ],
+    0,
+function( x, Q )
+    return x/Q;
+end );
+
+InstallOtherMethod( \/, "for right quasigroup and a right quasigroup element",
+    [ IsRightQuasigroup, IsRightQuasigroupElement ],
+    0,
+function( Q, x )
+    if not x in Parent( Q ) then
+        Error( "RQ: <2> must be an element of the parent of <1>.");
+    fi;
+    return Elements(Q)/x;
+end );
+
+InstallOtherMethod( RightQuotient, "for right quasigroup and a right quasigroup element",
+    [ IsRightQuasigroup, IsRightQuasigroupElement ],
+    0,
+function( Q, x )
+    return Q/x;
+end );
+
 # LeftQuotient, LeftDivision
 
 InstallOtherMethod( LeftQuotient, "for two quasigroup elements",
@@ -382,16 +508,30 @@ end );
 
 InstallOtherMethod( LeftQuotient, "for list of quasigroup elements and quasigroup element",
     [ IsList, IsQuasigroupElement ],
-    0,
+    1, # PROG: else a more generic outside method is called
 function( ls, y )
     return List( ls, x -> LeftQuotient(x,y) );
 end );
 
 InstallOtherMethod( LeftQuotient, "for quasigroup element and list of quasigroup elements",
-    [ IsRightQuasigroupElement, IsList ],
+    [ IsQuasigroupElement, IsList ],
     0,
 function( x, ls )
     return List( ls, y -> LeftQuotient(x,y) );
+end );
+
+InstallOtherMethod( LeftQuotient, "for quasigroup element and a quasigroup",
+    [ IsQuasigroupElement, IsQuasigroup ],
+    0,
+function( x, Q )
+    return LeftQuotient( x, Elements(Q) );
+end );
+
+InstallOtherMethod( LeftQuotient, "for quasigroup and a quasigroup element",
+    [ IsQuasigroup, IsQuasigroupElement ],
+    1, # PROG: else a more generic outside method is called
+function( Q, x )
+    return LeftQuotient( Elements(Q), x );
 end );
 
 # \^
@@ -399,6 +539,14 @@ end );
 
 InstallMethod( \^, "for right quasigroup element and permutation",
     [ IsRightQuasigroupElement, IsPerm ],
+function( x, p )
+    local F, i;
+    F := FamilyObj( x );
+    return F!.set[ ParentInd( x )^p ];
+end );
+
+InstallMethod( \^, "for right quasigroup element and transformation",
+    [ IsRightQuasigroupElement, IsTransformation ],
 function( x, p )
     local F, i;
     F := FamilyObj( x );
@@ -526,7 +674,7 @@ InstallMethod( IndexBasedCopy, "for right quasigroup",
 function( Q )
     local copyQ;
     copyQ := RQ_AlgebraByCayleyTable( CategoryOfRightQuasigroup( Q ), CayleyTable( Q ), ConstructorStyle( true, false ) );
-    RQ_InheritProperties( Q, copyQ );
+    RQ_InheritProperties( Q, copyQ, false );
     return copyQ;
 end );
 
@@ -547,7 +695,7 @@ InstallMethod( CanonicalCopy, "for right quasigroup",
 function( Q )
     local copyQ;
     copyQ := RQ_AlgebraByCayleyTable( CategoryOfRightQuasigroup( Q ), MultiplicationTable( Q ), ConstructorStyle( true, false ) );
-    RQ_InheritProperties( Q, copyQ );
+    RQ_InheritProperties( Q, copyQ, false );
     return copyQ;
 end );
 

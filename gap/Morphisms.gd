@@ -108,9 +108,8 @@ DeclareOperation( "IsLoopAutomorphism", [ IsMapping ] );
 #! @BeginExampleSession
 #! gap> Q := AutomorphicLoop( 15, 1 );;
 #! gap> f := LeftInnerMapping( Q, Q.6, Q.2 );
-#! 9,8,7,10)(11,15,12,13,14)
+#! (6,9,8,7,10)(11,15,12,13,14)
 #! gap> m := AsRightQuasigroupMapping( Q, f );;
-#! MappingByFunction( <automorphic loop 15/1>, <automorphic loop 15/1>, function( x ) ... end )
 #! gap> IsRightQuasigroupAutomorphism( m );
 #! true
 #! @EndExampleSession
@@ -194,7 +193,7 @@ DeclareOperation( "NaturalHomomorphismByCongruenceNC", [ IsEquivalenceRelation ]
 
 #! @BeginExampleSession
 #! gap> Q := QuasigroupByFunction( [0..3], function(x,y) return (x-y) mod 4; end );;
-#! gap> C := EquivalenceRelationByPartition( Q, [ [Q[0],Q[2]], [Q[1],Q[3]] ] );
+#! gap> C := EquivalenceRelationByPartition( Q, [ [Q[0],Q[2]], [Q[1],Q[3]] ] );;
 #! gap> f := NaturalHomomorphismByCongruence( C );
 #! MappingByFunction( <quasigroup of size 4>, <quasigroup of size 2>, function( x ) ... end )
 #! gap> UnderlyingSet( Range( f ) );
@@ -252,7 +251,7 @@ DeclareOperation( "NaturalHomomorphismByNormalSubloopNC", [ IsLoop, IsLoop ] );
 #! @GroupTitle Isomorphs
 
 # RQ_AlgebraIsomorh( category, data )
-DeclareOperation( "RQ_AlgebraIsomorph", [ IsObject, IsList ] );
+DeclareOperation( "RQ_AlgebraIsomorph", [ IsOperation, IsList ] );
 
 #! @Arguments Q, f[, isCanonical, constructorStyle]
 #! @Returns the isomorph of the right quasigroup (quasigroup, loop) <Arg>Q</Arg> via <Arg>f</Arg>.
@@ -267,8 +266,8 @@ DeclareGlobalFunction( "QuasigroupIsomorph" );
 DeclareGlobalFunction( "LoopIsomorph" );
 
 #! @BeginExampleSession
-#! gap> Q1 := MoufangLoop( 12, 1 );;
-#! <Moufang loop of size 12>
+#! gap> Q1 := MoufangLoop( 12, 1 );
+#! <Moufang loop 12/1>
 #! gap> Q2 := LoopIsomorph( Q1, (3,4,5) ); # Other kinds of mappings are accepted. Note inherited properties.
 #! <Moufang loop of size 12>
 #! @EndExampleSession
@@ -329,14 +328,14 @@ DeclareOperation( "RQ_ExtendIsomorphism", [ IsList, IsRectangularTable, IsList, 
 # Given a right quasigroup <Q1>, its efficient generators <gen1>, the 
 # disciminator <dis1> of <Q1>, and another right quasigroup <Q2> with discriminator
 # <dis2>, it returns an isomorphism from <Q1> onto <Q2>, or it fails.
-DeclareOperation( "RQ_IsomorphismAlgebrasWithPrecalculatedData",  [ IsObject, IsRightQuasigroup, IsList, IsList, IsRightQuasigroup, IsList ] );
+DeclareOperation( "RQ_IsomorphismAlgebrasWithPrecalculatedData",  [ IsOperation, IsRightQuasigroup, IsList, IsList, IsRightQuasigroup, IsList ] );
 
 #! @BeginGroup
 #! @GroupTitle IsomorphismRightQuasigroups, IsomorphismQuasigroups, IsomorphismLoops
 
 # Auxiliary function (category, Q1, Q2 )
 # returns an isomorphism from <Q1> onto <Q2>, or fail.
-DeclareOperation( "RQ_IsomorphismAlgebras", [ IsObject, IsRightQuasigroup, IsRightQuasigroup ] );
+DeclareOperation( "RQ_IsomorphismAlgebras", [ IsOperation, IsRightQuasigroup, IsRightQuasigroup ] );
 
 #! @Arguments Q1, Q2
 #! @Returns an isomorphism between the right quasigroups (quasigroups, loops) `Q1` and `Q2`, if one exists,
@@ -370,7 +369,7 @@ DeclareOperation( "IsomorphismLoops", [ IsLoop, IsLoop ] );
 
 # auxiliary function ( category, ls )
 # given a list <ls> of algebras of type <category>, returns a sublist of <ls> with algebras up to isomorphism
-DeclareOperation( "RQ_AlgebrasUpToIsomorphism", [ IsObject, IsList ] );
+DeclareOperation( "RQ_AlgebrasUpToIsomorphism", [ IsOperation, IsList ] );
 
 #! @Arguments ls
 #! @Returns a sublist of `ls` consisting of all right quasigroups (quasigroups, loops) in `ls` up to isomorphism.

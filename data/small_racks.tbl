@@ -16,4 +16,4 @@ RQ_rack_groups := [];
 RQ_rack_ids := [];
 
 # info about previous rack constructed, to speed up the library
-RQ_rack_previous := rec( G := "", orbs := "", reps := "", m := "", stabs := "", folder := "", trans := "" );
+RQ_rack_previous := rec( G := "", orbs := "", reps := "", m := "", n := "", stabs := "", folder := "", trans := "" );

@@ -19,7 +19,7 @@ gap> LoopSatisfiesIdentity( Q, "x*x=1" );
 gap> RightQuasigroupTermFromString("x*(y/z)");
 [ 24, '*', [ 25, '/', 26 ] ]
 gap> QuasigroupTermFromString("(a|b)/(c*d)"); # note the symbol | for left division
-[ [ 1, '|', 2 ], '/', [ 3, '*', 5 ] ]
+[ [ 1, '|', 2 ], '/', [ 3, '*', 4 ] ]
 
 #
 gap> STOP_TEST("rightquasigroups07.tst", 1 );

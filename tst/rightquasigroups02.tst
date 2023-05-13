@@ -41,7 +41,7 @@ gap> Q := RQ_AlgebraShell( IsRightQuasigroup, GF(5), rec( indexBased := false ) 
 gap> F := FamilyObj( Q.1 );;
 gap> F!.mult := function(x,y) return x+y; end;;
 gap> Q; # still a shell since right division is not bound
-<right quasigroup shell of size 5> 
+<right quasigroup shell of size 5>
 gap> Q.1*Q.1; # multiplication already works since Q is not index based and F!.mult is bound
 r0*Z(5)
 gap> RQ_AddDefaultOperations( Q );
@@ -54,10 +54,10 @@ r0*Z(5)
 # doc/_Chapter_Constructors.xml:181-196
 gap> Q := RQ_AlgebraShell( IsRightQuasigroup, GF(5) );
 <right quasigroup shell of size 5>
-gap> F := FamilyObj( Q.1 );
+gap> F := FamilyObj( Q.1 );;
 gap> F!.multTable := List( GF(5), x-> List( GF(5), y -> Position( Elements(GF(5)), x+y ) ) );;
 gap> Q; # still a shell since right division is not bound
-<right quasigroup shell of size 5> 
+<right quasigroup shell of size 5>
 gap> Q.1*Q.1; # multiplication already works since Q is index based and F!.multTable is bound
 r0*Z(5)
 gap> RQ_AddDefaultOperations( Q );
@@ -85,10 +85,10 @@ gap> Display( MultiplicationTable( Q ) ); # note the ordering of elements, with 
 [ [  2,  3,  3 ],
   [  1,  1,  2 ],
   [  3,  2,  1 ] ]
-gap> Display( CayleyTable( Q ) );
-[ [ "red", "white", "white" ],
-  [ "blue", "blue", "red" ],
-  [ "white", "red", "blue" ] ]
+gap> PrintArray( CayleyTable( Q ) );
+[ [    red,  white,  white ],
+  [   blue,   blue,    red ],
+  [  white,    red,   blue ] ]
 gap> Elements( Q );
 [ rblue, rred, rwhite ]
 gap> IsQuasigroupCayleyTable( ct );
@@ -160,7 +160,7 @@ gap> section := [ (), (1,2,3,4), (), (1,3)(2,4) ];;
 gap> IsRightSection( [1..4], section );
 true
 gap> IsRightSection( section ); # the underlying set can be omitted
-false
+true
 gap> IsRightSection( "abcd", section ); # implicit permutation action on the set ['a','b','c','d']
 true
 gap> IsQuasigroupRightSection( [1..4], section );
@@ -190,7 +190,7 @@ gap> section := [(1,2),()];;
 gap> IsQuasigroupRightSection( [1,2], section );
 true
 gap> QuasigroupByRightSection( [1,2], section );
-<right quasigroup of size 2>
+<quasigroup of size 2>
 gap> IsLoopRightSection( [1,2], section );
 true
 gap> LoopByRightSection( [1,2], section );
@@ -210,7 +210,7 @@ gap> Q2 := RightQuasigroupByRightFolder( G, H, T );
 <right quasigroup of size 20>
 gap> Q3 := RightQuasigroupByRightFolder( G, H, Elements( T ) );
 <right quasigroup of size 20>
-gap> IsomorphismRightQuasigroups( Q1, Q2 );
+gap> AsCanonicalPerm( IsomorphismRightQuasigroups( Q1, Q2 ) );
 ()
 gap> UnderlyingSet( Q1 ) = Elements( T );
 true
@@ -238,20 +238,13 @@ gap> Q := ProjectionRightQuasigroup( [1..1000] );; # 375 ms to construct
 gap> Q.123*Q.456;
 r123
 
-# doc/_Chapter_Constructors.xml:808-822
-gap> PrintArray( CayleyTable( RandomRightQuasigroup( 4 ) ) );
-[ [  2,  2,  4,  3 ],
-  [  1,  3,  3,  4 ],
-  [  3,  1,  2,  2 ],
-  [  4,  4,  1,  1 ] ]
-gap> PrintArray( CayleyTable( RandomQuasigroup( ["a","b","c"] ) ) );
-[ [  c,  a,  b ],
-  [  a,  b,  c ],
-  [  b,  c,  a ] ]
-gap> PrintArray( CayleyTable( RandomLoop( ["a","b","c"] ) ) );
-[ [  a,  b,  c ],
-  [  b,  c,  a ],
-  [  c,  a,  b ] ]
+# doc/_Chapter_Constructors.xml:808-815
+gap> RandomRightQuasigroup( 4 );
+<right quasigroup of size 4>
+gap> Elements( RandomQuasigroup( ["a","b","c"] ) );
+[ qa, qb, qc ]
+gap> RandomLoop( ["a","b","c"] );
+<loop of size 3>
 
 #
 gap> STOP_TEST("rightquasigroups02.tst", 1 );

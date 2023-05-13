@@ -56,5 +56,5 @@ DeclareOperation( "RightBolLoopByExactGroupFactorization", [ IsGroup, IsGroup, I
 #! gap> IsExactGroupFactorization( G, H1, H2 );
 #! true
 #! gap> RightBolLoopByExactGroupFactorization( G, H1, H2 );
-#! <right Bol loop of order 120>
+#! <right Bol loop of size 120>
 #! @EndExampleSession

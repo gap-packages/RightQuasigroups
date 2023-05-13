@@ -7,7 +7,7 @@
 
 # RQ_IsAlgebraMapping
 InstallMethod( RQ_IsAlgebraMapping, "for category and mapping",
-    [ IsObject, IsMapping ],
+    [ IsOperation, IsMapping ],
 function( category, m )
     return category( Source( m ) ) and category( Range( m ) );
 end );;

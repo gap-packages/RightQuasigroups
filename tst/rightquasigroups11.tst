@@ -136,7 +136,7 @@ gap> [ IsAffineRackArithmeticForm( 12, 5, 2, 6 ), AffineRack( 12, 5, 2, 6 ) ];
 gap> # affine rack on GF(9)
 gap> F := GF(9);; f := 2*Z(9);; g := Z(9)+One(F);; c := Zero(F);;
 gap> [ IsAffineRackArithmeticForm( F, f, g, c ), AffineRack( F, f, g, c ) ]; # latin racks are quandles
-[ true, <latin quandle of size 9> ] 
+[ true, <latin quandle of size 9> ]
 gap> # affine rack on cyclic group of order 4
 gap> x := (1,2,3,4);; G := Group( x );;
 gap> f := GroupHomomorphismByImages( G, G, [x], [x^-1] );;
@@ -159,7 +159,7 @@ gap> [ IsAffineQuandleArithmeticForm( G, f ), AffineQuandle( G, f ) ];
 [ true, <latin quandle of size 5> ]
 
 # doc/_Chapter_Racks_and_quandles.xml:273-281
-gap> G := AlternatingGroup( 5 );
+gap> G := AlternatingGroup( 5 );;
 gap> Q := CoreOfGroup( G );
 <quandle of size 60>
 gap> Q[(1,2,3)]*Q[(1,2,3,4,5)] = Q[(1,2,3)*(1,2,3,4,5)^(-1)*(1,2,3)];
@@ -183,9 +183,8 @@ gap> ConjugationQuandle( ConjugacyClass( G, (1,2,3) ) ); # y^-1*x*y on [ (1,2,3)
 gap> ConjugationQuandle( G, 2 ); # y^-2*x*y^2 on G
 <quandle of size 6>
 
-# doc/_Chapter_Racks_and_quandles.xml:398-413
+# doc/_Chapter_Racks_and_quandles.xml:398-412
 gap> Q := SmallQuandle( 10, 1000 );
-#I   - reading data file
 <small quandle 10/1000>
 gap> env := QuandleEnvelope( Q );
 [ Group([ (1,3,2)(7,8) ]), [ 1, 4, 5, 6, 7, 9, 10 ],
@@ -199,26 +198,26 @@ IdentityTransformation
 gap> QuandleByQuandleEnvelope( env[1], env[2], env[3] ); # separate arguments also supported for envelopes
 <quandle of size 10>
 
-# doc/_Chapter_Racks_and_quandles.xml:449-455
+# doc/_Chapter_Racks_and_quandles.xml:448-454
 gap> Q := AffineRack( 12, 5, 2, 6 );;
 gap> S := Subrack( Q, [ Q[2] ] );
 <rack of size 2>
 gap> IsSubrack( Q, S );
 true
 
-# doc/_Chapter_Racks_and_quandles.xml:470-474
+# doc/_Chapter_Racks_and_quandles.xml:469-473
 gap> Q := ConjugationQuandle( SymmetricGroup( 3 ) );;
 gap> List( AllSubquandles( Q ), Size );
-[ 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 5, 2, 4, 6, 3 ]
+[ 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 5, 2, 4, 6, 3 ]
 
-# doc/_Chapter_Racks_and_quandles.xml:492-498
+# doc/_Chapter_Racks_and_quandles.xml:491-497
 gap> Q := ConjugationQuandle( SymmetricGroup( 3 ) );;
 gap> S := QuandleWithGenerators( [ Q[(1,2)], Q[(1,2,3)] ] );
 <quandle of size 5>
 gap> GeneratorsOfMagma( S );
 [ r(1,2), r(1,2,3) ]
 
-# doc/_Chapter_Racks_and_quandles.xml:550-559
+# doc/_Chapter_Racks_and_quandles.xml:549-558
 gap> g := AdjointGroup( DihedralQuandle( 3 ) );
 <fp group on the generators [ q0, q1 ]>
 gap> GeneratorsOfGroup( g );

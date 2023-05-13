@@ -286,7 +286,7 @@ end );
 # PROG: constructor OK, calls RQ_AlgebraTwist
 
 InstallMethod( RQ_AlgebraIsomorph, "for category and list of arguments",
-    [ IsObject, IsList ],
+    [ IsOperation, IsList ],
 function( category, data )
     local ls, Q;
     # expects data to be Q, f ...
@@ -299,7 +299,7 @@ function( category, data )
     ls := Concatenation( ls, data{[3..Length(data)]} );
     Q := RQ_AlgebraTwist( category, ls );
     # inherit properties
-    RQ_InheritProperties( ls[1], Q );
+    RQ_InheritProperties( ls[1], Q, false );
     return Q;
 end );
 
@@ -364,7 +364,7 @@ function( Q )
     if case < 2 then # am I an idempotent?
         for i in [1..n] do I[i,3] := T[i,i]=i; od;
     elif case = 2 then # am I an involution?
-        for i in [1..n] do I[i,3] := T[i,i]=1; od;
+        for i in [1..n] do I[i,3] := T[i,i]= ParentInd( One(Q) ); od;
     else # what's my order?
         for i in [1..n] do I[i,3] := Order( Q.(i) ); od;
     fi;
@@ -562,7 +562,7 @@ end );
 
 InstallMethod( RQ_IsomorphismAlgebrasWithPrecalculatedData,
     "for category, right quasigroups, generators, discriminator, right quasigroup and discriminator",
-    [ IsObject, IsRightQuasigroup, IsList, IsList, IsRightQuasigroup, IsList ],
+    [ IsOperation, IsRightQuasigroup, IsList, IsList, IsRightQuasigroup, IsList ],
 function( category, Q1, gen1, dis1, Q2, dis2 ) # PROG: category is never used
     local f, iso;
     iso := RQ_ExtendIsomorphism( 0*[1..Size(Q1)], MultiplicationTable( Q1 ), gen1, dis1[2], MultiplicationTable( Q2 ), dis2[2] );
@@ -575,7 +575,7 @@ end );
 # RQ_IsomorphismAlgebras
 
 InstallMethod( RQ_IsomorphismAlgebras, "for category and two right quasigroups",
-    [ IsObject, IsRightQuasigroup, IsRightQuasigroup ],
+    [ IsOperation, IsRightQuasigroup, IsRightQuasigroup ],
 function( category, Q1, Q2 ) # PROG: category is never used
     local origQ1, origQ2, dis1, dis2, gen1, iso;
    
@@ -624,7 +624,7 @@ end );
 # RQ_AlgebrasUpToIsomorphism
 
 InstallMethod( RQ_AlgebrasUpToIsomorphism, "for category and list of algebras",
-    [ IsObject, IsList ],
+    [ IsOperation, IsList ],
 function( category, ls )
     local kept, positions, pos, Q, dis, gen, with_same_D, is_new, K;
     

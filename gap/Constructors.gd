@@ -96,8 +96,8 @@ DeclareSynonymAttr( "IsLatinMagma", IsQuasigroupMagma );
 
 # RQ_AsAlgebra( category, M, style )
 # returns M as an algebra in the appropriate category, if possible
-DeclareOperation( "RQ_AsAlgebra", [ IsObject, IsDomain, IsRecord ] );
-# REVISIT: a) It would be better to restrict the first argument more, but neither IsCategory nor IsFilter works. If a change is made, make it everywhere. 
+DeclareOperation( "RQ_AsAlgebra", [ IsOperation, IsDomain, IsRecord ] );
+# a) IsRightQuasigroup lies in IsOperation, and IsOperation is a filter. IsCategory cannot be used since it is not a filter.
 # b) The second filter must accommodate IsMagma and IsAdditiveGroup.
 
 #! @BeginGroup
@@ -166,7 +166,7 @@ DeclareOperation( "AsLoop", [ IsDomain ]);
 #! The value of <Arg>category</Arg> must be `IsRightQuasigroup`, `IsQuasigroup` or `IsLoop`.
 #! @Description Note: The value of <Arg>constructorStyle</Arg>`.checkArguments` of the optional argument <Arg>constructorStyle</Arg>
 #! does not come into play and need not be specified.
-DeclareOperation( "RQ_AlgebraShell", [ IsObject, IsCollection ] ); 
+DeclareOperation( "RQ_AlgebraShell", [ IsOperation, IsCollection ] ); 
 
 #! @Arguments Q 
 #! @Returns `true`
@@ -185,7 +185,7 @@ DeclareOperation( "RQ_AddDefaultOperations", [ IsRightQuasigroup ] );
 #! gap> F := FamilyObj( Q.1 );;
 #! gap> F!.mult := function(x,y) return x+y; end;;
 #! gap> Q; # still a shell since right division is not bound
-#! <right quasigroup shell of size 5> 
+#! <right quasigroup shell of size 5>
 #! gap> Q.1*Q.1; # multiplication already works since Q is not index based and F!.mult is bound
 #! r0*Z(5)
 #! gap> RQ_AddDefaultOperations( Q );
@@ -201,10 +201,10 @@ DeclareOperation( "RQ_AddDefaultOperations", [ IsRightQuasigroup ] );
 #! @BeginExampleSession
 #! gap> Q := RQ_AlgebraShell( IsRightQuasigroup, GF(5) );
 #! <right quasigroup shell of size 5>
-#! gap> F := FamilyObj( Q.1 );
+#! gap> F := FamilyObj( Q.1 );;
 #! gap> F!.multTable := List( GF(5), x-> List( GF(5), y -> Position( Elements(GF(5)), x+y ) ) );;
 #! gap> Q; # still a shell since right division is not bound
-#! <right quasigroup shell of size 5> 
+#! <right quasigroup shell of size 5>
 #! gap> Q.1*Q.1; # multiplication already works since Q is index based and F!.multTable is bound
 #! r0*Z(5)
 #! gap> RQ_AddDefaultOperations( Q );
@@ -296,7 +296,7 @@ DeclareOperation( "LeftDivisionTableFromMultiplicationTable", [ IsRectangularTab
 # RQ_IsAlgebraCayleyTable( category, ct, reportErrors )
 # returns true if <Arg>ct</Arg> is a Cayley table for an algebra in the given category
 # The underlying set it understood to be the ordered set of elements contained in the firts column of <Arg>ct</Arg>.
-DeclareOperation( "RQ_IsAlgebraCayleyTable", [ IsObject, IsRectangularTable, IsBool ] );
+DeclareOperation( "RQ_IsAlgebraCayleyTable", [ IsOperation, IsRectangularTable, IsBool ] );
 
 #! @Arguments ct
 DeclareOperation( "IsRightQuasigroupCayleyTable", [ IsRectangularTable ] );
@@ -347,7 +347,8 @@ DeclareOperation( "NormalizedQuasigroupCayleyTable", [ IsRectangularTable ] );
 #! @BeginGroup
 #! @GroupTitle Creating right quasigroups by Cayley table
 
-DeclareOperation( "RQ_AlgebraByCayleyTable", [ IsObject, IsRectangularTable, IsRecord ] ); # category, ct, constructorStyle
+# RQ_AlgebraByCayleyTable( category, ct, costructorStyle )
+DeclareOperation( "RQ_AlgebraByCayleyTable", [ IsOperation, IsRectangularTable, IsRecord ] ); 
 
 #! @Arguments ct[, constructorStyle]
 DeclareOperation( "RightQuasigroupByCayleyTable", [ IsRectangularTable ] );
@@ -370,10 +371,10 @@ DeclareOperation( "LoopByCayleyTable", [ IsRectangularTable ] );
 #! [ [  2,  3,  3 ],
 #!   [  1,  1,  2 ],
 #!   [  3,  2,  1 ] ]
-#! gap> Display( CayleyTable( Q ) );
-#! [ [ "red", "white", "white" ],
-#!   [ "blue", "blue", "red" ],
-#!   [ "white", "red", "blue" ] ]
+#! gap> PrintArray( CayleyTable( Q ) );
+#! [ [    red,  white,  white ],
+#!   [   blue,   blue,    red ],
+#!   [  white,    red,   blue ] ]
 #! gap> Elements( Q );
 #! [ rblue, rred, rwhite ]
 #! gap> IsQuasigroupCayleyTable( ct );
@@ -445,7 +446,7 @@ DeclareOperation( "LoopByCayleyTable", [ IsRectangularTable ] );
 # RQ_AreAlgebraFunctions( category, S, mult, ops, reportErrors ) 
 # checks if the operations are valid for the given category on S
 # ops can be any sublist of [rdiv,ldiv,one]
-DeclareOperation( "RQ_AreAlgebraFunctions", [ IsObject, IsCollection, IsFunction, IsList, IsBool ] );
+DeclareOperation( "RQ_AreAlgebraFunctions", [ IsOperation, IsCollection, IsFunction, IsList, IsBool ] );
 
 #! @Arguments S, mult[, rdiv]
 #! @Returns `true` if <Arg>mult</Arg> is a right quasigroup function on <Arg>S</Arg>, else returns `false`.
@@ -522,7 +523,7 @@ DeclareOperation( "LeftDivisionFunction", [ IsQuasigroup ] );
 # RQ_AlgebraByFunction( category, S, mult, rest )
 # returns algebra in the appropriate category based on the specified (subset of) operations
 # rest is any subset of [rdiv,ldiv,one,style]
-DeclareOperation( "RQ_AlgebraByFunction", [ IsObject, IsCollection, IsFunction, IsList ] );
+DeclareOperation( "RQ_AlgebraByFunction", [ IsOperation, IsCollection, IsFunction, IsList ] );
 
 #! @Arguments S, mult[, rdiv][, constructorStyle]
 #! @Returns a right quasigroup with underlying set <Arg>S</Arg> and multiplication function <Arg>mult</Arg>.
@@ -598,7 +599,7 @@ DeclareGlobalFunction( "LoopByFunction" );
 # Accepts two kinds of sections:
 # - if section is any set of group elements acting on S, we use that action
 # - if section is a set of permutations, we implicitly act on the ordered set S
-DeclareOperation( "RQ_IsAlgebraRightSection", [ IsObject, IsCollection, IsCollection, IsBool ] );
+DeclareOperation( "RQ_IsAlgebraRightSection", [ IsOperation, IsCollection, IsCollection, IsBool ] );
 
 #! @BeginGroup
 #! @GroupTitle Testing right sections
@@ -622,7 +623,7 @@ DeclareOperation( "IsLoopRightSection", [ IsCollection, IsCollection ] );
 
 # RQ_AlgebraByRightSection( category, S, section, style )
 # returns the corresponding algebra by right section
-DeclareOperation( "RQ_AlgebraByRightSection", [ IsObject, IsCollection, IsCollection, IsRecord ] );
+DeclareOperation( "RQ_AlgebraByRightSection", [ IsOperation, IsCollection, IsCollection, IsRecord ] );
 
 #! @Arguments [S,] section[, constructorStyle]
 DeclareOperation( "RightQuasigroupByRightSection", [ IsCollection, IsCollection ] );
@@ -644,7 +645,7 @@ DeclareOperation( "LoopByRightSection", [ IsCollection, IsCollection ] );
 #! gap> IsRightSection( [1..4], section );
 #! true
 #! gap> IsRightSection( section ); # the underlying set can be omitted
-#! false
+#! true
 #! gap> IsRightSection( "abcd", section ); # implicit permutation action on the set ['a','b','c','d']
 #! true
 #! gap> IsQuasigroupRightSection( [1..4], section );
@@ -684,7 +685,7 @@ DeclareOperation( "LoopByRightSection", [ IsCollection, IsCollection ] );
 #! gap> IsQuasigroupRightSection( [1,2], section );
 #! true
 #! gap> QuasigroupByRightSection( [1,2], section );
-#! <right quasigroup of size 2>
+#! <quasigroup of size 2>
 #! gap> IsLoopRightSection( [1,2], section );
 #! true
 #! gap> LoopByRightSection( [1,2], section );
@@ -737,7 +738,7 @@ DeclareOperation( "RQ_RightSectionFromRightFolder", [ IsGroup, IsGroup, IsSet ] 
 # RQ_IsAlgebraRightFolder(category, G, H, T, reportErrors )
 # auxiliary function
 # returns true if G, H, T is a right folder for the given category
-DeclareOperation( "RQ_IsAlgebraRightFolder", [ IsObject, IsGroup, IsGroup, IsList, IsBool ] ); 
+DeclareOperation( "RQ_IsAlgebraRightFolder", [ IsOperation, IsGroup, IsGroup, IsList, IsBool ] ); 
 
 #! @Arguments arg
 DeclareOperation( "IsRightFolder", [ IsRightTransversal ] ); # T or G,H,T
@@ -757,7 +758,7 @@ DeclareOperation( "IsLoopRightFolder", [ IsRightTransversal ] ); # T or G,H,T
 
 # RQ_AlgebraByRightFolder( category, G, H, T, style )
 # returns the appropriate algebra from the right folder G, H, T
-DeclareOperation( "RQ_AlgebraByRightFolder", [ IsObject, IsGroup, IsGroup, IsList, IsRecord ] ); 
+DeclareOperation( "RQ_AlgebraByRightFolder", [ IsOperation, IsGroup, IsGroup, IsList, IsRecord ] ); 
 
 #! @Arguments arg[, constructorStyle]
 DeclareOperation( "RightQuasigroupByRightFolder", [ IsRightTransversal ] ); # T or G,H,T, then [, constructorStyle ]
@@ -786,7 +787,7 @@ DeclareOperation( "LoopByRightFolder", [ IsRightTransversal ] ); # T or G,H,T, t
 #! <right quasigroup of size 20>
 #! gap> Q3 := RightQuasigroupByRightFolder( G, H, Elements( T ) );
 #! <right quasigroup of size 20>
-#! gap> IsomorphismRightQuasigroups( Q1, Q2 );
+#! gap> AsCanonicalPerm( IsomorphismRightQuasigroups( Q1, Q2 ) );
 #! ()
 #! gap> UnderlyingSet( Q1 ) = Elements( T );
 #! true

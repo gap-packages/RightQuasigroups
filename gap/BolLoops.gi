@@ -38,7 +38,7 @@ end );
 # AssociatedLeftBruckLoop
 InstallMethod( AssociatedLeftBruckLoop,
     [ IsLeftBolLoop ],
-function( Q ) 
+function( Q )     
     # REVISIT: we could also call OppositeLoop( AssociatedRightBruckLoop( OppositeLoop( Q ) ) )
     local n, elms, squares, roots, uSet, t, ct, L, F;
     n := Size( Q );

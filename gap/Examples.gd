@@ -61,10 +61,10 @@ DeclareOperation( "DisplayLibraryInfo", [ IsString ] );
 #! The library contains all nonassociative nilpotent loops of order less than 12.
 #! ------
 #! Extent of the library:
-#!    2 loops of order 6
-#!    134 loops of order 8
-#!    8 loops of order 9
-#!    1043 loops of order 10
+#!    2 algebras of order 6
+#!    134 algebras of order 8
+#!    8 algebras of order 9
+#!    1043 algebras of order 10
 #! true
 #! @EndExampleSession
 
@@ -108,7 +108,7 @@ DeclareGlobalFunction( "LibraryAlgebras" );
 #! gap> LibraryAlgebras( "Moufang loops", Size, 81, IsCommutative, false );
 #! [ <Moufang loop 81/3>, <Moufang loop 81/4>, <Moufang loop 81/5> ]
 #! gap> MoufangLoops( [65..81], IsCommutative, Exponent, 3 ); 
-#! [ <MoufangLoop 81/1> ]
+#! [ <Moufang loop 81/1> ]
 #! @EndExampleSession
 
 # auxiliary function for the construction of various loops
@@ -116,6 +116,7 @@ DeclareGlobalFunction( "RQ_SmallestNonsquare" );
 DeclareGlobalFunction( "RQ_ActivateLeftBolLoopPQ" );
 DeclareGlobalFunction( "RQ_ActivateLeftBolLoop" );
 DeclareGlobalFunction( "RQ_ActivateMoufangLoop" );
+DeclareGlobalFunction( "RQ_ActivateCodeLoop" );
 DeclareGlobalFunction( "RQ_ActivateSteinerLoop" );
 DeclareGlobalFunction( "RQ_ActivateRCCLoop" );
 DeclareGlobalFunction( "RQ_ActivateCCLoop" );
@@ -233,11 +234,15 @@ DeclareGlobalFunction( "MoufangLoops" );
 
 #! @Section Library of code loops
 
-#! <P/>The library named **code loops** contains all nonassociative code loops of order less than 65.
-#! There are 5 such loops of order 16, 16 of order 32, and 80 of order 64, all Moufang.
-#! The library merely points to the corresponding Moufang loops. See
-#! <Cite Key="NaVo2007"/>
-#! for a classification of small code loops.
+#! <P/>The library named **code loops** contains all code loops of order up to and including 256.
+#! Code loops are Moufang loops $Q$ containing a central subloop $Z$ of order $2$ such that
+#! $Q/Z$ is an elementary abelian $2$-group.
+
+#! <P/>There are 1, 2, 4, 10, 23, 88, 767, 80826 and 937791557 code loops of order
+#! 2, 4, 8, 16, 32, 64, 128, 256 and 512, respectively. The code loops of order 512
+#! can be obtained by request from the second author. See <Cite Key="NaVo2007"/>
+#! for a classification of small code loops and <Cite Key="OBVo2017"/> for 
+#! a classification of code loops up to order 512.
 
 #! @Arguments n, m
 #! @Returns the <Arg>m</Arg>th code loop of order <Arg>n</Arg>. 

@@ -36,7 +36,7 @@ DeclareOperation( "RandomRightQuasigroup", [ IsCollection ] );
 # auxiliary function
 # Returns random quasigroup or loop on the underlying set S, using iter initial steps in the J&M algorithm.
 # We also allow S to be the order instead of the underlying set.
-DeclareOperation( "RQ_RandomAlgebra", [ IsObject, IsCollection, IsPosInt ] );
+DeclareOperation( "RQ_RandomAlgebra", [ IsOperation, IsCollection, IsPosInt ] );
 
 #! @Arguments S[, iter]
 #! @Returns a random quasigroup (loop) on the underlying set <Arg>S</Arg>, using <Arg>iter</Arg> number of
@@ -51,19 +51,12 @@ DeclareOperation( "RandomQuasigroup", [ IsCollection ] );
 DeclareOperation( "RandomLoop", [ IsCollection ] );
 
 #! @BeginExampleSession
-#! gap> PrintArray( CayleyTable( RandomRightQuasigroup( 4 ) ) );
-#! [ [  2,  2,  4,  3 ],
-#!   [  1,  3,  3,  4 ],
-#!   [  3,  1,  2,  2 ],
-#!   [  4,  4,  1,  1 ] ]
-#! gap> PrintArray( CayleyTable( RandomQuasigroup( ["a","b","c"] ) ) );
-#! [ [  c,  a,  b ],
-#!   [  a,  b,  c ],
-#!   [  b,  c,  a ] ]
-#! gap> PrintArray( CayleyTable( RandomLoop( ["a","b","c"] ) ) );
-#! [ [  a,  b,  c ],
-#!   [  b,  c,  a ],
-#!   [  c,  a,  b ] ]
+#! gap> RandomRightQuasigroup( 4 );
+#! <right quasigroup of size 4>
+#! gap> Elements( RandomQuasigroup( ["a","b","c"] ) );
+#! [ qa, qb, qc ]
+#! gap> RandomLoop( ["a","b","c"] );
+#! <loop of size 3>
 #! @EndExampleSession
 
 #! @EndGroup

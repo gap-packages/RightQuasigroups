@@ -10,7 +10,75 @@
 #
 gap> START_TEST( "rightquasigroups04.tst");
 
-# doc/_Chapter_Mappings.xml:65-73
+# doc/_Chapter_Mappings.xml:61-128
+gap> Q := MoufangLoop( 12, 1 );;
+gap> S := Subloop( Q, [Q.3] );
+<Moufang loop of size 3>
+gap> ParentInd( S ); # indices of S in Q
+[ 1, 3, 5 ]
+gap> f := LeftTranslation( S, S.3 ); # automatically returned as a parent permutation
+(1,3,5)
+gap> #
+gap> # CONVERTING PARENT PERMUTATIONS
+gap> #
+gap> AsCanonicalPerm( S, f );
+(1,2,3)
+gap> AsTransformation( f ); # standard GAP function
+Transformation( [ 3, 2, 5, 4, 1 ] )
+gap> AsCanonicalTransformation( S, f );
+Transformation( [ 2, 3, 1 ] )
+gap> AsRightQuasigroupMapping( S, f ); # parent permutation expected by default
+MappingByFunction( <Moufang loop of size 3>, <Moufang loop of size 3>, function( x ) ... end )
+gap> #
+gap> # CONVERTING CANONICAL PERMUTATIONS
+gap> #
+gap> g := (1,2,3);;
+gap> AsParentPerm( S, g );
+(1,3,5)
+gap> AsTransformation( g ); # standard GAP function
+Transformation( [ 2, 3, 1 ] )
+gap> AsParentTransformation( S, g );
+Transformation( [ 3, 2, 5, 4, 1 ] )
+gap> AsRightQuasigroupMapping( S, g, true ); # optional bool needed for canonical
+MappingByFunction( <Moufang loop of size 3>, <Moufang loop of size 3>, function( x ) ... end )
+gap> #
+gap> # CONVERTING PARENT TRANSFORMATIONS
+gap> #
+gap> h := Transformation( [3,2,5,4,1] );;
+gap> AsPermutation( h ); # standard GAP function
+(1,3,5)
+gap> AsCanonicalPerm( S, h );
+(1,2,3)
+gap> AsCanonicalTransformation( S, S, h );
+Transformation( [ 2, 3, 1 ] )
+gap> AsRightQuasigroupMapping( S, S, h ); # parent transformation expected by default
+MappingByFunction( <Moufang loop of size 3>, <Moufang loop of size 3>, function( x ) ... end )
+gap> #
+gap> # CONVERTING CANONICAL TRANSFORMATIONS
+gap> #
+gap> k := Transformation( [ 2, 3, 1 ] );;
+gap> AsPermutation( k ); # default GAP function
+(1,2,3)
+gap> AsParentPerm( S, k );
+(1,3,5);
+gap> AsParentTransformation( S, S, k );
+Transformation( [ 3, 2, 5, 4, 1 ] )
+gap> AsRightQuasigroupMapping( S, S, k, true ); # optional bool needed for canonical
+MappingByFunction( <Moufang loop of size 3>, <Moufang loop of size 3>, function( x ) ... end ) 
+gap> #
+gap> # CONVERTING RIGHT QUASIGROUP MAPPINGS
+gap> #
+gap> m := last;;
+gap> AsParentPerm( m );
+(1,3,5)
+gap> AsCanonicalPerm( m );
+(1,2,3)
+gap> AsParentTransformation( m );
+Transformation( [ 3, 2, 5, 4, 1 ] )
+gap> AsCanonicalTransformation( m );
+Transformation( [ 2, 3, 1 ] )
+
+# doc/_Chapter_Mappings.xml:139-147
 gap> Q := MoufangLoop( 12, 1 );;
 gap> m := MappingByFunction( Q, Q, x -> x*x );
 MappingByFunction( <Moufang loop 12/1>, <Moufang loop 12/1>, function( x ) ... end )
@@ -19,7 +87,7 @@ gap> [ Source( m ) = Q, Range( m ) = Q ];
 gap> Q.2*Q.2 = Q.2^m;
 true
 
-# doc/_Chapter_Mappings.xml:132-148
+# doc/_Chapter_Mappings.xml:206-222
 gap> Q := MoufangLoop( 12, 1 );; S := Subloop( Q, [Q.3] );;
 gap> ParentInd( S );
 [ 1, 3, 5 ]
@@ -29,32 +97,14 @@ gap> IsParentPerm( S, (3,4) ); # does not act on [ 1, 3, 5 ]
 false
 gap> IsParentPerm( S, (3,5) ); # acts on [ 1, 3, 5 ]
 true
-gap> IsParentPerm( S, (3,5)(7,8) ); # action on the complement of S is ignored
+gap> IsParentPerm( S, (3,5)(7,8) ); # behavior outside of S is ignored
 true
 gap> IsCanonicalPerm( S, (1,2,3) ); # acts on [1..Size(S)]
 true
 gap> IsCanonicalPerm( S, (1,3,5) ); # does not act on [1..Size(S)]
 false
 
-# doc/_Chapter_Mappings.xml:181-198
-gap> Q := MoufangLoop( 12, 1 );; S := Subloop( Q, [Q.3] );; ParentInd( S );
-[ 1, 3, 5 ]
-gap> m := AsRightQuasigroupMapping( S, (1,3,5) );
-MappingByFunction( <Moufang loop of size 3>, <Moufang loop of size 3>, function( x ) ... end )
-gap> m2 := AsRightQuasigroupMapping( S, (1,2,3), true ); # argument is a canonical permutation
-MappingByFunction( <Moufang loop of size 3>, <Moufang loop of size 3>, function( x ) ... end )
-gap> m = m2;
-true
-gap> f := AsParentPerm( m ); # ParentInd( m ) has the same effect
-(1,3,5)
-gap> f2 := AsCanonicalPerm( m );
-(1,2,3)
-gap> AsParentPerm( S, f2 );
-(1,3,5)
-gap> AsCanonicalPerm( S, f );
-(1,2,3)
-
-# doc/_Chapter_Mappings.xml:258-276
+# doc/_Chapter_Mappings.xml:312-330
 gap> Q := AsLoop( SymmetricGroup( 4 ) );;
 gap> S1 := Subloop( Q, [ Q[(1,2,3)] ] );;
 gap> S2 := Subloop( Q, [ Q[(1,4)]*Q[(1,2,3)]*Q[(1,4)] ] );; # conjugate subloop

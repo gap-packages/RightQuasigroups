@@ -29,8 +29,8 @@ DeclareOperation( "RQ_CharToDigit", [ IsChar ] );
 # because they can be reconstructed from the rest of the table.
 # When <ct> is commutative, only "half" of the table is saved.
 # This can be detected from <str> and decoded appropriately.
-DeclareOperation( "RQ_EncodeCayleyTable", [ IsObject, IsList ] );
-DeclareOperation( "RQ_DecodeCayleyTable", [ IsObject, IsString ] );
+DeclareOperation( "RQ_EncodeCayleyTable", [ IsOperation, IsList ] );
+DeclareOperation( "RQ_DecodeCayleyTable", [ IsOperation, IsString ] );
 
 # RQ_ConvertToDecimal( s, n )
 # Converts an <n>-ary number represented by a string <s> to a decimal

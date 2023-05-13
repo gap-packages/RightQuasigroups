@@ -317,31 +317,46 @@ function( Q )
     return Length( series ) - 1;
 end );
 
-# FRATTINI SUBLOOP
+# FRATTINI SUBALGEBRA
 # _____________________________________________________________________________
 
+# FrattiniSubrightquasigroup
+InstallMethod( FrattiniSubrightquasigroup, "for right quasigroup", 
+    [ IsRightQuasigroup ],
+function( Q )
+    # slow
+    return Intersection( AllMaximalSubrightquasigroups( Q ) );
+end );
+
+# FrattiniSubquasigroup
+InstallMethod( FrattiniSubquasigroup, "for quasigroup",
+    [ IsQuasigroup ],
+    Q -> FrattiniSubrightquasigroup( Q )
+);
+
 # FrattiniSubloop
-InstallMethod( FrattiniSubloop, "for a strongly nilpotent loop", 
+InstallMethod( FrattiniSubloop, "for loop",
     [ IsLoop ],
 function( Q )
     local S;
     if IsNilpotent( MultiplicationGroup( Q ) ) then
+        # faster method
         S := Orbit( FrattiniSubgroup( MultiplicationGroup( Q ) ), One( Q ) );
         return Subloop( Q, S );
-    else
-        TryNextMethod();
-        return;
     fi;
+    # call generic method
+    return FrattiniSubrightquasigroup( Q );
 end );
 
+# REVISIT: Activate this later?
 # FrattinifactorSize( Q ) 
-InstallOtherMethod( FrattinifactorSize, "for a strongly nilpotent loop", 
-    [ IsLoop ],
-function( Q )
-    if IsNilpotent( MultiplicationGroup( Q ) ) then
-        return Size( Q ) / Size( FrattiniSubloop( Q ) );
-    else
-        TryNextMethod();
-        return;
-    fi;
-end );
+#InstallOtherMethod( FrattinifactorSize, "for a strongly nilpotent loop", 
+#    [ IsLoop ],
+#function( Q )
+#    if IsNilpotent( MultiplicationGroup( Q ) ) then
+#        return Size( Q ) / Size( FrattiniSubloop( Q ) );
+#    else
+#        TryNextMethod();
+#        return;
+#    fi;
+#end );

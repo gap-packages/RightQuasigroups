@@ -25,7 +25,7 @@ function( x, y ) ... end
 gap> Q := LoopByFunction( uset, mult ); # Z_4 x Z_2 with one quandrant "replaced" with ct
 <loop of size 8>
 gap> DerivedSeries( Q );
-[ <loop of size 8>, <loop of size 4>, <loop of size 1> ]
+[ <loop of size 8>, <loop of size 4>, <associative loop of size 1> ]
 gap> IsSolvable( Q );
 true
 gap> DerivedLength( Q );
@@ -51,7 +51,7 @@ gap> F := LoopByCayleyTable( [ [ "a", "b" ], [ "b", "a" ] ] );;
 gap> AutomorphismGroup( K );
 Group([ (2,4) ])
 gap> phi := [ (), (2,4) ];; # homomorphism from F to Aut( K )
-gap> theta := [ [ 1, 1 ], [ 1, 4 ] ]; # loop cocycle from FxF to K
+gap> theta := [ [ 1, 1 ], [ 1, 4 ] ];; # loop cocycle from FxF to K
 gap> IsLoopCocycle( K, F, theta );
 true
 gap> Q := LoopByNuclearExtension( K, F, phi, theta );
@@ -60,17 +60,17 @@ gap> S := NucleusOfLoop( Q );
 <associative loop of size 4>
 gap> IsNormal( Q, S );
 true
-gap> IsomorphismLoops( F, Q/S );
+gap> AsCanonicalPerm( IsomorphismLoops( F, Q/S ) );
 ()
 gap> Display( MultiplicationTable( Q ) );
 [ [  1,  2,  3,  4,  5,  6,  7,  8 ],
-  [  2,  3,  4,  1,  6,  7,  8,  5 ],
-  [  3,  4,  1,  2,  7,  8,  5,  6 ],
-  [  4,  1,  2,  3,  8,  5,  6,  7 ],
-  [  5,  8,  7,  6,  4,  3,  2,  1 ],
-  [  6,  5,  8,  7,  1,  4,  3,  2 ],
-  [  7,  6,  5,  8,  2,  1,  4,  3 ],
-  [  8,  7,  6,  5,  3,  2,  1,  4 ] ]
+  [  2,  7,  8,  5,  6,  3,  4,  1 ],
+  [  3,  4,  5,  6,  7,  8,  1,  2 ],
+  [  4,  1,  2,  7,  8,  5,  6,  3 ],
+  [  5,  6,  7,  8,  1,  2,  3,  4 ],
+  [  6,  3,  4,  1,  2,  7,  8,  5 ],
+  [  7,  8,  1,  2,  3,  4,  5,  6 ],
+  [  8,  5,  6,  3,  4,  1,  2,  7 ] ]
 gap> Q.1; # the underlying set of Q is the carthesian product of underlying sets K x F
 l[ <identity> of ..., "a" ]
 gap> LoopByCentralExtension( K, F, theta );
@@ -90,11 +90,11 @@ gap> ext := NuclearExtensionByNormalSubloop( Q, Nuc( Q ) );
       [ 1, 3, 1, 1, 3, 1, 3, 3 ], [ 1, 1, 1, 1, 3, 1, 3, 1 ], [ 1, 3, 1, 1, 1, 1, 1, 3 ], [ 1, 3, 1, 1, 1, 1, 3, 1 ]
      ] ]
 gap> copyQ := LoopByNuclearExtension( ext[1],ext[2],ext[3],ext[4] );;
-gap> IsomorphismLoops( Q, copyQ );
+gap> AsCanonicalPerm( IsomorphismLoops( Q, copyQ ) );
 (4,9,11,28,29,24,22,21,20,25,27,12,13,8,6,5)(7,10)(14,30)(15,31)(16,32)(23,26)
 gap> ext := CentralExtensionByNormalSubloop( Q, Center( Q ) );;
 gap> copyQ := LoopByCentralExtension( ext );; # extension can also be given as a list
-gap> IsomorphismLoops( Q, copyQ );
+gap> AsCanonicalPerm( IsomorphismLoops( Q, copyQ ) );
 ()
 
 # doc/_Chapter_Nilpotency_and_solvability.xml:479-498
@@ -126,21 +126,31 @@ gap> cob := LoopCoboundaries( F, 2 );; Length( cob ); # basis of coboundaries
 gap> Length( LoopCocyclesModAction( F, 2, coc, cob ) ); # cocycles modulo coboundaries and action of Aut(K)x Aut(F)
 10
 gap> Length( AllLoopCocyclesInVariety( F, 2, [ "x*(y*(x*z)) = (x*(y*x))*z" ] ) ); # the same in one step
-#I   - Calculating coboundaries
-#I   - Coboundaries have dimension 1
-#I   - Calculating cocycles
-#I   - Cocycles have dimension 6
+#I  RQ: Calculating coboundaries
+#I  RQ: Coboundaries have dimension 1
+#I  RQ: Calculating cocycles
+#I  RQ: Cocycles have dimension 6
 10
 gap> lps := AllLoopCentralExtensionsInVariety( F, 2, [ "x*(y*(x*z)) = (x*(y*x))*z" ] );; Length( lps ); # all central extensions in one step
-#I   - Calculating coboundaries
-#I   - Coboundaries have dimension 1
-#I   - Calculating cocycles
-#I   - Cocycles have dimension 6
+#I  RQ: Calculating coboundaries
+#I  RQ: Coboundaries have dimension 1
+#I  RQ: Calculating cocycles
+#I  RQ: Cocycles have dimension 6
 10
 gap> ForAll( lps, IsLeftBolLoop );
 true
 gap> Length( LoopsUpToIsomorphism( lps ) ); # filtering up to isomorphism (no isomorphisms in this example)
 10
+
+# doc/_Chapter_Nilpotency_and_solvability.xml:625-634
+gap> Q := MoufangLoop(64,5);
+<Moufang loop 64/5>
+gap> F := FrattiniSubloop(Q);
+<Moufang loop of size 8>
+gap> Exponent(Q/F);
+2
+gap> FrattiniSubrightquasigroup( ProjectionRightQuasigroup([1,2]) );
+[  ]
 
 #
 gap> STOP_TEST("rightquasigroups06.tst", 1 );

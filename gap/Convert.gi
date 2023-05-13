@@ -22,7 +22,7 @@ end );
 # RQ_EncodeCayleyTable( ct ) 
 
 InstallMethod( RQ_EncodeCayleyTable, "for category and list",
-    [ IsObject, IsList ],
+    [ IsOperation, IsList ],
 function( category, ct )
     local n, ret, start, i, j;
     n := Length( ct );
@@ -50,7 +50,7 @@ end );
 # RQ_DecodeCayleyTable( str )
 
 InstallMethod( RQ_DecodeCayleyTable, "for category and string",
-    [ IsObject, IsString ],
+    [ IsOperation, IsString ],
 function( category, str )
     local symbols, n, start, pos, ret, i, j;
     symbols := Set( Set( str ), c -> RQ_CharToDigit(c) + 1 );

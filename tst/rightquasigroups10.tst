@@ -22,7 +22,7 @@ gap> H2 := Subgroup( G, [(1,2,3,4,5)] );;
 gap> IsExactGroupFactorization( G, H1, H2 );
 true
 gap> RightBolLoopByExactGroupFactorization( G, H1, H2 );
-<right Bol loop of order 120>
+<right Bol loop of size 120>
 
 #
 gap> STOP_TEST("rightquasigroups10.tst", 1 );

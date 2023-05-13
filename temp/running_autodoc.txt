@@ -12,6 +12,6 @@ packagedir/
 LoadPackage("RightQuasigroups");
 SetInfoLevel(InfoRightQuasigroups, 2);
 
-ChangeDirectoryCurrent("/opt/gap-4.11.1/pkg/RightQuasigroups");
+ChangeDirectoryCurrent("/opt/gap-4.12.2/pkg/rightquasigroups");
 LoadPackage("AutoDoc");
 AutoDoc( rec( scaffold := rec( bib := "bib.xml.bib" ), autodoc := true, extract_examples := true  ) );

@@ -153,7 +153,7 @@
 
 #! @Section Subalgebras
 
-#! @Section Right cosets and transversals
+#! @Section Cosets and transversals
 
 #! @Section Right quasigroups by generators
 #! @SectionLabel ByGenerators

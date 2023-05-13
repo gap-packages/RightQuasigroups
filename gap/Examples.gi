@@ -77,7 +77,7 @@ function( name )
     elif name = "Paige loops" then
         s := "The library contains the smallest nonassociative finite simple Moufang loop.";
     elif name = "code loops" then
-        s := "The library contains all nonassociative even code loops of order less than 65.";
+        s := "The library contains all code loops of order less than 512.";
     elif name = "Steiner loops" then
         s := "The library contains all nonassociative Steiner loops of order less or equal to 16.\nIt also contains the associative Steiner loops of order 4 and 8.";
     elif name = "CC loops" then
@@ -275,6 +275,103 @@ function( n, pos_n, m )
     cocycle := RQ_DecodeCocycle( cocycle, [1..d[1]] ); 
     return LoopByCentralExtension( K, F, cocycle );
 end);
+
+#############################################################################
+##  
+#F  RQ_ActivateCodeLoop( n, pos_n, m ) 
+##    
+##  Auxiliary function for activating code loops from the database.
+##  See data\code_loops.tbl for more information.
+
+InstallGlobalFunction( RQ_ActivateCodeLoop,
+function( n, pos_n, m )
+    local lib, dat, dim, P, C, A, IntToForm, vC, vA, pos, t,
+         K, F, nF, cocycle, xpos, x, ypos, y, s, i, j, k;
+
+    lib := RQ_LibraryByName( "code loops" );
+    dat := lib[ 3 ][ pos_n ];
+    dim := First( [0..7], d -> 2^(d+1) = n ); # dimension of Q/Z
+    
+    # FIND the 3-form, 2-form and 1-form in the library
+    P := ""; C := ""; A := "";
+    if n > 2 then # PROG: for n=2 the only entry is [,,] which does not count as a list of length 3
+        # 1-form P
+        i := m;
+        if IsList( dat[i] ) then P := Last( dat[i] ); else P := dat[i]; fi;
+        # backtrack in the library to the nearest tuple that specifies the 2-form C
+        while not ( IsList( dat[i] ) and Length( dat[i] )>=2 ) do i := i-1; od; # stops at list of length 2 or 3
+        if Length( dat[i] ) = 2 and IsBound( dat[i][1] ) then C := dat[i][1]; fi;
+        if Length( dat[i] ) = 3 and IsBound( dat[i][2] ) then C := dat[i][2]; fi;
+        # backtrack some more in the library to the nearest triple that specifies the 3-form A
+        while not ( IsList( dat[i] ) and Length( dat[i] ) = 3 ) do i := i-1; od;
+        if IsBound( dat[i][1] ) then A := dat[i][1]; fi;
+    fi;
+    
+    IntToForm := function( x, k )
+    # converts an integer x into a k-form represented by a list of 0s and 1s of the desired length "dim choose k"
+        local N, f, i, y;
+        if x = "" then return ""; fi;
+        N := Binomial(dim,k);
+        f := 0*[1..N];
+        for i in [1..N] do
+            y := x mod 2;
+            if y = 1 then f[i] := 1; x := (x-1)/2;
+            else f[i] := 0; x := x/2;
+            fi;
+        od;
+        return f;
+    end;
+    
+    # CONVERT forms (which as of now are integers) to 0-1 lists
+    P := IntToForm( P, 1 );
+    vC := IntToForm( C, 2 ); # will use C later
+    vA := IntToForm( A, 3 );
+
+    # CONVERT the binary strings to arrays for faster lookup
+    # e.g., C[i][j] will be the entry of C corresponding to the entry [i,j] in Combinations([1..dim],2)
+    C := List( [1..dim], i -> 0*[1..dim] );
+    pos := 0;
+    for t in Combinations( [1..dim], 2 ) do 
+        pos := pos + 1;
+        C[ t[1] ][ t[2] ] := vC[ pos ];
+    od;
+    A := List( [1..dim], i -> List([1..dim], j -> 0*[1..dim]) );
+    pos := 0;
+    for t in Combinations( [1..dim], 3 ) do 
+        pos := pos + 1;
+        A[ t[1] ][ t[2] ][ t[3] ] := vA[ pos ];
+    od;
+
+    # UNDERLYING SET K x F
+    #K := AsLoop( GF(2) ); # natural choice, 40 s in time test
+    #F := AsLoop( GF(2)^dim ); 
+    K := LoopByFunction( [0,1], function(x,y) return (x+y) mod 2; end ); # 32 s in time test
+    F := LoopByFunction( Tuples([0,1],dim), function(x,y) return List([1..Length(x)], i -> (x[i]+y[i]) mod 2 ); end ); 
+
+    # COCYCLE
+    nF := Size( F );
+    cocycle := List( [ 1..nF ], i -> 0*[1..nF] ); # entries will be in [1,2]
+    for xpos in [1..nF] do 
+        x := UnderlyingSet(F)[xpos];
+        for ypos in [1..nF] do
+            y := UnderlyingSet(F)[ypos];
+            # CALCULATING s = t(x,y)
+            #s := Zero( GF(2) ); # use this with the natural choice
+            s := 0;
+            for i in [1..dim] do s := s + x[i]*y[i]*P[i]; od;
+            for i in [1..dim] do for j in [i+1..dim] do
+                s := s + x[i]*y[j]*C[i][j];
+            od; od;
+            for i in [1..dim] do for j in [i+1..dim] do for k in [j+1..dim] do
+                s := s + (x[i]*x[j]*y[k] + x[i]*y[j]*x[k] + y[i]*x[j]*x[k])*A[i][j][k];
+            od; od; od;
+            #cocycle[ xpos ][ ypos ] := IntFFE( s ) + 1; # use this with the natural choice
+            cocycle[ xpos ][ ypos ] := (s mod 2) + 1;
+    od; od;
+
+    # CONSTRUCT the loop
+    return LoopByCentralExtension( K, F, cocycle );
+end );
 
 #############################################################################
 ##  
@@ -556,18 +653,17 @@ end);
 
 InstallGlobalFunction( RQ_ActivateAutomorphicLoop,
 function( n, m )
-    # returns the associated Gamma loop (which here always happens to be automorphic)
-    # improve later
-    local P, L, s, Ls, ct, i, j, pos, f;
+    # MATH: returns the associated Gamma loop (which here always happens to be automorphic)
+    local P, L, Ls, ct, i, j, g, k, f;
     P := LeftBruckLoop( n, m );
     L := LeftMultiplicationGroup( P );;
-    s := List(Elements(L), x -> x^2 );;
     Ls := List([1..n], i -> LeftTranslation( P, Elements(P)[i] ) );;
     ct := List([1..n],i->0*[1..n]);;
     for i in [1..n] do for j in [1..n] do
-	   pos := Position( s, Ls[i]*Ls[j]*Ls[i]^(-1)*Ls[j]^(-1) );
-	   f := Elements(L)[pos];
-	   ct[i,j] := 1^(f*Ls[j]*Ls[i]);
+        g := Ls[i]*Ls[j]*Ls[i]^(-1)*Ls[j]^(-1);
+        k := Order( g ); # will be of odd order
+        f := g^((k+1)/2); # the square root of g
+        ct[i,j] := 1^(f*Ls[j]*Ls[i]);
     od; od;
     return LoopByCayleyTable(ct);
 end);
@@ -676,12 +772,13 @@ function( category, n, m )
         fi;
     od;
 
-    if previous.G <> G or previous.m <> m then # new parameters, initialize
-        # PROG: it's not enough to test previous.G <> G since trivial G does not keep track of m and the orbits
+    if previous.G <> G or previous.n <> n then # new parameters, initialize
+        # PROG: it's not enough to test previous.G <> G since trivial G does not keep track of n
         previous.G := G;
         previous.orbs := Orbits( G, [1..n] );
         previous.reps := List( previous.orbs, O -> O[1] );
         previous.m := Length( previous.reps ); # number of orbits
+        previous.n := n;
         previous.stabs := List( [1..previous.m], i -> Stabilizer( G, previous.reps[i] ) );
         if category = IsRack then
             previous.folder := List( [1..previous.m], i -> Set( Elements( Centralizer( G, previous.stabs[i] ) ) ) );
@@ -716,11 +813,29 @@ InstallMethod( LibraryAlgebra, "for string and two positive integers",
     [ IsString, IsPosInt, IsPosInt ],
 function( name, n, m )
 
-    local lib, singularName, implementedOrders, NOA, algebra, pos_n, p, q, divs, root, half, case, g, h;
+    local lib, singularName, algebraName, newWord, c, implementedOrders, NOA,
+        algebra, pos_n, p, q, divs, root, half, case, g, h;
 
     # selecting data library
     lib := RQ_LibraryByName( name );
     singularName := name{[1..Length(name)-1]};
+
+    # calculating name for the algebra, e.g., left Bol loop -> LeftBolLoop( n, m )
+    algebraName := "";
+    newWord := true;
+    for c in singularName do
+        if c = ' ' then # ignore space and flag a new word
+            newWord := true;
+        else
+            if newWord then 
+                Add( algebraName, UppercaseChar( c ) );
+                newWord := false;
+            else
+                Add( algebraName, c );
+            fi;
+        fi;
+    od;
+    algebraName := Concatenation( algebraName, "( ", String(n), ", ", String(m), " )" );
 
     # extent of the library
     implementedOrders := lib[ 1 ];
@@ -800,7 +915,7 @@ function( name, n, m )
         algebra := LoopByCayleyTable( lib[ 3 ][ 1 ][ 1 ] ); #only one loop there at this point
         SetIsMoufangLoop( algebra, true );
     elif name = "code loops" then
-        algebra := LibraryAlgebra( "Moufang loops", n, lib[ 3 ][ pos_n ][ m ] ); 
+        algebra := RQ_ActivateCodeLoop( n, pos_n, m );
         SetIsCodeLoop( algebra, true );
     elif name = "Steiner loops" then
         algebra := RQ_ActivateSteinerLoop( n, pos_n, m );
@@ -827,7 +942,7 @@ function( name, n, m )
         else             
             algebra := LoopByCayleyTable( RQ_DecodeCayleyTable( IsLoop, lib[ 3 ][ pos_n ][ m ][ 1 ] ) );
         fi;
-        SetName( algebra, lib[ 3 ][ pos_n ][ m ][ 2 ] ); # special naming for interesting loops
+        # SetName( algebra, lib[ 3 ][ pos_n ][ m ][ 2 ] ); # special naming for interesting loops (not used anymore)
     elif name = "nilpotent loops" then
         algebra := RQ_ActivateNilpotentLoop( lib[ 3 ][ pos_n ][ m ] );
     elif name = "automorphic loops" then
@@ -859,7 +974,7 @@ function( name, n, m )
     fi;
     
     # setting the name
-    SetName( algebra, Concatenation( "<", singularName, " ", String( n ), "/", String( m ), ">" ) ); # PROG: SetName will not rename an already named object
+    SetName( algebra, algebraName );
 
     # returning the algebra
     return algebra;
@@ -992,7 +1107,7 @@ function( n, m )
     local loop;
     loop := OppositeLoop( LeftBolLoop( n, m ) );
     SetIsRightBolLoop( loop, true );
-    SetName( loop, Concatenation( "<right Bol loop ", String( n ), "/", String( m ), ">" ) );
+    SetName( loop, Concatenation( "RightBolLoop( ", String(n), ", ", String(m), " )" ) );
     return loop;
 end);
 
@@ -1007,7 +1122,7 @@ function( n, m )
     local loop;
     loop := OppositeLoop( RightBruckLoop( n, m ) );
     SetIsLeftBruckLoop( loop, true );
-    SetName( loop, Concatenation( "<left Bruck loop ", String( n ), "/", String( m ), ">" ) );
+    SetName( loop, Concatenation( "LeftBruckLoop( ", String(n), ", ", String(m), " )" ) );
     return loop;
 end);
 
@@ -1123,7 +1238,7 @@ function( n, m )
     local loop;
     loop := OppositeLoop( RCCLoop( n, m ) );
     SetIsLCCLoop( loop, true );
-    SetName( loop, Concatenation( "<LCC loop ", String( n ), "/", String( m ), ">" ) );
+    SetName( loop, Concatenation( "LCCLoop( ", String(n), ", ", String(m), " )" ) );
     return loop;
 end);
 

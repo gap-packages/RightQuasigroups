@@ -196,7 +196,7 @@ DeclareAttribute( "CongruenceDerivedLength", IsLoop );
 #! gap> Q := LoopByFunction( uset, mult ); # Z_4 x Z_2 with one quandrant "replaced" with ct
 #! <loop of size 8>
 #! gap> DerivedSeries( Q );
-#! [ <loop of size 8>, <loop of size 4>, <loop of size 1> ]
+#! [ <loop of size 8>, <loop of size 4>, <associative loop of size 1> ]
 #! gap> IsSolvable( Q );
 #! true
 #! gap> DerivedLength( Q );
@@ -217,16 +217,49 @@ DeclareAttribute( "CongruenceDerivedLength", IsLoop );
 #! false
 #! @EndExampleSession
 
-# FRATTINI SUBLOOP
+# FRATTINI SUBALGEBRA
 # _____________________________________________________________________________
 
-#! @Section Frattini subloop
+#! @Section Frattini subalgebra
 
-# FrattiniSubloop( Q ) 
-# Returns the Frattini subloop of a strongly nilpotent loop <Q>.
+#! <P/>For a finite algebra $Q$ the <Index>Frattini subalgebra</Index>**Frattini subalgebra** $\Phi(Q)$
+#! is the intersection of all maximal subalgebras of $Q$. It is precisely the set of
+#! <Index>non-generator</Index>**non-generators** of $Q$, i.e., elements $x\in Q$ such that
+#! whenever $Q=\langle S,x\rangle$ then $Q=\langle S\rangle$.
+
+#! <P/>The Frattini subalgebra might be empty if $Q$ is a quasigroup. If $Q$ is a loop, the $\Phi(Q)$
+#! is a subloop of $Q$, the <Index>Frattini subloop</Index>**Frattini subloop** of $Q$.
+#! When $Q$ is a nilpotent loop, then $\Phi(Q)$ is a normal subloop of $Q$. If $Q$ is
+#! a nilpotent $p$-loop then $Q/\Phi(Q)$ is isomorphic to a vector space over
+#! $\mathbb Z_p$ whose dimension is the size of a minimal generating subset of $Q$.
+
+#! <P/>When $Q$ is a loop with nilpotent multiplication group $\mathrm{Mlt}(Q)$, then
+#! $\Phi(Q)$ is the orbit of $\Phi(\mathrm{Mlt}(Q))$ containing $1$.
+
+#! @Arguments Q 
+#! @Returns the Frattini subrightquasigroup (possibly empty) of the right quasigroup `Q`.
+DeclareAttribute( "FrattiniSubrightquasigroup", IsRightQuasigroup );
+
+#! @Arguments Q
+#! @Returns the Frattini subquasigroup (possibly empty) of the quasigroup `Q`.
+DeclareAttribute( "FrattiniSubquasigroup", IsQuasigroup );
+
+#! @Arguments Q
+#! @Returns the Frattini subloop of the loop `Q`.
 DeclareAttribute( "FrattiniSubloop", IsLoop );
 
-# REVISIT: DO we really need this? It is easy to call Size(Q)/Size(FrattiniSubloop(Q)).
+#! @BeginExampleSession
+#! gap> Q := MoufangLoop(64,5);
+#! <Moufang loop 64/5>
+#! gap> F := FrattiniSubloop(Q);
+#! <Moufang loop of size 8>
+#! gap> Exponent(Q/F);
+#! 2
+#! gap> FrattiniSubrightquasigroup( ProjectionRightQuasigroup([1,2]) );
+#! [  ]
+#! @EndExampleSession
+
+# REVISIT: Do we really need this? It is easy to call Size(Q)/Size(FrattiniSubloop(Q)).
 # FrattinifactorSize( Q )
 # Returns the Frattini factor size of loop <Q>, i.e., the index of
 # the Frattini subloop of <Q> in <Q>.

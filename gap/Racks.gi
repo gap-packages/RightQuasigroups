@@ -308,7 +308,7 @@ end );
 # PROG: constructor OK, mult function needs no external data
 
 InstallMethod( RQ_CoreOfAlgebra, "for category, (group, additive group or right Bol loop) and record",
-    [ IsObject, IsDomain, IsRecord ],
+    [ IsOperation, IsDomain, IsRecord ],
 function( category, G, style )
     local mult, rdiv, Q;
     RQ_CompleteConstructorStyle( style );
@@ -412,7 +412,7 @@ end );
 # PROG: constructor OK, external data for mult stored
 
 InstallOtherMethod( RQ_ConjugationQuandle, "for category, collection of group elements, integer and record",
-    [ IsObject, IsCollection, IsInt, IsRecord ],
+    [ IsOperation, IsCollection, IsInt, IsRecord ],
 function( category, S, m, style )
     local Q, F;
     RQ_CompleteConstructorStyle( style );
@@ -465,7 +465,7 @@ end );
 
 # RQ_IsRackOrQuandleEnvelope
 InstallMethod( RQ_IsRackOrQuandleEnvelope, "for category, group, two lists and bool",
-    [ IsObject, IsGroup, IsList, IsList, IsBool ],
+    [ IsOperation, IsGroup, IsList, IsList, IsBool ],
 function( category, G, reps, perms, reportErrors )
     local set, orbs, m, pos_reps, conj_classes;
     if not IsPermGroup( G ) then
@@ -542,7 +542,7 @@ InstallMethod( QuandleEnvelope, "for quandle",
 # PROG: constructor OK, calls RightQuasigroupByRightSection
 
 InstallMethod( RQ_RackOrQuandleByEnvelope, "for category, group, list, list and record",
-    [ IsObject, IsGroup, IsList, IsList, IsRecord ],
+    [ IsOperation, IsGroup, IsList, IsList, IsRecord ],
 function( category, G, reps, perms, style )
     local uSet, rsection, m, i, r, t, Q;
     RQ_CompleteConstructorStyle( style );
@@ -663,13 +663,13 @@ end );
 # AllSubracks
 InstallMethod( AllSubracks, "for rack",
     [ IsRack ],
-    Q -> RQ_AllSubalgebras( Q )
+    Q -> AllSubrightquasigroups( Q )
 );
 
 # AllSubquandles
 InstallMethod( AllSubquandles, "for quandle",
     [ IsQuandle ],
-    Q -> RQ_AllSubalgebras( Q )
+    Q -> AllSubrightquasigroups( Q )
 );
 
 # Rack

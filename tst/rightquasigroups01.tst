@@ -20,29 +20,37 @@ gap> CategoryOfRightQuasigroup( Q );
 gap> CategoryOfRightQuasigroup( [ Q, ProjectionRightQuasigroup( 5 ) ] ); # common category
 <Category "IsRightQuasigroup">
 
-# doc/_Chapter_Introduction.xml:193-202
+# doc/_Chapter_Introduction.xml:197-210
 gap> Q := QuasigroupByCayleyTable( [[0,1],[1,0]] );
 <quasigroup of size 2>
+gap> String( Q );
+"<quasigroup of size 2>"
 gap> IsAssociative( Q );
 true
 gap> Q;
 <associative quasigroup of size 2>
-gap> Print( AsLoop( SymmetricGroup( 4 ) ) );
-<associative loop of size 24 on (), (3,4), (2,3), (2,3,4), (2,4,3), ...>
+gap> Print( Q );
+<associative quasigroup of size 2 on 0, 1>
+gap> String( Q ); # stored at first call
+"<quasigroup of size 2>"
 
-# doc/_Chapter_Introduction.xml:235-246
+# doc/_Chapter_Introduction.xml:247-262
 gap> Q := AsLoop( Group( (1,2) ) );
 <associative loop of size 2>
+gap> String( Q.1 );
+"l()"
 gap> Elements( Q );
 [ l(), l(1,2) ]
 gap> SetLoopElementsName( Q, "g" );; Elements( Q );
 [ g(), g(1,2) ]
+gap> String( Q.1 ); # right quasigroup elements are not attribute storing
+"g()"
 gap> SetLoopElementsName( Q, "" );; Elements( Q ); # better legibility but perhaps confusing
 [ (), (1,2) ]
 gap> IsPerm( last[1] );
 false
 
-# doc/_Chapter_Introduction.xml:305-317
+# doc/_Chapter_Introduction.xml:321-333
 gap> Q := AsLoop( SymmetricGroup( 3 ) );;
 gap> UnderlyingSetElm( Q.1 );
 ()
@@ -55,7 +63,7 @@ gap> UnderlyingSet( Q );
 gap> CayleyTable( Q );
 [ "abcdef", "badcfe", "ceafbd", "dfbeac", "ecfadb", "fdebca" ]
 
-# doc/_Chapter_Introduction.xml:442-469
+# doc/_Chapter_Introduction.xml:459-486
 gap> Q := RightQuasigroupByFunction( [0..3], function( x,y ) return (x+2*y) mod 4; end ); # index based by default
 <right quasigroup of size 4>
 gap> UnderlyingSet( Q );
@@ -83,7 +91,7 @@ r2
 gap> Q[0]/Q[2]; # RightQuotient and RightDivision are also supported
 r0
 
-# doc/_Chapter_Introduction.xml:481-500
+# doc/_Chapter_Introduction.xml:498-517
 gap> Q := LoopByCayleyTable( [["a", "b"], ["b", "a"]], ConstructorStyle( false, false ) ); # not index based, arguments not checked
 <loop of size 2>
 gap> UnderlyingSet( Q ); 
@@ -103,7 +111,7 @@ la
 gap> LeftQuotient( Q.1, Q.2 ); # LeftDivision is also supported
 lb
 
-# doc/_Chapter_Introduction.xml:526-549
+# doc/_Chapter_Introduction.xml:543-566
 gap> Q := RightQuasigroupByFunction([0..5], function(x,y) return (x+y) mod 6; end );; Elements( Q ); 
 [ r0, r1, r2, r3, r4, r5 ]
 gap> A := Subrightquasigroup( Q, [2] );
@@ -111,11 +119,11 @@ gap> A := Subrightquasigroup( Q, [2] );
 gap> Elements( A );
 [ r0, r2, r4 ]
 gap> Parent( A ) = Q;
-true;
+true
 gap> Elements( A )[ 3 ]; # the 3rd element of A
 r4
 gap> A.3; # the 3rd element of the parent of A
-r3
+r2
 gap> A[4]; # the element of parent of A corresponding to the given underlying element
 r4
 gap> Display( CayleyTable( A ) );
@@ -127,7 +135,7 @@ gap> Display( MultiplicationTable( A ) );
   [  2,  3,  1 ],
   [  3,  1,  2 ] ]
 
-# doc/_Chapter_Introduction.xml:659-684
+# doc/_Chapter_Introduction.xml:676-701
 gap> Q := RightQuasigroupByFunction( GF( 9 ), \+, ConstructorStyle( false, false ) ); # not index based, arguments not checked
 <right quasigroup of size 9>
 gap> IsIndexBased( Q );
@@ -153,8 +161,8 @@ function( x, y ) ... end
 gap> rdiv( Z(3), Z(3) );
 0*Z(3)
 
-# doc/_Chapter_Introduction.xml:688-719
-gap> Q := RightQuasigroupByFunction( GF( 9 ), \+, ConstructorStyle( false, false ) ); # same as in the above example, not index based
+# doc/_Chapter_Introduction.xml:705-736
+gap> Q := RightQuasigroupByFunction( GF( 9 ), \+, ConstructorStyle( false, false ) );; # same as in the above example, not index based
 gap> R := IndexBasedCopy( Q );;
 gap> IsIndexBased( R );
 true
@@ -163,13 +171,13 @@ gap> UnderlyingSet( R ); # no change to the underlying set
 gap> IsCanonical( R ); # underlying set is not [1..n]
 false
 gap> x := R.2;;
-gap> x![1] # the index of x in the parent of R (here R itself)
+gap> x![1]; # the index of x in the parent of R (here R itself)
 2
 gap> x*x;
 rZ(3)
 gap> F := FamilyObj( R.1 );;
 gap> [ IsBound( F!.mult ), IsBound( F!.rdiv ), IsBound( F!.ldiv ) ]; # if bound then based on respective tables
-[ true, true, false]
+[ true, true, false ]
 gap> [ IsBound( F!.multTable ), IsBound( F!.rdivTable ), IsBound( F!.ldivTable ) ]; # division tables will be bound when divisions are called 
 [ true, false, false ]
 gap> x/x;
@@ -185,7 +193,7 @@ gap> C := CanonicalCopy( Q );
 gap> UnderlyingSet( C ); # underlying set has changed to [1..n]
 [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 
-# doc/_Chapter_Introduction.xml:765-777
+# doc/_Chapter_Introduction.xml:782-794
 gap> Q := AsLoop( GF(8) );;
 gap> GeneratorsOfLoop( Q ); # trivial generating set
 [ l0*Z(2), lZ(2)^0, lZ(2^3), lZ(2^3)^2, lZ(2^3)^3, lZ(2^3)^4, lZ(2^3)^5, lZ(2^3)^6 ]

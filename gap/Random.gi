@@ -37,7 +37,7 @@ end );
 # RQ_RandomAlgebra
 # PROG: constructor OK, calls RQ_AlgebraByCayleyTable
 InstallMethod( RQ_RandomAlgebra, "for category, collection, positive integer and record",
-    [ IsObject, IsCollection, IsPosInt ], 
+    [ IsOperation, IsCollection, IsPosInt ], 
 function( category, S, iter )
     local n, style, f, x, y, z, is_proper, xx, yy, zz, random_walk_step, i, ct;
     

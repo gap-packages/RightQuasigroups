@@ -16,4 +16,4 @@ RQ_quandle_groups := [];
 RQ_quandle_ids := [];
 
 # info about previous quandle constructed, to speed up the library
-RQ_quandle_previous := rec( G := "", orbs := "", reps := "", m := "", stabs := "", folder := "", trans := "" );
+RQ_quandle_previous := rec( G := "", orbs := "", reps := "", m := "", n := "", stabs := "", folder := "", trans := "" );

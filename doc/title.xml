@@ -9,7 +9,7 @@
     Computing with one-sided quasigroups in &GAP;.
   </Subtitle>
   <Version>
-    0.84
+    0.852
   </Version>
   <Author>
     Gábor P. Nagy<Alt Only="LaTeX"><Br/></Alt>
@@ -35,6 +35,6 @@ USA<Br/>
 
   </Author>
   <Date>
-    17 August 2021
+    27 January 2022
   </Date>
   </TitlePage>

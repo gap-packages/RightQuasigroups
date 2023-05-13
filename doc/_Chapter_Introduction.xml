@@ -181,24 +181,32 @@ gap> CategoryOfRightQuasigroup( [ Q, ProjectionRightQuasigroup( 5 ) ] ); # commo
 <Subsection Label="Chapter_Introduction_Section_Displaying_right_quasigroups_and_their_elements_Subsection_Displaying_right_quasigroups_quasigroups_and_loops">
 <Heading>Displaying right quasigroups, quasigroups and loops</Heading>
 
- <P/>The standard <Code>ViewObj</Code> function is implemented for right quasigroups <Code>Q</Code> 
- and it always displays at least the size of <Code>Q</Code>, namely <Code>&lt;right quasigroup of size n&gt;</Code>, 
- <Code>&lt;quasigroup of size n&gt;</Code> or <Code>&lt;loop of size n&gt;</Code>, depending on whether <Code>Q</Code>
- is declared as a right quasigroup, quasigroup or loop.
- When additional properties of <Code>Q</Code> become known, one of the strongest properties of <Code>Q</Code> is displayed,
- e.g., <Code>&lt;associative loop of order n&gt;</Code>.
- Library objects are displayed with their catalog numbers, e.g., <Code>&lt;Moufang loop 64/12&gt;</Code>.
- <P/>Likewise, the standard <Code>PrintObj</Code> function is implemented for right quasigroups. It displays
- in addition up to the first 5 elements of the underlying set of <Code>Q</Code>.
+ <P/>The <Code>ViewObj</Code> and <Code>PrintObj</Code> operations are implemented for right quasigroups. The 
+ methods <Code>View</Code> and <Code>Print</Code> call <Code>ViewObj</Code> and <Code>PrintObj</Code>, respectively.
+ <P/>If <Code>Q</Code> has a name (typically when <Code>Q</Code> is a library object), <Code>View( Q )</Code> prints <Code>Name( Q )</Code>, e.g.,
+ <Code>&lt;Moufang loop 64/12&gt;</Code>. In all other situations, <Code>View( Q )</Code> contains at
+ least the size of <Code>Q</Code>, as in <Code>&lt;right quasigroup of size 8&gt;</Code>, <Code>&lt;quasigroup of size 8&gt;</Code>
+ or <Code>&lt;loop of size n&gt;</Code>, depending on whether <Code>Q</Code> is declared as a right quasigroup, quasigroup or loop.
+ When additional properties of <Code>Q</Code> become known, one of the strongest properties of <Code>Q</Code> is also included
+ in <Code>View( Q )</Code>, e.g., <Code>&lt;associative loop of order n&gt;</Code>.
+ <P/><Code>Print( Q )</Code> additionally displays up to the first 5 elements of the underlying set of <Code>Q</Code>.
+ <P/>The <Code>String</Code> attribute is also implemented for right quasigroups. It returns the same value as
+ <Code>View</Code>, except that the returned value is a string. Since <Code>String</Code> is an attribute, the value
+ is set at first call and does not change dynamically. (Use <Code>RQ_String( Q )</Code> for a string that
+ changes dynamically with the properties of <Code>Q</Code>.)
 <Example><![CDATA[
 gap> Q := QuasigroupByCayleyTable( [[0,1],[1,0]] );
 <quasigroup of size 2>
+gap> String( Q );
+"<quasigroup of size 2>"
 gap> IsAssociative( Q );
 true
 gap> Q;
 <associative quasigroup of size 2>
-gap> Print( AsLoop( SymmetricGroup( 4 ) ) );
-<associative loop of size 24 on (), (3,4), (2,3), (2,3,4), (2,4,3), ...>
+gap> Print( Q );
+<associative quasigroup of size 2 on 0, 1>
+gap> String( Q ); # stored at first call
+"<quasigroup of size 2>"
 ]]></Example>
 
 
@@ -208,14 +216,18 @@ gap> Print( AsLoop( SymmetricGroup( 4 ) ) );
 <Subsection Label="Chapter_Introduction_Section_Displaying_right_quasigroups_and_their_elements_Subsection_Displaying_right_quasigroup_elements">
 <Heading>Displaying right quasigroup elements</Heading>
 
- <P/>The <Code>PrintObj</Code> function is implemented to display elements of right quasigroups.
- By default, if <Code>Q</Code> is a right quasigroup and <Code>x</Code> is an element of the underlying set of
- <Code>Q</Code> then the corresponding element of <Code>Q</Code> is displayed as <Code>rx</Code>, <Code>qx</Code>
- or <Code>lx</Code>, depending on whether <Code>Q</Code> is declared as a right quasigroup, a quasigroup or a loop.
+ <P/>The <Code>ViewObj</Code> and <Code>PrintObj</Code> operations are implemented for right quasigroup elements. The 
+ methods <Code>View</Code> and <Code>Print</Code> call <Code>ViewObj</Code> and <Code>PrintObj</Code>, respectively.
+ <P/>By default, if <Code>x</Code> is an element of a right quasigroup <Code>Q</Code> and <Code>e</Code> is the underlying element of <Code>x</Code>,
+ both <Code>View( x )</Code> and <Code>Print( x )</Code> display <Code>r</Code> or <Code>q</Code> or <Code>l</Code> (depending on whether <Code>Q</Code> is declared
+ as a right quasigroup, a quasigroup or a loop), followed by a display of <Code>e</Code>.
+ <P/>The <Code>String</Code> attribute is also implemented for right quasigroup elements.
+ It returns the same value as <Code>View</Code>, except that the returned value is a string. Since right 
+ quasigroup elements are not attribute storing, the attribute <Code>String</Code> is always recalculated.
 </Subsection>
 
 
-<ManSection Label="AutoDoc_generated_group83">
+<ManSection Label="AutoDoc_generated_group87">
 <Heading>Changing the name of right quasigroup elements</Heading>
   <Oper Arg="Q, s" Name="SetRightQuasigroupElementsName" Label="for IsRightQuasigroup, IsString"/>
   <Oper Arg="Q, s" Name="SetQuasigroupElementsName" Label="for IsQuasigroup, IsString"/>
@@ -235,10 +247,14 @@ gap> Print( AsLoop( SymmetricGroup( 4 ) ) );
 <Example><![CDATA[
 gap> Q := AsLoop( Group( (1,2) ) );
 <associative loop of size 2>
+gap> String( Q.1 );
+"l()"
 gap> Elements( Q );
 [ l(), l(1,2) ]
 gap> SetLoopElementsName( Q, "g" );; Elements( Q );
 [ g(), g(1,2) ]
+gap> String( Q.1 ); # right quasigroup elements are not attribute storing
+"g()"
 gap> SetLoopElementsName( Q, "" );; Elements( Q ); # better legibility but perhaps confusing
 [ (), (1,2) ]
 gap> IsPerm( last[1] );
@@ -334,8 +350,9 @@ gap> CayleyTable( Q );
  The right quotient of <Code>x</Code> and <Code>y</Code> is obtained via <Code>x/y</Code>, <Code>RightQuotient( x, y )</Code> or <Code>RightDivision( x, y )</Code>.
  In case of quasigroups, the left division is obtained via <Code>LeftQuotient( x, y )</Code> or <Code>LeftDivision( x, y )</Code>
  but not by <Code>x\y</Code> since <Code>\</Code> is not supported in &GAP; as a binary operation symbol.
- <P/>For each of these operations, one of the two arguments can be a list of right quasigroup elements,
- in which case the corresponding list is returned.
+ <P/>For each of these operations, one of the two arguments can be a list of right quasigroup elements
+ or a right quasigroup, in which case the corresponding list is returned. We allow <Code>x*Q</Code> etc even if
+ <Code>x</Code> is an element of <Code>Parent(Q)</Code>, not necessarily an element of <Code>Q</Code>.
 <ManSection>
   <Oper Arg="x,y" Name="RightQuotient" Label="for IsRightQuasigroupElement, IsRightQuasigroupElement"/>
  <Returns>the right quotient of right quasigroup elements <Arg>x</Arg> and <Arg>y</Arg>, that is, the unique element  <Code>z</Code> such that <Arg>x</Arg><Code> = z*</Code><Arg>y</Arg>. The synonym <Code>RightDivision( </Code><Arg>x</Arg><Code>, </Code><Arg>y</Arg><Code> )</Code>
@@ -358,7 +375,7 @@ gap> CayleyTable( Q );
 </ManSection>
 
 
-<ManSection Label="AutoDoc_generated_group84">
+<ManSection Label="AutoDoc_generated_group88">
 <Heading>Inverses in loops</Heading>
   <Attr Arg="Q" Name="One" Label="for IsLoopElement"/>
   <Attr Arg="x" Name="RightInverse" Label="for IsLoopElement"/>
@@ -531,11 +548,11 @@ gap> A := Subrightquasigroup( Q, [2] );
 gap> Elements( A );
 [ r0, r2, r4 ]
 gap> Parent( A ) = Q;
-true;
+true
 gap> Elements( A )[ 3 ]; # the 3rd element of A
 r4
 gap> A.3; # the 3rd element of the parent of A
-r3
+r2
 gap> A[4]; # the element of parent of A corresponding to the given underlying element
 r4
 gap> Display( CayleyTable( A ) );
@@ -686,7 +703,7 @@ gap> rdiv( Z(3), Z(3) );
 
  <P/>Note how things change in index based and canonical copies.
 <Example><![CDATA[
-gap> Q := RightQuasigroupByFunction( GF( 9 ), \+, ConstructorStyle( false, false ) ); # same as in the above example, not index based
+gap> Q := RightQuasigroupByFunction( GF( 9 ), \+, ConstructorStyle( false, false ) );; # same as in the above example, not index based
 gap> R := IndexBasedCopy( Q );;
 gap> IsIndexBased( R );
 true
@@ -695,13 +712,13 @@ gap> UnderlyingSet( R ); # no change to the underlying set
 gap> IsCanonical( R ); # underlying set is not [1..n]
 false
 gap> x := R.2;;
-gap> x![1] # the index of x in the parent of R (here R itself)
+gap> x![1]; # the index of x in the parent of R (here R itself)
 2
 gap> x*x;
 rZ(3)
 gap> F := FamilyObj( R.1 );;
 gap> [ IsBound( F!.mult ), IsBound( F!.rdiv ), IsBound( F!.ldiv ) ]; # if bound then based on respective tables
-[ true, true, false]
+[ true, true, false ]
 gap> [ IsBound( F!.multTable ), IsBound( F!.rdivTable ), IsBound( F!.ldivTable ) ]; # division tables will be bound when divisions are called 
 [ true, false, false ]
 gap> x/x;
@@ -817,7 +834,7 @@ gap> GeneratorsOfLoop( Q ); # not changed since no smaller generating set has be
       subalgebra of <Code>P</Code> then <Code>UnderlyingSet( Q )</Code> is a proper subset of <Code>F!.uSet</Code>.</Item>
  </List>
  <P/>Note that not all of the above components of <Code>F</Code> are necessarily bound,
- depending on the constructor used for <Code>P</Code>. 
+ depending on the constructor used for <Code>P</Code>. To see the list of bound components, call <Code>NamesOfComponents( F )</Code>.
 </Section>
 
 

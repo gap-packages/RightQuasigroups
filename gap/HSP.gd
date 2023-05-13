@@ -31,11 +31,11 @@ DeclareGlobalFunction( "RQ_DirectProduct" );
 #! gap> G := Group((1,2));;
 #! gap> Q := ProjectionRightQuasigroup( [1..3] );;
 #! gap> D := DirectProduct( G, Q );
-#! <right quasigroup of size 6>
-#! gap> Elements( D );
-#! [ r[ (), r1 ], r[ (), r2 ], r[ (), r3 ], r[ (1,2), r1 ], r[ (1,2), r2 ], r[ (1,2), r3 ] ]
+#! <associative right quasigroup of size 6>
+#! gap> D.1;
+#! r[ (), r1 ]
 #! gap> DirectProduct( Q, G, Q );
-#! <right quasigroup of size 18>
+#! <associative right quasigroup of size 18>
 #! @EndExampleSession
 
 # OPPOSITE QUASIGROUPS
@@ -57,7 +57,8 @@ DeclareGlobalFunction( "RQ_OppositeAlgebra" );
 
 #! @Arguments Q
 #! @Returns the opposite quasigroup (loop) of the quasigroup (loop) <Arg>Q</Arg>.
-#! The resulting algebra is index based iff <Arg>Q</Arg> is index based.
+#! The resulting algebra is index based iff <Arg>Q</Arg> is index based. An effort is made
+#! to inherit dual properties from <Arg>Q</Arg>
 DeclareOperation( "OppositeQuasigroup", [ IsQuasigroup ] );
 
 #! @Arguments Q
@@ -75,6 +76,10 @@ DeclareOperation( "OppositeLoop", [ IsLoop ] );
 #! [ [  1,  2,  3 ],
 #!   [  3,  1,  2 ],
 #!   [  2,  3,  1 ] ]
+#! gap> B := LeftBolLoop( 8, 1 );
+#! <left Bol loop 8/1>
+#! gap> OppositeLoop( B ); # dual properties inherited
+#! <right Bol loop of size 8>
 #! @EndExampleSession
 
 #! @EndGroup
@@ -118,10 +123,11 @@ DeclareOperation( "IsSubloop", [ IsLoop, IsLoop ] );
 
 # Constructors for subquasigroups. No optional arguments here since index based in inherited from parent.
 
-# RQ_InheritProperties( P, Q )
+# RQ_InheritProperties( P, Q, isDual )
 # auxiliary function
 # sets properties for Q inherited from P 
 # we also allow P to be a list of algebras
+# if isDual is true, properties will be inherited dually (this is useful in Opposite)
 DeclareGlobalFunction( "RQ_InheritProperties" ); # P, Q
 
 # RQ_Subalgebra( Q, gens )
@@ -162,7 +168,7 @@ DeclareOperation( "Subloop", [IsLoop, IsList ] );
 #! gap> S.2; # the 2nd element of Q, the parent of S
 #! l1
 #! gap> S[4]; # the element of parent Q corresponding to the given element of the underlying set
-#! l4 
+#! l4
 #! gap> Display( CayleyTable( S ) );
 #! [ [  0,  4 ],
 #!   [  4,  0 ] ]
@@ -181,9 +187,6 @@ DeclareOperation( "Subloop", [IsLoop, IsList ] );
 # ALL SUBALGEBRAS
 # _____________________________________________________________________________
 
-# RQ_AllSubalgebras( Q )
-DeclareOperation( "RQ_AllSubalgebras", [ IsRightQuasigroup ] );
-
 #! @BeginGroup
 #! @GroupTitle All subalgebras
 
@@ -199,24 +202,126 @@ DeclareOperation( "AllSubquasigroups", [ IsQuasigroup ] );
 DeclareOperation( "AllSubloops", [ IsLoop ] );
 
 #! @BeginExampleSession
-#! gap> AllSubloops( AsLoop( SymmetricGroup( 3 ) ) );
-#! [ <associative loop of size 1>, <associative loop of size 2>, <associative loop of size 2>,
-#!   <associative loop of size 3>, <associative loop of size 2>, <associative loop of size 6> ]
-#! gap> P := ProjectionRightQuasigroup( [1..2] );; 
-#! gap> AllSubrightquasigroups( P ); # every nonempty subset is a subrightquasigroup
-#! [ <associative quandle of size 1>, <associative quandle of size 1>, <associative quandle of size 2> ]
+#! gap> AllSubloops( AsLoop( CyclicGroup( 3 ) ) );
+#! [ <associative loop of size 1>, <associative loop of size 3> ]
+#! gap> P := ProjectionRightQuasigroup( 2 );; 
+#! gap> Length( AllSubrightquasigroups( P ) ); # every nonempty subset is a subrightquasigroup
+#! 3
 #! @EndExampleSession
 
 #! @EndGroup
 
-# REVISIT: It would be good to have AllNormalSubloops with some efficiency.
-
-# RIGHT COSETS AND RIGHT TRANSVERSALS
+# MINIMAL SUBALGEBRAS
 # _____________________________________________________________________________
 
-#! @Section Right cosets and transversals
+#! <P/>A subloop $S$ of a loop $Q$ is **minimal**<Index>minimal subloop</Index> if $S$ 
+#! is nontrivial and $S$ contains no proper nontrivial subloops.
+#! A sub(right)quasigroup $S$ of a (right) quasigroup $Q$ is
+#! **minimal**<Index>minimal subquasigroup</Index><Index>minimal subquasigroup</Index> if $S$ contains
+#! no proper sub(right)quasigroups.
 
-#! <P/>If $S$ is a subrightquasigroup of a right quasigroup $Q$, the <Index>right cosets</Index>
+#! @BeginGroup
+#! @GroupTitle Testing minimal subalgebras
+
+#! @Arguments [Q, ]S
+DeclareOperation( "IsMinimalSubrightquasigroup", [ IsRightQuasigroup ] );
+
+#! @Arguments [Q, ]S
+DeclareOperation( "IsMinimalSubquasigroup", [ IsQuasigroup ] );
+
+#! @Arguments [Q, ]S
+#! @Returns `true` iff <Arg>S</Arg> is a minimal subrightquasigroup (subquasigroup, subloop), else returns false.
+#! @Description Note that it is not necessary to specify the enveloping right quasigroup (quasigroup, loop). 
+#! In the version with two arguments <Arg>Q</Arg>, <Arg>S</Arg>, it is first checked that
+#! <Arg>S</Arg> is a subalgebra of <Arg>Q</Arg>.
+DeclareOperation( "IsMinimalSubloop", [ IsLoop ]);
+
+#! @EndGroup
+
+#! @BeginGroup
+#! @GroupTitle All minimal subalgebras
+
+#! @Arguments Q
+DeclareOperation( "AllMinimalSubrightquasigroups", [ IsRightQuasigroup ] );
+
+#! @Arguments Q
+DeclareOperation( "AllMinimalSubquasigroups", [ IsQuasigroup ] );
+
+#! @Arguments Q
+#! @Returns a list of all minimal subrightquasigroups (subquasigroups, subloops) of
+#! a right quasigroup (quasigroup, loop) <Arg>Q</Arg>.
+DeclareOperation( "AllMinimalSubloops", [ IsLoop ] );
+
+#! @EndGroup
+
+# MAXIMAL SUBALGEBRAS
+# _____________________________________________________________________________
+
+#! <P/>A surighquasigroup $S$ of a right quasigroup $Q$ is
+#! **maximal**<Index>maximal surightquasigroup</Index><Index>maximal suquasigroup</Index><Index>maximal subloop</Index>
+#! if $S$ is propertly contained in $Q$ and if whenever $S&lt;A&lt;Q$ then either $A=S$ or $A=Q$.
+
+#! @BeginGroup
+#! @GroupTitle Testing maximal subalgebras
+
+#! @Arguments S
+DeclareOperation( "IsMaximalSubrightquasigroup", [ IsRightQuasigroup , IsRightQuasigroup] );
+
+#! @Arguments S
+DeclareOperation( "IsMaximalSubquasigroup", [ IsQuasigroup, IsQuasigroup ] );
+
+#! @Arguments Q, S
+#! @Returns `true` iff <Arg>S</Arg> is a maximal subrightquasigroup (subquasigroup, subloop)
+#! of the right quasigroup (quasigroup, loop) <Arg>Q</Arg>, else returns false.
+DeclareOperation( "IsMaximalSubloop", [ IsLoop, IsLoop ]);
+
+#! @EndGroup
+
+#! @BeginGroup
+#! @GroupTitle All maximal subalgebras
+
+#! @Arguments Q
+DeclareOperation( "AllMaximalSubrightquasigroups", [ IsRightQuasigroup ] );
+
+#! @Arguments Q
+DeclareOperation( "AllMaximalSubquasigroups", [ IsQuasigroup ] );
+
+#! @Arguments Q
+#! @Returns a list of all maximal subrightquasigroups (subquasigroups, subloops) of
+#! the right quasigroup (quasigroup, loop) <Arg>Q</Arg>.
+DeclareOperation( "AllMaximalSubloops", [ IsLoop ]);
+
+#! @BeginExampleSession
+#! gap> Q := MoufangLoop(12,1);;
+#! gap> S := Subloop(Q,[Q.2]);;
+#! gap> IsMinimalSubloop(S);
+#! true
+#! gap> AllMinimalSubloops(Q);
+#! [ <Moufang loop of size 2>, <Moufang loop of size 2>,
+#!   <Moufang loop of size 3>, <Moufang loop of size 2>,
+#!   <Moufang loop of size 2>, <Moufang loop of size 2>,
+#!   <Moufang loop of size 2>, <Moufang loop of size 2>,
+#!   <Moufang loop of size 2>, <Moufang loop of size 2> ]
+#! gap> IsMaximalSubloop(Q,S);
+#! false
+#! gap> AllMaximalSubloops(Q);
+#! [ <Moufang loop of size 6>, <Moufang loop of size 4>,    
+#!   <Moufang loop of size 4>, <Moufang loop of size 4>,
+#!   <Moufang loop of size 6>, <Moufang loop of size 6>,
+#!   <Moufang loop of size 4>, <Moufang loop of size 4>,
+#!   <Moufang loop of size 4>, <Moufang loop of size 4>,
+#!   <Moufang loop of size 4>, <Moufang loop of size 4> ]
+#! @EndExampleSession
+
+#! @EndGroup
+
+
+# COSETS AND TRANSVERSALS
+# _____________________________________________________________________________
+
+#! @Section Cosets and transversals
+
+#! <P/>If $S$ is a subrightquasigroup of a right quasigroup $Q$, the <Index>right coset</Index>
 #! **right cosets** are subsets of $Q$ of the form $Sx$, where $x\in Q$. Note that
 #! unlike in the case of groups, the right cosets of right quasigroups, quasigroups and loops
 #! can intersect in nontrivial ways. Moreover, in the case of right quasigroups, the
@@ -231,9 +336,10 @@ DeclareOperation( "AllSubloops", [ IsLoop ] );
 # RightCosetsNC
 # PROG: RightCosets(Q,S) is implemented as a global function in GAP. It
 # checks if S is a subset of Q and then calls operation RightCosetsNC.
-# Note: LeftCosets is not implemented in GAP.
+# REVISIT: Should RightCoset( S, x ) be implemented? See GAP for their extensive implementation.
 
-#! <P/>The function `RightCosets( Q, S )` returns a list of all right cosets of `S` in `Q`.
+#! <P/>The function `RightCosets( Q, S )` checks that `S` is a subrightquasigroup of `Q` and then
+#! returns a list of all right cosets of `S` in `Q`. 
 
 #! @Arguments Q, S
 #! @Returns a right transversal to subrightquasigroup <Arg>S</Arg> in the right quasigroup <Arg>Q</Arg>. 
@@ -244,12 +350,29 @@ DeclareOperation( "RightTransversal", [ IsRightQuasigroup, IsRightQuasigroup ] )
 #! gap> P := ProjectionRightQuasigroup( 3 ); # this is in fact an associative quandle
 #! <associative quandle of size 3>
 #! gap> S := Subrightquasigroup( P, [1,2] );
-#! <associative quandle quasigroup of size 2>
+#! <associative quandle of size 2>
 #! gap> RightCosets( P, S ); # there is a single right coset of S in P
 #! [ [ r1, r2 ] ]
 #! gap> RightTransversal( P, S );
 #! [ r1 ]
 #! @EndExampleSession
+
+#! <Index>left coset</Index>**Left cosets** $xS$ and <Index>left transversal</Index>**left transversals**
+#! are defined dually to right cosets and right transversals. Unlike right cosets, left cosets are not
+#! implemented in &GAP; outside of &RightQuasigroups;. Note that in a right quasigroups the left cosets
+#! of `S` need not have the same cardinality as `S`.
+
+# LeftCosetsNC( Q, S )
+DeclareOperation( "LeftCosetsNC", [ IsRightQuasigroup, IsRightQuasigroup ] );
+
+#! @Arguments Q, S
+#! @Returns a duplicate-free list containing all left cosets of <Arg>S</Arg> in <Arg>Q</Arg>. The function
+#! checks that <Arg>S</Arg> is a subalgebra of <Arg>Q</Arg>.
+DeclareGlobalFunction( "LeftCosets" );
+
+#! @Arguments Q, S
+#! @Returns a left transversal to <Arg>S</Arg> in <Arg>Q</Arg>.
+DeclareOperation( "LeftTransversal", [ IsRightQuasigroup, IsRightQuasigroup ] );
 
 # RIGHT QUASIGROUP BY GENERATORS
 # _____________________________________________________________________________
@@ -262,7 +385,7 @@ DeclareOperation( "RightTransversal", [ IsRightQuasigroup, IsRightQuasigroup ] )
 # RQ_AlgebraByGenerators( category, gens )
 # PROG: Category is used only to check the argument gens. It does not determined the type
 # of the resulting algebra. We allow category to be IsRack, IsQuandle, which really is a property.
-DeclareOperation( "RQ_AlgebraByGenerators", [ IsObject, IsList ] );
+DeclareOperation( "RQ_AlgebraByGenerators", [ IsOperation, IsList ] );
 
 #! @BeginGroup
 #! @GroupTitle RightQuasigroup, Quasigroup and Loop
@@ -303,7 +426,7 @@ DeclareGlobalFunction( "LoopByGenerators" );
 #! @BeginGroup
 #! @GroupTitle RightQuasigroupWithGenerators, QuasigroupWithGenerators and LoopWithGenerators
 
-DeclareOperation( "RQ_AlgebraWithGenerators", [ IsObject, IsList ] ); # category/property, gens
+DeclareOperation( "RQ_AlgebraWithGenerators", [ IsOperation, IsList ] ); # category/property, gens
 
 #! @Arguments gens...
 #! @Returns the right quasigroup (quasigroup, loop) generated by the given right quasigroup
@@ -454,8 +577,8 @@ DeclareOperation( "QuasigroupCongruenceByPartition", [ IsQuasigroup, IsList ] );
 DeclareOperation( "LoopCongruenceByPartition", [ IsLoop, IsList ] );
 
 #! @BeginExampleSession
-#! gap> Q := QuasigroupByFunction( GF(27), \- );
-#! gap> C := QuasigroupCongruenceByPartition( Q, [ [ Q.1, Q.2, Q.3 ], [ Q.4, Q.5 ] ] );; merge Q.1, Q.2, Q.3 and also Q.4, Q.5
+#! gap> Q := QuasigroupByFunction( GF(27), \- );;
+#! gap> C := QuasigroupCongruenceByPartition( Q, [ [ Q.1, Q.2, Q.3 ], [ Q.4, Q.5 ] ] );; # merge Q.1, Q.2, Q.3 and also Q.4, Q.5
 #! gap> List( EquivalenceClasses( C ), Size );
 #! [ 9, 9, 9 ]
 #! gap> G := AsLoop( SymmetricGroup( 5 ) );;
@@ -604,7 +727,7 @@ DeclareOperation( "IsSimpleLoop", [ IsLoop ] );
 #! false
 #! gap> S := Subloop(  L, [ (1,3)(2,4) ] );;
 #! gap> IsNormal( L, S );
-#! true 
+#! true
 #! @EndExampleSession
 
 #! @EndGroup
@@ -636,11 +759,11 @@ DeclareOperation( "FactorRightQuasigroup", [ IsEquivalenceRelation ] );
 #! @Arguments C[, constructorStyle ]
 DeclareOperation( "FactorQuasigroup", [ IsEquivalenceRelation ] );
 
-#! @Arguments C[, constructorStyle ]
+#! @Arguments C[, indexBased, checkArgs ]
 #! @Returns the factor algebra of `Source( `<Arg>C</Arg>` )` modulo the right quasigroup (resp. quasigroup,
 #! loop) congruence <Arg>C</Arg>. In case of loops we also allow arguments <Arg>Q</Arg> and <Arg>N</Arg>
 #! instead of <Arg>C</Arg>, where <Arg>Q</Arg> is a loop and <Arg>N</Arg> is a normal subloop of <Arg>Q</Arg>.
-#! See Section <Ref Sect="Section_OptionalArguments"/> for the optional argument <Arg>constructorStyle</Arg>.
+#! See Section <Ref Sect="Section_OptionalArguments"/> for the optional argument `constructorStyle`.
 #! @Description An effort is made for the factor algebra to inherit properties from the enveloping algebra.
 #! For instance, if it is known that the enveloping algebra is commutative, the factor algebra will
 #! have an attribute that signifies it is commutative.
@@ -671,7 +794,7 @@ DeclareOperation( "FactorLoop", [ IsEquivalenceRelation ] );
 #! false
 #! gap> H.1*H.2;
 #! r{r1}
-#! gap> CayleyTable( H );
+#! gap> CayleyTable( H );   
 #! [ [ {r1}, {r1}, {r1} ], [ {r3}, {r3}, {r3} ], [ {r6}, {r6}, {r6} ] ]
 #! @EndExampleSession
 

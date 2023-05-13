@@ -5,150 +5,281 @@
 # HOMOTOPISMS OF RIGHT QUASIGROUPS
 # _____________________________________________________________________________
 
-# RQ_IsAlgebraHomotopism
-InstallMethod( RQ_IsAlgebraHomotopism, "for category and three mappings",
-    [ IsObject, IsMapping, IsMapping, IsMapping ],
-function( category, f, g, h )
-    local Q1, Q2;
-    Q1 := Source( f ); Q2 := Range( f );
-    if not ( category( Q1 ) and category( Q2 ) ) then return false; fi;
-    if not ( Source( g ) = Q1 and Source( h ) = Q1 ) then return false; fi;
-    if not ( Range( g ) = Q2 and Range( h ) = Q2 ) then return false; fi;
-    return ForAll( Q1, x -> ForAll( Q1, y -> (x^f)*(y^g) = (x*y)^h ) );
+# HomotopismRightQuasigroups
+InstallOtherMethod( HomotopismRightQuasigroups, "for two right quasigroups, three transformations and bool",
+    [ IsRightQuasigroup, IsRightQuasigroup, IsTransformation, IsTransformation, IsTransformation, IsBool ],
+function( source, range, f, g, h, isCanonical )
+    local ind;
+    # REVISIT: Allow permutations in the case when source = range!
+    if isCanonical then # convert to parent transformations
+        f := AsParentTransformation( source, range, f );
+        g := AsParentTransformation( source, range, g );
+        h := AsParentTransformation( source, range, h );
+    fi;
+    # test of homotopic property f(x).g(y) = h(x*y)
+    ind := ParentInd( source );
+    if not ForAll( ind, i -> ForAll( ind, j -> range.(i^f)*range.(j^g) = range.( ParentInd( range.(i)*range.(j) )^h ) ) ) then
+        return fail;
+    fi; 
+    return Objectify( RQ_HomotopismType, rec( source := source, range := range, f := f, g := g, h := h ) );
 end );
 
-# IsRightQuasigroupHomotopism
-# IsQuasigroupHomotopism
-# IsLoopHomotopism
+InstallOtherMethod( HomotopismRightQuasigroups, "for two right quasigroups, three parent transformations and a bool",
+    [ IsRightQuasigroup, IsRightQuasigroup, IsTransformation, IsTransformation, IsTransformation ],
+function( source, range, f, g, h )
+    return HomotopismRightQuasigroups( source, range, f, g, h, false );
+end );
 
-InstallMethod( IsRightQuasigroupHomotopism, "for three mappings",
+InstallOtherMethod( HomotopismRightQuasigroups, "for a right quasigroups, three permutations and a bool",
+    [ IsRightQuasigroup, IsPerm, IsPerm, IsPerm, IsBool ],
+function( Q, f, g, h, isCanonical )
+    if isCanonical then 
+        f := AsTransformation( f ); g := AsTransformation( g ); h := AsTransformation( h );
+    else
+        f := AsParentTransformation( Q, f );
+        g := AsParentTransformation( Q, g );
+        h := AsParentTransformation( Q, h );
+    fi;
+    # REVISIT: It would be good to allow permutations. We need to expand the default constructor.    
+    return HomotopismRightQuasigroups( Q, Q, f, g, h, false );
+end );
+
+InstallOtherMethod( HomotopismRightQuasigroups, "for a right quasigroups and three parent permutations",
+    [ IsRightQuasigroup, IsPerm, IsPerm, IsPerm ],
+function( Q, f, g, h )
+    return HomotopismRightQuasigroups( Q, f, g, h, false );
+end );
+
+InstallMethod( HomotopismRightQuasigroups, "for three right quasigroup mappings",
     [ IsMapping, IsMapping, IsMapping ],
 function( f, g, h )
-    return RQ_IsAlgebraHomotopism( IsRightQuasigroup, f, g, h );
+    local source, range, func;
+    if not ( Source( f ) = Source( g ) and Source( g ) = Source( h ) ) then
+        Error( "RQ: The three mappings must have the same source." );
+    fi;
+    if not ( Range( f ) = Range( g ) and Range( g ) = Range( h ) ) then
+        Error( "RQ: The three mappings must have the same range." );
+    fi;
+    range := Range( f );
+    func := AsParentTransformation;
+    return HomotopismRightQuasigroups( source, range, func(f), func(g), func(h), false ); 
 end );
 
-InstallOtherMethod( IsRightQuasigroupHomotopism, "for list of three mappings",
-    [ IsList ],
-function( fgh )
-    return RQ_IsAlgebraHomotopism( IsRightQuasigroup, fgh[1], fgh[2], fgh[3] );
+InstallMethod( ViewString, "for right quasigroup homotopism",
+    [ IsRightQuasigroupHomotopism ],
+function( t )
+    local props, s, category;
+    s := "<";
+    props := [ HasIsInjective( t ) and IsInjective( t ), HasIsSurjective( t ) and IsSurjective( t ), t!.source = t!.range ];
+    if props = [true, true, true] then
+        Append( s, "autotopism" );
+    elif props = [true, true, false ] then
+        Append( s, "isotopism" );
+    elif props[1]=true then 
+        Append( s, "injective homotopism" );
+    elif props[2]=true then
+        Append( s, "surjective homotopism" );
+    else 
+        Append( s, "homotopism" );
+    fi;
+    Append( s, " of ");
+    category := CategoryOfRightQuasigroup( [ t!.source, t!.range ] );
+    if category = IsLoop then
+        Append( s, "loops" );
+    elif category = IsQuasigroup then
+        Append( s, "quasigroups" );
+    else
+        Append( s, "right quasigroups" );
+    fi;
+    Append( s, ">" );
+    return s;
 end );
 
-InstallMethod( IsQuasigroupHomotopism, "for three mappings",
-    [ IsMapping, IsMapping, IsMapping ],
-function( f, g, h )
-    return RQ_IsAlgebraHomotopism( IsQuasigroup, f, g, h );
+InstallMethod( DisplayString, "for right quasigroup homotopism",
+    [ IsRightQuasigroupHomotopism ],
+function( t )
+    local s;
+    s := ViewString( t );
+    Remove(s); # remove last character
+    if t!.source <> t!.range then
+        Append( s, "\n   source = " ); Append( s, String( t!.source ) );
+        Append( s, "\n   range = " ); Append( s, String( t!.range ) );
+    else
+        Append( s, "\n   source = range = "); Append( s, String( t!.source ) );
+    fi;
+    Append( s, "\n   f = " ); Append( s, String( t!.f ) );
+    Append( s, "\n   g = " ); Append( s, String( t!.g ) );
+    Append( s, "\n   h = " ); Append( s, String( t!.h ) );
+    Append( s, "\n>" );
+    return s;
 end );
 
-InstallOtherMethod( IsQuasigroupHomotopism, "for list of three mappings",
-    [ IsList ],
-function( fgh )
-    return RQ_IsAlgebraHomotopism( IsQuasigroup, fgh[1], fgh[2], fgh[3] );
+InstallMethod( PrintObj, "for right quasigroup homotopism",
+	[ IsRightQuasigroupHomotopism ],
+function( t )
+	Print( "HomotopismRightQuasigroups( ", t!.source, ", ", t!.range, ", ", t!.f, ", ", t!.g, ", ", t!.h, ")" );
 end );
 
-InstallMethod( IsLoopHomotopism, "for three mappings",
-    [ IsMapping, IsMapping, IsMapping ],
-function( f, g, h )
-    return RQ_IsAlgebraHomotopism( IsLoop, f, g, h );
+InstallMethod( \=, "for two right quasigroup homotopisms",
+	IsIdenticalObj,
+	[ IsRightQuasigroupHomotopism, IsRightQuasigroupHomotopism ],
+function( u, v )
+    return [ u!.source, u!.range, u!.f, u!.g, u!.h ] = [v!.source, v!.range, v!.f, v!.g, v!.h ];
 end );
 
-InstallOtherMethod( IsLoopHomotopism, "for list of three mappings",
-    [ IsList ],
-function( fgh )
-    return RQ_IsAlgebraHomotopism( IsLoop, fgh[1], fgh[2], fgh[3] );
+InstallMethod( \<, "for two right quasigroup homotopisms",
+	IsIdenticalObj,
+	[ IsRightQuasigroupHomotopism, IsRightQuasigroupHomotopism ],
+function( u, v )
+	return [ u!.source, u!.range, u!.f, u!.g, u!.h ] < [ v!.source, v!.range, v!.f, v!.g, v!.h ];
 end );
 
-# RQ_IsAlgebraIsotopism
-InstallMethod( RQ_IsAlgebraIsotopism, "for category and three mappings",
-    [ IsObject, IsMapping, IsMapping, IsMapping ],
-function( category, f, g, h )
-    return ForAll( [f,g,h], IsBijective ) and RQ_IsAlgebraHomotopism( category, f, g, h );
+# acting on the right of arguments, hence composing from left to right
+InstallMethod( \*, "for two right quasigroup homotopisms",
+    IsIdenticalObj,
+    [ IsRightQuasigroupHomotopism, IsRightQuasigroupHomotopism ],
+function( u, v )
+    if not u!.range = v!.source then
+        Error( "RQ: The two homotopisms cannot be composed. ");
+    fi;
+    return HomotopismRightQuasigroups( u!.source, v!.range, u!.f*v!.f, u!.g*v!.g, u!.h*v!.h, false );
 end );
 
-# IsRightQuasigroupIsotopism
-# IsQuasigroupIsotopism
-# IsLoopIsotopism
+InstallMethod( Source, "for right quasigroup homotopism",
+    [ IsRightQuasigroupHomotopism ],
+    t -> t!.source
+);
 
-InstallMethod( IsRightQuasigroupIsotopism, "for three mappings",
-    [ IsMapping, IsMapping, IsMapping ],
-function( f, g, h )
-    return RQ_IsAlgebraIsotopism( IsRightQuasigroup, f, g, h );
+InstallMethod( Range, "for right quasigroup homotopism",
+    [ IsRightQuasigroupHomotopism ],
+    t -> t!.range
+);
+
+InstallMethod( ComponentOfHomotopism, "for right quasigorup homotopism and integer",
+    [ IsRightQuasigroupHomotopism, IsInt ],
+function( t, i )
+    if i=1 then
+        return t!.f;
+    elif i=2 then
+        return t!.g;
+    elif i=3 then 
+        return t!.h;
+    fi;
+    return fail;
 end );
 
-InstallOtherMethod( IsRightQuasigroupIsotopism, "for list of three mappings",
-    [ IsList ],
-function( fgh )
-    return RQ_IsAlgebraIsotopism( IsRightQuasigroup, fgh[1], fgh[2], fgh[3] );
+InstallMethod( OneMutable, "for right quasigroup homotopism",
+	[ IsRightQuasigroupHomotopism ],
+function( t )
+    if t!.source<>t!.range then
+        return fail;
+    fi;
+    return HomotopismRightQuasigroups( t!.source, (), (), () );
 end );
 
-InstallMethod( IsQuasigroupIsotopism, "for three mappings",
-    [ IsMapping, IsMapping, IsMapping ],
-function( f, g, h )
-    return RQ_IsAlgebraIsotopism( IsQuasigroup, f, g, h );
+InstallMethod( InverseMutable, "for a right quasigroup homotopism",
+	[ IsRightQuasigroupHomotopism ],
+function( t )
+    if not IsBijective( t ) then 
+        return fail;
+    fi;
+    return HomotopismRightQuasigroups( t!.range, t!.source, (t!.f)^-1, (t!.g)^-1, (t!.h)^-1, false );
 end );
 
-InstallOtherMethod( IsQuasigroupIsotopism, "for list of three mappings",
-    [ IsList ],
-function( fgh )
-    return RQ_IsAlgebraIsotopism( IsQuasigroup, fgh[1], fgh[2], fgh[3] );
+# IsHomotopismRightQuasigroups
+InstallGlobalFunction( IsHomotopismRightQuasigroups, 
+function( arg )
+# PROG: The constructor checks the homotopic property.
+    return CallFuncList( HomotopismRightQuasigroups, arg ) <> fail;
 end );
 
-InstallMethod( IsLoopIsotopism, "for three mappings",
-    [ IsMapping, IsMapping, IsMapping ],
-function( f, g, h )
-    return RQ_IsAlgebraIsotopism( IsLoop, f, g, h );
+# IsHomotopismQuasigroups
+InstallGlobalFunction( IsHomotopismQuasigroups,
+function( arg )
+    if not ForAll( Filtered( arg, IsRightQuasigroup ), IsQuasigroup ) then return false; fi;
+    return CallFuncList( IsHomotopismRightQuasigroups ) <> fail;
 end );
 
-InstallOtherMethod( IsLoopIsotopism, "for list of three mappings",
-    [ IsList ],
-function( fgh )
-    return RQ_IsAlgebraIsotopism( IsLoop, fgh[1], fgh[2], fgh[3] );
+# IsHomotopismLoops
+InstallGlobalFunction( IsHomotopismLoops,
+function( arg )
+    if not ForAll( Filtered( arg, IsRightQuasigroup ), IsLoop ) then return false; fi;
+    return CallFuncList( IsHomotopismRightQuasigroups ) <> fail;
 end );
 
-# RQ_IsAlgebraAutotopism
-InstallMethod( RQ_IsAlgebraAutotopism, "for category and three mappings",
-    [ IsObject, IsMapping, IsMapping, IsMapping ],
-function( category, f, g, h )
-    return Source( f ) = Range( f ) and RQ_IsAlgebraIsotopism( category, f, g, h );
+# IsInjective
+InstallOtherMethod( IsInjective, "for right quasigroup homotopism",
+    [ IsRightQuasigroupHomotopism ],
+function( t )
+    local ind, func;
+    ind := ParentInd( t!.source );
+    func := IsInjectiveListTrans;
+    return ( func( ind, t!.f ) and func( ind, t!.g ) and func( ind, t!.h ) );
 end );
 
-# IsRightQuasigroupAutotopism
-# IsQuasigroupAutotopism
-# IsLoopAutotopism
-
-InstallMethod( IsRightQuasigroupAutotopism, "for three mappings",
-    [ IsMapping, IsMapping, IsMapping ],
-function( f, g, h )
-    return RQ_IsAlgebraAutotopism( IsRightQuasigroup, f, g, h );
+# IsSurjective
+InstallOtherMethod( IsSurjective, "for right quasigroup homotopism",
+    [ IsRightQuasigroupHomotopism ],
+function( t )
+    local sourceInd, rangeInd;
+    sourceInd := ParentInd( t!.source );
+    rangeInd := ParentInd( t!.range );
+    return ForAll( [t!.f, t!.g, t!.h ], p -> Set( sourceInd, i->i^p ) = rangeInd );
 end );
 
-InstallOtherMethod( IsRightQuasigroupAutotopism, "for list of three mappings",
-    [ IsList ],
-function( fgh )
-    return RQ_IsAlgebraAutotopism( IsRightQuasigroup, fgh[1], fgh[2], fgh[3] );
+# IsBijective
+InstallOtherMethod( IsBijective, "for right quasigroup homotopism",
+    [ IsRightQuasigroupHomotopism ],
+function( t )
+    return IsInjective( t ) and IsBijective( t );
 end );
 
-InstallMethod( IsQuasigroupAutotopism, "for three mappings",
-    [ IsMapping, IsMapping, IsMapping ],
-function( f, g, h )
-    return RQ_IsAlgebraAutotopism( IsQuasigroup, f, g, h );
+# IsIsotopismRightQuasigroups
+InstallGlobalFunction( IsIsotopismRightQuasigroups,
+function( arg )
+    local t;
+    t := CallFuncList( HomotopismRightQuasigroups, arg );
+    return t<>fail and IsInjective( t ) and IsSurjective( t );
 end );
 
-InstallOtherMethod( IsQuasigroupAutotopism, "for list of three mappings",
-    [ IsList ],
-function( fgh )
-    return RQ_IsAlgebraAutotopism( IsQuasigroup, fgh[1], fgh[2], fgh[3] );
+# IsIsotopismQuasigroups
+InstallGlobalFunction( IsIsotopismQuasigroups,
+function( arg )
+    if not ForAll( Filtered( arg, IsRightQuasigroup ), IsQuasigroup ) then return false; fi;
+    return CallFuncList( IsIsotopismRightQuasigroups, arg );
 end );
 
-InstallMethod( IsLoopAutotopism, "for three mappings",
-    [ IsMapping, IsMapping, IsMapping ],
-function( f, g, h )
-    return RQ_IsAlgebraAutotopism( IsLoop, f, g, h );
+# IsIsotopismLoops
+InstallGlobalFunction( IsIsotopismLoops,
+function( arg )
+    if not ForAll( Filtered( arg, IsRightQuasigroup ), IsLoop ) then return false; fi;
+    return CallFuncList( IsIsotopismRightQuasigroups, arg );
 end );
 
-InstallOtherMethod( IsLoopAutotopism, "for list of three mappings",
-    [ IsList ],
-function( fgh )
-    return RQ_IsAlgebraAutotopism( IsLoop, fgh[1], fgh[2], fgh[3] );
+# IsAutotopismRightQuasigroups
+InstallGlobalFunction( IsAutotopismRightQuasigroups,
+function( arg )
+    local t;
+    t := CallFuncList( HomotopismRightQuasigroups, arg );
+    return t<>fail and t!.source = t!.range and IsInjective( t ) and IsSurjective( t );
+end );
+
+# IsAutotopismQuasigroups
+InstallGlobalFunction( IsAutotopismQuasigroups,
+function( arg )
+    local t;
+    if not ForAll( Filtered( arg, IsRightQuasigroup ), IsQuasigroup ) then return false; fi;
+    t := CallFuncList( HomotopismRightQuasigroups, arg );
+    return t<>fail and t!.source = t!.range and IsInjective( t ) and IsSurjective( t );
+end );
+
+# IsAutotopismLoops
+InstallGlobalFunction( IsAutotopismLoops,
+function( arg )
+    local t;
+    if not ForAll( Filtered( arg, IsRightQuasigroup ), IsLoop ) then return false; fi;
+    t := CallFuncList( HomotopismRightQuasigroups, arg );
+    return t<>fail and t!.source = t!.range and IsInjective( t ) and IsSurjective( t );
 end );
 
 # TWISTS OF RIGHT QUASIGROUPS
@@ -158,7 +289,7 @@ end );
 # PROG: constructor OK
 # Many other constuctors are reduced to this one.
 InstallMethod( RQ_AlgebraTwistByParentTransformations, "for category, right quasigroup, three transformations and record",
-    [ IsObject, IsRightQuasigroup, IsTransformation, IsTransformation, IsTransformation, IsRecord ],
+    [ IsOperation, IsRightQuasigroup, IsTransformation, IsTransformation, IsTransformation, IsRecord ],
 function( category, Q, f, g, h, style )
     local n, ind, F, ct, ret, invf, invg, invh, e;  
     RQ_CompleteConstructorStyle( style );
@@ -225,50 +356,40 @@ end );
 
 # RQ_AlgebraTwist
 InstallMethod( RQ_AlgebraTwist, "for category and list of arguments",
-    [ IsObject, IsList ],
+    [ IsOperation, IsList ],
 function( category, data )
-    local Q, f, g, h, isCanonical, style, ConvertMapping;
-    # processing arguments
-    # expects Q, f, g, h, isCanonical, style, OR Q, [f,g,h], isCanonical, style, with the last two arguments optional 
-    Q := data[1];
-    if IsList( data[2] ) then
-        f := data[2][1]; g := data[2][2]; h := data[2][3];
+    local Q, maps, isCanonical, i, style;
+    # processing argument "data"
+    # expects data = [f,g,h] or [Q,f,g,h] or [Q,f,g,h,isCanonical] with another optional argument for constructor style
+    if IsMapping( data[1] ) then # looks like [f,g,h]
+        Q := Source( data[1] ); maps := data{[1,2,3]}; 
     else
-        f := data[2]; g := data[3]; h := data[4];
+        Q := data[1]; maps := data{[2,3,4]}; 
     fi;
+    # check category
     if ( category = IsLoop and not IsQuasigroup( Q ) ) or ( category <> IsLoop and not category( Q ) ) then
         Error( "RQ: <Q> must be a right quasigroup or quasigroup." );
     fi;
-    if not ForAll( [f,g,h], m -> ( IsMapping( m ) and Source( m ) = Q and Range( m ) = Q ) or IsPerm( m ) or IsTransformation( m ) ) then
-        Error( "RQ: Each of <f>, <g>, <h> must be a mapping from <Q> to <Q>, or a permutation on <Q> or a transformation on <Q>." );
-    fi;
-    isCanonical := First( data, IsBool );
-    if isCanonical = fail then
-        isCanonical := false;
-    fi;
+    # convert mappings to parent transformations
+    isCanonical := First( data, x -> x=true ) <> fail;
+    for i in [1..3] do
+        if IsMapping( maps[i] ) then
+            maps[i] := AsParentTransformation( Q, maps[i] );
+        fi;
+        if IsPerm( maps[i] ) then 
+            maps[i] := AsTransformation( maps[i] );
+        fi;
+        if IsTransformation( maps[i] ) and isCanonical then
+            AsParentTransformation( Q, Q, maps[i] );
+        fi;
+    od;
     style := Last( data, IsRecord );
     if style = fail then # no style given
         style := RQ_defaultConstructorStyle;
     else
         RQ_CompleteConstructorStyle( style );
     fi;
-    # converting arguments
-    ConvertMapping := function( m )
-        if IsMapping( m ) then
-            return AsParentTransformation( m );
-        fi;
-        if IsPerm( m ) then # first convert to a transformation
-            m := AsTransformation( m );
-        fi;
-        if IsTransformation( m ) and isCanonical then
-            return AsParentTransformation( Q, Q, m );
-        fi;
-        return m; # no change to parent transformation
-    end;
-    f := ConvertMapping( f );
-    g := ConvertMapping( g );
-    h := ConvertMapping( h );
-    return RQ_AlgebraTwistByParentTransformations( category, Q, f, g, h, style );    
+    return RQ_AlgebraTwistByParentTransformations( category, Q, maps[1], maps[2], maps[3], style );    
 end );
 
 # RightQuasigroupTwist
@@ -289,7 +410,6 @@ function( arg )
     return RQ_AlgebraTwist( IsLoop, arg );
 end );
 
-
 # ISOTOPES OF RIGHT QUASIGROUPS
 # _____________________________________________________________________________
 
@@ -297,17 +417,16 @@ end );
 # PROG: constructor OK, calls RQ_AlgebraTwist
 
 InstallMethod( RQ_AlgebraIsotope, "for category and list of arguments",
-    [ IsObject, IsList ],
+    [ IsOperation, IsList ],
 function( category, data )
-    local ls;
-    # expects data to be Q, f, g, h, ... or Q, [f,g,h], ...
+    local ls, pos;
+    # expects data to be as in RQ_AlgebraTwist
     # PROG: the multiplication will be given by x*y = h(f^{-1}(x)g^{-1}(y)), so call twist (f^{-1},g^{-1},h)
     ls := ShallowCopy( data );
-    if IsList( ls[2] ) then 
-        ls[2] := [ ls[2,1]^-1, ls[2,2]^-1, ls[2,3] ];
-    else  
-        ls[2] := ls[2]^-1; ls[3] := ls[3]^-1; ls[4] := ls[4];
-    fi;
+    # positions of maps
+    pos := Filtered( [1..Length( data )], i -> IsMapping( data[i] ) or IsPerm( data[i] ) or IsTransformation( data[i] ) );
+    ls[pos[1]] := ls[pos[1]]^-1;
+    ls[pos[2]] := ls[pos[2]]^-1;
     return RQ_AlgebraTwist( category, ls );
 end );
 
@@ -331,7 +450,7 @@ function( arg )
 end);
 
 # PrincipalLoopIsotope
-# PROG: constructor OK, calls RQ_AlgebraIsotopeByPerms
+# PROG: constructor OK, calls RQ_AlgebraIsotope
 
 InstallOtherMethod( PrincipalLoopIsotope, "for quasigroup and two quasigroup elements",
     [ IsQuasigroup, IsQuasigroupElement, IsQuasigroupElement ],
@@ -616,7 +735,7 @@ end );
 # RQ_IsotopismAlgebras
 
 InstallMethod( RQ_IsotopismAlgebras, "for category, two right quasigroups and bool",
-    [ IsObject, IsRightQuasigroup, IsRightQuasigroup, IsBool ],
+    [ IsOperation, IsRightQuasigroup, IsRightQuasigroup, IsBool ],
 function( category, Q1, Q2, viaPrincipalLoopIsotopes ) 
     local origQ1, origQ2, tables1, tables2, n, gens1, i, f, g, h, fgh,
         T, Q, phi, alpha, beta, gamma;
@@ -654,7 +773,8 @@ function( category, Q1, Q2, viaPrincipalLoopIsotopes )
             h := 0*[1..n];
             fgh := RQ_ExtendIsotopism( f, g, h, tables1, tables2, gens1 );
             if not fgh = fail then # isotopism found
-                return List( fgh, m -> AsRightQuasigroupMapping( origQ1, origQ2, Transformation( m ), true ) );
+                return HomotopismRightQuasigroups( origQ1, origQ2, AsTransformation( f ), AsTransformation( g ), AsTransformation( h ), true );
+                # return List( fgh, m -> AsRightQuasigroupMapping( origQ1, origQ2, Transformation( m ), true ) );
             fi;
         od;
         return fail;
@@ -668,17 +788,16 @@ function( category, Q1, Q2, viaPrincipalLoopIsotopes )
         if not phi = fail then 
             # reconstruct the isotopism (alpha, beta, gamma)
             phi := AsCanonicalPerm( phi );
-            alpha := AsRightQuasigroupMapping( origQ1, origQ2, AsTransformation( RightTranslation(Q1,f)*phi ), true );
-            beta := AsRightQuasigroupMapping( origQ1, origQ2, AsTransformation( LeftTranslation(Q1,g)*phi ), true );
-            gamma := AsRightQuasigroupMapping( origQ1, origQ2, AsTransformation( phi ), true );
-            return [ alpha, beta, gamma ];
+            alpha := AsTransformation( RightTranslation(Q1,f)*phi );
+            beta := AsTransformation( LeftTranslation(Q1,g)*phi );
+            gamma := AsTransformation( phi );
+            return HomotopismRightQuasigroups( origQ1, origQ2, alpha, beta, gamma, true );
         fi; 
     od; od;
     return fail; 
 end );
 
 # IsotopismRightQuasigroups
-
 InstallMethod( IsotopismRightQuasigroups, "for two right quasigroups",
     [ IsRightQuasigroup, IsRightQuasigroup ],
 function( Q1, Q2 )
@@ -687,7 +806,6 @@ function( Q1, Q2 )
 end );
 
 # IsotopismQuasigroups
-
 InstallMethod( IsotopismQuasigroups, "for two quasigroups",
     [ IsQuasigroup, IsQuasigroup ],
 function( Q1, Q2 )
@@ -695,7 +813,6 @@ function( Q1, Q2 )
 end );
 
 # IsotopismLoops
-
 InstallMethod( IsotopismLoops, "for two loops",
     [ IsLoop, IsLoop ],
 function( Q1, Q2 )
@@ -709,9 +826,8 @@ function( Q1, Q2, viaPrincipalLoopIsotopes )
 end);
 
 # RQ_AlgebrasUpToIsotopism
-
 InstallMethod( RQ_AlgebrasUpToIsotopism, "for category, list of algebras and bool",
-    [ IsObject, IsList, IsBool ],
+    [ IsOperation, IsList, IsBool ],
 function( category, ls, viaPrincipalLoopIsotopes )
     local kept, positions, pos, Q, is_new, K;
     
@@ -782,163 +898,30 @@ end );
 # _____________________________________________________________________________
 
 #############################################################################
-##  CONSTRUCTORS
-##  -------------------------------------------------------------------------
-
-InstallGlobalFunction( AutotopismObject@,
-function( Q, f, g, h ) 
-    local alpha;
-    if ( IsMapping( f ) and ( Range( f ) <> Q or Source( f ) <> Q ) )
-        or ( IsMapping( g ) and ( Range( g ) <> Q or Source( g ) <> Q ) )
-        or ( IsMapping( h ) and ( Range( h ) <> Q or Source( h ) <> Q ) )
-    then 
-        Error( "RQ: wrong mappings given.");
-    fi; 
-    if ( IsTransformation(f) and not IsParentTransformation( Q, Q, f ) ) 
-        or ( IsTransformation(g) and not IsParentTransformation( Q, Q, g ) ) 
-        or ( IsTransformation(h) and not IsParentTransformation( Q, Q, h ) ) 
-    then 
-        Error( "RQ: wrong transformations given.");
-    fi;
-    if ( IsPerm(f) and not IsParentPerm( Q, f ) ) 
-        or ( IsPerm(g) and not IsParentPerm( Q, g ) ) 
-        or ( IsPerm(h) and not IsParentPerm( Q, h ) ) 
-    then 
-        Error( "RQ: wrong parent permutations given.");
-    fi;
-	alpha := Objectify( RQAtpType, [ f, g, h, Q ] ); 
-    return alpha;
-end);
-
-InstallMethod( AmbientRightQuasigroup, "for an autotopism object",
-    [ IsRightQuasigroupAutotopismObject ],
-function( atp )
-    return atp![4];
-end);
-
-#############################################################################
-##  DISPLAYING AND COMPARING ELEMENTS
-##  -------------------------------------------------------------------------
-
-InstallMethod( ViewObj, "for an autotopism object",
-	[ IsRightQuasigroupAutotopismObject ],
-function( obj )
-	Print( "IsRightQuasigroupAutotopismObject(", obj![1], ", ", obj![2], ", ", obj![3], ")" );
-end );
-
-InstallMethod( Display, "for an autotopism object",
-	[ IsRightQuasigroupAutotopismObject ],
-function( obj )
-	Print( "Autotopism object on a right quasigroup of order ", Size( obj![4] ) );
-end );
-
-InstallMethod( PrintObj, "for an autotopism object",
-	[ IsRightQuasigroupAutotopismObject ],
-function( obj )
-	Print( "IsRightQuasigroupAutotopismObject(", obj![1], ", ", obj![2], ", ", obj![3], ")" );
-end );
-
-InstallMethod( \=, "for two autotopism objects",
-	IsIdenticalObj,
-	[ IsRightQuasigroupAutotopismObject, IsRightQuasigroupAutotopismObject ],
-function( atp1, atp2 )
-	return atp1![4] = atp2![4] and 
-        [ atp1![1], atp1![2], atp1![3] ] = [ atp2![1], atp2![2], atp2![3] ];
-end );
-
-InstallMethod( \<, "for two autotopism objects",
-	IsIdenticalObj,
-	[ IsRightQuasigroupAutotopismObject, IsRightQuasigroupAutotopismObject ],
-function( atp1, atp2 )
-	return [ atp1![1], atp1![2], atp1![3] ] < [ atp2![1], atp2![2], atp2![3] ];
-end );
-
-InstallMethod( ViewObj, "for an autotopism group",
-    [ IsAutotopismGroup ],
-function( g )
-    local str;
-    if IsTrivial( g ) then
-        Print( "<trivial autotopism group>" );
-    else
-        str := "<autotopism group";
-        if HasSize(g) then
-            str := Concatenation( str, " of size ", String( Size( g ) ) );
-        fi;
-        if HasGeneratorsOfGroup( g ) then 
-            str := Concatenation( str, " with ", 
-                String( Length( GeneratorsOfGroup( g ) ) ), " generators" );
-        fi;
-        Print( str, ">" );
-    fi;
-end );
-
-#############################################################################
-##  MULTIPLICATION
-##  -------------------------------------------------------------------------
-
-InstallMethod( \*, "for two autotopism objects",
-	IsIdenticalObj,
-	[ IsRightQuasigroupAutotopismObject, IsRightQuasigroupAutotopismObject ],
-function( atp1, atp2 )
-	if atp1![4] = atp2![4] then 
-		return AutotopismObject@( 
-            atp1![4],
-            atp1![1] * atp2![1],
-            atp1![2] * atp2![2],
-            atp1![3] * atp2![3]
-        );
-	else
-		Error("RQ: Two autotopism objects must have the same ambient right quasigroup.");
-	fi;
-end );
-
-InstallMethod( OneMutable, "for an autotopism object",
-	[ IsRightQuasigroupAutotopismObject ],
-function( atp )
-	return AutotopismObject@( 
-            atp![4],
-            One( atp![1] ),
-            One( atp![2] ),
-            One( atp![3] )
-        );
-end );
-
-InstallMethod( InverseMutable, "for an autotopism object",
-	[ IsRightQuasigroupAutotopismObject ],
-function( atp )
-	return AutotopismObject@( 
-            atp![4],
-            InverseMutable( atp![1] ),
-            InverseMutable( atp![2] ),
-            InverseMutable( atp![3] )
-        );
-end );
-
-#############################################################################
 ##  ACTIONS
 ##  -------------------------------------------------------------------------
 
 InstallMethod( AtpOn3nElms@, "for an integer in [1..3n] and an autotopism",
-    [ IsPosInt, IsRightQuasigroupAutotopismObject ],
+    [ IsPosInt, IsRightQuasigroupHomotopism ],
 function( i, atp )
     local n;
-    n := Size( atp![4] );
+    n := Size( atp!.source );
     if i <= n then 
-        return i^atp![1];
+        return i^(atp!.f);
     elif i <= 2*n then 
-        return n+(i-n)^atp![2];
+        return n+(i-n)^(atp!.g);
     else 
-        return 2*n+(i-2*n)^atp![3];
+        return 2*n+(i-2*n)^(atp!.h);
     fi;
 end );
 
 InstallMethod( AtpOnnSquare@, "for an element of QxQ(xQ) and an autotopism",
-    [ IsList, IsRightQuasigroupAutotopismObject ],
+    [ IsList, IsRightQuasigroupHomotopism ],
  function( x, atp )
     if Length( x ) = 2 then
-        return [ x[1]^atp![1], x[2]^atp![2] ];
+        return [ x[1]^(atp!.f), x[2]^(atp!.g) ];
     elif Length( x ) = 3 then 
-        return [ x[1]^atp![1], x[2]^atp![2], x[3]^atp![3] ];
+        return [ x[1]^(atp!.f), x[2]^(atp!.g), x[3]^(atp!.h) ];
     else
         Error( "RQ: <1> must have length 2 or 3." );
     fi;
@@ -960,19 +943,19 @@ function( Q, a, b )
     f := h / RightTranslation( Q, a );
     g := h / LeftTranslation( Q, b );
     #ForAll( Q, x -> ForAll( Q, y -> x^f * y^g = (x * y)^u ) );
-    return AutotopismObject@( Q, f, g, h );
+    return HomotopismRightQuasigroups( Q, f, g, h ); # REVISIT: perhaps set attributes so that it knows it is bijective
 end );
 
 
 InstallMethod( AutotopismGroupByGenerators, "for a collection of autotopisms",
-    [ IsList and IsRightQuasigroupAutotopismObjectCollection ],
+    [ IsList and IsRightQuasigroupHomotopismCollection ],
 function( gens )
     local g, nice, n;
     if gens = [] then 
         Error( "RQ: list of generators cannot be empty." );
     fi;
     g := GroupWithGenerators( gens );
-    n := Size( gens[1]![4] );
+    n := Size( gens[1]!.source );
     nice := ActionHomomorphism( g, [1 .. 3*n], AtpOn3nElms@ );
     SetIsInjective( nice, true );
     SetNiceMonomorphism( g, nice );
@@ -1007,7 +990,7 @@ InstallMethod( AutotopismGroup, "for a loop",
 function( Q )
     local ag, gens, green, yellow, red;
     ag := AutomorphismGroup(Q);
-    gens := List( GeneratorsOfGroup( ag ), u -> AutotopismObject@( Q, u, u, u ) );
+    gens := List( GeneratorsOfGroup( ag ), u -> HomotopismRightQuasigroups( Q, u, u, u ) );
     green := []; red := []; yellow := Cartesian( Q, Q );
     while yellow <> [] do
         yellow := ExtendAtpGrp( Q, gens, green, yellow, red );

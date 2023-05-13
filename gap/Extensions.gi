@@ -120,13 +120,13 @@ function( ext, style )
     if not Length( ext ) = 3 then
         Error(" RQ: <1> must be a list of length 3.");
     fi;
-    return LoopByNuclearExtension( ext[1], ext[2], ext[3], style );
+    return LoopByCentralExtension( ext[1], ext[2], ext[3], style );
 end); 
 
 InstallOtherMethod( LoopByCentralExtension, "for an extension (list)",
     [ IsList ],
 function( ext )
-    LoopByNuclearExtension( ext, RQ_defaultConstructorStyle );
+    return LoopByCentralExtension( ext, RQ_defaultConstructorStyle );
 end); 
 
 # AsSquareTable

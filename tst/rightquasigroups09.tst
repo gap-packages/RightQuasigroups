@@ -114,13 +114,15 @@ IsRightQuasigroupAutotopismObject((), (), ())
 gap> atp^-4;
 IsRightQuasigroupAutotopismObject((1,4,5), (2,3,4), (1,4,5))
 
-# doc/_Chapter_Topisms.xml:558-565
+# doc/_Chapter_Topisms.xml:558-567
 gap> Q := RightBolLoop(8,1);
 <right Bol loop 8/1>
 gap> AutotopismFromPrincipalLoopIsotope( Q, Q.4, Q.3 );
 IsRightQuasigroupAutotopismObject((1,3)(2,4)(5,7)(6,8), (1,4)(2,3)(5,8), (1,2)(3,4)(5,6)(7,8))
 gap> AutotopismGroup( Q );
-<autotopism group of size 128 with 5 generators>
+<autotopism group with 5 generators>
+gap> Size( last );
+128
 
 #
 gap> STOP_TEST("rightquasigroups09.tst", 1 );

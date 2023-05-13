@@ -84,7 +84,7 @@ InstallMethod( IsLoopMagma, "for magma",
 # RQ_AsAlgebra
 # PROG: constructor OK 
 InstallMethod( RQ_AsAlgebra, "for category, domain and record", 
-    [ IsObject, IsDomain, IsRecord ],
+    [ IsOperation, IsDomain, IsRecord ],
 function( category, M, style )
     local Q, ct;
     RQ_CompleteConstructorStyle( style );
@@ -112,11 +112,11 @@ function( category, M, style )
             return fail;
         fi;
         Q := RQ_AlgebraByCayleyTable( category, ct, ConstructorStyle( style.indexBased, false ) ); # no need to check again
-        RQ_InheritProperties( M, Q ); # isomorphic copy inherits everything
+        RQ_InheritProperties( M, Q, false ); # isomorphic copy inherits everything
         return Q;
     fi; 
     if IsMagma( M ) then 
-        if style.checkArguments and not RQ_AreAlgebraFunctions( category, M, \*, fail, fail, fail, false ) then
+        if style.checkArguments and not RQ_AreAlgebraFunctions( category, M, \*, [ fail, fail, fail ], false ) then
             return fail;
         fi; 
         return RQ_AlgebraByFunction( category, M, \*, [ ConstructorStyle( style.indexBased, false ) ] );
@@ -170,13 +170,13 @@ end );
 # PROG: We support the optional argument here because the function appears in the documentation.
 # In general, auxiliary RQ_ functions do not support optional arguments.
 InstallMethod( RQ_AlgebraShell, "for category and collection",
-    [ IsObject, IsCollection ],
+    [ IsOperation, IsCollection ],
 function( category, S )
     return RQ_AlgebraShell( category, S, RQ_defaultConstructorStyle );
 end );
 
 InstallOtherMethod( RQ_AlgebraShell, "for category, collection and record",
-    [ IsObject, IsCollection, IsRecord ],
+    [ IsOperation, IsCollection, IsRecord ],
 function( category, S, style )
     local elmName, familyName, elementType, repType, F, n, Q;
     RQ_CompleteConstructorStyle( style );
@@ -400,7 +400,7 @@ end );
 
 # RQ_IsAlgebraCayleyTable
 InstallMethod( RQ_IsAlgebraCayleyTable, "for category, square table and bool",
-    [ IsObject, IsRectangularTable, IsBool ],
+    [ IsOperation, IsRectangularTable, IsBool ],
 function( category, ct, reportErrors )
     local n, S, e;
     n := Length( ct );
@@ -454,7 +454,7 @@ InstallMethod( NormalizedQuasigroupCayleyTable, "for square table",
 # RQ_AlgebraByCayleyTable
 # PROG: constructor OK
 InstallMethod( RQ_AlgebraByCayleyTable, "for category, Cayley table and record",
-    [ IsObject, IsRectangularTable, IsRecord ],
+    [ IsOperation, IsRectangularTable, IsRecord ],
 function( category, ct, style ) 
     local n, S, Q, F;
     RQ_CompleteConstructorStyle( style );
@@ -521,7 +521,7 @@ end );
 
 # RQ_AreAlgebraFunctions
 InstallMethod( RQ_AreAlgebraFunctions, "for category, collection, function, list optional functions and bool",
-    [ IsObject, IsCollection, IsFunction, IsList, IsBool ],
+    [ IsOperation, IsCollection, IsFunction, IsList, IsBool ],
 function( category, S, mult, ops, reportErrors )
     local rdiv, ldiv, one, e;
     # PROCESSING ARGUMENTS
@@ -627,7 +627,7 @@ end );
 # RQ_AlgebraByFunction
 # PROF: constructor OK. There is no point in making shallow copies of functions
 InstallMethod( RQ_AlgebraByFunction, "for category, collection, function and list",
-    [ IsObject, IsCollection, IsFunction, IsList ],
+    [ IsOperation, IsCollection, IsFunction, IsList ],
 function( category, S, mult, rest ) 
     local rdiv, ldiv, one, style, ct, Q, F;
     # PROCESSING ARGUMENTS
@@ -699,7 +699,7 @@ end );
 
 # RQ_IsAlgebraRightSection
 InstallMethod( RQ_IsAlgebraRightSection, "for category, two collections and bool",
-    [ IsObject, IsCollection, IsCollection, IsBool ],
+    [ IsOperation, IsCollection, IsCollection, IsBool ],
 function( category, S, section, reportErrors )
     local n, A, e;
     if not IsSet( S ) then S := Set( S ); fi;
@@ -766,7 +766,7 @@ end );
 # RQ_AlgebraByRightSection
 # PROG: constructor OK
 InstallMethod( RQ_AlgebraByRightSection, "for category, two collections and record",
-    [ IsObject, IsCollection, IsCollection, IsRecord ],
+    [ IsOperation, IsCollection, IsCollection, IsRecord ],
 function( category, S, section, style )
     local n, ct, Q, F;
     RQ_CompleteConstructorStyle( style );
@@ -888,7 +888,7 @@ end );
 
 # RQ_IsAlgebraRightFolder
 InstallMethod( RQ_IsAlgebraRightFolder, "for category, group, subgroup, right transversal and bool",
-    [ IsObject, IsGroup, IsGroup, IsList, IsBool ],
+    [ IsOperation, IsGroup, IsGroup, IsList, IsBool ],
 function( category, G, H, T, reportErrors )
     local checked, cosets, section;
     checked := IsRightTransversal( T ); # whether to check if T is a right transversal to H in G
@@ -949,7 +949,7 @@ end );
 # RQ_AlgebraByRightFolder
 # PROG: constructor OK, calls RQ_AlgbraByRightSection
 InstallMethod( RQ_AlgebraByRightFolder, "for category, group, subgroup, right transversal and record",
-    [ IsObject, IsGroup, IsGroup, IsList, IsRecord ],
+    [ IsOperation, IsGroup, IsGroup, IsList, IsRecord ],
 function( category, G, H, T, style ) 
     local section;
     RQ_CompleteConstructorStyle( style );
@@ -991,7 +991,7 @@ end );
 # QuasigroupByRightFolder
 InstallMethod( QuasigroupByRightFolder, "for right transversal",
     [ IsRightTransversal ],
-    T -> RQ_AlgebraByRightFolder( IsRightQuasigroup, T!.group, T!.subgroup, T, RQ_defaultConstructorStyle )
+    T -> RQ_AlgebraByRightFolder( IsQuasigroup, T!.group, T!.subgroup, T, RQ_defaultConstructorStyle )
 );
 
 InstallOtherMethod( QuasigroupByRightFolder, "for right transversal and record",

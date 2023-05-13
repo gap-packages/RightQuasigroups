@@ -9,6 +9,14 @@ DeclareInfoClass( "InfoRightQuasigroups" );
 
 #! @Chapter Introduction
 
+# RQ_rank
+# global variable to set the selection rank of certain methods high, mostly to 
+# beat the semigroups package in case of associative loops
+# _____________________________________________________________________________
+
+# UPDATE POINT: Set the value high enough. It used to work with 10, now 17 is needed.
+RQ_rank := 17; 
+
 # GAP CATEGORIES AND REPRESENTATIONS
 # _____________________________________________________________________________
 
@@ -149,46 +157,67 @@ DeclareOperation( "CategoryOfRightQuasigroup", [ IsRightQuasigroup ] );
 
 #! @Section Displaying right quasigroups and their elements
 
-# RQ_ViewObjPrintObjString( Q )
-# returns the common portion of the string for ViewObj, PrintObj for a right quasigroup Q
-DeclareOperation( "RQ_ViewObjPrintObjString",  [ IsRightQuasigroup ] ); 
+# String
 
+# ViewString
 # ViewObj
+# View
 
+# PrintString
 # PrintObj
+# Print
+
+# DisplayString
+# Display
 
 #! @Subsection Displaying right quasigroups, quasigroups and loops
 
-#! <P/>The standard `ViewObj` function is implemented for right quasigroups `Q` 
-#! and it always displays at least the size of `Q`, namely `&lt;right quasigroup of size n&gt;`, 
-#! `&lt;quasigroup of size n&gt;` or `&lt;loop of size n&gt;`, depending on whether `Q`
-#! is declared as a right quasigroup, quasigroup or loop.
-#! When additional properties of `Q` become known, one of the strongest properties of `Q` is displayed,
-#! e.g., `&lt;associative loop of order n&gt;`.
-#! Library objects are displayed with their catalog numbers, e.g., `&lt;Moufang loop 64/12&gt;`.
+#REVISIT: Rewrite this section! Change output in examples, too!!!
 
-#! <P/>Likewise, the standard `PrintObj` function is implemented for right quasigroups. It displays
-#! in addition up to the first 5 elements of the underlying set of `Q`.
+#! <P/>The `ViewObj` and `PrintObj` operations are implemented for right quasigroups. The 
+#! methods `View` and `Print` call `ViewObj` and `PrintObj`, respectively.
+
+#! <P/>If `Q` has a name (typically when `Q` is a library object), `View( Q )` prints `Name( Q )`, e.g.,
+#! `&lt;Moufang loop 64/12&gt;`. In all other situations, `View( Q )` contains at
+#! least the size of `Q`, as in `&lt;right quasigroup of size 8&gt;`, `&lt;quasigroup of size 8&gt;`
+#! or `&lt;loop of size n&gt;`, depending on whether `Q` is declared as a right quasigroup, quasigroup or loop.
+#! When additional properties of `Q` become known, one of the strongest properties of `Q` is also included
+#! in `View( Q )`, e.g., `&lt;associative loop of order n&gt;`.
+
+#! <P/>`Print( Q )` additionally displays up to the first 5 elements of the underlying set of `Q`.
+
+#! <P/>The `String` attribute is also implemented for right quasigroups. It returns the same value as
+#! `View`, except that the returned value is a string. Since `String` is an attribute, the value
+#! is set at first call and does not change dynamically. (Use `RQ_String( Q )` for a string that
+#! changes dynamically with the properties of `Q`.)
 
 #! @BeginExampleSession
 #! gap> Q := QuasigroupByCayleyTable( [[0,1],[1,0]] );
 #! <quasigroup of size 2>
+#! gap> String( Q );
+#! "<quasigroup of size 2>"
 #! gap> IsAssociative( Q );
 #! true
 #! gap> Q;
 #! <associative quasigroup of size 2>
-#! gap> Print( AsLoop( SymmetricGroup( 4 ) ) );
-#! <associative loop of size 24 on (), (3,4), (2,3), (2,3,4), (2,4,3), ...>
+#! gap> Print( Q );
+#! <associative quasigroup of size 2 on 0, 1>
+#! gap> String( Q ); # stored at first call
+#! "<quasigroup of size 2>"
 #! @EndExampleSession
-
-# PrintObj
 
 #! @Subsection Displaying right quasigroup elements
 
-#! <P/>The `PrintObj` function is implemented to display elements of right quasigroups.
-#! By default, if `Q` is a right quasigroup and `x` is an element of the underlying set of
-#! `Q` then the corresponding element of `Q` is displayed as `rx`, `qx`
-#! or `lx`, depending on whether `Q` is declared as a right quasigroup, a quasigroup or a loop.
+#! <P/>The `ViewObj` and `PrintObj` operations are implemented for right quasigroup elements. The 
+#! methods `View` and `Print` call `ViewObj` and `PrintObj`, respectively.
+
+#! <P/>By default, if `x` is an element of a right quasigroup `Q` and `e` is the underlying element of `x`,
+#! both `View( x )` and `Print( x )` display `r` or `q` or `l` (depending on whether `Q` is declared
+#! as a right quasigroup, a quasigroup or a loop), followed by a display of `e`.
+
+#! <P/>The `String` attribute is also implemented for right quasigroup elements.
+#! It returns the same value as `View`, except that the returned value is a string. Since right 
+#! quasigroup elements are not attribute storing, the attribute `String` is always recalculated.
 
 #! @BeginGroup
 #! @GroupTitle Changing the name of right quasigroup elements
@@ -211,10 +240,14 @@ DeclareOperation( "SetLoopElementsName", [ IsLoop, IsString ] );
 #! @BeginExampleSession
 #! gap> Q := AsLoop( Group( (1,2) ) );
 #! <associative loop of size 2>
+#! gap> String( Q.1 );
+#! "l()"
 #! gap> Elements( Q );
 #! [ l(), l(1,2) ]
 #! gap> SetLoopElementsName( Q, "g" );; Elements( Q );
 #! [ g(), g(1,2) ]
+#! gap> String( Q.1 ); # right quasigroup elements are not attribute storing
+#! "g()"
 #! gap> SetLoopElementsName( Q, "" );; Elements( Q ); # better legibility but perhaps confusing
 #! [ (), (1,2) ]
 #! gap> IsPerm( last[1] );
@@ -313,8 +346,9 @@ DeclareOperation( "ChangeUnderlyingSet", [ IsRightQuasigroup, IsCollection ] );
 #! In case of quasigroups, the left division is obtained via `LeftQuotient( x, y )` or `LeftDivision( x, y )`
 #! but not by `x\y` since `\` is not supported in &GAP; as a binary operation symbol.
 
-#! <P/>For each of these operations, one of the two arguments can be a list of right quasigroup elements,
-#! in which case the corresponding list is returned.
+#! <P/>For each of these operations, one of the two arguments can be a list of right quasigroup elements
+#! or a right quasigroup, in which case the corresponding list is returned. We allow `x*Q` etc even if
+#! `x` is an element of `Parent(Q)`, not necessarily an element of `Q`.
 
 #! @Arguments x,y
 #! @Returns the right quotient of right quasigroup elements <Arg>x</Arg> and <Arg>y</Arg>, that is, the unique element
@@ -516,11 +550,11 @@ DeclareOperation( "Associator", [ IsRightQuasigroupElement, IsRightQuasigroupEle
 #! gap> Elements( A );
 #! [ r0, r2, r4 ]
 #! gap> Parent( A ) = Q;
-#! true;
+#! true
 #! gap> Elements( A )[ 3 ]; # the 3rd element of A
 #! r4
 #! gap> A.3; # the 3rd element of the parent of A
-#! r3
+#! r2
 #! gap> A[4]; # the element of parent of A corresponding to the given underlying element
 #! r4
 #! gap> Display( CayleyTable( A ) );
@@ -652,7 +686,7 @@ DeclareOperation( "CanonicalCopy", [ IsRightQuasigroup ] );
 #! <P/>Note how things change in index based and canonical copies.
 
 #! @BeginExampleSession
-#! gap> Q := RightQuasigroupByFunction( GF( 9 ), \+, ConstructorStyle( false, false ) ); # same as in the above example, not index based
+#! gap> Q := RightQuasigroupByFunction( GF( 9 ), \+, ConstructorStyle( false, false ) );; # same as in the above example, not index based
 #! gap> R := IndexBasedCopy( Q );;
 #! gap> IsIndexBased( R );
 #! true
@@ -661,13 +695,13 @@ DeclareOperation( "CanonicalCopy", [ IsRightQuasigroup ] );
 #! gap> IsCanonical( R ); # underlying set is not [1..n]
 #! false
 #! gap> x := R.2;;
-#! gap> x![1] # the index of x in the parent of R (here R itself)
+#! gap> x![1]; # the index of x in the parent of R (here R itself)
 #! 2
 #! gap> x*x;
 #! rZ(3)
 #! gap> F := FamilyObj( R.1 );;
 #! gap> [ IsBound( F!.mult ), IsBound( F!.rdiv ), IsBound( F!.ldiv ) ]; # if bound then based on respective tables
-#! [ true, true, false]
+#! [ true, true, false ]
 #! gap> [ IsBound( F!.multTable ), IsBound( F!.rdivTable ), IsBound( F!.ldivTable ) ]; # division tables will be bound when divisions are called 
 #! [ true, false, false ]
 #! gap> x/x;
@@ -793,9 +827,7 @@ DeclareGlobalFunction( "RQ_GroupByGenerators" );
 # REVISIT: ADD MORE TO THIS LIST.
 
 #! <P/>Note that not all of the above components of `F` are necessarily bound,
-#! depending on the constructor used for `P`. 
-
-# REVISIT: How can we see the list of bound components? `NamesOfComponents( F )` does not work.
+#! depending on the constructor used for `P`. To see the list of bound components, call `NamesOfComponents( F )`.
  
 ###################
 ## TO DO:
@@ -805,6 +837,5 @@ DeclareGlobalFunction( "RQ_GroupByGenerators" );
 # [ ] affine representations
 # [ ] better isom checks
 # [ ] ID function
-# [ ] library of small racks and quandles
 # [ ] documentation, InfoClass
 

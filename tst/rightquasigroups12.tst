@@ -15,10 +15,10 @@ gap> DisplayLibraryInfo("nilpotent loops");
 The library contains all nonassociative nilpotent loops of order less than 12.
 ------
 Extent of the library:
-   2 loops of order 6
-   134 loops of order 8
-   8 loops of order 9
-   1043 loops of order 10
+   2 algebras of order 6
+   134 algebras of order 8
+   8 algebras of order 9
+   1043 algebras of order 10
 true
 
 # doc/_Chapter_Libraries_of_loops_racks_and_quandles.xml:85-90
@@ -62,7 +62,7 @@ gap> MoufangLoop( 64, 10 );
 gap> LibraryAlgebras( "Moufang loops", Size, 81, IsCommutative, false );
 [ <Moufang loop 81/3>, <Moufang loop 81/4>, <Moufang loop 81/5> ]
 gap> MoufangLoops( [65..81], IsCommutative, Exponent, 3 ); 
-[ <MoufangLoop 81/1> ]
+[ <Moufang loop 81/1> ]
 
 #
 gap> STOP_TEST("rightquasigroups12.tst", 1 );

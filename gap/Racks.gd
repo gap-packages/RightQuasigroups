@@ -165,7 +165,7 @@ DeclareGlobalFunction( "AffineRack" );
 #! gap> # affine rack on GF(9)
 #! gap> F := GF(9);; f := 2*Z(9);; g := Z(9)+One(F);; c := Zero(F);;
 #! gap> [ IsAffineRackArithmeticForm( F, f, g, c ), AffineRack( F, f, g, c ) ]; # latin racks are quandles
-#! [ true, <latin quandle of size 9> ] 
+#! [ true, <latin quandle of size 9> ]
 #! gap> # affine rack on cyclic group of order 4
 #! gap> x := (1,2,3,4);; G := Group( x );;
 #! gap> f := GroupHomomorphismByImages( G, G, [x], [x^-1] );;
@@ -221,7 +221,7 @@ DeclareSynonym( "AlexanderQuandle", AffineQuandle );
 DeclareOperation( "DihedralQuandle", [ IsPosInt ] );
 
 # RQ_CoreOfAlgebra( category, G, style )
-DeclareOperation( "RQ_CoreOfAlgebra", [ IsObject, IsDomain, IsRecord ] );
+DeclareOperation( "RQ_CoreOfAlgebra", [ IsOperation, IsDomain, IsRecord ] );
 
 #! @Arguments G[, constructorStyle]
 #! @Returns the core of the group (resp. additive group) <Arg>G</Arg> defined by $x*y = (yx^{-1})y$
@@ -238,7 +238,7 @@ DeclareOperation( "CoreOfGroup", [ IsGroup ] );
 DeclareOperation( "CoreOfRightBolLoop", [ IsRightBolLoop ] );
 
 #! @BeginExampleSession
-#! gap> G := AlternatingGroup( 5 );
+#! gap> G := AlternatingGroup( 5 );;
 #! gap> Q := CoreOfGroup( G );
 #! <quandle of size 60>
 #! gap> Q[(1,2,3)]*Q[(1,2,3,4,5)] = Q[(1,2,3)*(1,2,3,4,5)^(-1)*(1,2,3)];
@@ -273,7 +273,7 @@ DeclareSynonym( "HomogeneousQuandle", GalkinQuandle );
 #! @EndGroup
 
 # RQ_ConjugationQuandle( category, S, m, style )
-DeclareOperation( "RQ_ConjugationQuandle", [ IsObject, IsCollection, IsInt, IsRecord ] );
+DeclareOperation( "RQ_ConjugationQuandle", [ IsOperation, IsCollection, IsInt, IsRecord ] );
 
 #! @Arguments G[, m[, constructorStyle] ]
 #! @Returns the conjugation quandle on <Arg>G</Arg> defined by $x*y = y^{-m}*x*y^m$.
@@ -322,7 +322,7 @@ DeclareGlobalFunction( "ConjugationQuandle" ); # PROG: too many possibilities of
 # RQ_IsRackOrQuandleEnvelope( category, G, reps, perms, reportErrors )
 # checks if [ G, reps, perms ] is a rack/quandle envelope
 # PROG: the permutations need not be canonical
-DeclareOperation( "RQ_IsRackOrQuandleEnvelope", [ IsObject, IsGroup, IsList, IsList, IsBool ] );
+DeclareOperation( "RQ_IsRackOrQuandleEnvelope", [ IsOperation, IsGroup, IsList, IsList, IsBool ] );
 
 #! @BeginGroup
 #! @GroupTitle IsRackEnvelope and IsQuandleEnvelope
@@ -357,7 +357,7 @@ DeclareOperation( "QuandleEnvelope", [ IsQuandle ] );
 
 # RQ_RackOrQuandleByEnvelope( category, G, reps, perms, style )
 # creates rack/quandle from the envelope [ G, reps, perms ]
-DeclareOperation( "RQ_RackOrQuandleByEnvelope", [ IsObject, IsGroup, IsList, IsList, IsRecord ] );
+DeclareOperation( "RQ_RackOrQuandleByEnvelope", [ IsOperation, IsGroup, IsList, IsList, IsRecord ] );
 
 #! @Arguments G, reps, perms[, constructorStyle]
 #! @Returns the rack (quandle) corresponding to the rack envelope (quandle envelope)
@@ -375,7 +375,6 @@ DeclareOperation( "QuandleByQuandleEnvelope", [ IsGroup, IsList, IsList ] );
 
 #! @BeginExampleSession
 #! gap> Q := SmallQuandle( 10, 1000 );
-#! #I   - reading data file
 #! <small quandle 10/1000>
 #! gap> env := QuandleEnvelope( Q );
 #! [ Group([ (1,3,2)(7,8) ]), [ 1, 4, 5, 6, 7, 9, 10 ],
@@ -444,7 +443,7 @@ DeclareOperation( "AllSubquandles", [ IsQuandle ] );
 #! @BeginExampleSession
 #! gap> Q := ConjugationQuandle( SymmetricGroup( 3 ) );;
 #! gap> List( AllSubquandles( Q ), Size );
-#! [ 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 5, 2, 4, 6, 3 ]
+#! [ 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 5, 2, 4, 6, 3 ]
 #! @EndExampleSession
 
 #! @EndGroup
