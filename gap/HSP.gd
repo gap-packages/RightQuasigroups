@@ -363,12 +363,11 @@ DeclareOperation( "RightTransversal", [ IsRightQuasigroup, IsRightQuasigroup ] )
 #! of `S` need not have the same cardinality as `S`.
 
 # LeftCosetsNC( Q, S )
-DeclareOperation( "LeftCosetsNC", [ IsRightQuasigroup, IsRightQuasigroup ] );
-
 #! @Arguments Q, S
 #! @Returns a duplicate-free list containing all left cosets of <Arg>S</Arg> in <Arg>Q</Arg>. The function
-#! checks that <Arg>S</Arg> is a subalgebra of <Arg>Q</Arg>.
-DeclareGlobalFunction( "LeftCosets" );
+#! <C>LeftCosets( Q, S )</C> (provided by &GAP; checks that <Arg>S</Arg> is a subalgebra of <Arg>Q</Arg>.
+DeclareOperation( "LeftCosetsNC", [ IsRightQuasigroup, IsRightQuasigroup ] );
+#DeclareGlobalFunction( "LeftCosets" );
 
 #! @Arguments Q, S
 #! @Returns a left transversal to <Arg>S</Arg> in <Arg>Q</Arg>.

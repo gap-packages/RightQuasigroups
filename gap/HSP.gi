@@ -610,11 +610,14 @@ function( Q, S )
 end );
 
 # LeftCosets
-InstallGlobalFunction( LeftCosets, 
-function( Q, S )
+#InstallGlobalFunction( LeftCosets, 
+#function( Q, S )
     # REVISIT: Should something be checked? Look ar RightCosets in GAP.
-    return LeftCosetsNC( Q, S );
-end );
+    # ANSWER: Autimatically loaded "utils" package implements "LeftCosets(G,U)".
+    #         It only checks if U is a subset of G. 
+    #         Same for RightCosets in the main GAP library.
+#    return LeftCosetsNC( Q, S );
+#end );
 
 # RIGHT QUASIGROUP BY GENERATORS
 # _____________________________________________________________________________
