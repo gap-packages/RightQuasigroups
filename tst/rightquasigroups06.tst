@@ -10,7 +10,7 @@
 #
 gap> START_TEST("rightquasigroups06.tst");
 
-# doc/_Chapter_Nilpotency_and_solvability.xml:244-278
+# doc/_Chapter_Nilpotency_and_solvability.xml:246-280
 gap> uset := Union( List([0..3], i-> [[i,0],[i,1]] ) ); # the underlying set
 [ [ 0, 0 ], [ 0, 1 ], [ 1, 0 ], [ 1, 1 ], [ 2, 0 ], [ 2, 1 ], [ 3, 0 ], [ 3, 1 ] ]
 gap> ct := [[0,1,2,3],[1,3,0,2],[2,0,3,1],[3,2,1,0]];;
@@ -45,7 +45,7 @@ true
 gap> IsAbelianNormalSubloop( Q, C ); # but not abelian in Q
 false
 
-# doc/_Chapter_Nilpotency_and_solvability.xml:345-377
+# doc/_Chapter_Nilpotency_and_solvability.xml:347-379
 gap> K := AsLoop( CyclicGroup( 4 ) );;
 gap> F := LoopByCayleyTable( [ [ "a", "b" ], [ "b", "a" ] ] );;
 gap> AutomorphismGroup( K );
@@ -78,7 +78,7 @@ gap> LoopByCentralExtension( K, F, theta );
 gap> Center( last );
 <associative loop of size 8>
 
-# doc/_Chapter_Nilpotency_and_solvability.xml:416-434
+# doc/_Chapter_Nilpotency_and_solvability.xml:418-436
 gap> Q := MoufangLoop(32,3);;
 gap> Nuc( Q ); # here, the nucleus is commutative and properly contains the center
 <associative loop of size 4>
@@ -97,7 +97,7 @@ gap> copyQ := LoopByCentralExtension( ext );; # extension can also be given as a
 gap> AsCanonicalPerm( IsomorphismLoops( Q, copyQ ) );
 ()
 
-# doc/_Chapter_Nilpotency_and_solvability.xml:479-498
+# doc/_Chapter_Nilpotency_and_solvability.xml:481-500
 gap> F := AsLoop( Group( (1,2), (3,4) ) );; # the Klein group
 gap> coc := LoopCocyclesInVariety( F, 2, [ "x*(y*(x*z)) = (x*(y*x))*z" ] );; # basis of left Bol cocycles
 gap> Length( coc ); # dimension of the vector space of cocycles
@@ -117,7 +117,7 @@ gap> Q := LoopByCentralExtension( AsLoop( CyclicGroup(2) ), F, theta );
 gap> IsLeftBolLoop( Q );
 true
 
-# doc/_Chapter_Nilpotency_and_solvability.xml:551-575
+# doc/_Chapter_Nilpotency_and_solvability.xml:553-577
 gap> F := AsLoop( Group( (1,2), (3,4 ) ) );; # Klein group
 gap> coc := LoopCocyclesInVariety( F, 2, [ "x*(y*(x*z)) = (x*(y*x))*z" ] );; Length( coc ); # basis of left Bol cocycles
 6
@@ -142,7 +142,7 @@ true
 gap> Length( LoopsUpToIsomorphism( lps ) ); # filtering up to isomorphism (no isomorphisms in this example)
 10
 
-# doc/_Chapter_Nilpotency_and_solvability.xml:625-634
+# doc/_Chapter_Nilpotency_and_solvability.xml:627-636
 gap> Q := MoufangLoop(64,5);
 <Moufang loop 64/5>
 gap> F := FrattiniSubloop(Q);

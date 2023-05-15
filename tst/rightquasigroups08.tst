@@ -65,13 +65,13 @@ gap> Q := MoufangLoop( 12, 1 );
 gap> f := NaturalHomomorphismByNormalSubloop( Q, Subloop(Q, [Q.2,Q.3] ) );
 MappingByFunction( <Moufang loop 12/1>, <Moufang loop of size 2>, function( x ) ... end )
 
-# doc/_Chapter_Morphisms.xml:252-257
+# doc/_Chapter_Morphisms.xml:253-258
 gap> Q1 := MoufangLoop( 12, 1 );
 <Moufang loop 12/1>
 gap> Q2 := LoopIsomorph( Q1, (3,4,5) ); # Other kinds of mappings are accepted. Note inherited properties.
 <Moufang loop of size 12>
 
-# doc/_Chapter_Morphisms.xml:305-316
+# doc/_Chapter_Morphisms.xml:306-317
 gap> Q1 := RightQuasigroupByFunction( [0..9], function(x,y) return (x+2*y) mod 10; end );
 <right quasigroup of size 10>
 gap> Q2 := RightQuasigroupIsomorph( Q1, (3,4,5) );
@@ -83,7 +83,7 @@ Transformation( [ 1, 2, 4, 5, 3 ] )
 gap> AsPermutation( last );
 (3,4,5)
 
-# doc/_Chapter_Morphisms.xml:332-341
+# doc/_Chapter_Morphisms.xml:333-342
 gap> Q1 := CheinLoop( SymmetricGroup( 3 ) );;
 gap> Q2 := LoopIsomorph( Q1, (1,2) );;
 gap> Q3 := AsLoop( CyclicGroup( 12 ) );;
@@ -93,7 +93,7 @@ gap> lps[1] = Q1; lps[2] = Q3;
 true
 true
 
-# doc/_Chapter_Morphisms.xml:360-369
+# doc/_Chapter_Morphisms.xml:361-370
 gap> Q := MoufangLoop( 12, 1 );
 <Moufang loop 12/1>
 gap> AutomorphismGroup( Q );

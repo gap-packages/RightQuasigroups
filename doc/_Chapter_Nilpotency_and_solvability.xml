@@ -4,6 +4,8 @@
 <Chapter Label="Chapter_Nilpotency_and_solvability">
 <Heading>Nilpotency and solvability</Heading>
 
+ <P/>Nilpotency and solvability are well-developed for loops but less so for quasigroups and right quasigroups.
+ Many methods described in this chapter therefore apply only to loops.    
 <Section Label="Chapter_Nilpotency_and_solvability_Section_Nuclei_commutant_and_center">
 <Heading>Nuclei, commutant and center</Heading>
 
@@ -49,7 +51,7 @@
 
 <ManSection>
   <Attr Arg="Q" Name="Center" Label="for IsRightQuasigroup"/>
- <Returns>the center of the right quasigroup <Code>Q</Code>.
+ <Returns>the center of the right quasigroup <Code>Q</Code>, a possibly empty subset of <Code>Q</Code>.
 </Returns>
  <Description>
 <P/>

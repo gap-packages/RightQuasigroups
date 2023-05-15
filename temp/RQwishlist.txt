@@ -1,0 +1,10 @@
+
+WISHLIST
+
+1) maybe support different types of principal loop isotopisms? (There are two oother kinds besides x*y = x/a.b\y)
+2) add rest for G-loops (easy: |Atp(Q)| = |Aut(Q)|*|Q|^2 )
+3) add AbelianExtension for loops
+4) more functionality for racks and quandles (see RIG package)
+5) add principal quandles
+6) improve speed, for instance while working with factors modulo a congruence
+7) commutator of congruences in quasigroups (and right quasigroups??)

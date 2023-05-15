@@ -133,8 +133,8 @@ DeclareCategory( "IsLoop", IsQuasigroup and IsMultiplicativeElementWithInverseCo
 #! @Arguments obj
 #! @Returns If the argument is a right quasigroup, returns the smallest
 #! category from among `IsRightQuasigroup`, `IsQuasigroup` and `IsLoop` into which the right quasigroup belongs.
-#! If the argument is a list of right quasigroups, returns the the smallest
-#! category from among `IsRightQuasigroup`, `IsQuasigroup` and `IsLoop` into which all the right quasigroups
+#! If the argument is a list of right quasigroups, returns the smallest category
+#! from among `IsRightQuasigroup`, `IsQuasigroup` and `IsLoop` into which all the right quasigroups
 #! on the list belong.
 #! @Description All declared right quasigroups, quasigroups and loops belong to the filter `IsRightQuasigroup`.
 #! It is often useful to know if a right quasigroup is in fact declared as a quasigroup or a loop,
@@ -172,24 +172,23 @@ DeclareOperation( "CategoryOfRightQuasigroup", [ IsRightQuasigroup ] );
 
 #! @Subsection Displaying right quasigroups, quasigroups and loops
 
-#REVISIT: Rewrite this section! Change output in examples, too!!!
+#REVISIT: Since changes were made, check output of examples, too!
 
-#! <P/>The `ViewObj` and `PrintObj` operations are implemented for right quasigroups. The 
-#! methods `View` and `Print` call `ViewObj` and `PrintObj`, respectively.
+#! <P/>The `View`, `Display` and `Print` methods are implemented for right quasigroups as dynamic methods
+#! that display (some) currently known information about the object.
 
 #! <P/>If `Q` has a name (typically when `Q` is a library object), `View( Q )` prints `Name( Q )`, e.g.,
-#! `&lt;Moufang loop 64/12&gt;`. In all other situations, `View( Q )` contains at
+#! `&lt;Moufang loop 64/12&gt;`. In all other situations, `View( Q )` reveals at
 #! least the size of `Q`, as in `&lt;right quasigroup of size 8&gt;`, `&lt;quasigroup of size 8&gt;`
-#! or `&lt;loop of size n&gt;`, depending on whether `Q` is declared as a right quasigroup, quasigroup or loop.
-#! When additional properties of `Q` become known, one of the strongest properties of `Q` is also included
+#! or `&lt;loop of size 8&gt;`, depending on whether `Q` is declared as a right quasigroup, quasigroup or loop.
+#! Once additional properties of `Q` become known, one of the strongest properties of `Q` is also included
 #! in `View( Q )`, e.g., `&lt;associative loop of order n&gt;`.
 
-#! <P/>`Print( Q )` additionally displays up to the first 5 elements of the underlying set of `Q`.
+#! <P/>`Print(Q)` and `Display( Q )` additionally displays up to the first 5 elements of the underlying set of `Q`.
 
-#! <P/>The `String` attribute is also implemented for right quasigroups. It returns the same value as
-#! `View`, except that the returned value is a string. Since `String` is an attribute, the value
-#! is set at first call and does not change dynamically. (Use `RQ_String( Q )` for a string that
-#! changes dynamically with the properties of `Q`.)
+#! <P/>The `String` attribute is also implemented for right quasigroups. Initially it behaves as `View`,
+#! except that the returned value is returned as a string, not just displayed in the terminal window.
+#! Since `String` is an attribute, the value is set at first call and does not change dynamically, unlike `View`.
 
 #! @BeginExampleSession
 #! gap> Q := QuasigroupByCayleyTable( [[0,1],[1,0]] );
@@ -200,24 +199,27 @@ DeclareOperation( "CategoryOfRightQuasigroup", [ IsRightQuasigroup ] );
 #! true
 #! gap> Q;
 #! <associative quasigroup of size 2>
+#! gap> Display( Q );
+#! <associative quasigroup of size 2 on 0, 1>
 #! gap> Print( Q );
 #! <associative quasigroup of size 2 on 0, 1>
-#! gap> String( Q ); # stored at first call
+#! gap> String( Q ); # was stored as attribute at first call
 #! "<quasigroup of size 2>"
+#! gap> 
 #! @EndExampleSession
 
 #! @Subsection Displaying right quasigroup elements
 
-#! <P/>The `ViewObj` and `PrintObj` operations are implemented for right quasigroup elements. The 
-#! methods `View` and `Print` call `ViewObj` and `PrintObj`, respectively.
+#! <P/>The `View`, `Display` and `Print` methods are implemented for right quasigroup elements.
 
 #! <P/>By default, if `x` is an element of a right quasigroup `Q` and `e` is the underlying element of `x`,
-#! both `View( x )` and `Print( x )` display `r` or `q` or `l` (depending on whether `Q` is declared
-#! as a right quasigroup, a quasigroup or a loop), followed by a display of `e`.
+#! both `View( x )` and `Display( x )` display the character `r` or `q` or `l` (depending on whether `Q` is declared
+#! as a right quasigroup, a quasigroup or a loop), followed by the result of `View( e )`. The method `Print( x )`
+#! behaves similarly, except that it calls `Print( e )`.
 
 #! <P/>The `String` attribute is also implemented for right quasigroup elements.
 #! It returns the same value as `View`, except that the returned value is a string. Since right 
-#! quasigroup elements are not attribute storing, the attribute `String` is always recalculated.
+#! quasigroup elements are not attribute storing, the attribute `String` is dynamic.
 
 #! @BeginGroup
 #! @GroupTitle Changing the name of right quasigroup elements
@@ -246,7 +248,7 @@ DeclareOperation( "SetLoopElementsName", [ IsLoop, IsString ] );
 #! [ l(), l(1,2) ]
 #! gap> SetLoopElementsName( Q, "g" );; Elements( Q );
 #! [ g(), g(1,2) ]
-#! gap> String( Q.1 ); # right quasigroup elements are not attribute storing
+#! gap> String( Q.1 ); # dynamic since right quasigroup elements are not attribute storing
 #! "g()"
 #! gap> SetLoopElementsName( Q, "" );; Elements( Q ); # better legibility but perhaps confusing
 #! [ (), (1,2) ]
@@ -454,7 +456,7 @@ DeclareOperation( "Associator", [ IsRightQuasigroupElement, IsRightQuasigroupEle
 #! depending on whether the algebra in question is index based or not. See Section <Ref Sect="Section_IndexBased"/>
 #! for more information on index based versus non-index based right quasigroups, Section <Ref Sect="Section_Cayley"/>
 #! for details on multiplication tables and Cayley tables, and Section <Ref Sect="Section_Function"/> for details
-#! on how functions are used as arithmetic operations. 
+#! on how functions can be used as arithmetic operations. 
 
 #! <P/>Chapter <Ref Chap="Chapter_Constructors"/> contains a comprehensive list of right quasigroup constructors.
 #! Here we present two examples, starting with a right quasigroup constructor based on a multiplication function.
@@ -466,6 +468,8 @@ DeclareOperation( "Associator", [ IsRightQuasigroupElement, IsRightQuasigroupEle
 #! [ 0, 1, 2, 3 ]
 #! gap> Elements( Q ); # default prefix "r" is assigned to right quasigroup elements
 #! [ r0, r1, r2, r3 ]
+#! gap> [ Elements(Q)[1], Q.1, Q[0] ]; # three ways of accessing elements
+#! [ r0, r0, r0 ]
 #! gap> Display( CayleyTable( Q ) ); # based on the underlying set
 #! [ [  0,  2,  0,  2 ],
 #!   [  1,  3,  1,  3 ],
@@ -480,12 +484,10 @@ DeclareOperation( "Associator", [ IsRightQuasigroupElement, IsRightQuasigroupEle
 #! function( i, j ) ... end
 #! gap> mult( 1, 1 );
 #! 1
-#! gap> [ Elements( Q )[ 1 ], Q.1, Q[0] ]; # three ways of accessing elements
-#! [ r0, r0, r0 ]
 #! gap> Q[0]*Q[1];
 #! r2
-#! gap> Q[0]/Q[2]; # RightQuotient and RightDivision are also supported
-#! r0
+#! gap> Q[0]/Q[1]; # RightQuotient and RightDivision are also supported
+#! r2
 #! @EndExampleSession
 
 #! <P/>If, as in the above example, 
@@ -496,33 +498,32 @@ DeclareOperation( "Associator", [ IsRightQuasigroupElement, IsRightQuasigroupEle
 #! a right quasigroup `Q` is given and `Q` is not index based, then the right quotient `x/y` is obtained 
 #! by locating the first (and only) element `z` of `Q` such that `x = z*y`; this is slow when `Q` is large.
 
-#! <P/>Here is an example of a loop constructor based on a Cayley table. The underlying set
-#! is automatically understood to be the sorted list of elements contained in the first column of the Cayley table.
+#! <P/>Here is an example of a loop constructor based on a conversion from a group.
 
 #! @BeginExampleSession
-#! gap> Q := LoopByCayleyTable( [["a", "b"], ["b", "a"]], ConstructorStyle( false, false ) ); # not index based, arguments not checked
-#! <loop of size 2>
-#! gap> UnderlyingSet( Q ); 
-#! [ "a", "b" ]
+#! gap> Q := AsLoop( SymmetricGroup( 3 ), ConstructorStyle( false, false ) ); # not index based, arguments not checked
+#! <associative loop of size 6>
+#! gap> UnderlyingSet( Q );
+#! [ (), (2,3), (1,2), (1,2,3), (1,3,2), (1,3) ]
 #! gap> Elements( Q ); # default prefix "l" is assigned to loop elements
-#! [ la, lb ]
+#! [ l(), l(2,3), l(1,2), l(1,2,3), l(1,3,2), l(1,3) ]
 #! gap> mult := MultiplicationFunction( Q ); # based on the underlying set since Q is not index based
-#! function( x, y ) ... end
-#! gap> mult( "a", "b" );
-#! "b"
+#! <Operation "*">
+#! gap> mult( (1,2), (1,3) );
+#! (1,2,3)
 #! gap> One( Q );
-#! la
-#! gap> Commutator( Q["a"], Q["b"] );
-#! la
-#! gap> Associator( Q.1, Q.1, Q.2 );
-#! la
-#! gap> LeftQuotient( Q.1, Q.2 ); # LeftDivision is also supported
-#! lb
+#! l()
+#! gap> Commutator( Q[(1,2)], Q[(1,3)] );
+#! l(1,3,2)
+#! gap> Associator( Q[(1,2)], Q[(1,3)], Q[(2,3)] );
+#! l()
+#! LeftQuotient( Q.1, Q.2 ); # LeftDivision is also supported
+#! l(2,3)
 #! @EndExampleSession
 
 #! <P/>Note that right quasigroups that happen to be quasigroups and/or loops mathematically must be explicitly
 #! declared as such in &GAP; to make quasigroup and/or loop methods available to them. For instance,
-#! the above loop of size 2 is in fact an associative loopp (that is, a group),
+#! the above loop of size 6 is an associative loop (that is, a group),
 #! but it will not be automatically recognized as a group by &GAP;. There are methods
 #! provided that check if a given right quasigroup is mathematically a quasigroup or a loop,
 #! cf. Section <Ref Sect="Section_Converting"/>.
@@ -555,7 +556,7 @@ DeclareOperation( "Associator", [ IsRightQuasigroupElement, IsRightQuasigroupEle
 #! r4
 #! gap> A.3; # the 3rd element of the parent of A
 #! r2
-#! gap> A[4]; # the element of parent of A corresponding to the given underlying element
+#! gap> A[4]; # the element of the parent of A corresponding to the given underlying element
 #! r4
 #! gap> Display( CayleyTable( A ) );
 #! [ [  0,  2,  4 ],
@@ -758,7 +759,7 @@ DeclareAttribute( "GeneratorsSmallest", IsRightQuasigroup );
 #! identical &GAP; objects, merely that they have the same parent and consist of the same elements.
 #! In particular, if `A = Parent( A )` holds then `A` is not necessarily its own parent;
 #! it might be a subalgebra of `Parent( A )` that happens to contain all elements of `Parent( A )`.
-#! (One can call `IsIdenticalObj( A, Parent( A ) )` to check whether `A` is its own parent.)
+#! (One can call `IsIdenticalObj( A, Parent( A ) )` to check whether `A` truly is its own parent.)
 
 #! @BeginExampleSession
 #! gap> Q := AsLoop( GF(8) );;

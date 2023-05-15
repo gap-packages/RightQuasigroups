@@ -5,8 +5,8 @@ SetPackageInfo( rec(
 
 PackageName := "RightQuasigroups",
 Subtitle := "Computing with one-sided quasigroups in GAP.",
-Version := "0.853",
-Date := "31/01/2022", # dd/mm/yyyy format
+Version := "0.87",
+Date := "15/05/2023", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -15,7 +15,7 @@ Persons := [
     IsMaintainer := true,
     FirstNames := "Gábor P.",
     LastName := "Nagy",
-    WWWHome := "https://algebra.math.bme.hu/nagy-gabor-peter",
+    WWWHome := "https://algebra.math.bme.hu/nagy-gabor",
     Email := "nagyg@math.bme.hu",
     PostalAddress := Concatenation(
                "Department of Algebra, Budapest University of Technology\n",
@@ -51,7 +51,7 @@ Persons := [
 
 #SourceRepository := rec( Type := "TODO", URL := "URL" ),
 #IssueTrackerURL := "TODO",
-PackageWWWHome := "http://xyz/",
+PackageWWWHome := "https://github.com/gap-packages/RightQuasigroups",
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 README_URL     := Concatenation( ~.PackageWWWHome, "README.md" ),
 ArchiveURL     := Concatenation( ~.PackageWWWHome,
@@ -70,12 +70,9 @@ ArchiveFormats := ".tar.gz",
 Status := "dev",
 
 AbstractHTML   :=  Concatenation( 
-  "This package implements basic functionalities for the class of one-sided ",
-  "right quasigroups in such a way that they can be naturally extended to ",
-  "other nonassociative structures like (two-sided) quasigroups, loops, ",
-  "racks, quandles, etc.</p>",
-  "While the methods of this package are intended to use for finite right ",
-  "quasigroups, some of them may work in the infinite case as well.</p>"
+  "This package implements basic methods for calculations with finite",
+  "right quasigroups. Additional methods and libraries are provided",
+  "for quasigroups, loops, racks and quandles." 
 ),
 
 PackageDoc := rec(
@@ -88,7 +85,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">= 4.9",
+  GAP := ">= 4.12",
   NeededOtherPackages := [ ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],

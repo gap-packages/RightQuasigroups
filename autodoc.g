@@ -117,7 +117,7 @@
 #! @Chapter Constructors
 #! @ChapterLabel Constructors
 
-#! <P/>In this chapter we collect constructor methods for right quasigroups.
+#! <P/>In this chapter we describe most constructor methods for right quasigroups.
 
 #! @Section Optional arguments in constructors
 #! @SectionLabel OptionalArguments
@@ -202,6 +202,9 @@
 
 
 #! @Chapter Nilpotency and solvability
+
+#! <P/>Nilpotency and solvability are well-developed for loops but less so for quasigroups and right quasigroups.
+#! Many methods described in this chapter therefore apply only to loops.    
 
 #! @Section Nuclei, commutant and center
 

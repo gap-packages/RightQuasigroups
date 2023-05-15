@@ -591,7 +591,7 @@ function( Q, S )
 end );
 
 # LeftCosetsNC
-InstallMethod( LeftCosetsNC, "for two right quasigroups",
+InstallOtherMethod( LeftCosetsNC, "for two right quasigroups",
     [ IsRightQuasigroup, IsRightQuasigroup ],
 function( Q, S )
     local cosets, x;
@@ -609,15 +609,12 @@ function( Q, S )
     return cosets;
 end );
 
-# LeftCosets
-#InstallGlobalFunction( LeftCosets, 
-#function( Q, S )
-    # REVISIT: Should something be checked? Look ar RightCosets in GAP.
-    # ANSWER: Autimatically loaded "utils" package implements "LeftCosets(G,U)".
-    #         It only checks if U is a subset of G. 
-    #         Same for RightCosets in the main GAP library.
-#    return LeftCosetsNC( Q, S );
-#end );
+# LeftTransversal
+InstallMethod( LeftTransversal, "for two right quasigroups",
+    [ IsRightQuasigroup, IsRightQuasigroup ],
+function( Q, S )
+    return List( LeftCosetsNC( Q, S ), x -> x[1] );
+end );
 
 # RIGHT QUASIGROUP BY GENERATORS
 # _____________________________________________________________________________

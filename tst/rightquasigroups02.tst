@@ -10,7 +10,7 @@
 #
 gap> START_TEST("rightquasigroups02.tst");
 
-# doc/_Chapter_Constructors.xml:94-118
+# doc/_Chapter_Constructors.xml:93-117
 gap> M := MagmaByMultiplicationTable( [ [1,1], [2,2] ] );;
 gap> Elements( M );
 [ m1, m2 ]
@@ -35,7 +35,7 @@ gap> Elements( L );
 gap> AsRightQuasigroup(GF(7)^2); # additive group
 <associative right quasigroup of size 49>
 
-# doc/_Chapter_Constructors.xml:162-177
+# doc/_Chapter_Constructors.xml:161-176
 gap> Q := RQ_AlgebraShell( IsRightQuasigroup, GF(5), rec( indexBased := false ) );
 <right quasigroup shell of size 5>
 gap> F := FamilyObj( Q.1 );;
@@ -51,7 +51,7 @@ gap> Q; # all needed operations for the right quasigroup are now bound
 gap> Q.1/Q.1;
 r0*Z(5)
 
-# doc/_Chapter_Constructors.xml:181-196
+# doc/_Chapter_Constructors.xml:180-195
 gap> Q := RQ_AlgebraShell( IsRightQuasigroup, GF(5) );
 <right quasigroup shell of size 5>
 gap> F := FamilyObj( Q.1 );;
@@ -67,7 +67,7 @@ gap> Q; # all needed operations for the right quasigroup are now bound
 gap> Q.1/Q.1;
 r0*Z(5)
 
-# doc/_Chapter_Constructors.xml:291-298
+# doc/_Chapter_Constructors.xml:290-297
 gap> ct := [[1,1],[0,0]];;
 gap> NormalizedRightQuasigroupCayleyTable( ct );
 [ [ 0, 0 ], [ 1, 1 ] ]
@@ -75,35 +75,35 @@ gap> ct := [["b","a"],["a","b"]];;
 gap> NormalizedQuasigroupCayleyTable( ct );
 [ [ "a", "b" ], [ "b", "a" ] ]
 
-# doc/_Chapter_Constructors.xml:314-341
+# doc/_Chapter_Constructors.xml:313-340
 gap> ct := [ [ "red", "white", "white" ], [ "blue", "blue", "red" ], [ "white", "red", "blue" ] ];;
 gap> IsRightQuasigroupCayleyTable( ct );
 true
 gap> Q := RightQuasigroupByCayleyTable( ct );
 <right quasigroup of size 3>
-gap> Display( MultiplicationTable( Q ) ); # note the ordering of elements, with rows and columns implicitly labeled 1, 2, 3
-[ [  2,  3,  3 ],
-  [  1,  1,  2 ],
-  [  3,  2,  1 ] ]
-gap> PrintArray( CayleyTable( Q ) );
+gap> Elements( Q ); # note the ordering of the elements induced by "blue" < "red" < "white"
+[ rblue, rred, rwhite ]
+gap> PrintArray( CayleyTable( Q ) ); # rows and column are implicitly labeled "blue", "red", "white"
 [ [    red,  white,  white ],
   [   blue,   blue,    red ],
   [  white,    red,   blue ] ]
-gap> Elements( Q );
-[ rblue, rred, rwhite ]
+gap> Display( MultiplicationTable( Q ) ); # rows and columns are implicitly labeled 1, 2, 3
+[ [  2,  3,  3 ],
+  [  1,  1,  2 ],
+  [  3,  2,  1 ] ]
 gap> IsQuasigroupCayleyTable( ct );
 false
-gap> ct2 := [ [0,1],[1,0] ];;
-gap> [ IsQuasigroupCayleyTable(ct2), IsLoopCayleyTable(ct2) ];
+gap> t := [ [0,1], [1,0] ];;
+gap> [ IsQuasigroupCayleyTable( t ), IsLoopCayleyTable( t ) ];
 [ true, true ]
-gap> QuasigroupByCayleyTable(ct2);
+gap> QuasigroupByCayleyTable( t );
 <quasigroup of size 2>
-gap> LoopByCayleyTable(ct2);
+gap> LoopByCayleyTable( t );
 <loop of size 2>
-gap> One(last);
+gap> One( last );
 l0
 
-# doc/_Chapter_Constructors.xml:415-422
+# doc/_Chapter_Constructors.xml:414-421
 gap> mult := function( x, y ) return (x+2*y) mod 4; end;
 function( x, y ) ... end
 gap> IsRightQuasigroupFunction( [0..3], mult );
@@ -111,7 +111,7 @@ true
 gap> IsQuasigroupFunction( [0..3], mult );
 false
 
-# doc/_Chapter_Constructors.xml:439-458
+# doc/_Chapter_Constructors.xml:438-457
 gap> mult := \+;;
 gap> rdiv := \-;;
 gap> ldiv := function( x,y ) return -x+y; end;;
@@ -131,17 +131,21 @@ true
 gap> IsLoopFunction( GF(5), mult, ldiv ); # returns false because right division is expected before left division
 false
 
-# doc/_Chapter_Constructors.xml:500-509
+# doc/_Chapter_Constructors.xml:499-512
 gap> S := GF(5);;
 gap> mult := function( x, y ) return x+2*y; end;;
+gap> IsQuasigroupFunction( S, mult );
+true
+gap> QuasigroupByFunction( S, mult ); # it is not necessary to provide right division and left division
+<quasigroup of size 5>
 gap> rdiv := function( x, y ) return x-2*y; end;;
 gap> ldiv := function( x, y ) return (y-x)/2; end;;
-gap> IsQuasigroupFunction( S, mult, rdiv, ldiv );
+gap> IsQuasigroupFunction( S, mult, rdiv, ldiv ); 
 true
-gap> QuasigroupByFunction( S, mult, rdiv, ldiv );
+gap> QuasigroupByFunction( S, mult, rdiv, ldiv ); # but calculations will be faster if the divisions are provided
 <quasigroup of size 5>
 
-# doc/_Chapter_Constructors.xml:526-539
+# doc/_Chapter_Constructors.xml:529-542
 gap> p := 1000003;;
 gap> S := Difference( GF(p), [ Zero( GF( p ) ) ] );; # nonzero elements of GF(p)
 gap> Q := LoopByFunction( S, \*, ConstructorStyle( false, false ) ); # not index based, no arguments checked
@@ -155,7 +159,7 @@ lZmodpZObj( 10, 1000003 )
 gap> Inverse( Q.10 );
 lZmodpZObj( 300001, 1000003 )
 
-# doc/_Chapter_Constructors.xml:589-607
+# doc/_Chapter_Constructors.xml:592-610
 gap> section := [ (), (1,2,3,4), (), (1,3)(2,4) ];;
 gap> IsRightSection( [1..4], section );
 true
@@ -174,7 +178,7 @@ gap> RightQuasigroupByRightSection( "abcd", section );
 gap> Elements( last );
 [ r'a', r'b', r'c', r'd' ]
 
-# doc/_Chapter_Constructors.xml:612-622
+# doc/_Chapter_Constructors.xml:615-625
 gap> i := Z(2)*[[1,0],[0,1]];;
 gap> m := Z(2)*[[1,1],[0,1]];;
 gap> section := [m,m,i,i];;
@@ -185,7 +189,7 @@ gap> Q := RightQuasigroupByRightSection( GF(2)^2, section );
 gap> Q.1;
 r[ 0*Z(2), 0*Z(2) ]
 
-# doc/_Chapter_Constructors.xml:627-639
+# doc/_Chapter_Constructors.xml:630-642
 gap> section := [(1,2),()];;
 gap> IsQuasigroupRightSection( [1,2], section );
 true
@@ -198,7 +202,7 @@ gap> LoopByRightSection( [1,2], section );
 gap> One( last );
 l2
 
-# doc/_Chapter_Constructors.xml:700-718
+# doc/_Chapter_Constructors.xml:703-721
 gap> G := SymmetricGroup( 5 );;
 gap> H := Subgroup( G, [ (1,2),(1,3) ] );;
 gap> T := RightTransversal( G, H );;
@@ -217,7 +221,7 @@ true
 gap> IsQuasigroupRightFolder( T );
 false
 
-# doc/_Chapter_Constructors.xml:722-736
+# doc/_Chapter_Constructors.xml:725-739
 gap> G := SymmetricGroup( 2 );;
 gap> H := Subgroup( G, [()] );;
 gap> T := RightTransversal( G, H );;
@@ -232,13 +236,13 @@ gap> LoopByRightFolder( T );
 gap> Elements( last );
 [ l(), l(1,2) ]
 
-# doc/_Chapter_Constructors.xml:757-762
+# doc/_Chapter_Constructors.xml:760-765
 gap> ProjectionRightQuasigroup( [1..1000], rec( indexBased := false ) );; # 16 ms to construct, 
 gap> Q := ProjectionRightQuasigroup( [1..1000] );; # 375 ms to construct
 gap> Q.123*Q.456;
 r123
 
-# doc/_Chapter_Constructors.xml:808-815
+# doc/_Chapter_Constructors.xml:811-818
 gap> RandomRightQuasigroup( 4 );
 <right quasigroup of size 4>
 gap> Elements( RandomQuasigroup( ["a","b","c"] ) );

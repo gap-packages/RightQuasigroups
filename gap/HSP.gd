@@ -29,13 +29,14 @@ DeclareGlobalFunction( "RQ_DirectProduct" );
 
 #! @BeginExampleSession
 #! gap> G := Group((1,2));;
-#! gap> Q := ProjectionRightQuasigroup( [1..3] );;
-#! gap> D := DirectProduct( G, Q );
-#! <associative right quasigroup of size 6>
+#! gap> L := LoopByCayleyTable( [[1,2,3],[2,3,1],[3,1,2]] );;
+#! gap> R := ProjectionRightQuasigroup( [1..3] );;
+#! gap> D := DirectProduct( G, L );
+#! <loop of size 6>
 #! gap> D.1;
-#! r[ (), r1 ]
-#! gap> DirectProduct( Q, G, Q );
-#! <associative right quasigroup of size 18>
+#! l[ (), l1 ]
+#! gap> DirectProduct( G, L, R );
+#! <right quasigroup of size 18>
 #! @EndExampleSession
 
 # OPPOSITE QUASIGROUPS
@@ -97,9 +98,10 @@ DeclareOperation( "OppositeLoop", [ IsLoop ] );
 #! $S$ is a subalgebra if it is closed under multiplicaton.
 
 #! <P/>In &RightQuasigroups;, if a subalgebra `S` is created from an algebra `Q`,
-#! the parent of `S` is set to `Q` and the elements of `S` are inherited from `Q`,
-#! cf. Section <Ref Sect="Section_Parent"/>. If `A`, `B` are two algebras then
-#! `A` is a subalgebra of `B` iff `Parent( A ) = Parent( B )` and `A` is a subset of `B`.
+#! the parent of `S` is set to the parent of `Q`, possibly `Q` itself, and the elements
+#! of `S` are inherited from the parent of `Q`, cf. Section <Ref Sect="Section_Parent"/>.
+#! If `A`, `B` are two algebras then `A` is a subalgebra of `B` iff `Parent( A ) = Parent( B )`
+#! and the elements of `A` form a subset of `B`.
 
 #! @BeginGroup
 #! @GroupTitle Testing for subalgebras
@@ -205,7 +207,7 @@ DeclareOperation( "AllSubloops", [ IsLoop ] );
 #! gap> AllSubloops( AsLoop( CyclicGroup( 3 ) ) );
 #! [ <associative loop of size 1>, <associative loop of size 3> ]
 #! gap> P := ProjectionRightQuasigroup( 2 );; 
-#! gap> Length( AllSubrightquasigroups( P ) ); # every nonempty subset is a subrightquasigroup
+#! gap> Length( AllSubrightquasigroups( P ) ); # every nonempty subset is a subrightquasigroup here
 #! 3
 #! @EndExampleSession
 
@@ -231,9 +233,9 @@ DeclareOperation( "IsMinimalSubquasigroup", [ IsQuasigroup ] );
 
 #! @Arguments [Q, ]S
 #! @Returns `true` iff <Arg>S</Arg> is a minimal subrightquasigroup (subquasigroup, subloop), else returns false.
-#! @Description Note that it is not necessary to specify the enveloping right quasigroup (quasigroup, loop). 
-#! In the version with two arguments <Arg>Q</Arg>, <Arg>S</Arg>, it is first checked that
-#! <Arg>S</Arg> is a subalgebra of <Arg>Q</Arg>.
+#! @Description Note that it is not necessary to specify the enveloping right quasigroup (quasigroup, loop)
+#! since all needed information is contained already in <Arg>S</Arg>. In the version with two arguments
+#! <Arg>Q</Arg>, <Arg>S</Arg>, it is first checked that <Arg>S</Arg> is a subalgebra of <Arg>Q</Arg>.
 DeclareOperation( "IsMinimalSubloop", [ IsLoop ]);
 
 #! @EndGroup
@@ -264,10 +266,10 @@ DeclareOperation( "AllMinimalSubloops", [ IsLoop ] );
 #! @BeginGroup
 #! @GroupTitle Testing maximal subalgebras
 
-#! @Arguments S
+#! @Arguments Q, S
 DeclareOperation( "IsMaximalSubrightquasigroup", [ IsRightQuasigroup , IsRightQuasigroup] );
 
-#! @Arguments S
+#! @Arguments Q, S
 DeclareOperation( "IsMaximalSubquasigroup", [ IsQuasigroup, IsQuasigroup ] );
 
 #! @Arguments Q, S
@@ -322,11 +324,11 @@ DeclareOperation( "AllMaximalSubloops", [ IsLoop ]);
 #! @Section Cosets and transversals
 
 #! <P/>If $S$ is a subrightquasigroup of a right quasigroup $Q$, the <Index>right coset</Index>
-#! **right cosets** are subsets of $Q$ of the form $Sx$, where $x\in Q$. Note that
-#! unlike in the case of groups, the right cosets of right quasigroups, quasigroups and loops
-#! can intersect in nontrivial ways. Moreover, in the case of right quasigroups, the
-#! right cosets need not cover `Q`.
-#!
+#! **right cosets** are subsets of $Q$ of the form $Sx=\{sx:s\in S\}$, where $x\in Q$.
+#! All right cosets of a subrightquasigroup $S$ of a right quasigroup $Q$
+#! have the same cardinality, but they need not cover $Q$ and they can intersect
+#! in nontrivial ways. In quasigroups and loops, the right cosest cover $Q$.
+
 #! <P/> A <Index>right transversal</Index>**right transversal**
 #! to $S$ in $Q$ is then a list of elements of `Q` containing one element from each right coset of $S$ in $Q$.
 
@@ -342,15 +344,17 @@ DeclareOperation( "AllMaximalSubloops", [ IsLoop ]);
 #! returns a list of all right cosets of `S` in `Q`. 
 
 #! @Arguments Q, S
-#! @Returns a right transversal to subrightquasigroup <Arg>S</Arg> in the right quasigroup <Arg>Q</Arg>. 
+#! @Returns a right transversal to <Arg>S</Arg> in <Arg>Q</Arg>. 
 DeclareOperation( "RightTransversal", [ IsRightQuasigroup, IsRightQuasigroup ] );
 # REVISIT: This is a candidate for InParentFOA, as in the case of groups.
 
 #! @BeginExampleSession
-#! gap> P := ProjectionRightQuasigroup( 3 ); # this is in fact an associative quandle
-#! <associative quandle of size 3>
-#! gap> S := Subrightquasigroup( P, [1,2] );
-#! <associative quandle of size 2>
+#! gap> P := ProjectionRightQuasigroup( 3 );;
+#! gap> Display( MultiplicationTable( P ) );
+#! [ [  1,  1,  1 ],
+#!   [  2,  2,  2 ],
+#!   [  3,  3,  3 ] ]
+#! gap> S := Subrightquasigroup( P, [1,2] );;
 #! gap> RightCosets( P, S ); # there is a single right coset of S in P
 #! [ [ r1, r2 ] ]
 #! gap> RightTransversal( P, S );
@@ -358,16 +362,12 @@ DeclareOperation( "RightTransversal", [ IsRightQuasigroup, IsRightQuasigroup ] )
 #! @EndExampleSession
 
 #! <Index>left coset</Index>**Left cosets** $xS$ and <Index>left transversal</Index>**left transversals**
-#! are defined dually to right cosets and right transversals. Unlike right cosets, left cosets are not
-#! implemented in &GAP; outside of &RightQuasigroups;. Note that in a right quasigroups the left cosets
-#! of `S` need not have the same cardinality as `S`.
+#! are defined dually to right cosets and right transversals. In right quasigroups, the left cosets of
+#! $S$ need not have the same cardinality and can intersect in nontrivial ways, but they cover $Q$.
+#! In quasigroups and loops, all left cosets of $S$ have the same cardinality.
 
-# LeftCosetsNC( Q, S )
-#! @Arguments Q, S
-#! @Returns a duplicate-free list containing all left cosets of <Arg>S</Arg> in <Arg>Q</Arg>. The function
-#! <C>LeftCosets( Q, S )</C> (provided by the &GAP; package <Package>utils</Package>) checks that <Arg>S</Arg> is a subalgebra of <Arg>Q</Arg>.
-DeclareOperation( "LeftCosetsNC", [ IsRightQuasigroup, IsRightQuasigroup ] );
-#DeclareGlobalFunction( "LeftCosets" );
+#! <P/>The function `LeftCosets( Q, S )` checks that `S` is a subrightquasigroup of `Q` and then
+#! returns a list of all left cosets of `S` in `Q`. 
 
 #! @Arguments Q, S
 #! @Returns a left transversal to <Arg>S</Arg> in <Arg>Q</Arg>.
@@ -452,7 +452,7 @@ DeclareGlobalFunction( "LoopWithGenerators" );
 #! `Intersection( algebra1, algebra2, ... )`.
 
 #! <P/>Passing of arguments for `Intersection` is handled in the standard &GAP; way.
-#! The only method implemented in &RightQuasigroups; is `Intersection2` for the intersection of
+#! Therefore the only method implemented in &RightQuasigroups; is `Intersection2` for the intersection of
 #! two right quasigroups.
 
 #! <P/>Given a list `algebras` of right quasigroups (quasigroups, loops) with the same parent algebra,
@@ -503,9 +503,9 @@ DeclareOperation( "Join2", [ IsRightQuasigroup, IsRightQuasigroup ] );
 #! is a right quasigroup (resp. quasigroup, loop) congruence
 #! iff for every $x,y,u\in Q$ with $x\sim y$ we have $xu\sim yu$ and $ux\sim uy$.
 #! Therefore, an equivalence relation $\sim$ on a finite loop (quasigroup, right quasigroup) is a
-#! loop (quasigroup, right quasigroup) congruence iff it is magma congruence.
+#! loop (quasigroup, right quasigroup) congruence iff it is a groupoid congruence.
 
-#! <P/>In &GAP;, equivalence relations on  $A$ are represented as general functions $f:A\to A$,
+#! <P/>In &GAP;, equivalence relations on  $A$ are represented as functions $f:A\to A$,
 #! where $a,b\in A$ are related iff $f(a)=b$. Since equivalence relations are in one-to-one
 #! correspondence with partitions, the &GAP; function `EquivalenceRelationByPartition` is
 #! particularly convenient, as illustrated by the following example:
@@ -564,7 +564,7 @@ DeclareOperation( "RQ_AlgebraCongruenceByPartition", [ IsRightQuasigroup, IsList
 #! @Arguments Q, partition
 #! @Returns the right quasigroup (quasigroup, loop) congruence of the right quasigroup
 #! (quasigroup, loop) <Arg>Q</Arg> generated by <Arg>partition</Arg>, that is, the smallest
-#! congruence `C` such that every element of <Arg>partition</Arg> is contained in 
+#! congruence `C` such that every element of <Arg>partition</Arg> is a subset of 
 #! an equivalence class of `C`. Here, <Arg>partition</Arg> must be a list of disjoint
 #! subsets of <Arg>Q</Arg> (whose union is not necessarily all of <Arg>Q</Arg>).
 DeclareOperation( "RightQuasigroupCongruenceByPartition", [ IsRightQuasigroup, IsList ] );
@@ -632,9 +632,9 @@ DeclareOperation( "AllQuasigroupCongruences", [ IsQuasigroup ] );
 #! @Arguments Q
 #! @Returns a list of all right quasigroup (quasigroup, loop) congruences  of a right quasigroup
 #! (quasigroup, loop) <Arg>Q</Arg>. The congruences  are returned as &GAP; objects suitable
-#! as arguments of `FactorRightQuasigroup` (`FactorQuasigroupLoop`, `FactorLoop`).
-#! @Description Note: For a right quasigroup <Arg>Q</Arg>, there is no method `AllRightQuasigroups( `<Arg>Q</Arg>` )` for the case when
-#! `RightMultiplicationGroup( `<Arg>Q</Arg>` )` does not act transitively on <Arg>Q</Arg>.
+#! as arguments of `FactorRightQuasigroup` (`FactorQuasigroup`, `FactorLoop`).
+#! @Description Note: For a right quasigroup <Arg>Q</Arg>, there is no method yet for the case when
+#! `RightMultiplicationGroup( Q )` does not act transitively on <Arg>Q</Arg>.
 DeclareOperation( "AllLoopCongruences", [ IsLoop ] );
 
 #! @EndGroup
@@ -758,7 +758,7 @@ DeclareOperation( "FactorRightQuasigroup", [ IsEquivalenceRelation ] );
 #! @Arguments C[, constructorStyle ]
 DeclareOperation( "FactorQuasigroup", [ IsEquivalenceRelation ] );
 
-#! @Arguments C[, indexBased, checkArgs ]
+#! @Arguments C[, constructorStyle ]
 #! @Returns the factor algebra of `Source( `<Arg>C</Arg>` )` modulo the right quasigroup (resp. quasigroup,
 #! loop) congruence <Arg>C</Arg>. In case of loops we also allow arguments <Arg>Q</Arg> and <Arg>N</Arg>
 #! instead of <Arg>C</Arg>, where <Arg>Q</Arg> is a loop and <Arg>N</Arg> is a normal subloop of <Arg>Q</Arg>.
@@ -774,7 +774,7 @@ DeclareOperation( "FactorLoop", [ IsEquivalenceRelation ] );
 #! <P/>We also support infix notation for factor algebras, that is, `Q/C` or `Q/N`. In that version:
 #! <List>
 #!      <Item>the enveloping algebra `Q` must always be given,</Item>
-#!      <Item>the optional arguments `constructorStyle` cannot be given, and</Item>
+#!      <Item>the optional argument `constructorStyle` cannot be given,</Item>
 #!      <Item>the resulting algebra will be index based iff `Q` is index based.</Item>
 #! </List>
 
@@ -803,13 +803,12 @@ DeclareOperation( "FactorLoop", [ IsEquivalenceRelation ] );
 
 #! @Section An example of the factor construction: Paige loops
 
-#! <P/>We conclude the chapter with a larger example, the construction of finite simple Moufang loops, so-called
+#! <P/>We conclude with a larger example, the construction of finite simple Moufang loops, so-called
 #! Paige loops. These are obtained as the factor of the multiplicative set $S$ of
 #! elements of norm one in the Zorn vector matrix algebra modulo the center of $S$.
 
-#! <P/>Here are the auxiliary functions:
-
 #! @BeginExampleSession
+#! gap> # auxiliary functions
 #! gap> DotProduct := function( x, y ) return Sum( [1..Length(x)], i -> x[i]*y[i] ); end;;
 #! gap> CrossProduct := function( x, y ) return [ x[2]*y[3]-x[3]*y[2], x[3]*y[1]-x[1]*y[3], x[1]*y[2]-x[2]*y[1] ]; end;;
 #! gap> PaigeNorm := function( x ) return x[1]*x[8] - DotProduct( x{[2,3,4]},x{[5,6,7]} ); end;;
@@ -821,22 +820,12 @@ DeclareOperation( "FactorLoop", [ IsEquivalenceRelation ] );
 #! > d := DotProduct(x{[5,6,7]},y{[2,3,4]})+x[8]*y[8];
 #! > return Concatenation( [a], b, c, [d] );
 #! > end;;
-#! @EndExampleSession
-
-#! <P/>Let us construct the Paige loop over `GF(2)` as an index based loop. Since we are in characteristic 2
-#! the center is trivial and there is nothing to factor.
-
-#! @BeginExampleSession
+#! gap> # Paige loop over GF(2) (index based approach in characteristic 2)
 #! gap> F := GF(2);;
 #! gap> S := Filtered( F^8, x -> PaigeNorm( x ) = One( F ) );;
 #! gap> P := LoopByFunction( S, PaigeMult, ConstructorStyle( true, true ) ); 
 #! <loop of size 120>
-#! @EndExampleSession
-
-#! <P/>Here is the general case of Paige loops in any characteristic. We factor out a congruence
-#! that corresponds to the center. We construct the loop as a non-index based loop to speed up the constructor.
-
-#! @BeginExampleSession
+#! gap> # general approach (not index based, any characteristic, using congruences)
 #! gap> n := 3;; # any prime power works but it will be very slow
 #! gap> F := GF(n);;
 #! gap> S := Filtered( F^8, x -> PaigeNorm( x ) = One( F ) );;
@@ -844,40 +833,11 @@ DeclareOperation( "FactorLoop", [ IsEquivalenceRelation ] );
 #! gap> C := EquivalenceRelationByPartition( M, Set( S, x -> Set( [ M[x], M[-x] ] ) ) );; # factoring out +/- one
 #! gap> P := FactorLoop( C, ConstructorStyle( false, false ) ); # 2000 ms
 #! <loop of size 1080>
-#! @EndExampleSession
-
-#! <P/>Another approach to Paige loops in which we factor out the a center as a normal subloop:
-
-#! @BeginExampleSession
+#! gap> # another approach using normal subloop
 #! gap> n := 3;; F := GF(n);; S := Filtered( F^8, x -> PaigeNorm( x ) = One( F ) );;
 #! gap> M := LoopByFunction( S, PaigeMult, ConstructorStyle( false, false ) );;
 #! gap> one := [ Z(n)^0, 0*Z(n), 0*Z(n), 0*Z(n), 0*Z(n), 0*Z(n), 0*Z(n), Z(n)^0 ];;
 #! gap> N := Subloop( M, [-one] );;
 #! gap> P := FactorLoop( M, N, ConstructorStyle( false, false ) ); # 2000 ms, it takes a while to find the neutral element
 #! <loop of size 1080>
-#! @EndExampleSession
-
-#! <P/>The factoring does take some time in the above examples. In the final example below we employ a trick
-#! for the odd characteristic that allows us to bypass the factoring.
-#! We subdivide the elements of norm one into two subsets $A$ and $B$ corresponding to the two equivalence classes
-#! modulo the center, by focusing on the first nonzero element in Zorn matrices.
-#! The multiplication function is modified to always return the product of two elements of $A$ as an element of $A$.
-#! (Summarizing, the factoring modulo the center is taken care of already in the multiplication function.)
-
-#! @BeginExampleSession
-#! gap> F := GF( 5 );;
-#! gap> FA := [ One(F), Z(5) ];; # so F^* is a disjoint union of FA and -FA
-#! gap> ModifiedPaigeMult := function( x, y )
-#! > local a, b, c, d, e;
-#! > a := x[1]*y[1] + DotProduct(x{[2,3,4]},y{[5,6,7]});
-#! > b := x[1]*y{[2,3,4]} + x{[2,3,4]}*y[8] - CrossProduct(x{[5,6,7]},y{[5,6,7]});
-#! > c := x{[5,6,7]}*y[1] + x[8]*y{[5,6,7]} + CrossProduct(x{[2,3,4]},y{[2,3,4]});
-#! > d := DotProduct(x{[5,6,7]},y{[2,3,4]})+x[8]*y[8];
-#! > e := Concatenation( [a], b, c, [d] );
-#! > if not First( e, x -> x <> Zero( F ) ) in FA then e := -e ; fi;
-#! > return e;
-#! > end;;
-#! gap> A := Filtered( F^8, x -> PaigeNorm( x ) = One( F ) and First( x, y -> y <> Zero( F ) ) in FA );;
-#! gap> M := LoopByFunction( A, ModifiedPaigeMult, ConstructorStyle( false, false ) );
-#! <loop of size 39000>
 #! @EndExampleSession

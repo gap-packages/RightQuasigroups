@@ -286,23 +286,60 @@ Suppose that $(Q,\cdot)$ is an abelian group. Then $(Q,*)$ is a quandle iff $c=1
 
 Let $Q_1 = (Q_1,\cdot,\ldiv,\rdiv)$, $Q_2=(Q_2,*,\isoldiv,\isordiv)$ be quasigroups. The triple $(f,g,h)$ of mappings $Q_1\to Q_2$ is a homotopism if $f(x)*g(y) = h(x\cdot y)$ for all $x,y\in Q_1$.
 
+\subsection{Method via perfect matchings with invariants}
+
+Let $(f,g,h)$ be an isotopism of right quasigroups $(Q_1,\cdot)\to (Q_2,*)$. In principle, no information about $g$ can be deduced from $f$ and $h$. For instance, if both $(Q1,\cdot)$, $(Q_2,*)$ are projection right quasigroups (that is, $x\cdot y y = x$ and $x*y=x$) then the identity $f(x)*g(y)=h(xy)$ becomes $f(x)=h(x)$.
+
 \begin{lemma}
-Let $c$ be a fixed element of $Q_1$. A homotopism $(f,g,h)$ from $Q_1$ to $Q_2$ is determined by the values of one of the three mappings on $Q_1$ and by the value on $c$ of one of the two remaining mappings.
+Let $(Q_1,\cdot)$, $(Q_2,*)$ be right quasigroups and let $e\in Q_1$.
+\begin{enumerate}
+\item[(i)] If $f:Q_1\to Q_2$ is a bijection and $g(e)$ is given then there is a unique $h:Q_1\to Q_2$ such that $(f,g,h)$ is an isotopism (note that $g$ might not be unique).
+\item[(ii)] Suppose that two bijections $f,h:Q_1\to Q_2$ are given. Then $(f,g,h)$ is an isotopism iff $g$ is a bijection such that $g(y)\in S(y)$ for every $x\in Q$, where
+\begin{displaymath}
+	S(y) = \bigcap_{x\in X}\{z\in Q_1:f(x)*g(z) = h(x\cdot z)\}.
+\end{displaymath}
+Hence an isotopism $(f,g,h)$ with given components $f$ and $h$ exists if and only if there is a perfect matching in the bipartite graph $(V,E)$ with $V=Q_1\cup Q_2$ and $E=\{(x,y):y\in S(x)\}$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+(i) We have $h(y) = f(x\rdiv e)*g(e)$.
+
+Part (ii) is obvious.
+\end{proof} 
+
+If $(Q,\cdot)$ is a groupoid and $x\in Q$, let $m_x=m_x(Q)$ be the sorted list $(m_{x,y}:y\in Q)$, where $m_{x,y}=|\{z\in Q:xy=z\}|$, that is, $m_{x,y}$ counts the number of occurrences of $y$ in the row indexed by $x$. Since the effect of an isotopism $(f,g,h):(Q_1,\cdot)\to (Q_2,*)$ on a multplication table is to rename rows by $f$, rename columns by $g$ and re rename entries by $h$, we must have $m_x(Q_1) = m_{f(x)}(Q_2)$. 
+
+The sorted list $(m_x:x\in Q)$ is therefore an isotopism invariant. Moreover, while searching for an isotopism $(f,g,h):Q_1\to Q_2$, we must select $f(x)\in\{y\in Q_2:m_y(Q_2)=m_x(Q_1)\}$. This severely restricts $f$ for random $Q_1$. The above lemma then allows us to calculate $h$ from a single entry $g(e)$, and the we can easily decide if a suitable $g$ exists by solving the perfect matching problem.
+
+\subsection{Method via perfect matchings with automorphisms groups}
+
+The invariant $(m_x:x\in X)$ is useless for quasigroups. The perfect matching idea still applies but it is not practical to check all possible permutations $f$. It suffices to work modulo $\mathrm{Aut}(Q_1)$, which sometimes helps.
+
+\subsection{Method via domain extension}
+
+The following works reasonably well for quasigroups and loops.
+
+\begin{lemma}
+Let $Q_1$, $Q_2$ be quasigroups. Let $c$ be a fixed element of $Q_1$. A homotopism $(f,g,h)$ from $Q_1$ to $Q_2$ is determined by the values of one of the three mappings on $Q_1$ and by the value on $c$ of one of the two remaining mappings.
 \end{lemma}
 \begin{proof}
 We will give a proof when $h(x)$ is known for all $x\in Q_1$ and $f(c)$ is known. The remaining five cases are similar.
 We have $f(c)*g(c\ldiv x) = h(c(c\ldiv x)) = h(x)$ and hence $g(c\ldiv x) = g(c)\isoldiv h(x)$. This shows that $g(x)$ is determined for all $x\in Q_1$. We also have $f(x\rdiv c)*g(c) = h((x\rdiv c)c) = h(x)$ and hence $f(x\rdiv c) = h(x)\isordiv g(c)$. This shows that $f(x)$ is determined for all $x\in Q_1$.
 \end{proof}
 
-The following result shows how the domain of a partially defined homotopism must be extended (iteratively) whenever a new image of $f$, $g$ or $h$ has been chosen. The domain of a mapping $f$ is denoted by $D(f)$.
+The following result shows how the domain of a partially defined homotopism of quasigroups must be extended (iteratively) whenever a new image of $f$, $g$ or $h$ has been chosen. The domain of a mapping $f$ is denoted by $D(f)$.
 
 \begin{lemma}
-Let $(f,g,h)$ be a partial homotopism $Q_1\to Q_2$.
+Let $(f,g,h):Q_1\to Q_2$ be a partial homotopism of quasigroups.
 \begin{enumerate}
 \item[(i)] If $x\in D(f)$ then $g(x\ldiv y) = f(x)\isoldiv h(y)$ for all $y\in D(h)$ and $h(xy) = f(x)*g(y)$ for all $y\in D(g)$.
 \item[(ii)] If $x\in D(g)$ then $f(y\rdiv x) = h(y)\isordiv g(x)$ for all $y\in D(h)$ and $h(yx) = f(y)*g(x)$ for all $y\in D(f)$.
 \item[(iii)] If $x\in D(h)$ then $g(y\ldiv x) =f(y)\isoldiv h(x)$ for all $y\in D(f)$ and $f(x\rdiv y) = h(x)\isordiv g(y)$ for all $y\in D(g)$.
 \end{enumerate}
 \end{lemma}
+
+\subsection{Method via principal loop isotopes}
+
+To find an isotopism of loops $Q\to Q'$, it suffices to check whether there is an isomorphism $Q_{a,b}\to Q'$, for all $a,b\in Q_1$. In both coordinates it suffices to work modulo some nucleus.
 
 \end{document} 

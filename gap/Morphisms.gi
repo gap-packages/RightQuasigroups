@@ -289,14 +289,19 @@ InstallMethod( RQ_AlgebraIsomorph, "for category and list of arguments",
     [ IsOperation, IsList ],
 function( category, data )
     local ls, Q;
-    # expects data to be Q, f ...
+    # expects data to be Q, f ... or f, ... if f is a right quasigroup mapping
     # PROG: the multiplication will be given by x*y = f(f^{-1}(x)f^{-1}(y)), so call twist (f^{-1},f^{-1},f)
     ls := [];
-    ls[1] := data[1];
-    ls[2] := Inverse( data[2] );
-    ls[3] := Inverse( data[2] );
-    ls[4] := data[2];
-    ls := Concatenation( ls, data{[3..Length(data)]} );
+    if IsRightQuasigroup( data[1] ) then # Q, f, ...
+        ls[1] := data[1];
+        data := data{[2..Length(data)]};
+    else # f, ...
+        ls[1] := Source( data[1] ); 
+    fi;
+    ls[2] := Inverse( data[1] );
+    ls[3] := Inverse( data[1] );
+    ls[4] := data[1];
+    ls := Concatenation( ls, data{[2..Length(data)]} );
     Q := RQ_AlgebraTwist( category, ls );
     # inherit properties
     RQ_InheritProperties( ls[1], Q, false );

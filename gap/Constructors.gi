@@ -516,6 +516,7 @@ function( ct, style )
     return RQ_AlgebraByCayleyTable( IsLoop, ct, style ); 
 end );
 
+
 # CONSTRUCTORS BY FUNCTION
 # _____________________________________________________________________________
 

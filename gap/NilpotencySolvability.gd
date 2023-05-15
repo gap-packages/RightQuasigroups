@@ -58,7 +58,7 @@ DeclareSynonymAttr( "NucleusOfLoop", Nuc );
 DeclareAttribute( "Commutant", IsRightQuasigroup );
 
 #! @Arguments Q
-#! @Returns the center of the right quasigroup `Q`.
+#! @Returns the center of the right quasigroup `Q`, a possibly empty subset of `Q`.
 DeclareAttribute( "Center", IsRightQuasigroup );
 
 # NILPOTENCY

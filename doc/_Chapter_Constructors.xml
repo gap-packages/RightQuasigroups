@@ -4,27 +4,26 @@
 <Chapter Label="Chapter_Constructors">
 <Heading>Constructors</Heading>
 
- <P/>In this chapter we collect constructor methods for right quasigroups.
+ <P/>In this chapter we describe most constructor methods for right quasigroups.
 <Section Label="Section_OptionalArguments">
 <Heading>Optional arguments in constructors</Heading>
 
  <P/>Almost all constructors in &RightQuasigroups; (exceptions will be noted) allow an optional argument
  <Code>constructorStyle</Code>, a record that determines if the constructed right quasigroup will be index based
  (cf. Section <Ref Sect="Section_IndexBased"/>) and if the arguments of the constuctor will be checked. 
- <P/>The default value of this optional record is <Code>RQ_defaultConstructorStyle := rec( indexBased := true, checkArguments := false )</Code>,
- which means that, unless otherwise specified by the user, all created right quasigroups will be index based
- and no arguments will be checked.
+ <P/>The default value of this optional record is <Code>RQ_defaultConstructorStyle := rec( indexBased := true, checkArguments := false )</Code>.
+ This means that all created right quasigroups will be index based and no arguments of the constructors will be checked, 
+ unless otherwise specified by the user.
  <P/>The default constructor style for all constructors can be changed by calling <Code>SetDefaultConstructorStyle</Code>.
- This should have no side effects for the code of &RightQuasigroups; since no particular value of
- <Code>RQ_defaultConstructorStyle</Code> is assumed in the code.
- <P/>The constructor style can also be overridden one constructor at a time by providing the constructor style
- as an optional argument, either direcly, e.g., <Code>rec( indexBased := false, checkArguments := false )</Code>,
+ <P/>The constructor style can also be specified as an optional argument of a given constructor,
+ either direcly, e.g., <Code>rec( indexBased := false, checkArguments := false )</Code>,
  or by inserting the record returned by <Code>ConstructorStyle</Code>. Furthermore, in the former case
  we allow the provided constructor style to be incomplete, that is, having only one (or none) of the
  components <Code>indexBased</Code> and <Code>checkArguments</Code>; the missing components are assumed to have default values then.
- <P/><Emph>Note:</Emph> In regard to checking of arguments in right quasigroup constructors of &RightQuasigroups;, the optional
- component <Code>constructorStyle.checkArguments</Code> replaces the standard naming mechanism of &GAP; in which <Code>FunctionNC</Code> does not check its
- arguments while the corresponding <Code>Function</Code> does. Outside of those constructors, the <Code>NC</Code> convention is kept.
+ <P/><Emph>Note:</Emph> As far as checking of arguments in right quasigroup constructors of &RightQuasigroups; is concerned,
+ the optional component <Code>constructorStyle.checkArguments</Code> intends to replace the standard naming mechanism of &GAP;
+ in which <Code>FunctionNC</Code> does not check its arguments while the corresponding <Code>Function</Code> does.
+ The <Code>NC</Code> convention is kept outside of the constructors.
 <ManSection>
   <Oper Arg="indexBased, checkArguments" Name="SetDefaultConstructorStyle" Label="for IsBool, IsBool"/>
  <Returns><Code>true</Code> and changes the default constructor style according to the bool values <Arg>indexBased</Arg> and <Arg>checkArguments</Arg>.
@@ -158,7 +157,7 @@ This method adds all required unary and binary operations to the right quasigrou
 </ManSection>
 
 
- <P/>The following simple examples illustrates the approach, first for non-index based algebras
+ <P/>The following simple examples illustrates the approach, first for non-index based algebras:
 <Example><![CDATA[
 gap> Q := RQ_AlgebraShell( IsRightQuasigroup, GF(5), rec( indexBased := false ) );
 <right quasigroup shell of size 5>
@@ -177,7 +176,7 @@ r0*Z(5)
 ]]></Example>
 
 
- <P/>and now for index based algebras:
+ <P/>And now for index based algebras:
 <Example><![CDATA[
 gap> Q := RQ_AlgebraShell( IsRightQuasigroup, GF(5) );
 <right quasigroup shell of size 5>
@@ -209,15 +208,15 @@ r0*Z(5)
  <Emph>Cayley table</Emph> of <Code>Q</Code> is the <Math>n\times n</Math> array with rows and columns
  implictly labeled by the elements of (the sorted list) <Math>S</Math>
  such that the cell in row <Math>x</Math> and column <Math>y</Math> contains the element <Math>xy\in S</Math>.
- <P/>In accordance with &GAP; conventions, given a magma <Code>M</Code> of size <Math>n</Math> with <Math>m_i</Math> denoting the <Math>i</Math>ith element of <Code>M</Code>,
+ <P/>In accordance with &GAP; conventions, given a magma <Code>M</Code> of size <Math>n</Math> with <Math>m_i</Math> denoting the <Math>i</Math>th element of <Code>M</Code>,
  the <Index>multiplication table</Index><Emph>multiplication table</Emph> of <Code>Q</Code>
  is the <Math>n\times n</Math> array with rows and columns implicitly labeled by <Math>[1..n]</Math> such that
- the cell in row <Math>i</Math> and column <Math>j</Math> contains <Math>k</Math> iff <Math>m_im_j=m_k</Math>.
- <P/>It is also possible to form an <Math>n\times n</Math> array with rows and columns implicitly labeled by &GAP; elements
+ the cell in row <Math>i</Math> and column <Math>j</Math> contains <Math>k</Math> if <Math>m_im_j=m_k</Math>.
+ <P/>Analogous conventions apply to right division and left division.
+ <P/><Emph>Note:</Emph> It is also possible to form an <Math>n\times n</Math> array with rows and columns implicitly labeled by &GAP; elements
  of <Code>Q</Code> so that the cell in row <Code>x</Code> and column <Code>y</Code> contains the &GAP; element <Code>x*y</Code>. Such a table can be quickly
  constructed from the Cayley table <Code>ct</Code> of <Code>Q</Code> by <Code>List( ct, row -> List( row, x -> Q[x] ) )</Code>, for instance.
  We do not introduce terminology for such tables, nor do we provide any methods for dealing with them.
- <P/>Analogous conventions apply to right division and left division.
 </Subsection>
 
 
@@ -317,26 +316,26 @@ gap> IsRightQuasigroupCayleyTable( ct );
 true
 gap> Q := RightQuasigroupByCayleyTable( ct );
 <right quasigroup of size 3>
-gap> Display( MultiplicationTable( Q ) ); # note the ordering of elements, with rows and columns implicitly labeled 1, 2, 3
-[ [  2,  3,  3 ],
-  [  1,  1,  2 ],
-  [  3,  2,  1 ] ]
-gap> PrintArray( CayleyTable( Q ) );
+gap> Elements( Q ); # note the ordering of the elements induced by "blue" < "red" < "white"
+[ rblue, rred, rwhite ]
+gap> PrintArray( CayleyTable( Q ) ); # rows and column are implicitly labeled "blue", "red", "white"
 [ [    red,  white,  white ],
   [   blue,   blue,    red ],
   [  white,    red,   blue ] ]
-gap> Elements( Q );
-[ rblue, rred, rwhite ]
+gap> Display( MultiplicationTable( Q ) ); # rows and columns are implicitly labeled 1, 2, 3
+[ [  2,  3,  3 ],
+  [  1,  1,  2 ],
+  [  3,  2,  1 ] ]
 gap> IsQuasigroupCayleyTable( ct );
 false
-gap> ct2 := [ [0,1],[1,0] ];;
-gap> [ IsQuasigroupCayleyTable(ct2), IsLoopCayleyTable(ct2) ];
+gap> t := [ [0,1], [1,0] ];;
+gap> [ IsQuasigroupCayleyTable( t ), IsLoopCayleyTable( t ) ];
 [ true, true ]
-gap> QuasigroupByCayleyTable(ct2);
+gap> QuasigroupByCayleyTable( t );
 <quasigroup of size 2>
-gap> LoopByCayleyTable(ct2);
+gap> LoopByCayleyTable( t );
 <loop of size 2>
-gap> One(last);
+gap> One( last );
 l0
 ]]></Example>
 
@@ -500,11 +499,15 @@ Returns, respectively, the multiplication function, right division function and 
 <Example><![CDATA[
 gap> S := GF(5);;
 gap> mult := function( x, y ) return x+2*y; end;;
+gap> IsQuasigroupFunction( S, mult );
+true
+gap> QuasigroupByFunction( S, mult ); # it is not necessary to provide right division and left division
+<quasigroup of size 5>
 gap> rdiv := function( x, y ) return x-2*y; end;;
 gap> ldiv := function( x, y ) return (y-x)/2; end;;
-gap> IsQuasigroupFunction( S, mult, rdiv, ldiv );
+gap> IsQuasigroupFunction( S, mult, rdiv, ldiv ); 
 true
-gap> QuasigroupByFunction( S, mult, rdiv, ldiv );
+gap> QuasigroupByFunction( S, mult, rdiv, ldiv ); # but calculations will be faster if the divisions are provided
 <quasigroup of size 5>
 ]]></Example>
 
@@ -554,7 +557,7 @@ lZmodpZObj( 300001, 1000003 )
  <P/>In &RightQuasigroups;, a right section consists of the underlying set <Math>S</Math> of size <Math>n</Math>
  and an ordered collection of <Math>n</Math> group elements that act on <Math>S</Math>. Implicit
  right sections are also allowed, that is, a set <Math>S</Math> of size <Math>n</Math> and an ordered
- collection of permutations on <Math>[1..n]</Math>, in which case <Math>x^f=y</Math> iff <Math>x</Math> is the <Math>i</Math>th 
+ collection of permutations on <Math>[1..n]</Math>, in which case <Math>x^f=y</Math> if and only if <Math>x</Math> is the <Math>i</Math>th 
  element of <Math>S</Math>, <Math>i^f=j</Math> and <Math>y</Math> is the <Math>j</Math>th element of <Math>S</Math>.
 <ManSection Label="AutoDoc_generated_group9">
 <Heading>Testing right sections</Heading>
@@ -665,7 +668,7 @@ l2
  <Item>three arguments <Code>G</Code>, <Code>H</Code>, <Code>T</Code> standing for the right folder <Code>(G,H,T)</Code>, 
  where <Code>T</Code> can be a subset of <Code>G</Code> or a &GAP; right transversal to <Code>H</Code> in <Code>G</Code>.</Item>
  </List>
- The reason for the second options is that while &GAP; calculates a right transversal to <Code>H</Code> in <Code>G</Code> via
+ The reason for the second option is that while &GAP; calculates a right transversal to <Code>H</Code> in <Code>G</Code> via
  <Code>RightTransversal( G, H )</Code>, it might not be the desired right transversal required for
  the construction of a particular right quasigroup, quasigroup or loop.
 <ManSection Label="AutoDoc_generated_group11">

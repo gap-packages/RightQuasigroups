@@ -57,8 +57,8 @@ end );
 
 # END OF EXPERIMENTING
 
-# RQ_IsAlgebraHomotopism
-InstallMethod( RQ_IsAlgebraHomotopism, "for category and three mappings",
+# RQ_IsHomotopismAlgebras
+InstallMethod( RQ_IsHomotopismAlgebras, "for category and three mappings",
     [ IsOperation, IsMapping, IsMapping, IsMapping ],
 function( category, f, g, h )
     local Q1, Q2;
@@ -76,44 +76,44 @@ end );
 InstallMethod( IsRightQuasigroupHomotopism, "for three mappings",
     [ IsMapping, IsMapping, IsMapping ],
 function( f, g, h )
-    return RQ_IsAlgebraHomotopism( IsRightQuasigroup, f, g, h );
+    return RQ_IsHomotopismAlgebras( IsRightQuasigroup, f, g, h );
 end );
 
 InstallOtherMethod( IsRightQuasigroupHomotopism, "for list of three mappings",
     [ IsList ],
 function( fgh )
-    return RQ_IsAlgebraHomotopism( IsRightQuasigroup, fgh[1], fgh[2], fgh[3] );
+    return RQ_IsHomotopismAlgebras( IsRightQuasigroup, fgh[1], fgh[2], fgh[3] );
 end );
 
 InstallMethod( IsQuasigroupHomotopism, "for three mappings",
     [ IsMapping, IsMapping, IsMapping ],
 function( f, g, h )
-    return RQ_IsAlgebraHomotopism( IsQuasigroup, f, g, h );
+    return RQ_IsHomotopismAlgebras( IsQuasigroup, f, g, h );
 end );
 
 InstallOtherMethod( IsQuasigroupHomotopism, "for list of three mappings",
     [ IsList ],
 function( fgh )
-    return RQ_IsAlgebraHomotopism( IsQuasigroup, fgh[1], fgh[2], fgh[3] );
+    return RQ_IsHomotopismAlgebras( IsQuasigroup, fgh[1], fgh[2], fgh[3] );
 end );
 
 InstallMethod( IsLoopHomotopism, "for three mappings",
     [ IsMapping, IsMapping, IsMapping ],
 function( f, g, h )
-    return RQ_IsAlgebraHomotopism( IsLoop, f, g, h );
+    return RQ_IsHomotopismAlgebras( IsLoop, f, g, h );
 end );
 
 InstallOtherMethod( IsLoopHomotopism, "for list of three mappings",
     [ IsList ],
 function( fgh )
-    return RQ_IsAlgebraHomotopism( IsLoop, fgh[1], fgh[2], fgh[3] );
+    return RQ_IsHomotopismAlgebras( IsLoop, fgh[1], fgh[2], fgh[3] );
 end );
 
 # RQ_IsAlgebraIsotopism
 InstallMethod( RQ_IsAlgebraIsotopism, "for category and three mappings",
     [ IsOperation, IsMapping, IsMapping, IsMapping ],
 function( category, f, g, h )
-    return ForAll( [f,g,h], IsBijective ) and RQ_IsAlgebraHomotopism( category, f, g, h );
+    return ForAll( [f,g,h], IsBijective ) and RQ_IsHomotopismAlgebras( category, f, g, h );
 end );
 
 # IsRightQuasigroupIsotopism
@@ -568,9 +568,9 @@ end );
 # RIGHT QUASIGROUPS UP TO ISOTOPISM
 # _____________________________________________________________________________
 
-# RQ_ArePossiblyIsotopicLoops
+# ArePossiblyIsotopicRightQuasigroups
 
-InstallMethod( RQ_ArePossiblyIsotopicLoops, "for two loops",
+InstallMethod( ArePossiblyIsotopicRightQuasigroups, "for two loops",
     [ IsLoop, IsLoop ],
 function( Q1, Q2 )
     # testing a few properties of loops preserved by isotopisms
@@ -679,7 +679,7 @@ function( category, Q1, Q2, viaPrincipalLoopIsotopes )
     if not IsCanonical(Q1) then Q1 := CanonicalCopy( Q1 ); fi;
     if not IsCanonical(Q2) then Q2 := CanonicalCopy( Q2 ); fi;
     # check for isotopism invariants in case of loops
-    if category = IsLoop and not RQ_ArePossiblyIsotopicLoops( Q1, Q2 ) then
+    if category = IsLoop and not ArePossiblyIsotopicRightQuasigroups( Q1, Q2 ) then
         return fail;
     fi;
     if not viaPrincipalLoopIsotopes then # generic method

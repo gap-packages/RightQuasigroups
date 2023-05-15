@@ -10,17 +10,18 @@
 #
 gap> START_TEST("rightquasigroups03.tst");
 
-# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:20-29
+# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:20-30
 gap> G := Group((1,2));;
-gap> Q := ProjectionRightQuasigroup( [1..3] );;
-gap> D := DirectProduct( G, Q );
-<associative right quasigroup of size 6>
+gap> L := LoopByCayleyTable( [[1,2,3],[2,3,1],[3,1,2]] );;
+gap> R := ProjectionRightQuasigroup( [1..3] );;
+gap> D := DirectProduct( G, L );
+<loop of size 6>
 gap> D.1;
-r[ (), r1 ]
-gap> DirectProduct( Q, G, Q );
-<associative right quasigroup of size 18>
+l[ (), l1 ]
+gap> DirectProduct( G, L, R );
+<right quasigroup of size 18>
 
-# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:55-71
+# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:56-72
 gap> Q := QuasigroupByFunction( GF(3), \- );;
 gap> OQ := OppositeQuasigroup( Q );
 <quasigroup of size 3>
@@ -37,7 +38,7 @@ gap> B := LeftBolLoop( 8, 1 );
 gap> OppositeLoop( B ); # dual properties inherited
 <right Bol loop of size 8>
 
-# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:124-149
+# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:126-151
 gap> Q := LoopByFunction([0..7],function(x,y) return (x+y) mod 8; end);;
 gap> S := Subrightquasigroup( Q, [4] ); # inherits loop property from parent
 <loop of size 2>
@@ -63,14 +64,14 @@ gap> Subquasigroup( Q, [4] );
 gap> Subloop( Q, [4] );
 <loop of size 2>
 
-# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:165-171
+# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:167-173
 gap> AllSubloops( AsLoop( CyclicGroup( 3 ) ) );
 [ <associative loop of size 1>, <associative loop of size 3> ]
 gap> P := ProjectionRightQuasigroup( 2 );; 
-gap> Length( AllSubrightquasigroups( P ) ); # every nonempty subset is a subrightquasigroup
+gap> Length( AllSubrightquasigroups( P ) ); # every nonempty subset is a subrightquasigroup here
 3
 
-# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:237-257
+# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:239-259
 gap> Q := MoufangLoop(12,1);;
 gap> S := Subloop(Q,[Q.2]);;
 gap> IsMinimalSubloop(S);
@@ -91,17 +92,19 @@ gap> AllMaximalSubloops(Q);
   <Moufang loop of size 4>, <Moufang loop of size 4>,
   <Moufang loop of size 4>, <Moufang loop of size 4> ]
 
-# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:288-297
-gap> P := ProjectionRightQuasigroup( 3 ); # this is in fact an associative quandle
-<associative quandle of size 3>
-gap> S := Subrightquasigroup( P, [1,2] );
-<associative quandle of size 2>
+# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:289-300
+gap> P := ProjectionRightQuasigroup( 3 );;
+gap> Display( MultiplicationTable( P ) );
+[ [  1,  1,  1 ],
+  [  2,  2,  2 ],
+  [  3,  3,  3 ] ]
+gap> S := Subrightquasigroup( P, [1,2] );;
 gap> RightCosets( P, S ); # there is a single right coset of S in P
 [ [ r1, r2 ] ]
 gap> RightTransversal( P, S );
 [ r1 ]
 
-# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:403-415
+# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:390-402
 gap> P := ProjectionRightQuasigroup( 10 );;
 gap> A := Subrightquasigroup( P, [1..4] );;
 gap> B := Subrightquasigroup( P, [3..7] );;
@@ -114,7 +117,7 @@ gap> Join( A, B );
 gap> Elements( last );
 [ r1, r2, r3, r4, r5, r6, r7 ]
 
-# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:470-479
+# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:457-466
 gap> Q := QuasigroupByFunction( [0..3], function(x,y) return (x-y) mod 4; end );;
 gap> C := EquivalenceRelationByPartition( Q, [ [Q[0],Q[2]], [Q[1],Q[3]] ] );
 <equivalence relation on <quasigroup of size 4 on 0, 1, 2, 3> >
@@ -124,7 +127,7 @@ gap> D := EquivalenceRelationByPartition( Q, [ [Q[0],Q[1],Q[2]], [Q[3]] ] );;
 gap> IsQuasigroupCongruence( D );
 false
 
-# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:498-507
+# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:485-494
 gap> Q := QuasigroupByFunction( GF(27), \- );;
 gap> C := QuasigroupCongruenceByPartition( Q, [ [ Q.1, Q.2, Q.3 ], [ Q.4, Q.5 ] ] );; # merge Q.1, Q.2, Q.3 and also Q.4, Q.5
 gap> List( EquivalenceClasses( C ), Size );
@@ -134,7 +137,7 @@ gap> C := LoopCongruenceByPartition( G, [ [ G[()], G[(1,2,3)] ] ] );; # merge ()
 gap> List( EquivalenceClasses( C ), Size );
 [ 60, 60 ]
 
-# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:525-533
+# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:512-520
 gap> Q := RightQuasigroupByFunction([0..7], function(x,y) return (x+2*y) mod 8; end );;
 gap> C := RightQuasigroupCongruenceByPairs( Q, [ [ Q[0],Q[2] ] ] );; # merge 0, 2
 gap> List( EquivalenceClasses( C ), Elements );
@@ -143,7 +146,7 @@ gap> C := RightQuasigroupCongruenceByPairs( Q, [ [ Q[0],Q[2] ], [ Q[0], Q[1] ] ]
 gap> List( EquivalenceClasses( C ), Elements );
 [ [ r0, r1, r2, r3, r4, r5, r6, r7 ] ]
 
-# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:601-629
+# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:588-616
 gap> # right quasigroup example
 gap> R := RightQuasigroupByCayleyTable( [[2,2,1,1],[3,1,2,2],[4,3,3,3],[1,4,4,4]] );; 
 gap> RMlt := RightMultiplicationGroup( R );
@@ -172,7 +175,7 @@ gap> S := Subloop(  L, [ (1,3)(2,4) ] );;
 gap> IsNormal( L, S );
 true
 
-# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:671-688
+# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:658-675
 gap> Q := ProjectionRightQuasigroup( 6 );;
 gap> C := EquivalenceRelationByPartition( Q, [[Q.1,Q.2],[Q.3,Q.4,Q.5],[Q.6]] );;
 gap> [ IsRightQuasigroupCongruence( C ), IsQuasigroupCongruence( C ), IsLoopCongruence( C ) ];
@@ -190,7 +193,8 @@ r{r1}
 gap> CayleyTable( H );   
 [ [ {r1}, {r1}, {r1} ], [ {r3}, {r3}, {r3} ], [ {r6}, {r6}, {r6} ] ]
 
-# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:702-714
+# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:688-721
+gap> # auxiliary functions
 gap> DotProduct := function( x, y ) return Sum( [1..Length(x)], i -> x[i]*y[i] ); end;;
 gap> CrossProduct := function( x, y ) return [ x[2]*y[3]-x[3]*y[2], x[3]*y[1]-x[1]*y[3], x[1]*y[2]-x[2]*y[1] ]; end;;
 gap> PaigeNorm := function( x ) return x[1]*x[8] - DotProduct( x{[2,3,4]},x{[5,6,7]} ); end;;
@@ -202,14 +206,12 @@ gap> PaigeMult := function( x, y )
 > d := DotProduct(x{[5,6,7]},y{[2,3,4]})+x[8]*y[8];
 > return Concatenation( [a], b, c, [d] );
 > end;;
-
-# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:719-724
+gap> # Paige loop over GF(2) (index based approach in characteristic 2)
 gap> F := GF(2);;
 gap> S := Filtered( F^8, x -> PaigeNorm( x ) = One( F ) );;
 gap> P := LoopByFunction( S, PaigeMult, ConstructorStyle( true, true ) ); 
 <loop of size 120>
-
-# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:729-737
+gap> # general approach (not index based, any characteristic, using congruences)
 gap> n := 3;; # any prime power works but it will be very slow
 gap> F := GF(n);;
 gap> S := Filtered( F^8, x -> PaigeNorm( x ) = One( F ) );;
@@ -217,31 +219,13 @@ gap> M := LoopByFunction( S, PaigeMult, ConstructorStyle( false, false ) );;
 gap> C := EquivalenceRelationByPartition( M, Set( S, x -> Set( [ M[x], M[-x] ] ) ) );; # factoring out +/- one
 gap> P := FactorLoop( C, ConstructorStyle( false, false ) ); # 2000 ms
 <loop of size 1080>
-
-# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:741-748
+gap> # another approach using normal subloop
 gap> n := 3;; F := GF(n);; S := Filtered( F^8, x -> PaigeNorm( x ) = One( F ) );;
 gap> M := LoopByFunction( S, PaigeMult, ConstructorStyle( false, false ) );;
 gap> one := [ Z(n)^0, 0*Z(n), 0*Z(n), 0*Z(n), 0*Z(n), 0*Z(n), 0*Z(n), Z(n)^0 ];;
 gap> N := Subloop( M, [-one] );;
 gap> P := FactorLoop( M, N, ConstructorStyle( false, false ) ); # 2000 ms, it takes a while to find the neutral element
 <loop of size 1080>
-
-# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:757-773
-gap> F := GF( 5 );;
-gap> FA := [ One(F), Z(5) ];; # so F^* is a disjoint union of FA and -FA
-gap> ModifiedPaigeMult := function( x, y )
-> local a, b, c, d, e;
-> a := x[1]*y[1] + DotProduct(x{[2,3,4]},y{[5,6,7]});
-> b := x[1]*y{[2,3,4]} + x{[2,3,4]}*y[8] - CrossProduct(x{[5,6,7]},y{[5,6,7]});
-> c := x{[5,6,7]}*y[1] + x[8]*y{[5,6,7]} + CrossProduct(x{[2,3,4]},y{[2,3,4]});
-> d := DotProduct(x{[5,6,7]},y{[2,3,4]})+x[8]*y[8];
-> e := Concatenation( [a], b, c, [d] );
-> if not First( e, x -> x <> Zero( F ) ) in FA then e := -e ; fi;
-> return e;
-> end;;
-gap> A := Filtered( F^8, x -> PaigeNorm( x ) = One( F ) and First( x, y -> y <> Zero( F ) ) in FA );;
-gap> M := LoopByFunction( A, ModifiedPaigeMult, ConstructorStyle( false, false ) );
-<loop of size 39000>
 
 #
 gap> STOP_TEST("rightquasigroups03.tst", 1);

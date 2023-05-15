@@ -20,7 +20,7 @@ gap> CategoryOfRightQuasigroup( Q );
 gap> CategoryOfRightQuasigroup( [ Q, ProjectionRightQuasigroup( 5 ) ] ); # common category
 <Category "IsRightQuasigroup">
 
-# doc/_Chapter_Introduction.xml:197-210
+# doc/_Chapter_Introduction.xml:196-212
 gap> Q := QuasigroupByCayleyTable( [[0,1],[1,0]] );
 <quasigroup of size 2>
 gap> String( Q );
@@ -29,12 +29,15 @@ gap> IsAssociative( Q );
 true
 gap> Q;
 <associative quasigroup of size 2>
+gap> Display( Q );
+<associative quasigroup of size 2 on 0, 1>
 gap> Print( Q );
 <associative quasigroup of size 2 on 0, 1>
-gap> String( Q ); # stored at first call
+gap> String( Q ); # was stored as attribute at first call
 "<quasigroup of size 2>"
+gap> 
 
-# doc/_Chapter_Introduction.xml:247-262
+# doc/_Chapter_Introduction.xml:249-264
 gap> Q := AsLoop( Group( (1,2) ) );
 <associative loop of size 2>
 gap> String( Q.1 );
@@ -43,14 +46,14 @@ gap> Elements( Q );
 [ l(), l(1,2) ]
 gap> SetLoopElementsName( Q, "g" );; Elements( Q );
 [ g(), g(1,2) ]
-gap> String( Q.1 ); # right quasigroup elements are not attribute storing
+gap> String( Q.1 ); # dynamic since right quasigroup elements are not attribute storing
 "g()"
 gap> SetLoopElementsName( Q, "" );; Elements( Q ); # better legibility but perhaps confusing
 [ (), (1,2) ]
 gap> IsPerm( last[1] );
 false
 
-# doc/_Chapter_Introduction.xml:321-333
+# doc/_Chapter_Introduction.xml:323-335
 gap> Q := AsLoop( SymmetricGroup( 3 ) );;
 gap> UnderlyingSetElm( Q.1 );
 ()
@@ -63,13 +66,15 @@ gap> UnderlyingSet( Q );
 gap> CayleyTable( Q );
 [ "abcdef", "badcfe", "ceafbd", "dfbeac", "ecfadb", "fdebca" ]
 
-# doc/_Chapter_Introduction.xml:459-486
+# doc/_Chapter_Introduction.xml:461-488
 gap> Q := RightQuasigroupByFunction( [0..3], function( x,y ) return (x+2*y) mod 4; end ); # index based by default
 <right quasigroup of size 4>
 gap> UnderlyingSet( Q );
 [ 0, 1, 2, 3 ]
 gap> Elements( Q ); # default prefix "r" is assigned to right quasigroup elements
 [ r0, r1, r2, r3 ]
+gap> [ Elements(Q)[1], Q.1, Q[0] ]; # three ways of accessing elements
+[ r0, r0, r0 ]
 gap> Display( CayleyTable( Q ) ); # based on the underlying set
 [ [  0,  2,  0,  2 ],
   [  1,  3,  1,  3 ],
@@ -84,34 +89,32 @@ gap> mult := MultiplicationFunction( Q ); # based on [1..n] since Q is index bas
 function( i, j ) ... end
 gap> mult( 1, 1 );
 1
-gap> [ Elements( Q )[ 1 ], Q.1, Q[0] ]; # three ways of accessing elements
-[ r0, r0, r0 ]
 gap> Q[0]*Q[1];
 r2
-gap> Q[0]/Q[2]; # RightQuotient and RightDivision are also supported
-r0
+gap> Q[0]/Q[1]; # RightQuotient and RightDivision are also supported
+r2
 
-# doc/_Chapter_Introduction.xml:498-517
-gap> Q := LoopByCayleyTable( [["a", "b"], ["b", "a"]], ConstructorStyle( false, false ) ); # not index based, arguments not checked
-<loop of size 2>
-gap> UnderlyingSet( Q ); 
-[ "a", "b" ]
+# doc/_Chapter_Introduction.xml:499-518
+gap> Q := AsLoop( SymmetricGroup( 3 ), ConstructorStyle( false, false ) ); # not index based, arguments not checked
+<associative loop of size 6>
+gap> UnderlyingSet( Q );
+[ (), (2,3), (1,2), (1,2,3), (1,3,2), (1,3) ]
 gap> Elements( Q ); # default prefix "l" is assigned to loop elements
-[ la, lb ]
+[ l(), l(2,3), l(1,2), l(1,2,3), l(1,3,2), l(1,3) ]
 gap> mult := MultiplicationFunction( Q ); # based on the underlying set since Q is not index based
-function( x, y ) ... end
-gap> mult( "a", "b" );
-"b"
+<Operation "*">
+gap> mult( (1,2), (1,3) );
+(1,2,3)
 gap> One( Q );
-la
-gap> Commutator( Q["a"], Q["b"] );
-la
-gap> Associator( Q.1, Q.1, Q.2 );
-la
-gap> LeftQuotient( Q.1, Q.2 ); # LeftDivision is also supported
-lb
+l()
+gap> Commutator( Q[(1,2)], Q[(1,3)] );
+l(1,3,2)
+gap> Associator( Q[(1,2)], Q[(1,3)], Q[(2,3)] );
+l()
+LeftQuotient( Q.1, Q.2 ); # LeftDivision is also supported
+l(2,3)
 
-# doc/_Chapter_Introduction.xml:543-566
+# doc/_Chapter_Introduction.xml:544-567
 gap> Q := RightQuasigroupByFunction([0..5], function(x,y) return (x+y) mod 6; end );; Elements( Q ); 
 [ r0, r1, r2, r3, r4, r5 ]
 gap> A := Subrightquasigroup( Q, [2] );
@@ -124,7 +127,7 @@ gap> Elements( A )[ 3 ]; # the 3rd element of A
 r4
 gap> A.3; # the 3rd element of the parent of A
 r2
-gap> A[4]; # the element of parent of A corresponding to the given underlying element
+gap> A[4]; # the element of the parent of A corresponding to the given underlying element
 r4
 gap> Display( CayleyTable( A ) );
 [ [  0,  2,  4 ],
@@ -135,7 +138,7 @@ gap> Display( MultiplicationTable( A ) );
   [  2,  3,  1 ],
   [  3,  1,  2 ] ]
 
-# doc/_Chapter_Introduction.xml:676-701
+# doc/_Chapter_Introduction.xml:677-702
 gap> Q := RightQuasigroupByFunction( GF( 9 ), \+, ConstructorStyle( false, false ) ); # not index based, arguments not checked
 <right quasigroup of size 9>
 gap> IsIndexBased( Q );
@@ -161,7 +164,7 @@ function( x, y ) ... end
 gap> rdiv( Z(3), Z(3) );
 0*Z(3)
 
-# doc/_Chapter_Introduction.xml:705-736
+# doc/_Chapter_Introduction.xml:706-737
 gap> Q := RightQuasigroupByFunction( GF( 9 ), \+, ConstructorStyle( false, false ) );; # same as in the above example, not index based
 gap> R := IndexBasedCopy( Q );;
 gap> IsIndexBased( R );
@@ -193,7 +196,7 @@ gap> C := CanonicalCopy( Q );
 gap> UnderlyingSet( C ); # underlying set has changed to [1..n]
 [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 
-# doc/_Chapter_Introduction.xml:782-794
+# doc/_Chapter_Introduction.xml:783-795
 gap> Q := AsLoop( GF(8) );;
 gap> GeneratorsOfLoop( Q ); # trivial generating set
 [ l0*Z(2), lZ(2)^0, lZ(2^3), lZ(2^3)^2, lZ(2^3)^3, lZ(2^3)^4, lZ(2^3)^5, lZ(2^3)^6 ]

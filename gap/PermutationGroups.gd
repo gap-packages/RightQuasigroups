@@ -15,7 +15,7 @@
 #! Consequently, such translations are elements of the symmetric group on `[1..nP]`.
 
 #! <P/>A left translation of a right quasigroup `Q` is not necessarily a permutation
-#! and it is represented as transformation on `[1..nP]` that fixes all
+#! and it is represented as a transformation on `[1..nP]` that fixes all
 #! points outside of `ParentInd( Q )`. Consequently, such translations are
 #! elements of the full transformation semigroup on `[1..nP]`.
 
@@ -23,14 +23,14 @@
 #! @Returns the right translation by the element <Arg>x</Arg> in the right quasigroup <Arg>Q</Arg>.
 #! We allow <Arg>x</Arg> to be an element of <Arg>Q</Arg> or an element of the underlying set of <Arg>Q</Arg>.
 #! The right translation is returned as a parent permutation, cf. 
-#! Section <Ref Sect="Section_Parent"/>.
+#! Section <Ref Sect="Section_MappingsIntro"/>.
 DeclareOperation( "RightTranslation", [ IsRightQuasigroup, IsObject ] );
 
 #! @Arguments Q, x
 #! @Returns the left translation by the element <Arg>x</Arg> in the right quasigroup <Arg>Q</Arg>.
 #! We allow <Arg>x</Arg> to be an element of <Arg>Q</Arg> or an element of the underlying set of <Arg>Q</Arg>.
 #! If <Arg>Q</Arg> is a quasigroup, the translation is returned as a parent permutation,
-#! cf. Section <Ref Sect="Section_Parent"/>. If <Arg>Q</Arg> is merely 
+#! cf. Section <Ref Sect="Section_MappingsIntro"/>. If <Arg>Q</Arg> is merely 
 #! a right quasigroup, the left translation is returned as a transformation on `[1..Size( Parent( `<Arg>Q</Arg>` ) )]`,
 #! even if the left translation happens to be a permutation.
 DeclareOperation( "LeftTranslation", [ IsRightQuasigroup, IsObject ] );
@@ -88,7 +88,7 @@ DeclareAttribute( "MultiplicationGroup", IsQuasigroup );
 #! @EndGroup
 
 #! @Arguments Q
-#! @Returns the left multiplication semigroup of the right quasigoup `Q`
+#! @Returns the left multiplication semigroup of the right quasigroup `Q`
 #! as a subsemigroup of the full transformation semigroup on the set `[1..Size(Parent(Q))]`.
 #! If `Q` is a quasigorup, the function returns the group `LeftMultiplicationGroup( Q )`.
 DeclareAttribute( "LeftMultiplicationSemigroup", IsRightQuasigroup );
@@ -137,10 +137,10 @@ DeclareOperation( "RelativeMultiplicationGroup", [ IsQuasigroup, IsQuasigroup ] 
 
 #! @Section Inner mappings and inner mapping groups
 
-#! <P/>Elements of the multiplication groups that fix the identity element
-#! are called <Index>inner mappings</Index>**inner mappings** in loop theory.
-#! We extend the definition of traditional inner mappings to right quasigroups and
-#! quasigroups 
+#! <P/>In loop theory, the mappings in the multiplication group that fix the identity element
+#! are called <Index>inner mappings</Index>**inner mappings**. 
+#! Certain standard inner mappings of loops make sense for quasigroups and right quasigroups, when written
+#! out as products of translations. We will call such mappings of right quasigroups inner mappings, too.
 
 #! <P/>When $Q$ is a right quasigroup and $x,y\in Q$, the <Index>right inner mapping</Index>
 #! **right inner mapping** determined by $x$ and $y$ is the permutation $R(x,y) = R_{xy}^{-1} R_y R_x$,
@@ -174,7 +174,7 @@ DeclareOperation( "MiddleInnerMapping", [ IsQuasigroup, IsQuasigroupElement ] );
 
 #! @Arguments Q, x, y
 #! @Returns the right, middle and left inner mappings in `Q` determined by `x` (and `y`).
-#! For the right inner mappings, `Q` can be a right quasigroups. For the middle and left inner
+#! For the right inner mappings, `Q` can be a right quasigroup. For the middle and left inner
 #! mappings, `Q` must be a quasigroup.
 DeclareOperation( "LeftInnerMapping", [ IsQuasigroup, IsQuasigroupElement, IsQuasigroupElement ] );
 

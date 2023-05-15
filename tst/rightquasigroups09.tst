@@ -10,18 +10,75 @@
 #
 gap> START_TEST("rightquasigroups09.tst");
 
-# doc/_Chapter_Topisms.xml:141-151
+# doc/_Chapter_Topisms.xml:78-98
+gap> Q1 := ProjectionRightQuasigroup( 3 );;
+gap> Q2 := ProjectionRightQuasigroup( 2 );;
+gap> f := Transformation( [1,1,2] );; g := Transformation( [2,1,2] );; h := f;;
+gap> t := HomotopismRightQuasigroups( Q1, Q2, f, g, h );
+<homotopism of quasigroups>
+gap> IsRightQuasigroupHomotopism( t ); # category/filter check
+true
+gap> Display( t );
+<homotopism of right quasigroups
+  source = <associative quandle of size 3>
+  range = <associative quandle of size 2>
+  f = Transformation( [ 1, 1, 2 ] )
+  g = Transformation( [ 2, 1, 2 ] )
+  h = Transformation( [ 1, 1, 2 ] )
+>
+gap> [ Source( t ), Range( t ) ];
+[ <associative quandle of size 3>, <associative quandle of size 2> ]
+gap> ComponentOfHomotopism( t, 2 ); # the second component, g
+Transformation( [ 2, 1, 2 ] )
+
+# doc/_Chapter_Topisms.xml:104-116
+gap> Q := QuasigroupByFunction( [0..4], function( x,y ) return (x+y) mod 5; end );;
+gap> f := (1,2,3,4,5);; g := (2,4,1,3,5);; h := (3,1,4,2,5);; # +1, +2, +3
+gap> t := HomotopismRightQuasigroups( Q, f, g, h );
+<autotopism of quasigroups>
+gap> Display( t );
+<autotopism of quasigroups
+   source = range = <quasigroup of size 5>
+   f = (1,2,3,4,5)
+   g = (1,3,5,2,4)
+   h = (1,4,2,5,3)
+>
+
+# doc/_Chapter_Topisms.xml:145-167
+gap> Q := QuasigroupByFunction( [0..4], function( x, y ) return (x+y) mod 5; end );;
+gap> f := RightTranslation( Q, 1 );; g := LeftTranslation( Q, 2 );; h := RightTranslation( Q, 3 );;
+gap> t := HomotopismRightQuasigroups( Q, f, g, h );;
+gap> Display( t*t );
+<autotopism of quasigroups
+   source = range = <quasigroup of size 5>
+   f = (1,3,5,2,4)
+   g = (1,5,4,3,2)
+   h = (1,2,3,4,5)
+>
+gap> Display( t^-1 );
+<autotopism of quasigroups
+   source = range = <quasigroup of size 5>
+   f = (1,5,4,3,2)
+   g = (1,4,2,5,3)
+   h = (1,3,5,2,4)
+>
+gap> One( t );
+<identity autotopism>
+gap> Display( last );
+<identity autotopism on <quasigroup of size 5>>
+
+# doc/_Chapter_Topisms.xml:262-272
 gap> Q := MoufangLoop( 12, 1 );;
 gap> f := (1,2,3);; g := Transformation( [3,3,3] );; h := MappingByFunction( Q, Q, x->x^-1 );; # note various formats
 gap> T := RightQuasigroupTwist( Q, f, g, h ); # f and h must be bijective 
 <right quasigroup of size 12>
-gap> QuasigroupTwist( Q, [ f, (1,12), h ] ); # g must be bijective for quasigroups
+gap> QuasigroupTwist( Q,  f, (1,12), h ); # g must be bijective for quasigroups
 <quasigroup of size 12>
 gap> f := RightTranslation( Q, Q.2 )^-1;; g := LeftTranslation( Q, Q.3 )^-1;;
 gap> LoopTwist( Q, f, g, (), ConstructorStyle( true, true ) ); # principal loop isotope
 <loop of size 12>
 
-# doc/_Chapter_Topisms.xml:202-211
+# doc/_Chapter_Topisms.xml:323-332
 gap> style := ConstructorStyle( false, false );;
 gap> P := QuasigroupByFunction( [0..99999], function(x,y) return (x-y) mod 10^5; end, style );
 <quasigroup of size 100000>
@@ -31,14 +88,14 @@ gap> R := QuasigroupIsotope( P, f, g, h, style );
 gap> R.1000*R.4;
 q97
 
-# doc/_Chapter_Topisms.xml:225-231
+# doc/_Chapter_Topisms.xml:346-352
 gap> Q := QuasigroupByFunction( GF(11), \- );;
 gap> P := PrincipalLoopIsotope( Q, Q.3, Q.4 );
 <loop of size 11>
 gap> UnderlyingSetElm( Q.4*Q.3 ) = UnderlyingSetElm( One( P ) );
 true
 
-# doc/_Chapter_Topisms.xml:316-325
+# doc/_Chapter_Topisms.xml:437-446
 gap> IsAffineRightQuasigroupArithmeticForm( 10, 3, 5, 1 ); # suitable for (3*x+5*y+1) mod 10
 true
 gap> IsAffineQuasigroupArithmeticForm( 10, 3, 5, 1 ); # gcd(10,5) <> 1
@@ -48,21 +105,21 @@ gap> Q := AffineRightQuasigroup( 10, 3, 5, 1 );
 gap> Q := AffineRightQuasigroup( 100000, 333, 777, 5, ConstructorStyle(false,false) ); # non-index based example
 <right quasigroup of size 100000>
 
-# doc/_Chapter_Topisms.xml:329-335
+# doc/_Chapter_Topisms.xml:450-456
 gap> F := GF(9);; f := Z(9);; g := Z(9)^3;; c := Z(9)^5;;
 gap> IsAffineQuasigroupArithmeticForm( F, f, g, c ); # suitable for f*x+g*y+c
 true
 gap> AffineQuasigroup( F, f, g, c );
 <quasigroup of size 9>
 
-# doc/_Chapter_Topisms.xml:339-345
+# doc/_Chapter_Topisms.xml:460-466
 gap> G := CyclicGroup(10);; A := AutomorphismGroup( G );; f := A.1;; g := A.2;; c := G.1;;
 gap> IsAffineQuasigroupArithmeticForm( G, f, g, c ); # suitable for x^f*y^g*c
 true
 gap> AffineQuasigroup( G, f, g, c );
 <quasigroup of size 10>
 
-# doc/_Chapter_Topisms.xml:349-356
+# doc/_Chapter_Topisms.xml:470-477
 gap> G := DihedralGroup(12);;
 gap> f := MappingByFunction( G, G, x->x^(G.1) );; g := MappingByFunction( G, G, x->x^(G.2) );; u := G.1;; v := G.2;;
 gap> IsAffineQuasigroupArithmeticForm( G, f, u, g, v ); # suitable for (x^f*u)*(y^g*v)
@@ -70,7 +127,7 @@ true
 gap> AffineQuasigroup( G, f, u, g, v ); 
 <quasigroup of size 12>
 
-# doc/_Chapter_Topisms.xml:361-369
+# doc/_Chapter_Topisms.xml:482-490
 gap> G := AutomorphicLoop( 10, 1 );; # inner mappings are automorphisms here
 gap> f := AsRightQuasigroupMapping( G, LeftInnerMapping( G, G.2, G.3 ) );;
 gap> g := f*f;; u := G.1;; v := G.2;;
@@ -79,50 +136,28 @@ true
 gap> Q := AffineQuasigroup( G, u, f, v, g ); 
 <quasigroup of size 10>
 
-# doc/_Chapter_Topisms.xml:398-408
-gap> Q1 := RandomQuasigroup( 32 );;
-gap> G := SymmetricGroup( 32 );;
-gap> Q2 := QuasigroupIsotope( Q1, Random( G ), Random( G ), Random( G ) );;
-gap> IsotopismQuasigroups( Q1, Q2 );
-[ MappingByFunction( <quasigroup of size 32>, <quasigroup of size 32>, function( x ) ... end ),
-  MappingByFunction( <quasigroup of size 32>, <quasigroup of size 32>, function( x ) ... end ),
-  MappingByFunction( <quasigroup of size 32>, <quasigroup of size 32>, function( x ) ... end ) ]
-gap> IsQuasigroupIsotopism( last );
+# doc/_Chapter_Topisms.xml:523-529
+gap> Q := RightQuasigroupByCayleyTable([[1,1,1],[2,3,2],[3,2,3]]);;
+gap> Display(IsotopismDiscriminator( Q ) );
+[ [  0,  0,  3 ],
+  [  0,  1,  2 ],
+  [  0,  1,  2 ] ]
+
+# doc/_Chapter_Topisms.xml:569-577
+gap> Q1 := RandomRightQuasigroup( 30 );;
+gap> Q2 := RightQuasigroupIsotope( Q1, (1,2,3), (10,20,30), (4,30) );;
+gap> t := IsotopismRightQuasigroups( Q1, Q2 );
+<isotopism of right quasigroups>
+gap> Q3 := RightQuasigroupIsotope( Q1, t!.f, t!.g, t!.h );;
+gap> MultiplicationTable( Q2 ) = MultiplicationTable( Q3 );
 true
 
-# doc/_Chapter_Topisms.xml:423-432
-gap> t := [ [1,2,3,4,5,6], [2,1,6,5,3,4], [3,4,5,2,6,1], [4,6,1,3,2,5], [5,3,4,6,1,2], [6,5,2,1,4,3] ];;
-gap> Q1 := LoopByCayleyTable( t );;
+# doc/_Chapter_Topisms.xml:604-610
+gap> Q1 := MoufangLoop( 32, 10 );
 gap> Q2 := LoopIsomorph( Q1, (3,4) );;
-gap> Q3 := PrincipalLoopIsotope( Q2, Q2.5, Q2.6 );; # a loop isotopic to Q1
-gap> IsotopismLoops( Q1, Q3 ); # add optional argument `true` to use a method via principal loop isotopes
-[ MappingByFunction( <loop of size 6>, <loop of size 6>, function( x ) ... end ),
-  MappingByFunction( <loop of size 6>, <loop of size 6>, function( x ) ... end ),
-  MappingByFunction( <loop of size 6>, <loop of size 6>, function( x ) ... end ) ]
-
-# doc/_Chapter_Topisms.xml:457-470
-gap> q:=LoopByCayleyTable([[1,2,3,4,5 ],[2,1,4,5,3],[3,4,5,1,2],[4,5,2,3,1],[5,3,1,2,4]]);
-<loop of size 5>
-gap> f:=[(1,5,4), (2,4,3), (1,5,4)];
-[ (1,5,4), (2,4,3), (1,5,4) ]
-gap> atp:=AutotopismObject@RightQuasigroups(q,f[1],f[2],f[3]);
-IsRightQuasigroupAutotopismObject((1,5,4), (2,4,3), (1,5,4))
-gap> AmbientRightQuasigroup(atp);
-<loop of size 5>
-gap> One(atp);
-IsRightQuasigroupAutotopismObject((), (), ())
-gap> atp^-4;
-IsRightQuasigroupAutotopismObject((1,4,5), (2,3,4), (1,4,5))
-
-# doc/_Chapter_Topisms.xml:521-530
-gap> Q := RightBolLoop(8,1);
-<right Bol loop 8/1>
-gap> AutotopismFromPrincipalLoopIsotope( Q, Q.4, Q.3 );
-IsRightQuasigroupAutotopismObject((1,3)(2,4)(5,7)(6,8), (1,4)(2,3)(5,8), (1,2)(3,4)(5,6)(7,8))
-gap> AutotopismGroup( Q );
-<autotopism group with 5 generators>
-gap> Size( last );
-128
+gap> Q3 := PrincipalLoopIsotope( Q2, Q2.10, Q2.20 );; # a loop isotopic to Q1
+gap> IsotopismLoops( Q1, Q3 ); 
+<isotopism of loops>
 
 #
 gap> STOP_TEST("rightquasigroups09.tst", 1);

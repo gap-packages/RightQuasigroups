@@ -6,69 +6,76 @@
 # _____________________________________________________________________________
 
 # HomotopismRightQuasigroups
-InstallOtherMethod( HomotopismRightQuasigroups, "for two right quasigroups, three transformations and bool",
-    [ IsRightQuasigroup, IsRightQuasigroup, IsTransformation, IsTransformation, IsTransformation, IsBool ],
+# PROG: We expect right quasigroups mappings, or transformations, or permutations
+InstallOtherMethod( HomotopismRightQuasigroups, "for two right quasigroups, three mappings, and bool", 
+    [ IsRightQuasigroup, IsRightQuasigroup, IsObject, IsObject, IsObject, IsBool ],
 function( source, range, f, g, h, isCanonical )
-    local ind;
-    # REVISIT: Allow permutations in the case when source = range!
-    if isCanonical then # convert to parent transformations
-        f := AsParentTransformation( source, range, f );
-        g := AsParentTransformation( source, range, g );
-        h := AsParentTransformation( source, range, h );
+    local ind, t;
+    # check source and range if mappings are right quasigroup mappings
+    if ForAny( [f,g,h], x -> IsMapping( x ) and Source( x )<>source and Range( x )<>range ) then
+        return fail;
     fi;
-    # test of homotopic property f(x).g(y) = h(x*y)
+    # convert to parent permutations (if source = range) or parent transformations
+    if source = range then 
+        if (not IsPerm( f )) or isCanonical then f := AsParentPerm( source, f ); fi;
+        if (not IsPerm( g )) or isCanonical then g := AsParentPerm( source, g ); fi;
+        if (not IsPerm( h )) or isCanonical then h := AsParentPerm( source, h ); fi;
+    else 
+        if (not IsTransformation( f )) or isCanonical then f := AsParentTransformation( source, range, f ); fi;
+        if (not IsTransformation( g )) or isCanonical then g:= AsParentTransformation( source, range, g ); fi;
+        if (not IsTransformation( h )) or isCanonical then h:= AsParentTransformation( source, range, h ); fi;
+    fi;
+    # the actual test of homotopic property f(x).g(y) = h(x*y)
     ind := ParentInd( source );
-    if not ForAll( ind, i -> ForAll( ind, j -> range.(i^f)*range.(j^g) = range.( ParentInd( range.(i)*range.(j) )^h ) ) ) then
+    if not ForAll( ind, i -> ForAll( ind, j -> range.(i^f)*range.(j^g) = range.( ParentInd( source.(i)*source.(j) )^h ) ) ) then
         return fail;
     fi; 
-    return Objectify( RQ_HomotopismType, rec( source := source, range := range, f := f, g := g, h := h ) );
+    t := Objectify( RQ_HomotopismType, rec( source := source, range := range, f := f, g := g, h := h ) );
+    # PROG: We now set properties IsSingleValued and IsTotal to true since the property IsBijective in GAP is handled
+    # as an immediate method "IsSingleValued and IsTotal and IsInjective and IsSurjective". This way we do not have to
+    # implement the methods.
+    if not t=fail then
+        SetIsSingleValued( t, true );
+        SetIsTotal( t, true );
+    fi;
+    # PROG: We perform a cheap test for injectivity and surjectivity.
+    if IsPerm( t!.f ) then # automatically bijective
+        SetIsBijective( t, true );
+    fi;
+    return t;
 end );
 
-InstallOtherMethod( HomotopismRightQuasigroups, "for two right quasigroups, three parent transformations and a bool",
-    [ IsRightQuasigroup, IsRightQuasigroup, IsTransformation, IsTransformation, IsTransformation ],
+InstallOtherMethod( HomotopismRightQuasigroups, "for two right quasigroups and three mappings",
+    [ IsRightQuasigroup, IsRightQuasigroup, IsObject, IsObject, IsObject ],
 function( source, range, f, g, h )
     return HomotopismRightQuasigroups( source, range, f, g, h, false );
 end );
 
-InstallOtherMethod( HomotopismRightQuasigroups, "for a right quasigroups, three permutations and a bool",
-    [ IsRightQuasigroup, IsPerm, IsPerm, IsPerm, IsBool ],
+InstallOtherMethod( HomotopismRightQuasigroups, "for a right quasigroup, three mappings and bool",
+    [ IsRightQuasigroup, IsObject, IsObject, IsObject, IsBool ],
 function( Q, f, g, h, isCanonical )
-    if isCanonical then 
-        f := AsTransformation( f ); g := AsTransformation( g ); h := AsTransformation( h );
-    else
-        f := AsParentTransformation( Q, f );
-        g := AsParentTransformation( Q, g );
-        h := AsParentTransformation( Q, h );
-    fi;
-    # REVISIT: It would be good to allow permutations. We need to expand the default constructor.    
+    return HomotopismRightQuasigroups( Q, Q, f, g, h, isCanonical );
+end );
+
+InstallOtherMethod( HomotopismRightQuasigroups, "for a right quasigroup and three mappings",
+    [ IsRightQuasigroup, IsObject, IsObject, IsObject ],
+function( Q, f, g, h )
     return HomotopismRightQuasigroups( Q, Q, f, g, h, false );
 end );
-
-InstallOtherMethod( HomotopismRightQuasigroups, "for a right quasigroups and three parent permutations",
-    [ IsRightQuasigroup, IsPerm, IsPerm, IsPerm ],
-function( Q, f, g, h )
-    return HomotopismRightQuasigroups( Q, f, g, h, false );
-end );
-
+ 
 InstallMethod( HomotopismRightQuasigroups, "for three right quasigroup mappings",
     [ IsMapping, IsMapping, IsMapping ],
 function( f, g, h )
-    local source, range, func;
-    if not ( Source( f ) = Source( g ) and Source( g ) = Source( h ) ) then
-        Error( "RQ: The three mappings must have the same source." );
-    fi;
-    if not ( Range( f ) = Range( g ) and Range( g ) = Range( h ) ) then
-        Error( "RQ: The three mappings must have the same range." );
-    fi;
-    range := Range( f );
-    func := AsParentTransformation;
-    return HomotopismRightQuasigroups( source, range, func(f), func(g), func(h), false ); 
+    return HomotopismRightQuasigroups( Source( f ), Range( f ), f, g, h, false ); 
 end );
 
 InstallMethod( ViewString, "for right quasigroup homotopism",
     [ IsRightQuasigroupHomotopism ],
 function( t )
     local props, s, category;
+    if t!.source = t!.range and t!.f = () and t!.g = () and t!.h = () then
+        return "<identity autotopism>";
+    fi;
     s := "<";
     props := [ HasIsInjective( t ) and IsInjective( t ), HasIsSurjective( t ) and IsSurjective( t ), t!.source = t!.range ];
     if props = [true, true, true] then
@@ -101,6 +108,10 @@ function( t )
     local s;
     s := ViewString( t );
     Remove(s); # remove last character
+    if s[3] = 'd' then # identity autotopism, special treatment
+        Append( s, " on "); Append( s, String( t!.source ) ); Append( s, ">");
+        return s;
+    fi;
     if t!.source <> t!.range then
         Append( s, "\n   source = " ); Append( s, String( t!.source ) );
         Append( s, "\n   range = " ); Append( s, String( t!.range ) );
@@ -120,30 +131,7 @@ function( t )
 	Print( "HomotopismRightQuasigroups( ", t!.source, ", ", t!.range, ", ", t!.f, ", ", t!.g, ", ", t!.h, ")" );
 end );
 
-InstallMethod( \=, "for two right quasigroup homotopisms",
-	IsIdenticalObj,
-	[ IsRightQuasigroupHomotopism, IsRightQuasigroupHomotopism ],
-function( u, v )
-    return [ u!.source, u!.range, u!.f, u!.g, u!.h ] = [v!.source, v!.range, v!.f, v!.g, v!.h ];
-end );
-
-InstallMethod( \<, "for two right quasigroup homotopisms",
-	IsIdenticalObj,
-	[ IsRightQuasigroupHomotopism, IsRightQuasigroupHomotopism ],
-function( u, v )
-	return [ u!.source, u!.range, u!.f, u!.g, u!.h ] < [ v!.source, v!.range, v!.f, v!.g, v!.h ];
-end );
-
-# acting on the right of arguments, hence composing from left to right
-InstallMethod( \*, "for two right quasigroup homotopisms",
-    IsIdenticalObj,
-    [ IsRightQuasigroupHomotopism, IsRightQuasigroupHomotopism ],
-function( u, v )
-    if not u!.range = v!.source then
-        Error( "RQ: The two homotopisms cannot be composed. ");
-    fi;
-    return HomotopismRightQuasigroups( u!.source, v!.range, u!.f*v!.f, u!.g*v!.g, u!.h*v!.h, false );
-end );
+# attributes and properties of homotopisms
 
 InstallMethod( Source, "for right quasigroup homotopism",
     [ IsRightQuasigroupHomotopism ],
@@ -168,7 +156,46 @@ function( t, i )
     return fail;
 end );
 
-InstallMethod( OneMutable, "for right quasigroup homotopism",
+# AutotopismRightQuasigroup 
+InstallGlobalFunction( AutotopismRightQuasigroup,
+function( arg )
+    local t;
+    t := CallFuncList( HomotopismRightQuasigroups, arg );
+    # check for endo and bijectivity
+    if t = fail then return fail; fi;
+    if ( Source( t ) <> Range( t ) ) or ( not IsBijective( t ) ) then
+        return fail;
+    fi;
+    return t;
+end );
+
+# operations for homotopisms
+
+InstallMethod( \=, "for two right quasigroup homotopisms",
+	IsIdenticalObj,
+	[ IsRightQuasigroupHomotopism, IsRightQuasigroupHomotopism ],
+function( u, v )
+    return [ u!.source, u!.range, u!.f, u!.g, u!.h ] = [v!.source, v!.range, v!.f, v!.g, v!.h ];
+end );
+
+InstallMethod( \<, "for two right quasigroup homotopisms",
+	IsIdenticalObj,
+	[ IsRightQuasigroupHomotopism, IsRightQuasigroupHomotopism ],
+function( u, v )
+	return [ u!.source, u!.range, u!.f, u!.g, u!.h ] < [ v!.source, v!.range, v!.f, v!.g, v!.h ];
+end );
+
+InstallMethod( \*, "for two right quasigroup homotopisms",
+    IsIdenticalObj,
+    [ IsRightQuasigroupHomotopism, IsRightQuasigroupHomotopism ],
+function( u, v )
+    if not u!.range = v!.source then
+        Error( "RQ: The two homotopisms cannot be composed. ");
+    fi;
+    return HomotopismRightQuasigroups( u!.source, v!.range, u!.f*v!.f, u!.g*v!.g, u!.h*v!.h, false );
+end );
+
+InstallOtherMethod( OneMutable, "for right quasigroup homotopism",
 	[ IsRightQuasigroupHomotopism ],
 function( t )
     if t!.source<>t!.range then
@@ -177,7 +204,13 @@ function( t )
     return HomotopismRightQuasigroups( t!.source, (), (), () );
 end );
 
-InstallMethod( InverseMutable, "for a right quasigroup homotopism",
+InstallMethod( IdentityAutotopism, "for right quasigroup",
+    [ IsRightQuasigroup ],
+function( Q )
+    return HomotopismRightQuasigroups( Q, (), (), () );
+end );
+
+InstallOtherMethod( InverseMutable, "for a right quasigroup homotopism",
 	[ IsRightQuasigroupHomotopism ],
 function( t )
     if not IsBijective( t ) then 
@@ -189,7 +222,7 @@ end );
 # IsHomotopismRightQuasigroups
 InstallGlobalFunction( IsHomotopismRightQuasigroups, 
 function( arg )
-# PROG: The constructor checks the homotopic property.
+# PROG: The constructor checks the homotopic property and does all the needed conversions.
     return CallFuncList( HomotopismRightQuasigroups, arg ) <> fail;
 end );
 
@@ -212,6 +245,9 @@ InstallOtherMethod( IsInjective, "for right quasigroup homotopism",
     [ IsRightQuasigroupHomotopism ],
 function( t )
     local ind, func;
+    if IsPerm( t!.f ) then # perms are injective by definition
+        return true;
+    fi; 
     ind := ParentInd( t!.source );
     func := IsInjectiveListTrans;
     return ( func( ind, t!.f ) and func( ind, t!.g ) and func( ind, t!.h ) );
@@ -222,6 +258,9 @@ InstallOtherMethod( IsSurjective, "for right quasigroup homotopism",
     [ IsRightQuasigroupHomotopism ],
 function( t )
     local sourceInd, rangeInd;
+    if IsPerm( t!.f ) then # perms are surjective by definition
+        return true;
+    fi; 
     sourceInd := ParentInd( t!.source );
     rangeInd := ParentInd( t!.range );
     return ForAll( [t!.f, t!.g, t!.h ], p -> Set( sourceInd, i->i^p ) = rangeInd );
@@ -231,7 +270,7 @@ end );
 InstallOtherMethod( IsBijective, "for right quasigroup homotopism",
     [ IsRightQuasigroupHomotopism ],
 function( t )
-    return IsInjective( t ) and IsBijective( t );
+    return IsInjective( t ) and IsSurjective( t );
 end );
 
 # IsIsotopismRightQuasigroups
@@ -239,47 +278,56 @@ InstallGlobalFunction( IsIsotopismRightQuasigroups,
 function( arg )
     local t;
     t := CallFuncList( HomotopismRightQuasigroups, arg );
-    return t<>fail and IsInjective( t ) and IsSurjective( t );
+    return t<>fail and IsBijective( t );
 end );
 
 # IsIsotopismQuasigroups
 InstallGlobalFunction( IsIsotopismQuasigroups,
 function( arg )
-    if not ForAll( Filtered( arg, IsRightQuasigroup ), IsQuasigroup ) then return false; fi;
-    return CallFuncList( IsIsotopismRightQuasigroups, arg );
+    local t;
+    t := CallFuncList( HomotopismRightQuasigroups, arg );
+    return t<>fail and IsBijective( t ) and CategoryOfRightQuasigroup( [t!.source, t!.range] ) in [ IsQuasigroup, IsLoop ];
 end );
 
 # IsIsotopismLoops
 InstallGlobalFunction( IsIsotopismLoops,
 function( arg )
-    if not ForAll( Filtered( arg, IsRightQuasigroup ), IsLoop ) then return false; fi;
-    return CallFuncList( IsIsotopismRightQuasigroups, arg );
+    local t;
+    t := CallFuncList( HomotopismRightQuasigroups, arg );
+    return t<>fail and IsBijective( t ) and CategoryOfRightQuasigroup([t!.source, t!.range] ) in [ IsLoop ];
 end );
 
 # IsAutotopismRightQuasigroups
 InstallGlobalFunction( IsAutotopismRightQuasigroups,
 function( arg )
     local t;
-    t := CallFuncList( HomotopismRightQuasigroups, arg );
-    return t<>fail and t!.source = t!.range and IsInjective( t ) and IsSurjective( t );
+    t := CallFuncList( IsIsotopismRightQuasigroups, arg );
+    if t in [fail, false] then 
+        return false;
+    fi;
+    return t!.source = t!.range;
 end );
 
 # IsAutotopismQuasigroups
 InstallGlobalFunction( IsAutotopismQuasigroups,
 function( arg )
     local t;
-    if not ForAll( Filtered( arg, IsRightQuasigroup ), IsQuasigroup ) then return false; fi;
-    t := CallFuncList( HomotopismRightQuasigroups, arg );
-    return t<>fail and t!.source = t!.range and IsInjective( t ) and IsSurjective( t );
+    t := CallFuncList( IsIsotopismQuasigroups, arg );
+    if t in [fail, false] then 
+        return false;
+    fi;
+    return t!.source = t!.range;
 end );
 
 # IsAutotopismLoops
 InstallGlobalFunction( IsAutotopismLoops,
 function( arg )
     local t;
-    if not ForAll( Filtered( arg, IsRightQuasigroup ), IsLoop ) then return false; fi;
-    t := CallFuncList( HomotopismRightQuasigroups, arg );
-    return t<>fail and t!.source = t!.range and IsInjective( t ) and IsSurjective( t );
+    t := CallFuncList( IsIsotopismLoops, arg );
+    if t in [fail, false] then 
+        return false;
+    fi;
+    return t!.source = t!.range;
 end );
 
 # TWISTS OF RIGHT QUASIGROUPS
@@ -374,7 +422,7 @@ function( category, data )
     isCanonical := First( data, x -> x=true ) <> fail;
     for i in [1..3] do
         if IsMapping( maps[i] ) then
-            maps[i] := AsParentTransformation( Q, maps[i] );
+            maps[i] := AsParentTransformation( maps[i] );
         fi;
         if IsPerm( maps[i] ) then 
             maps[i] := AsTransformation( maps[i] );
@@ -632,35 +680,267 @@ function( arg ) # last argument <style> is optional
     return RQ_AffineAlgebra( IsQuasigroup, arg, style );
 end );
 
-# RIGHT QUASIGROUPS UP TO ISOTOPISM
+# SEARCHING FOR AN ISOTOPISM OF RIGHT QUASIGROUPS
 # _____________________________________________________________________________
 
-# RQ_ArePossiblyIsotopicLoops
+# IsotopismDiscriminator
+InstallMethod( IsotopismDiscriminator, "for a right quasigroup",
+    [ IsRightQuasigroup ],
+function( Q )
+    local n, v, i, j, inv, x;
+    inv := [];
+    n := Size( Q ); 
+    for x in Q do
+	    v := 0*[1..n];
+	    for i in [1..n] do
+		    j := ParentInd( x*Q.(i) );
+		    v[j] := v[j]+1;
+	    od;
+        Add( inv, SortedList( v ) );
+    od;
+    return inv;
+end );
 
-InstallMethod( RQ_ArePossiblyIsotopicLoops, "for two loops",
-    [ IsLoop, IsLoop ],
+#AreEqualIsotopismDiscriminators
+InstallMethod( AreEqualIsotopismDiscriminators, "for two isotopism discriminators (lists) of right quasigroups",
+    [ IsList, IsList ],
+function( D1, D2 )
+    return SortedList( D1 ) = SortedList( D2 );
+end );
+
+# ArePossiblyIsotopicRightQuasigroups
+InstallMethod( ArePossiblyIsotopicRightQuasigroups, "for two right quasigroups",
+    [ IsRightQuasigroup, IsRightQuasigroup ],
 function( Q1, Q2 )
-    # testing a few properties of loops preserved by isotopisms
-    if not Size(Q1)=Size(Q2) then return false; fi;
+    local category, D1, D2;
+    # REVISIT: WE NEED SOMETHING FOR QUASIGROUPS!
+    if not ( Size( Q1 ) = Size( Q2 ) ) then
+        return true;
+    fi;
+    category := CategoryOfRightQuasigroup( [Q1, Q2] );
+    D1 := IsotopismDiscriminator( Q1 );
+    D2 := IsotopismDiscriminator( Q2 );
+    if not AreEqualIsotopismDiscriminators( D1, D2 ) then
+        return false;
+    fi;
+    if category <> IsLoop then # no further invariants
+        return true;
+    fi;
+    # loops
     if IsomorphismLoops( Center(Q1), Center(Q2) ) = fail then return false; fi;
     if IsomorphismLoops( LeftNucleus(Q1), LeftNucleus(Q2) ) = fail then return false; fi;
     if IsomorphismLoops( RightNucleus(Q1), RightNucleus(Q2) ) = fail then return false; fi;
     if IsomorphismLoops( MiddleNucleus(Q1), MiddleNucleus(Q2) ) = fail then return false; fi;
-    # REVISIT: we could test for isomorphism among multiplication groups and inner mapping groups, too
     if not Size(MultiplicationGroup(Q1)) = Size(MultiplicationGroup(Q2)) then return false; fi;
     if not Size(InnerMappingGroup(Q1)) = Size(InnerMappingGroup(Q2)) then return false; fi;
     return true;
 end );
 
-# RQ_ExtendIsotopismByClosingSource
+# isotopism via perfect matchings with invariants
+# and via perfect matchings with automorphism group
+# -----------------------------------------------
 
+InstallMethod( RQ_PerfectBipartiteMatching, "for a matrix",
+    [ IsMatrix ],
+function( A )
+    local n, edges, NV, NU, i, j, M, u, v, eM, eN, m, vnext, p, posv, posu;
+    n := Length( A );
+	edges := []; # edges of the graph
+	NV := List([1..n],i->[]); # NV[i] = { j in V: [i,j] in edghes }
+	NU := List([1..n],i->[]); # NU[j] = { i in U: [i,j] in edghes }
+	for i in [1..n] do for j in [1..n] do
+		if A[i,j]=1 then
+			AddSet( NV[i], j );
+			AddSet( NU[j], i );
+			AddSet( edges, [i,j] );
+		fi;
+	od; od;
+	if IsEmpty( edges ) then
+		return fail;
+	fi;
+	M := [ edges[ 1 ] ];
+	# partial matching to be enlarged
+	while Length( M ) < n do
+		# construct data for an alternating path
+		u := []; v := []; eM := []; eN := [];
+		# ...find a vertex of U not in M
+		u[1] := First( [1..n], i -> not (i in List(M,e->e[1])) ); if u[1]=fail then return fail; fi;
+		# ...find any edge adjacent to u[1]
+		v[1] := First( NV[u[1]] ); if v[1]=fail then return fail; fi;
+		eN := [[u[1],v[1]]];
+		m := 1;
+		while v[m] in List(M,e->e[2]) do # last vertex of v is in M, continue
+			u[m+1] := First( NU[v[m]], i -> [i,v[m]] in M ); if u[m+1]=fail then return fail; fi;
+			Add( eM, [u[m+1],v[m]] );
+			vnext := First( [1..n], i -> (not (i in v)) and (not IsEmpty( Intersection( NU[i], u ) ) ) ); # has some edge to a vertex of u
+			if vnext=fail then return fail; fi;
+			v[m+1] := vnext;
+			Add( eN, [ First( Intersection( NU[vnext], u ) ), vnext ] );
+			m := m+1;
+		od;
+		# construct the alternating path
+		p := [];
+		posv := m;
+		repeat 
+			posu := First( [1..posv], i -> [u[i],v[posv]] in eN );
+			Add( p, [u[posu],v[posv]] );
+			if posu > 1 then
+				posv := First( [1..posu], j -> [u[posu],v[j]] in eM );
+				Add( p, [u[posu],v[posv]] );
+			fi;
+		until posu = 1;
+		# replace M with a larger matching
+		M := Union( Difference( M, p ), Difference( p, M ) );
+	od;
+	return M;
+end );
+
+# RQ_Selector_Increment
+InstallMethod( RQ_Selector_Increment, "for selector (list of integers) and blocks (list of lists)",
+    [ IsList, IsList ],
+function( selector, blocks )
+    local n, pos, i;
+	n := Length( selector );
+	if selector[1]=0 then # special provision for selector that did not start yet
+		return List([1..n], i->1);
+	fi;
+	pos := First([1..n], i -> selector[n-i+1] < Length( blocks[n-i+1] ) );
+	if pos=fail then
+		return fail;
+	fi;
+	pos := n-pos+1;
+	selector[pos] := selector[pos]+1;
+	for i in [pos+1..n] do
+		selector[i]:=1;
+	od;
+	return selector;
+end );
+
+# RQ_Selector_FirstConflictWithBijectivity
+InstallMethod( RQ_Selector_FirstConflictWithBijectivity, "for selector (list of integers) and blocks (list of lists)",
+    [ IsList, IsList ],
+function( selector, blocks )
+	local n, used, i, z;
+	n := Length( selector );
+	used := 0*[1..n];
+	for i in [1..n] do
+		z := blocks[i][selector[i]];
+		if used[z]=1 then # conflict
+			return i;
+		fi;
+		used[z]:=1;
+	od;
+	return fail;
+end );
+
+# RQ_Selector_NextBijective
+InstallMethod( RQ_Selector_NextBijective, "for selector (list of integers) and blocks (list of lists)",
+    [ IsList, IsList ],
+function( selector, blocks )
+	local n, m, i;
+	n := Length( selector );
+	repeat 
+		selector := RQ_Selector_Increment( selector, blocks );
+		if selector=fail then 
+			return fail;
+		fi;
+		m := RQ_Selector_FirstConflictWithBijectivity( selector, blocks );
+		if m = fail then # no conflict
+			return selector;
+		fi;
+		for i in [m+1..n] do
+			selector[i] := Length(blocks[i]);
+		od;
+	until 0<>0;
+end );
+
+# RQ_IsotopismRightQuasigroupsPM
+InstallMethod( RQ_IsotopismRightQuasigroupsPM, "for two right quasigroups and method",
+    [ IsRightQuasigroup, IsRightQuasigroup, IsString ],
+function( Q1, Q2, method )
+    local n, t1, t2, s1, s2, blocks, selector, R2, f, g, h, e, x, S, y, A, M;
+	n := Size( Q1 );
+	t1 := MultiplicationTable( Q1 );
+	t2 := MultiplicationTable( Q2 );
+	s1 := IsotopismDiscriminator( Q1 );
+	s2 := IsotopismDiscriminator( Q2 );
+	# x and f(x) must have the same frequency statistics (no matter what g and h do)
+    if method = "via perfect matchings with invariants" then
+	    blocks := List([1..n], i -> Filtered( [1..n], j -> s1[i] = s2[j] ) );
+	    if ForAny( blocks, b -> IsEmpty(b) ) then
+		    return fail;
+	    fi;
+	    selector := 0*[1..n]; # current selector from blocks
+    else # via perfect matchings with automorphism group
+        R2 := RightTransversal( SymmetricGroup( n ), AutomorphismGroup( Q2 ) );
+        selector := 0;
+    fi;
+	repeat
+        # select next f
+		if method = "via perfect matchings with invariants" then
+            selector := RQ_Selector_NextBijective( selector, blocks );
+		    if selector = fail then
+			    return fail;
+		    fi;
+		    f := PermList( List( [1..n], i->blocks[i][selector[i]] ) );
+        else # via perfect matchings with automorphism group
+            selector := selector + 1;
+            if selector > Length( R2 ) then
+                return fail;
+            fi;
+            f := R2[ selector ];
+        fi;
+        # initiate g, h
+		g := 0*[1..n];
+		h := 0*[1..n];	
+		for e in [1..n] do # select the value g[1]
+			g[1] := e;
+			# build h
+			for x in [1..n] do
+				h[ t1[x][1] ] := t2[ x^f, e ];
+			od;
+			# try to complete g
+			S := List([1..n], i -> [] ); # g(y) must lie in S[y];
+			S[1] := [e];
+			for y in [2..n] do
+				S[y] := [1..n];
+				for x in [1..n]	do
+					S[y] := Filtered( S[y], z -> t2[x^f,z] = h[t1[x,y]] );
+				od;
+			od;
+			# solve the marriage problem for g
+			# build bipartite graph
+			A := List([1..n], i->0*[1..n]);
+			for x in [1..n] do for y in [1..n] do
+				if y in S[x] then
+					A[x][y] := 1;
+				fi;	
+			od; od;
+			M := RQ_PerfectBipartiteMatching( A );
+			if M<>fail then # done, report results
+				# build g
+				for x in M do # x is an edge of the matching M
+					g[x[1]] := x[2];
+				od;
+				g := PermList( g );
+				h := PermList( h );
+				return [f,g,h]; # this will be further processed by IsotopismRightQuasigroups
+			fi;		
+		od;
+	until 0<>0;
+end );
+
+# isotopism via via domain extension
+# ----------------------------------
+
+# RQ_ExtendIsotopismByClosingSource
 InstallGlobalFunction( RQ_ExtendIsotopismByClosingSource, 
 function( f, g, h, tables1, tables2 )
     local mult1, mult2, rdiv1, rdiv2, ldiv1, ldiv2,
         n, df, dg, dh, rf, rg, rh, newf, newg, newh, lastf, lastg, lasth,
         add, x, y;
     f := ShallowCopy( f ); g := ShallowCopy( g ); h := ShallowCopy( h ); # to protect backtracking
-    # multiplication, dight division and left division tables
+    # multiplication, right division and left division tables
     mult1 := tables1[1]; rdiv1 := tables1[2]; ldiv1 := tables1[3]; 
     mult2 := tables2[1]; rdiv2 := tables2[2]; ldiv2 := tables2[3];
     n := Length( f );
@@ -706,7 +986,6 @@ function( f, g, h, tables1, tables2 )
 end );
 
 # RQ_ExtendIsotopism
-
 InstallGlobalFunction( RQ_ExtendIsotopism, 
 function( f, g, h, tables1, tables2, gens1 )
     # g[1] is fixed here
@@ -732,118 +1011,151 @@ function( f, g, h, tables1, tables2, gens1 )
     return fail;    
 end );
 
-# RQ_IsotopismAlgebras
-
-InstallMethod( RQ_IsotopismAlgebras, "for category, two right quasigroups and bool",
-    [ IsOperation, IsRightQuasigroup, IsRightQuasigroup, IsBool ],
-function( category, Q1, Q2, viaPrincipalLoopIsotopes ) 
-    local origQ1, origQ2, tables1, tables2, n, gens1, i, f, g, h, fgh,
-        T, Q, phi, alpha, beta, gamma;
-    # PROG: This will not work for right quasigroups.
-    # making sure the quasigroups are canonical
-    origQ1 := ShallowCopy( Q1 );
-    origQ2 := ShallowCopy( Q2 );
-    if not IsCanonical(Q1) then Q1 := CanonicalCopy( Q1 ); fi;
-    if not IsCanonical(Q2) then Q2 := CanonicalCopy( Q2 ); fi;
-    # check for isotopism invariants in case of loops
-    if category = IsLoop and not RQ_ArePossiblyIsotopicLoops( Q1, Q2 ) then
+# RQ_IsotopismQuasigroupsDE
+InstallMethod( RQ_IsotopismQuasigroupsDE, "for two right quasigroups", 
+    [ IsRightQuasigroup, IsRightQuasigroup ],
+function( Q1, Q2 ) 
+    local category, tables1, tables2, n, gens1, i, f, g, h, itp;
+    category := CategoryOfRightQuasigroup( [Q1, Q2] );
+    if not ArePossiblyIsotopicRightQuasigroups( Q1, Q2 ) then
         return fail;
     fi;
-    if not viaPrincipalLoopIsotopes then # generic method
-        # tables of operations
-        tables1 := [ MultiplicationTable( Q1 ), RightDivisionTable( Q1 ), LeftDivisionTable( Q1 ) ];
-        tables2 := [ MultiplicationTable( Q2 ), RightDivisionTable( Q2 ), LeftDivisionTable( Q2 ) ];
-        n := Size( Q1 );
-        # for loops, it suffices to know f on a generating set containing One(Q1) and g on One(Q1)
-        # for quasigroups, it suffices to know f on Q1 and g on any one element of Q1
+    # tables of operations
+    tables1 := [ MultiplicationTable( Q1 ), RightDivisionTable( Q1 ), LeftDivisionTable( Q1 ) ];
+    tables2 := [ MultiplicationTable( Q2 ), RightDivisionTable( Q2 ), LeftDivisionTable( Q2 ) ];
+    n := Size( Q1 );
+    # for loops, it suffices to know f on a generating set containing One(Q1) and g on One(Q1)
+    # for quasigroups, it suffices to know f on Q1 and g on any one element of Q1
+    if category = IsLoop then
+        gens1 := ParentInd( Union( SmallGeneratingSet( Q1 ), [ One(Q1) ] ) );
+    else
+        gens1 := [1..n];
+    fi;
+    # main cycle
+    for i in [1..n] do # the one value of g
+        f := 0*[1..n]; # empty map
+        g := 0*[1..n];
         if category = IsLoop then
-            gens1 := ParentInd( Union( SmallGeneratingSet( Q1 ), [ One(Q1) ] ) );
+            g[ ParentInd( One(Q1) ) ] := i;
         else
-            gens1 := [1..n];
+            g[ 1 ] := i;
         fi;
-        # main cycle of generic method
-        for i in [1..n] do # the one value of g
-            f := 0*[1..n]; # empty map
-            g := 0*[1..n];
-            if category = IsLoop then
-                g[ ParentInd( One(Q1) ) ] := i;
-            else
-                g[ 1 ] := i;
-            fi;
-            h := 0*[1..n];
-            fgh := RQ_ExtendIsotopism( f, g, h, tables1, tables2, gens1 );
-            if not fgh = fail then # isotopism found
-                return HomotopismRightQuasigroups( origQ1, origQ2, AsTransformation( f ), AsTransformation( g ), AsTransformation( h ), true );
-                # return List( fgh, m -> AsRightQuasigroupMapping( origQ1, origQ2, Transformation( m ), true ) );
-            fi;
-        od;
-        return fail;
-    fi;
-    # method via principal loop isotopes
-    # construct all distinct principal loop isotopes of Q1 an check for isomorphism with Q2
+        h := 0*[1..n];
+        itp := RQ_ExtendIsotopism( f, g, h, tables1, tables2, gens1 );
+        if not itp=fail then 
+            return List( itp, PermList );
+        fi;
+    od;
+    return fail;
+end );
+
+# isotopism via via principal loop isotopes
+# -----------------------------------------
+
+# RQ_IsotopismLoopsPLI
+InstallMethod( RQ_IsotopismLoopsPLI, "for two loops", 
+    [ IsLoop, IsLoop ],
+function( Q1, Q2 ) 
+    local T, a, b, Q, iso, f, g, h;
+    # checks all principal loop isotopes of Q1, whether they are isomorphic to Q2
     T := RightTransversal( Q1, MiddleNucleus( Q1 ) ); # just a subset 
-    for f in Q1 do for g in T do 
-        Q := PrincipalLoopIsotope( Q1, f, g );
-        phi := IsomorphismLoops( Q, Q2 ); # fail or right quasigroup mapping
-        if not phi = fail then 
+    for a in Q1 do for b in T do 
+        Q := PrincipalLoopIsotope( Q1, a, b );
+        iso := IsomorphismLoops( Q, Q2 ); # fail or a right quasigroup mapping
+        if not iso = fail then 
             # reconstruct the isotopism (alpha, beta, gamma)
-            phi := AsCanonicalPerm( phi );
-            alpha := AsTransformation( RightTranslation(Q1,f)*phi );
-            beta := AsTransformation( LeftTranslation(Q1,g)*phi );
-            gamma := AsTransformation( phi );
-            return HomotopismRightQuasigroups( origQ1, origQ2, alpha, beta, gamma, true );
-        fi; 
+            iso := AsCanonicalPerm( iso );
+            f := RightTranslation(Q1,a)*iso;
+            g := LeftTranslation(Q1,b)*iso;
+            h := iso;
+            return [f,g,h]; # will be further processed
+        fi;
     od; od;
     return fail; 
 end );
 
+# main function for isotopism search
+# ----------------------------------
+
 # IsotopismRightQuasigroups
-InstallMethod( IsotopismRightQuasigroups, "for two right quasigroups",
+InstallMethod( IsotopismRightQuasigroups, "for two right quasigroups and method selector (string)",
+    [ IsRightQuasigroup, IsRightQuasigroup, IsString ],
+function( Q1, Q2, method )
+    local origQ1, origQ2, category, itp, t;
+    origQ1 := ShallowCopy( Q1 );
+    origQ2 := ShallowCopy( Q2 );
+    if not IsCanonical(Q1) then Q1 := CanonicalCopy( Q1 ); fi;
+    if not IsCanonical(Q2) then Q2 := CanonicalCopy( Q2 ); fi;
+    category := CategoryOfRightQuasigroup( [ Q1, Q2 ] );
+    if method = "via perfect matchings with invariants" or method = "via perfect matchings with automorphism group" then
+        itp := RQ_IsotopismRightQuasigroupsPM( Q1, Q2, method );
+    elif method = "via domain extension" and category <> IsRightQuasigroup then 
+        itp := RQ_IsotopismQuasigroupsDE( Q1, Q2 );
+    elif method = "via principal loop isotopes" and category = IsLoop then
+        itp := RQ_IsotopismLoopsPLI( Q1, Q2 );
+    else
+        Error( "RQ: The selected method is not suported for the type of algebras.");
+    fi;
+    if itp=fail then 
+        return fail;
+    fi;
+    # convert back to original right quasigroups
+    itp := List( itp, p -> AsParentTransformation( origQ1, origQ2, AsTransformation(p) ) );
+    t := HomotopismRightQuasigroups( origQ1, origQ2, itp[1], itp[2], itp[3] );
+    SetIsBijective( t, true );
+    return t;
+end );
+
+InstallOtherMethod( IsotopismRightQuasigroups, "for two right quasigroups",
     [ IsRightQuasigroup, IsRightQuasigroup ],
 function( Q1, Q2 )
-    # REVISIT: Implement isotopism check for right quasigroups
-    Error( "RQ: Not implemented yet." );
+    return IsotopismRightQuasigroups( Q1, Q2, "via perfect matchings with invariants" );
 end );
 
 # IsotopismQuasigroups
-InstallMethod( IsotopismQuasigroups, "for two quasigroups",
+InstallMethod( IsotopismQuasigroups, "for two quasigroups and method selector (string)",
+    [ IsQuasigroup, IsQuasigroup, IsString ],
+function( Q1, Q2, method )
+    return IsotopismRightQuasigroups( Q1, Q2, method );
+end );
+
+InstallOtherMethod( IsotopismQuasigroups, "for two quasigroups",
     [ IsQuasigroup, IsQuasigroup ],
 function( Q1, Q2 )
-    return RQ_IsotopismAlgebras( IsQuasigroup, Q1, Q2, false ); # do not use principal loop isotopes
+    return IsotopismRightQuasigroups( Q1, Q2, "via domain extension" );
 end );
 
 # IsotopismLoops
-InstallMethod( IsotopismLoops, "for two loops",
-    [ IsLoop, IsLoop ],
-function( Q1, Q2 )
-    return RQ_IsotopismAlgebras( IsLoop, Q1, Q2, false );
+InstallMethod( IsotopismLoops, "for two loops and method selector (string)",
+    [ IsLoop, IsLoop, IsString ],
+function( Q1, Q2, method )
+    return IsotopismRightQuasigroups( Q1, Q2, method );
 end );
 
-InstallOtherMethod( IsotopismLoops, "for two loops and bool",
-    [ IsLoop, IsLoop, IsBool ],
-function( Q1, Q2, viaPrincipalLoopIsotopes )
-    return RQ_IsotopismAlgebras( IsLoop, Q1, Q2, viaPrincipalLoopIsotopes );    
-end);
+InstallOtherMethod( IsotopismLoops, "for two loops",
+    [ IsLoop, IsLoop ],
+function( Q1, Q2 )
+    return IsotopismRightQuasigroups( Q1, Q2, "via domain extension" );
+end );
+
+# RIGHT QUASIGROUPS UP TO ISOTOPISM
+# _____________________________________________________________________________
 
 # RQ_AlgebrasUpToIsotopism
-InstallMethod( RQ_AlgebrasUpToIsotopism, "for category, list of algebras and bool",
-    [ IsOperation, IsList, IsBool ],
-function( category, ls, viaPrincipalLoopIsotopes )
+InstallMethod( RQ_AlgebrasUpToIsotopism, "for category, list of algebras and method selector (string)",
+    [ IsOperation, IsList, IsString ],
+function( category, ls, method )
     local kept, positions, pos, Q, is_new, K;
-    
-    if IsEmpty( ls ) then
-        return ls;
-    fi;
+    # check arguments
+    if IsEmpty( ls ) then return ls; fi;
     if not ForAll( ls, IsRightQuasigroup ) then
         Error( "RQ: <1> must be a list of right quasigroups" );
     fi;
-    if Length( ls ) = 1 then
-        return ls;
-    fi;
+    if Length( ls ) = 1 then return ls; fi;
     if not ForAll( ls, Q -> CategoryOfRightQuasigroup( Q ) = category ) then 
         Error("RQ: <1> must be a list of algebras of the same type");
     fi;        
-       
+    # main cycle   
     kept := []; # kept algebras 
     positions := []; # positions of kept algebras in the original list
     pos := 0;
@@ -852,13 +1164,13 @@ function( category, ls, viaPrincipalLoopIsotopes )
         if not IsCanonical( Q ) then Q := CanonicalCopy( Q ); fi; # making canonical when seen for the first time
         is_new := true;
         for K in kept do
-            if not RQ_IsotopismAlgebras( category, Q, K, viaPrincipalLoopIsotopes ) = fail then
+            if not IsotopismRightQuasigroups( Q, K, method ) = fail then
                 is_new := false;
                 break;
             fi;
         od;
         if is_new then
-            Add( kept, Q ); # storing discriminator, too
+            Add( kept, Q ); 
             Add( positions, pos );
         fi;
     od;
@@ -870,165 +1182,224 @@ end );
 # QuasigroupsUpToIsotopism 
 # LoopsUpToIsotopism
 
-InstallMethod( RightQuasigroupsUpToIsotopism, "for list of right quasigroups",
-    [ IsList ],
-function( ls )
-    return RQ_AlgebrasUpToIsotopism( IsRightQuasigroup, ls, false );
+InstallMethod( RightQuasigroupsUpToIsotopism, "for list of right quasigroups and method selector (string)",
+    [ IsList, IsString ],
+function( ls, method )
+    return RQ_AlgebrasUpToIsotopism( IsRightQuasigroup, ls, method );
 end );
 
-InstallMethod( QuasigroupsUpToIsotopism, "for list of quasigroups",
+InstallOtherMethod( RightQuasigroupsUpToIsotopism, "for list of right quasigroups",
     [ IsList ],
 function( ls )
-    return RQ_AlgebrasUpToIsotopism( IsQuasigroup, ls, false );
+    return RQ_AlgebrasUpToIsotopism( IsRightQuasigroup, ls, "via perfect matchings with invariants" );
 end );
 
-InstallMethod( LoopsUpToIsotopism, "for list of loops",
+InstallMethod( QuasigroupsUpToIsotopism, "for list of quasigroups and method selector (string)",
+    [ IsList, IsString ],
+function( ls, method )
+    return RQ_AlgebrasUpToIsotopism( IsQuasigroup, ls, method );
+end );
+
+InstallOtherMethod( QuasigroupsUpToIsotopism, "for list of right quasigroups",
     [ IsList ],
 function( ls )
-    return RQ_AlgebrasUpToIsotopism( IsLoop, ls, false );
+    return RQ_AlgebrasUpToIsotopism( IsQuasigroup, ls, "via domain extension" );
 end );
 
-InstallOtherMethod( LoopsUpToIsotopism, "for list of loops and bool",
-    [ IsList, IsBool ],
-function( ls, viaPrincipalLoopIsotopes )
-    return RQ_AlgebrasUpToIsotopism( IsLoop, ls, viaPrincipalLoopIsotopes );
+InstallMethod( LoopsUpToIsotopism, "for list of loops and method selector (string)",
+    [ IsList, IsString ],
+function( ls, method )
+    return RQ_AlgebrasUpToIsotopism( IsLoop, ls, method );
+end );
+
+InstallOtherMethod( LoopsUpToIsotopism, "for list of loops",
+    [ IsList ],
+function( ls )
+    return RQ_AlgebrasUpToIsotopism( IsLoop, ls, "via domain extension" );
 end );
 
 # AUTOTOPISM GROUPS OF RIGHT QUASIGROUPS
 # _____________________________________________________________________________
 
-#############################################################################
-##  ACTIONS
-##  -------------------------------------------------------------------------
-
-InstallMethod( AtpOn3nElms@, "for an integer in [1..3n] and an autotopism",
-    [ IsPosInt, IsRightQuasigroupHomotopism ],
-function( i, atp )
-    local n;
-    n := Size( atp!.source );
-    if i <= n then 
-        return i^(atp!.f);
-    elif i <= 2*n then 
-        return n+(i-n)^(atp!.g);
-    else 
-        return 2*n+(i-2*n)^(atp!.h);
-    fi;
-end );
-
-InstallMethod( AtpOnnSquare@, "for an element of QxQ(xQ) and an autotopism",
+# RQ_HtpOnPairs
+InstallMethod( RQ_HtpOnPairs, "for a 2-tuple and a right quasigroups homotopism",
     [ IsList, IsRightQuasigroupHomotopism ],
- function( x, atp )
-    if Length( x ) = 2 then
-        return [ x[1]^(atp!.f), x[2]^(atp!.g) ];
-    elif Length( x ) = 3 then 
-        return [ x[1]^(atp!.f), x[2]^(atp!.g), x[3]^(atp!.h) ];
-    else
-        Error( "RQ: <1> must have length 2 or 3." );
-    fi;
+function( ls, t )
+    local Q1, Q2, i, j, a, b;
+    Q1 := t!.source;
+    Q2 := t!.range;
+    i := ParentInd( ls[1] );
+    j := ParentInd( ls[2] );
+    a := Q2.( i^(t!.f) ); # f acting on the first coordinate
+    b := Q2.( j^(t!.g) ); # g acting on the second coordinate
+    return [a,b];
 end );
 
-InstallMethod( AutotopismFromPrincipalLoopIsotope, "for loops", 
-    [ IsLoop, IsLoopElement, IsLoopElement ],
-function( Q, a, b )
-    local S, iso, f, g, h;
-    if not CheckAtpInvariant@( Q, Q, a, b ) then
-        return fail;
-    fi;
-    S := PrincipalLoopIsotope( Q, a, b );
-    iso := IsomorphismLoops( Q, S );
-    if iso = fail then
-        return fail;
-    fi;                           
-    h := AsPermutation( iso!.cantraf );
-    f := h / RightTranslation( Q, a );
-    g := h / LeftTranslation( Q, b );
-    #ForAll( Q, x -> ForAll( Q, y -> x^f * y^g = (x * y)^u ) );
-    return HomotopismRightQuasigroups( Q, f, g, h ); # REVISIT: perhaps set attributes so that it knows it is bijective
-end );
-
-
-InstallMethod( AutotopismGroupByGenerators, "for a collection of autotopisms",
-    [ IsList and IsRightQuasigroupHomotopismCollection ],
-function( gens )
-    local g, nice, n;
-    if gens = [] then 
-        Error( "RQ: list of generators cannot be empty." );
-    fi;
-    g := GroupWithGenerators( gens );
-    n := Size( gens[1]!.source );
-    nice := ActionHomomorphism( g, [1 .. 3*n], AtpOn3nElms@ );
-    SetIsInjective( nice, true );
-    SetNiceMonomorphism( g, nice );
-    SetIsHandledByNiceMonomorphism( g, true );
-    SetGeneratorsOfGroup( g, gens );
-    return g;
-end );
-
-InstallGlobalFunction( ExtendAtpGrp,
-function( Q, gens, green, yellow, red )
-    local g, pt, newgen;
-    if yellow = [] then
-        return fail;
-    fi;
-    pt := yellow[1];
-    newgen := AutotopismFromPrincipalLoopIsotope( Q, pt[2], pt[1] );
-    if newgen <> fail then
-        Add( gens, newgen );
-        Add( green, pt );
-    else
-        Add( red, pt );
-    fi;
-    g := AutotopismGroupByGenerators( gens );
-    yellow := Difference( Cartesian( Q, Q ),
-        Union( List( Concatenation( green, red ), x -> Orbit( g, x, AtpOnnSquare@) ) ) 
-    );
-    return yellow;
-end );
-
+# AutotopismGroup
+# MATH: Every autotopism of Q decomposes uniquely as a prinipal loop isotopism Q --> Q_{a,b}
+# followed by an isomorphism Q_{a,b} --> Q. The principal loop isotope Q_{a,b}
+# is isomorphic to Q iff (a,b) lies in the orbit of (1,1)
+# under the action of the autotopism group Atp( Q ) on tuples: (f,g,h)(x,y) = (f(x),g(y)).
 InstallMethod( AutotopismGroup, "for a loop",
     [ IsLoop ],
-function( Q )
-    local ag, gens, green, yellow, red;
-    ag := AutomorphismGroup(Q);
-    gens := List( GeneratorsOfGroup( ag ), u -> HomotopismRightQuasigroups( Q, u, u, u ) );
-    green := []; red := []; yellow := Cartesian( Q, Q );
-    while yellow <> [] do
-        yellow := ExtendAtpGrp( Q, gens, green, yellow, red );
+function( Q )  
+    local origQ, aut, gens, isomorphic, nonisomorphic, open, a, b, f, atp, orbits;
+    origQ := Q;
+    Q := CanonicalCopy( Q ); 
+    # start with the embedding of Aut( Q ) to Atp( Q )
+    gens := List( GeneratorsOfGroup( AutomorphismGroup( Q ) ), f -> AutotopismRightQuasigroup( Q, f, f, f ) );
+    # keep track of pairs (a,b) for which Q_{a,b} is isomorphic to Q
+    isomorphic := []; # reps [a,b] of orbits of atp such that Q_{b,a} is isomorphic to Q
+    nonisomorphic := []; # reps [a,b] of orbits of atp such that Q_{b,a} is not isomorphic to Q
+    open := Difference( Cartesian( Q, Q ), [[One(Q),One(Q)]] ); # unresolved 
+    while not IsEmpty( open ) do
+        a := open[1,1];
+        b := open[1,2];
+        f := IsomorphismLoops( PrincipalLoopIsotope( Q, b, a ), Q ); # note the reversal
+        if f = fail then # not isomorphic
+            Add( nonisomorphic, [a,b] );       
+            open := open{[2..Length(open)]};          
+        else # isomorphic, add the induced autotopism (R_b, L_a, id )*(f,f,f)
+            Add( isomorphic, [a,b] );
+            f := AsCanonicalPerm( f );
+            AddSet( gens, AutotopismRightQuasigroup( Q, RightTranslation( Q, b )*f, LeftTranslation( Q, a )*f, f ) );
+            atp := Group( gens );
+            orbits := List( Concatenation( isomorphic, nonisomorphic ), x -> Orbit( atp, x, RQ_HtpOnPairs ) );
+            open := Difference( Cartesian( Q, Q ), Union( orbits ) );
+        fi;
     od;
-    return AutotopismGroupByGenerators( gens );
+    # convert back to original algebra
+    gens := List( gens, t -> AutotopismRightQuasigroup( origQ, t!.f, t!.g, t!.h, true ) ); # data given as canonical
+    return Group( gens );
 end );
 
-InstallGlobalFunction( LeftAtpInvariant@, 
-function( Q, a )
-    return SortedList( List( LeftTranslation( Q, a )^(-1)*LeftSection( Q ), CycleStructurePerm ) );
-end );
+#InstallMethod( AtpOn3nElms@, "for an integer in [1..3n] and an autotopism",
+#    [ IsPosInt, IsRightQuasigroupHomotopism ],
+#function( i, atp )
+#    local n;
+#    n := Size( atp!.source );
+#    if i <= n then 
+#        return i^(atp!.f);
+#    elif i <= 2*n then 
+#        return n+(i-n)^(atp!.g);
+#    else 
+#        return 2*n+(i-2*n)^(atp!.h);
+#    fi;
+#end );
 
-InstallGlobalFunction( RightAtpInvariant@, 
-function( Q, a )
-    return SortedList( List( RightTranslation( Q, a )^(-1)*RightSection( Q ), CycleStructurePerm ) );
-end );
+#InstallMethod( AtpOnnSquare@, "for an element of QxQ(xQ) and an autotopism",
+#    [ IsList, IsRightQuasigroupHomotopism ],
+# function( x, atp )
+#    if Length( x ) = 2 then
+#        return [ x[1]^(atp!.f), x[2]^(atp!.g) ];
+#    elif Length( x ) = 3 then 
+#        return [ x[1]^(atp!.f), x[2]^(atp!.g), x[3]^(atp!.h) ];
+#    else
+#        Error( "RQ: <1> must have length 2 or 3." );
+#    fi;
+#end );
 
-InstallMethod( AtpInvariant@, "for a loop",
-    [ IsLoop ],
-function( Q )
-    local S, left,right;
-    if IsCanonical( Q ) then
-        S := Q;
-    else
-        S := CanonicalCopy( Q );
-    fi;
-    left := List( S, a -> LeftAtpInvariant@( S, a ) );
-    right := List( S, a -> RightAtpInvariant@( S, a ) );
-    return [ left, right ];
-end );
+#InstallMethod( AutotopismFromPrincipalLoopIsotope, "for loops", 
+#    [ IsLoop, IsLoopElement, IsLoopElement ],
+#function( Q, a, b )
+#    local S, iso, f, g, h;
+#    if not CheckAtpInvariant@( Q, Q, a, b ) then
+#        return fail;
+#    fi;
+#    S := PrincipalLoopIsotope( Q, a, b );
+#    iso := IsomorphismLoops( Q, S );
+#    if iso = fail then
+#        return fail;
+#    fi;                           
+#    h := AsPermutation( iso!.cantraf );
+#    f := h / RightTranslation( Q, a );
+#    g := h / LeftTranslation( Q, b );
+#    #ForAll( Q, x -> ForAll( Q, y -> x^f * y^g = (x * y)^u ) );
+#    return HomotopismRightQuasigroups( Q, f, g, h ); # REVISIT: perhaps set attributes so that it knows it is bijective
+#end );
 
-InstallGlobalFunction( CheckAtpInvariant@, 
-function( Q, S, a, b )
-    local invQ, invS;
-    a := Position( Elements( S ), a );
-    b := Position( Elements( S ), b );
-    invQ := AtpInvariant@( Q );
-    invS := AtpInvariant@( S );
-    return invQ[1][1] = invS[1][b] and invQ[2][1] = invS[2][a];     
-end );
 
+#InstallMethod( AutotopismGroupByGenerators, "for a collection of autotopisms",
+#    [ IsList and IsRightQuasigroupHomotopismCollection ],
+#function( gens )
+#    local g, nice, n;
+#    if gens = [] then 
+#        Error( "RQ: list of generators cannot be empty." );
+#    fi;
+#    g := GroupWithGenerators( gens );
+#    n := Size( gens[1]!.source );
+#    nice := ActionHomomorphism( g, [1 .. 3*n], AtpOn3nElms@ );
+#    SetIsInjective( nice, true );
+#    SetNiceMonomorphism( g, nice );
+#    SetIsHandledByNiceMonomorphism( g, true );
+#    SetGeneratorsOfGroup( g, gens );
+#    return g;
+#end );
+
+#InstallGlobalFunction( ExtendAtpGrp,
+#function( Q, gens, green, yellow, red )
+#    local g, pt, newgen;
+#    if yellow = [] then
+#        return fail;
+#    fi;
+#    pt := yellow[1];
+#    newgen := AutotopismFromPrincipalLoopIsotope( Q, pt[2], pt[1] );
+#    if newgen <> fail then
+#        Add( gens, newgen );
+#        Add( green, pt );
+#    else
+#        Add( red, pt );
+#    fi;
+#    g := AutotopismGroupByGenerators( gens );
+#    yellow := Difference( Cartesian( Q, Q ),
+#        Union( List( Concatenation( green, red ), x -> Orbit( g, x, AtpOnnSquare@) ) ) 
+#    );
+#    return yellow;
+#end );
+
+#InstallMethod( AutotopismGroup, "for a loop",
+#    [ IsLoop ],
+#function( Q )
+#    local ag, gens, green, yellow, red;
+#    ag := AutomorphismGroup(Q);
+#    gens := List( GeneratorsOfGroup( ag ), u -> HomotopismRightQuasigroups( Q, u, u, u ) );
+#    green := []; red := []; yellow := Cartesian( Q, Q );
+#    while yellow <> [] do
+#        yellow := ExtendAtpGrp( Q, gens, green, yellow, red );
+#    od;
+#    return AutotopismGroupByGenerators( gens );
+#end );
+
+#InstallGlobalFunction( LeftAtpInvariant@, 
+#function( Q, a )
+#    return SortedList( List( LeftTranslation( Q, a )^(-1)*LeftSection( Q ), CycleStructurePerm ) );
+#end );
+
+#InstallGlobalFunction( RightAtpInvariant@, 
+#function( Q, a )
+#    return SortedList( List( RightTranslation( Q, a )^(-1)*RightSection( Q ), CycleStructurePerm ) );
+#end );
+
+#InstallMethod( AtpInvariant@, "for a loop",
+#    [ IsLoop ],
+#function( Q )
+#    local S, left,right;
+#    if IsCanonical( Q ) then
+#        S := Q;
+#    else
+#        S := CanonicalCopy( Q );
+#    fi;
+#    left := List( S, a -> LeftAtpInvariant@( S, a ) );
+#    right := List( S, a -> RightAtpInvariant@( S, a ) );
+#    return [ left, right ];
+#end );
+
+#InstallGlobalFunction( CheckAtpInvariant@, 
+#function( Q, S, a, b )
+#    local invQ, invS;
+#    a := Position( Elements( S ), a );
+#    b := Position( Elements( S ), b );
+#    invQ := AtpInvariant@( Q );
+#    invS := AtpInvariant@( S );
+#    return invQ[1][1] = invS[1][b] and invQ[2][1] = invS[2][a];     
+#end );

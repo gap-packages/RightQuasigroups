@@ -1,0 +1,31 @@
+CloseSeed := function( Q, A )
+    local newA, perform, currentA, x, y;
+    newA := StructuralCopy( A );
+    perform := 0; # 0 = multiply, 1 = divide on the right
+    repeat
+        currentA := StructuralCopy( newA );
+        newA := [];
+        for x in currentA do for y in currentA do 
+            if perform=0 then
+                AddSet( newA, x*y );
+            else
+                AddSet( newA, x/y );
+            fi;
+        od; od;
+        perform := (perform + 1) mod 2;
+    until Size( newA ) = Size( Q ) or Size( newA ) = Size( currentA );
+    return newA;
+end;
+
+FindAtpSeed := function( Q )
+# tries to find a small set A such that AA, (AA)/A, ((AA)/A)A, (((AA)/A)A)A, etc, gives Q
+    local A, x;
+    A := StructuralCopy( Q );
+    repeat 
+        x := First( A, y -> Size( CloseSeed( Q, Difference( A, [y] ) ) ) = Size( Q ) );
+        if x <> fail then
+            A := Difference( A, [x] );
+        fi;
+    until x = fail;
+    return A;
+end;

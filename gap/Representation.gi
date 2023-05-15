@@ -34,6 +34,14 @@ end );
 # DISPLAYING RIGHT QUASIGROUPS AND THEIR ELEMENTS
 # _____________________________________________________________________________
 
+# PROG: View is supposed to call ViewObj, which is supposed to call ViewString.
+# Similarly for Print, PrintObj and PrintString, and for Display and DisplayString (there is no DisplayObj).
+# In reality, ViewString often provides a very generic description, such as "<object>",
+# and ViewObj does not call it, prorividing something more descriptive for the main loop
+# instead. 
+# Print is supposed to give more details than View and it might be machine readable.
+# Display is supposed to be nice, human readable.
+
 # PROG: For right quasigroups, we want View, Print and Display to return results
 # dynamically, depending on what is known about them. Since String is an attribute
 # (which is calculated at first usage), while ViewString is not an attribute,
@@ -55,11 +63,13 @@ InstallOtherMethod( String, "for right quasigroup",
 
 InstallOtherMethod( String, "for right quasigroup element",
     [ IsRightQuasigroupElement ], 
-    x -> ViewString( x )
-);
+function( obj )
+    local F;
+    F := FamilyObj( obj );
+    return Concatenation( F!.names, String( UnderlyingSetElm( obj ) ) );
+end );
 
 # ViewString
-# returns the string representation of a right quasigroup or right quasigroup element
 InstallMethod( ViewString, "for right quasigroup",
     [ IsRightQuasigroup ], RQ_rank,
 function( Q )
@@ -122,58 +132,41 @@ function( Q )
     return Concatenation( "<", v, c, s, " of size ", String( Size( Q ) ), ">" );
 end );
 
-# REVISITl: delete this later 
-#InstallOtherMethod( ViewString, "for right quasigroup element",
-#    [ IsRightQuasigroupElement ], 
-#function( obj )
-#    local F, s, out;
-#    F := FamilyObj( obj );
-#    s := "";
-#    out := OutputTextString( s, true ); # will Print to s
-#    PrintTo( out, F!.names );
-#    PrintTo( out, UnderlyingSetElm( obj ) );
-#    CloseStream( out );
-#    return s;
-#end );
-
 InstallOtherMethod( ViewString, "for right quasigroup element",
     [ IsRightQuasigroupElement ], 
-function( obj )
-    local F;
-    F := FamilyObj( obj );
-    return  Concatenation( F!.names, ViewString( UnderlyingSetElm( obj ) ) );
-end );
-
-# ViewObj (calls ViewString by default, hence not implemented)
+    x -> String( x ) 
+);    
 
 # PrintString
-# REVISIT: This is supposed to be a string that results in a machine
-# readable outout that, when read, reconstructs the object. This is
-# hard to do with so many constructors. Perhaps later.
 InstallOtherMethod( PrintString, "for right quasigroup",
     [ IsRightQuasigroup ], RQ_rank, 
 function( Q )
-    return "LATER";
+    return DisplayString( Q ); # same for now
 end );
 
-InstallMethod( PrintString, "for a right quasigroup element",
+InstallOtherMethod( PrintString, "for a right quasigroup element",
     [ IsRightQuasigroupElement ],
-    x -> ViewString( x )
-);
-
+function( obj )
+    local F;
+    F := FamilyObj( obj );
+    return Concatenation( F!.names, PrintString( UnderlyingSetElm( obj ) ) );
+end );
+  
 # PrintObj
 # PROG: This calls PrintString by default, but it looks like the semigroups package
 # changed the default behavior and hence our PrintString would never be called for
 # associative right quasigroups.
 InstallOtherMethod( PrintObj, "for right quasigroup",
     [ IsRightQuasigroup ], RQ_rank, 
-function( Q )
+function( Q )    
     Print( PrintString( Q ) );
     return true;
 end );
 
 # DisplayString
-# PROG: This should be human readable with more info than ViewString
+# PROG: It appears that GAP "Display" does not often call "DisplayString" and, in addition,
+# "DisplayString" is often weird. For instance, DisplayString(0) returns "<object>/n".
+# We therefore call ViewString for elements of the underlying set.
 InstallOtherMethod( DisplayString, "for right quasigroup",
     [ IsRightQuasigroup], RQ_rank,
 function( Q )
@@ -186,7 +179,7 @@ function( Q )
     s := Concatenation( s, " on " );
     n := Minimum( Size(Q), 5 );
     for i in [1..n] do
-        s := Concatenation( s, ViewString( UnderlyingSetElm( Elements( Q )[ i ] ) ) );
+        s := Concatenation( s, String( UnderlyingSetElm( Elements( Q )[ i ] ) ) ); 
         if i<n then 
             s := Concatenation( s, ", ");
         fi;
@@ -194,16 +187,20 @@ function( Q )
     if Size( Q ) > 5 then
         s := Concatenation( s, ", ...");
     fi;
-    s := Concatenation( s, ">\n" );
+    s := Concatenation( s, ">" );
+    # PROG: A linebreak should be included per GAP specifiations but it causes problems
+    # since some GAP functions call DisplayString when they are supposed to call
+    # ViewString, for instance, EquivalenceRelationByPartition.
     return s;
 end );
 
 InstallOtherMethod( DisplayString, "for right quasigroup element",
     [ IsRightQuasigroupElement ], 
-    x -> Concatenation( ViewString( x ), "\n" )
-);
-
-# Display (calls DisplayString by default, hence not implemented)
+function( obj )
+    local F;
+    F := FamilyObj( obj );
+    return Concatenation( F!.names, DisplayString( UnderlyingSetElm( obj ) ) ); # REVISIT: This might display weird things, perhaps change later.
+end );
 
 # SetRightQuasigroupElementsName
 # SetQuasigroupElementsName

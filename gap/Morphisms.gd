@@ -233,17 +233,18 @@ DeclareOperation( "NaturalHomomorphismByNormalSubloopNC", [ IsLoop, IsLoop ] );
 #! <P/>For the convenience of the reader, functions that construct isomorphs accept a wide variety
 #! of arguments representing mappings:
 #! <List>
-#! <Item>There are two mandatory arguments <Arg>Q</Arg> and <Arg>f</Arg> and two
-#! optional arguments <Arg>isCanonical</Arg> and <Arg>constructorStyle</Arg>. Any subset of the
-#! optional arguments can be given.</Item>
-#! <Item>The argument <Arg>Q</Arg> must be a right quasigroup, quasigroup or loop. The returned 
-#! algebra will have the same underlying set as <Arg>Q</Arg>.</Item>
-#! <Item>The argument <Arg>f</Arg> can be given as a right quasigroup mapping
-#! from <Arg>Q</Arg> to <Arg>Q</Arg> or as a canonical or parent permutation of <Arg>Q</Arg> or 
-#! as a bijective canonical or parent transformation of <Arg>Q</Arg>. (See Chapter <Ref Chap="Chapter_Mappings"/>.)</Item>
+#! <Item>The argument <Arg>f</Arg> is mandatory and can be given as a bijective right quasigroup mapping,
+#! a bijective transformation or a permutation.</Item>
+#! <Item> If <Arg>f</Arg> is given as a transformation/permutation, the argument <Arg>Q</Arg> is also required,
+#! and it must be a right quasigroup, quasigroup or loop. The returned algebra will have the same
+#! underlying set as <Arg>Q</Arg>. If <Arg>f</Arg> is given as a right quasigroup mapping,
+#! its source will be used as <Arg>Q</Arg>.</Item>
+#! <Item>Any subset of the two optional arguments <Arg>isCanonical</Arg> and <Arg>constructorStyle</Arg>
+#! can be given.</Item>
 #! <Item>If the optional argument <Arg>isCanonical</Arg> is given and set to `true`, the permutation/transformation
 #! <Arg>f</Arg> is interpreted as a canonical permutation/transformation,
-#! else it is by default interpreted as parent permutation/tranformation.</Item>
+#! else it is by default interpreted as parent permutation/transformation.
+#! (See Chapter <Ref Chap="Chapter_Mappings"/>.) </Item>
 #! <Item>See Section <Ref Sect="Section_OptionalArguments"/> for the optional argument <Arg>constructorStyle</Arg>.</Item>
 #! </List>
 
@@ -253,16 +254,16 @@ DeclareOperation( "NaturalHomomorphismByNormalSubloopNC", [ IsLoop, IsLoop ] );
 # RQ_AlgebraIsomorh( category, data )
 DeclareOperation( "RQ_AlgebraIsomorph", [ IsOperation, IsList ] );
 
-#! @Arguments Q, f[, isCanonical, constructorStyle]
+#! @Arguments [Q,] f[, isCanonical, constructorStyle]
 #! @Returns the isomorph of the right quasigroup (quasigroup, loop) <Arg>Q</Arg> via <Arg>f</Arg>.
 #! See above for conventions on the arguments. 
-#! An effort is made for the isomorph to inherit properties from `Q`.
+#! An effort is made for the isomorph to inherit properties from <Arg>Q</Arg>.
 DeclareGlobalFunction( "RightQuasigroupIsomorph" );
 
-#! @Arguments Q, f[, isCanonical, constructorStyle]
+#! @Arguments [Q,] f[, isCanonical, constructorStyle]
 DeclareGlobalFunction( "QuasigroupIsomorph" );
 
-#! @Arguments Q, f[, isCanonical, constructorStyle]
+#! @Arguments [Q,] f[, isCanonical, constructorStyle]
 DeclareGlobalFunction( "LoopIsomorph" );
 
 #! @BeginExampleSession

@@ -9,25 +9,27 @@
 
 #! @Section Homotopisms, isotopism and autotopisms of right quasigroups
 
-#! <P/>A triple of mappings $f,g,h:(Q_1,\cdot)\to (Q_2,*)$ between right quasigroups is a **homotopism**
+
+#! <P/>A triple of mappings $t = (f,g,h):(Q_1,\cdot)\to (Q_2,*)$ between right quasigroups is a **homotopism**
 #! <Index Subkey="right quasigroups">homotopism</Index> if $f(x)*g(y) = h(x\cdot y)$
-#! for every $x,y\in Q_1$. If $f$, $g$, $h$ are also bijections, the triple is
+#! for every $x,y\in Q_1$. The right quasigroup $Q_1$ is the source of $t$, $Q_2$ is the range of $t$, and
+#! the mappings $f$, $g$, $h$ are the components of $t$. If $f$, $g$, $h$ are also bijections, $t$ is
 #! an **isotopism**<Index Subkey="right quasigroups">isotopism</Index>. An isotopism with
 #! $(Q_1,\cdot) = (Q_2,*)$ is an **autotopism**<Index Subkey="right quasigroups">autotopism</Index>.
 
-#! <P/>In &RightQuasigroups;, homotopisms are represented by three right quasigroup mappings,
-#! while autotopisms are represented by three parent permutations. 
-#! See Chapter <Ref Chap="Chapter_Mappings"/> for conversions between right quasigroup mappings,
-#! permutations and transformations. Many functions working with homotopisms and autotopisms
-#! accept either three arguments `f`, `g`, `h`, or a single argument `[f,g,h]`.
+#! @BeginGroup 
+#! @GroupTitle Representing homotopisms in &GAP;
 
-#! <P/>A homotopism $(f,g,h)$ of quasigroups $Q_1\to Q_2$ is determined by the values of one of the
-#! three components on $Q_1$ and by one more value of one of the other two components. For instance,
-#! if $c\in Q_1$, a homotopism $(f,g,h)$ is determined by the value $g(c)$ and by $f(x)$ for $x\in Q_1$.
-#! This fact is used in the search for isotopisms of quasigroups.
-
+#! @Arguments object
+#! @Returns `true` or `false`.
+#! @Description In &RightQuasigroups;, homotopisms are represented by a &GAP; category `IsRightQuasigroupHomotopism`
+#! that stores attributes and whose objects can be multiplied and inverted. Homotopisms keep track of the source, the range,
+#! and the three mappings. If the source is equal to the range, the mappins are stored as parent permutations, otherwise
+#! they are stored as parent transformations.
 DeclareCategory( "IsRightQuasigroupHomotopism", IsMultiplicativeElementWithInverse ); 
 # PROG: Not every homotopism is invertible but we allow it as an option.
+
+#! @EndGroup
 
 DeclareCategoryCollections( "IsRightQuasigroupHomotopism" );
 # InstallTrueMethod( IsGeneratorsOfMagmaWithInverses, IsRightQuasigroupHomotopismCollection );
@@ -39,88 +41,192 @@ DeclareRepresentation( "IsRightQuasigroupHomotopismRep",
 BindGlobal( "RQ_HomotopismFamily", NewFamily( "RQ_HomotopismFamily", IsObject, IsRightQuasigroupHomotopism ) );
 BindGlobal( "RQ_HomotopismType", NewType( RQ_HomotopismFamily, IsRightQuasigroupHomotopism and IsRightQuasigroupHomotopismRep ) );
 
-# constructor
-DeclareOperation( "HomotopismRightQuasigroups", [ IsMapping, IsMapping, IsMapping ] );
+#! @BeginGroup 
+#! @GroupTitle Attributes of homotopisms
 
+#! @Arguments t
 DeclareAttribute( "Source", IsRightQuasigroupHomotopism );
+
+#! @Arguments t
 DeclareAttribute( "Range", IsRightQuasigroupHomotopism );
+
+#! @Arguments t, i
+#! @Returns the source, range and the <Arg>i</Arg>th component of a homotopism <Arg>t</Arg>, respectively. The attributes can
+#! be also accessed directly via `t!.source`, `t!.range`, `t!.f`, `t!.g` and `t!.h`.
+#! @Description The three components are stored as parent transformations or as parent permutations (when the source equals the range).
 DeclareOperation( "ComponentOfHomotopism", [ IsRightQuasigroupHomotopism, IsInt ] );
 
-DeclareGlobalFunction( "IsHomotopismRightQuasigroups" );
-DeclareGlobalFunction( "IsHomotopismQuasigroups" );
-DeclareGlobalFunction( "IsHomotopismLoops" );
+#! @EndGroup
 
+#! @BeginGroup
+#! @GroupTitle Properties of homotopisms
+
+#! @Arguments t
 DeclareProperty( "IsInjective", IsRightQuasigroupHomotopism );
+
+#! @Arguments t
 DeclareProperty( "IsSurjective", IsRightQuasigroupHomotopism );
+
+#! @Arguments t
+#! @Description Returns `true` if (every component of) the homotopism <Arg>t</Arg> is injective, surjective and bijective, respectively.
 DeclareProperty( "IsBijective", IsRightQuasigroupHomotopism );
 
-DeclareGlobalFunction( "IsIsotopismRightQuasigroups");
+#! @EndGroup
+
+#! @BeginGroup 
+#! @GroupTitle Creating homotopisms
+
+#! @Arguments Q1, Q2, f, g, h[, isCanonical ]
+#! @Returns a homotopism from right quasigroup <Arg>Q1</Arg> to right quasigroup <Arg>Q2</Arg>
+#! according to the three mappings <Arg>f</Arg>, <Arg>g</Arg>, <Arg>h</Arg>.
+#! Each of the mappings can be a right quasigroup mappings (with source <Arg>Q1</Arg> and range <Arg>Q2</Arg>),
+#! or a transformation, or a permutation (where the latter only makes sense if <Arg>Q1</Arg> equals <Arg>Q2</Arg>).
+#! If the optional argument <Arg>isCanonical</Arg> is set to `true`, all transformations/permutations
+#! are understood as canonical (not parent) transformations/permtuations.
+#! The function performs an explicit check that the provided data give rise to a homotopism.
+#! @Description We also support other formats of the arguments, namely `HomotopismRightQuasigroups( Q, f, g, h[, isCanonical])`
+#! when `Q` is both the source and the range, and `HomotopismRightQuasigroups( f, g, h )`
+#! when the three mappings are right quasigroup mappings (which keep track of the source and the range). Note that in
+#! the last format the optional argument <Arg>isCanonical</Arg> is not supported because it is meaningless.
+DeclareOperation( "HomotopismRightQuasigroups", [ IsMapping, IsMapping, IsMapping ] ); # constructor
+
+#! <P/>Here is an example of a constructor for a homotopism:
+
+#! @BeginExampleSession
+#! gap> Q1 := ProjectionRightQuasigroup( 3 );;
+#! gap> Q2 := ProjectionRightQuasigroup( 2 );;
+#! gap> f := Transformation( [1,1,2] );; g := Transformation( [2,1,2] );; h := f;;
+#! gap> t := HomotopismRightQuasigroups( Q1, Q2, f, g, h );
+#! <homotopism of quasigroups>
+#! gap> IsRightQuasigroupHomotopism( t ); # category/filter check
+#! true
+#! gap> Display( t );
+#! <homotopism of right quasigroups
+#!   source = <associative quandle of size 3>
+#!   range = <associative quandle of size 2>
+#!   f = Transformation( [ 1, 1, 2 ] )
+#!   g = Transformation( [ 2, 1, 2 ] )
+#!   h = Transformation( [ 1, 1, 2 ] )
+#! >
+#! gap> [ Source( t ), Range( t ) ];
+#! [ <associative quandle of size 3>, <associative quandle of size 2> ]
+#! gap> ComponentOfHomotopism( t, 2 ); # the second component, g
+#! Transformation( [ 2, 1, 2 ] )
+#! @EndExampleSession
+
+#! <P/>And here is an example of a constructor for a homotopism with the same source and range.
+#! The homotopism is immediately recognized to be an autotopism since the three given
+#! mappings are permutations.
+
+#! @BeginExampleSession
+#! gap> Q := QuasigroupByFunction( [0..4], function( x,y ) return (x+y) mod 5; end );;
+#! gap> f := (1,2,3,4,5);; g := (2,4,1,3,5);; h := (3,1,4,2,5);; # +1, +2, +3
+#! gap> t := HomotopismRightQuasigroups( Q, f, g, h );
+#! <autotopism of quasigroups>
+#! gap> Display( t );
+#! <autotopism of quasigroups
+#!    source = range = <quasigroup of size 5>
+#!    f = (1,2,3,4,5)
+#!    g = (1,3,5,2,4)
+#!    h = (1,4,2,5,3)
+#! >
+#! @EndExampleSession
+
+#! @EndGroup
+
+#! @BeginGroup
+#! @GroupTitle Creating autotopisms
+
+#! @Arguments Q, f, g, h[, isCanonical ]
+#! @Returns an autotopism of a right quasigroup <Arg>Q</Arg>
+#! according to the three bijections <Arg>f</Arg>, <Arg>g</Arg>, <Arg>h</Arg>.
+#! The function differs from `HomotopismRightQuasigroups( Q, f, g, h )` in that it explicitly checks 
+#! that the provided mappings are bijective. The format of the mappings and the optional argument
+#! `isCanonical` behave as for `HomotopismRightQuasigroups`.
+DeclareGlobalFunction( "AutotopismRightQuasigroup" ); 
+
+#! @EndGroup
+
+#! @BeginGroup 
+#! @GroupTitle Operations with homotopisms
+
+#! <P/>Homotopism can be compared, multiplied (composed from left to right) and inverted (if they are bijective).
+
+#! @Arguments Q
+#! @Returns the identity autotopism on the right quasigroup <Arg>Q</Arg>. The identity autotopism can also be obtained
+#! by calling `HomotopismRightQuasigroups( Q, (), (), () )`. Finally, given any homotopism `t` with source `Q`,
+#! the method `One( t )` returns the identity autotopism on `Q`.
+DeclareOperation( "IdentityAutotopism", [ IsRightQuasigroup ] );
+
+#! @BeginExampleSession
+#! gap> Q := QuasigroupByFunction( [0..4], function( x, y ) return (x+y) mod 5; end );;
+#! gap> f := RightTranslation( Q, 1 );; g := LeftTranslation( Q, 2 );; h := RightTranslation( Q, 3 );;
+#! gap> t := HomotopismRightQuasigroups( Q, f, g, h );;
+#! gap> Display( t*t );
+#! <autotopism of quasigroups
+#!    source = range = <quasigroup of size 5>
+#!    f = (1,3,5,2,4)
+#!    g = (1,5,4,3,2)
+#!    h = (1,2,3,4,5)
+#! >
+#! gap> Display( t^-1 );
+#! <autotopism of quasigroups
+#!    source = range = <quasigroup of size 5>
+#!    f = (1,5,4,3,2)
+#!    g = (1,4,2,5,3)
+#!    h = (1,3,5,2,4)
+#! >
+#! gap> One( t );
+#! <identity autotopism>
+#! gap> Display( last );
+#! <identity autotopism on <quasigroup of size 5>>
+#! @EndExampleSession
+
+#! @EndGroup
+
+#! @BeginGroup 
+#! @GroupTitle Testing homotopism data
+
+#! @Arguments Q1, Q2, f, g, h[, isCanonical]
+DeclareGlobalFunction( "IsHomotopismRightQuasigroups" );
+
+#! @Arguments Q1, Q2, f, g, h[, isCanonical]
+DeclareGlobalFunction( "IsHomotopismQuasigroups" );
+
+#! @Arguments Q1, Q2, f, g, h[, isCanonical]
+#! @Returns `true` if the data provided in the arguments gives rise to a homotopism of right quasigroups (quasigroups, loops).
+#! Accepts the same type of arguments as the constructor `HomotopismRightQuasigroups`.
+DeclareGlobalFunction( "IsHomotopismLoops" );
+
+#! @BeginGroup 
+#! @GroupTitle Testing isotopism data
+
+#! @Arguments Q1, Q2, f, g, h[, isCanonical]
+DeclareGlobalFunction( "IsIsotopismRightQuasigroups" );
+
+#! @Arguments Q1, Q2, f, g, h[, isCanonical]
 DeclareGlobalFunction( "IsIsotopismQuasigroups" );
+
+#! @Arguments Q1, Q2, f, g, h[, isCanonical]
+#! @Returns `true` if the data provided by in the arguments gives rise to an isotopism of right quasigroups (quasigroups, loops).
+#! Accepts the same type of arguments as the constructor `HomotopismRightQuasigroups`.
 DeclareGlobalFunction( "IsIsotopismLoops" );
 
-DeclareGlobalFunction( "IsAutotopismRightQuasigroups");
+#! @EndGroup
+
+#! @BeginGroup 
+#! @GroupTitle Testing autotopism data
+
+#! @Arguments Q, f, g, h[, isCanonical]
+DeclareGlobalFunction( "IsAutotopismRightQuasigroups" );
+
+#! @Arguments Q, f, g, h[, isCanonical]
 DeclareGlobalFunction( "IsAutotopismQuasigroups" );
+
+#! @Arguments Q, f, g, h[, isCanonical]
+#! @Returns `true` if the data provided by in the arguments gives rise to an isotopism of right quasigroups (quasigroups, loops).
+#! Accepts the same type of arguments as the constructor `HomotopismRightQuasigroups` with the same source and range.
 DeclareGlobalFunction( "IsAutotopismLoops" );
-
-#! @BeginGroup 
-#! @GroupTitle IsRightQuasigroupHomotopism, IsQuasigroupHomotopism, IsLoopHomotopism
-
-# RQ_IsAlgebraHomotopism( category, f, g, h )
-DeclareOperation( "RQ_IsAlgebraHomotopism", [ IsOperation, IsMapping, IsMapping, IsMapping ] );
-
-#! @Arguments f, g, h
-#! @Returns `true` if the three right quasigroup (quasigroup, loop) mappings <Arg>f</Arg>, <Arg>g</Arg>, <Arg>h</Arg>
-#! form a homotopism from `Q1 = Source( f ) = Source( g ) = Source( h )` to
-#! `Q2 = Range( f ) = Range( g ) = Range( h )`, else returns `false`.
-#! @Description The function also accepts a single argument `[f,g,h]`.
-#DeclareOperation( "IsRightQuasigroupHomotopism", [ IsMapping, IsMapping, IsMapping ] );
-
-#! @Arguments f, g, h
-#DeclareOperation( "IsQuasigroupHomotopism", [ IsMapping, IsMapping, IsMapping ] );
-
-#! @Arguments f, g, h
-#DeclareOperation( "IsLoopHomotopism", [ IsMapping, IsMapping, IsMapping ] );
-
-#! @EndGroup
-
-#! @BeginGroup 
-#! @GroupTitle IsRightQuasigroupIsotopism, IsQuasigroupIsotopism, IsLoopIsotopism
-
-# RQ_IsAlgebraIsotopism( category, f, g, h )
-#DeclareOperation( "RQ_IsAlgebraIsotopism", [ IsOperation, IsMapping, IsMapping, IsMapping ] );
-
-#! @Arguments f, g, h
-#! @Returns `true` if the three right quasigroup (quasigroup, loop) mappings <Arg>f</Arg>, <Arg>g</Arg>, <Arg>h</Arg>
-#! form an isotopism from `Q1 = Source( f ) = Source( g ) = Source( h )` onto
-#! `Q2 = Range( f ) = Range( g ) = Range( h )`, else returns `false`.
-#! @Description The function also accepts a single argument `[f,g,h]`.
-#DeclareOperation( "IsRightQuasigroupIsotopism", [ IsMapping, IsMapping, IsMapping ] );
-
-#! @Arguments f, g, h
-#DeclareOperation( "IsQuasigroupIsotopism", [ IsMapping, IsMapping, IsMapping ] );
-
-#! @Arguments f, g, h
-#DeclareOperation( "IsLoopIsotopism", [ IsMapping, IsMapping, IsMapping ] );
-
-#! @EndGroup
-
-#! @BeginGroup 
-#! @GroupTitle IsRightQuasigroupAutotopism, IsQuasigroupAutotopism, IsLoopAutotopism
-
-# RQ_IsAlgebraHomotopism( category, f, g, h )
-#DeclareOperation( "RQ_IsAlgebraAutotopism", [ IsOperation, IsMapping, IsMapping, IsMapping ] );
-
-#! @Arguments f, g, h
-#! @Returns `true` if the three right quasigroup (quasigroup, loop) mappings <Arg>f</Arg>, <Arg>g</Arg>, <Arg>h</Arg>
-#! form an autotopism of `Q1 = Source( f ) = Source( g ) = Source( h ) = Range( g ) = Range( h )`, else returns `false`.
-#! @Description The function also accepts a single argument `[f,g,h]`.
-#DeclareOperation( "IsRightQuasigroupAutotopism", [ IsMapping, IsMapping, IsMapping ] );
-
-#! @Arguments f, g, h
-#DeclareOperation( "IsQuasigroupAutotopism", [ IsMapping, IsMapping, IsMapping ] );
-
-#! @Arguments f, g, h
-#DeclareOperation( "IsLoopAutotopism", [ IsMapping, IsMapping, IsMapping ] );
 
 #! @EndGroup
 
@@ -148,24 +254,26 @@ DeclareOperation( "RQ_IsAlgebraHomotopism", [ IsOperation, IsMapping, IsMapping,
 #! <Item>The functions are named according to the type of algebra they return, not
 #! according to the type of algebra they require as input. For instance, `LoopTwist` returns a loop
 #! but it accepts a quasigroup (or loop).</Item>
-#! <Item>There are four mandatory arguments, given as <Arg>Q</Arg>, <Arg>f</Arg>, <Arg>g</Arg>, <Arg>h</Arg>
-#! or as <Arg>Q</Arg>, `[`<Arg>f</Arg>`,`<Arg>g</Arg>`,`<Arg>h</Arg>`]`.</Item>
-#! <Item>There are two optional arguments <Arg>isCanonical</Arg> and <Arg>constructorStyle</Arg>. 
-#! Any subset of the optional arguments can be given.</Item>
-#! <Item>The argument <Arg>Q</Arg> must be a right quasigroup or quasigroup. The returned 
-#! algebra will have the same underlying set as <Arg>Q</Arg>.</Item>
-#! <Item>Each of the arguments <Arg>f</Arg>, <Arg>g</Arg>, <Arg>h</Arg> can be given as a right quasigroup mapping
-#! from <Arg>Q</Arg> to <Arg>Q</Arg> or as a canonical or parent permutation of <Arg>Q</Arg> or 
-#! as a canonical or parent transformation of <Arg>Q</Arg>. (See Chapter <Ref Chap="Chapter_Mappings"/>.)
+#! <Item>The arguments <Arg>f</Arg>, <Arg>g</Arg>, <Arg>h</Arg> are mandatory and each can be given as
+#! a right quasigroup mapping, a transformation or a permutation.
 #! The arguments <Arg>f</Arg> and <Arg>h</Arg> must always give rise to bijections. If a quasigroup is supposed
-#! to be returned, then also <Arg>g</Arg> must give rise to a bijection.
-#! Finally, if a loop is supposed to be returned then
+#! to be returned, then also <Arg>g</Arg> must give rise to a bijection. Finally, if a loop is supposed to be returned then
 #! $g^{-1}(f(x)\backslash h^{-1}(x))$ must be equal to $f^{-1}(h^{-1}(x)/g(x))$ and independent of $x$.</Item>
-#! <Item>If the optional argument <Arg>isCanonical</Arg> is given and set to `true`, all permutations/transformations
-#! from among <Arg>f</Arg>, <Arg>g</Arg>, <Arg>h</Arg> are interpreted as canonical permutations/transformations,
-#! else they are by default interpreted as parent permutations/transformations.</Item>
+#! <Item> If <Arg>f</Arg> is given as a transformation/permutation, the argument <Arg>Q</Arg> is also required,
+#! and it must be a right quasigroup, quasigroup or loop. The returned algebra will have the same
+#! underlying set as <Arg>Q</Arg>. If <Arg>f</Arg> is given as a right quasigroup mapping,
+#! its source will be used as <Arg>Q</Arg>.</Item>
+#! <Item>Any subset of the two optional arguments <Arg>isCanonical</Arg> and <Arg>constructorStyle</Arg>
+#! can be given.</Item>
+#! <Item>If the optional argument <Arg>isCanonical</Arg> is given and set to `true`, the permutation/transformation
+#! <Arg>f</Arg> is interpreted as a canonical permutation/transformation,
+#! else it is by default interpreted as parent permutation/transformation.
+#! (See Chapter <Ref Chap="Chapter_Mappings"/>.) </Item>
 #! <Item>See Section <Ref Sect="Section_OptionalArguments"/> for the optional argument <Arg>constructorStyle</Arg>.</Item>
 #! </List>
+
+#! @BeginGroup
+#! @GroupTitle RightQuasigroupTwist, QuasigroupTwist and LoopTwist 
 
 # RQ_AlgebraTwistByParentTransformations( category, Q, f, g, h, style )
 # Auxiliary. This is the main constructor here.
@@ -177,21 +285,15 @@ DeclareOperation( "RQ_AlgebraTwistByParentTransformations",
 # Auxiliary. Processes a wide range of arguments and calls RQ_AlgebraTwistByParentTransformations.
 DeclareOperation( "RQ_AlgebraTwist", [ IsOperation, IsList ] );
 
-#! @Arguments Q, f, g, h[, isCanonical, constructorStyle]
-#! @Returns the twist of the right quasigroup <Arg>Q</Arg> via <Arg>f</Arg>, <Arg>g</Arg>, <Arg>h</Arg>,
-#! that is, the right quasigroup on the underlying set of <Arg>Q</Arg> with multiplication $x*y = h(f(x)g(y))$.
-#! See above for conventions on the arguments.
+#! @Arguments [Q,] f, g, h[, isCanonical, constructorStyle]
 DeclareGlobalFunction( "RightQuasigroupTwist" );
 
-#! @Arguments Q, f, g, h[, isCanonical, constructorStyle]
-#! @Returns the twist of the quasigroup <Arg>Q</Arg> via <Arg>f</Arg>, <Arg>g</Arg>, <Arg>h</Arg>,
-#! that is, the quasigroup on the underlying set of <Arg>Q</Arg> with multiplication $x*y = h(f(x)g(y))$.
-#! See above for conventions on the arguments.
+#! @Arguments [Q,] f, g, h[, isCanonical, constructorStyle]
 DeclareGlobalFunction( "QuasigroupTwist" );
 
-#! @Arguments Q, f, g, h[, isCanonical, constructorStyle]
-#! @Returns the twist of the quasigroup <Arg>Q</Arg> via <Arg>f</Arg>, <Arg>g</Arg>, <Arg>h</Arg>,
-#! that is, the loop on the underlying set of <Arg>Q</Arg> with multiplication $x*y = h(f(x)g(y))$.
+#! @Arguments [Q,] f, g, h[, isCanonical, constructorStyle]
+#! @Returns the twist of the right quasigroup <Arg>Q</Arg> via <Arg>f</Arg>, <Arg>g</Arg>, <Arg>h</Arg>,
+#! that is, the right quasigroup (quasigroup, loop) on the underlying set of <Arg>Q</Arg> with multiplication $x*y = h(f(x)g(y))$.
 #! See above for conventions on the arguments.
 DeclareGlobalFunction( "LoopTwist" );
 
@@ -200,19 +302,21 @@ DeclareGlobalFunction( "LoopTwist" );
 #! gap> f := (1,2,3);; g := Transformation( [3,3,3] );; h := MappingByFunction( Q, Q, x->x^-1 );; # note various formats
 #! gap> T := RightQuasigroupTwist( Q, f, g, h ); # f and h must be bijective 
 #! <right quasigroup of size 12>
-#! gap> QuasigroupTwist( Q, [ f, (1,12), h ] ); # g must be bijective for quasigroups
+#! gap> QuasigroupTwist( Q,  f, (1,12), h ); # g must be bijective for quasigroups
 #! <quasigroup of size 12>
 #! gap> f := RightTranslation( Q, Q.2 )^-1;; g := LeftTranslation( Q, Q.3 )^-1;;
 #! gap> LoopTwist( Q, f, g, (), ConstructorStyle( true, true ) ); # principal loop isotope
 #! <loop of size 12>
 #! @EndExampleSession
 
+#! @EndGroup
+
 # ISOTOPES OF RIGHT QUASIGROUPS
 # _____________________________________________________________________________
 
 #! @Section Isotopes of right quasigroups
 
-#! <P/>If $f,g,h:(Q,\cdot)\to (Q,*)$ is an isotopism, then $x*y = h(f^{-1}(x)\cdot g^{-1}(y))$ for
+#! <P/>If $t=(f,g,h):(Q,\cdot)\to (Q,*)$ is an isotopism, then $x*y = h(f^{-1}(x)\cdot g^{-1}(y))$ for
 #! all $x,y\in Q$, and $(Q,*)$ is called an **isotope**<Index>isotope</Index> of $(Q,\cdot)$ via $f$, $g$, $h$.
 #! (Note that isotopes are special cases of twists, as introduced in Section <Ref Sect="Section_Twists"/>.)
 #! The isotope $(Q,*)$ is a (right) quasigroup iff $(Q,\cdot)$ is a (right) quasigroup, but an isotope
@@ -225,24 +329,24 @@ DeclareGlobalFunction( "LoopTwist" );
 # auxiliary function (category, data ), data = [ Q, f, g, h, [, isCanonical, constructorStyle ] ]
 DeclareOperation( "RQ_AlgebraIsotope", [ IsOperation, IsList ] );
 
-#! @Arguments Q, f, g, h[, isCanonical, constructorStyle ]
+#! @Arguments [Q,] f, g, h[, isCanonical, constructorStyle ]
 #! @Returns the isotope of the right quasigroup <Arg>Q</Arg> via isotopism <Arg>f</Arg>, <Arg>g</Arg>, <Arg>h</Arg>,
 #! that is, the right quasigroup on the underlying set of <Arg>Q</Arg> with multiplication $x*y = h(f^{-1}(x)g^{-1}(y))$.
 #! See Section <Ref Sect="Section_Twists"/> for conventions on the arguments.
-#! @Description Note that the function `IsotopicCopyByPerms` (in analogy to `IsotopicCopyByPerm`)
-#! is not provided since the category of the resulting algebra is not necessarily preserved.
 DeclareGlobalFunction( "RightQuasigroupIsotope" );
 
-#! @Arguments Q, f, g, h[, isCanonical, constructorStyle ]
+#! @Arguments [Q,] f, g, h[, isCanonical, constructorStyle ]
 #! @Returns the isotope of the quasigroup <Arg>Q</Arg> via isotopism <Arg>f</Arg>, <Arg>g</Arg>, <Arg>h</Arg>,
 #! that is, the quasigroup on the underlying set of <Arg>Q</Arg> with multiplication $x*y = h(f^{-1}(x)g^{-1}(y))$.
 #! See Section <Ref Sect="Section_Twists"/> for conventions on the arguments.
 DeclareGlobalFunction( "QuasigroupIsotope" );
 
-#! @Arguments Q, f, g, h[, isCanonical, constructorStyle ]
+#! @Arguments [Q,] f, g, h[, isCanonical, constructorStyle ]
 #! @Returns the loop isotope of the quasigroup <Arg>Q</Arg> via isotopism <Arg>f</Arg>, <Arg>g</Arg>, <Arg>h</Arg>,
 #! that is, the loop on the underlying set of <Arg>Q</Arg> with multiplication $x*y = h(f^{-1}(x)g^{-1}(y))$.
 #! See Section <Ref Sect="Section_Twists"/> for conventions on the arguments.
+#! @Description Warning: Unless the constructor style specifies that arguments should be checked, they will
+#! not be checked and the returned algebra might not have an identity element despite being declared a loop.
 DeclareGlobalFunction( "LoopIsotope" );
 
 #! @BeginExampleSession
@@ -307,7 +411,7 @@ DeclareOperation( "PrincipalLoopIsotope", [ IsQuasigroup, IsQuasigroupElement, I
 #! (and `g` is bijective for quasigroups).
 #! The multiplication is then defined on `G` by `(x^f+u)+(y^g+v)` in the additive case and by
 #! `(x^f*u)*(y^g*v)` otherwise.</Item>
-#! <Item>The three variations `(G,f,u,v,g)`, `(G,u,f,g,v)` and `(G,u,f,v,g)` are also also supported.</Item>
+#! <Item>The three variations `(G,f,u,v,g)`, `(G,u,f,g,v)` and `(G,u,f,v,g)` are also supported.</Item>
 #! </List>
 
 # RQ_IsAffineAlgebraArithmeticForm( category, data, reportErrors )
@@ -402,10 +506,82 @@ DeclareGlobalFunction( "AffineQuasigroup" );
 
 #! @Section Right quasigroups up to isotopism
 
-# RQ_ArePossiblyIsotopicLoops( Q1, Q2 )
-# Returns true if Q1, Q2 are possibly isotopic loops.
-# Rhe function checks a few invariants of loops under isotopisms.
-DeclareOperation( "RQ_ArePossiblyIsotopicLoops", [ IsLoop, IsLoop ] );
+#! <P/>We support four methods for calculating isotopisms between loops, quasigroups and right quasigroups $Q_1$, $Q_2$:
+#! <List>
+#! <Item> "via perfect matchings with invariants" (default method for right quasigroups):
+#! considers all possible $f$ that preserve certain invariants of right quasigroups, then completes the isotopism
+#! by finding a perfect matching in a bipartite graph,</Item>
+#! <Item> "via perfect matchings with automorphism group": considers all possible $f$ modulo the automorphism group of $Q1$,
+#! then employs perfect matchings as above,</Item>
+#! <Item> "via domain extension" (for quasigroups and loops only, default method for quasigroups and loops):
+#! attempts to find an isotopism $(f,g,h)$ by iteratively enlarging the domains of $f$, $g$ and $h$,</Item>
+#! <Item> "via principal loop isotopes" (for loops only): constructs principal loop isotopes of $Q1$
+#! one by one and checks if any one of them is isomrphic to $Q2$.</Item>
+#! </List>
+
+#! @Arguments Q
+#! @Returns a certain invariant $m$ of the right quasigroup <Arg>Q</Arg> that is preserved by isotopisms.
+#! (Strictly speaking, only the sorted version of $m$ is preserved under isotopisms, see `AreEqualIsotopismDscriminators`.)
+#! In more detail, $m$ is the list $(m_x:x\in Q)$, $m_x$ is the sorted list $(m_{x,y}:y\in Q)$, and $m_{x,y}$
+#! is the number of occurrences of $y$ in the row indexed by $x$.
+DeclareAttribute( "IsotopismDiscriminator", IsRightQuasigroup );
+
+#! @BeginExampleSession
+#! gap> Q := RightQuasigroupByCayleyTable([[1,1,1],[2,3,2],[3,2,3]]);;
+#! gap> Display(IsotopismDiscriminator( Q ) );
+#! [ [  0,  0,  3 ],
+#!   [  0,  1,  2 ],
+#!   [  0,  1,  2 ] ]
+#! @EndExampleSession
+
+#! @Arguments D1, D2
+#! @Returns `true` when the two isotopism discriminators <Arg>D1</Arg>, <Arg>D2</Arg> calculated via
+#! `IsotopismDiscriminator` are the same. When `false` is returned, it is guaranteed that
+#! the corresponding right quasigroups are not isotopic.
+DeclareOperation( "AreEqualIsotopismDiscriminators", [ IsList, IsList ] );
+
+#! @Arguments Q1, Q2
+#! @Returns `false` if the method determined that <Arg>Q1</Arg>, <Arg>Q2</Arg> are not isotopic right 
+#! quasigroups, based on their isotopism discrininators (and some additional invariants in the case of loops).
+#! When `true` is returned, the two right quasigroups might be isotopic.
+DeclareOperation( "ArePossiblyIsotopicRightQuasigroups", [ IsRightQuasigroup, IsRightQuasigroup ] );
+
+# RQ_PerfectBipartiteMatching( A )
+# returns a perfect matching in the bipartite graph determined by the square matrix A
+# A[i,j]=1 iff there is an edge between U[i] and V[j], where U,V are the two parts (of equal size).
+# If no perfect matching exists, fail is returned.
+# This is the standard Hall's algorithm.
+DeclareOperation( "RQ_PerfectBipartiteMatching", [ IsMatrix ] );
+
+# What follows are some general methods for selecting from blocks B1, ..., Bn of size b1, ..., bn
+# in all possible ways and in all possible bijective ways.
+# The "selector" (odometer-like) starts at [1,...,1] and goes all the way to [b1,...,bn] 
+
+# RQ_Selector_Increment( selector, blocks )
+# Increments and returns the selector. If it is initialized as [0,...0], the next state will be [1,...1].
+# If it overflows, `fail` is returned.
+DeclareOperation( "RQ_Selector_Increment", [ IsList, IsList ] ); 
+
+# RQ_Selector_FirstConflictWithBijectivity( selector, blocks )
+# Returns the first position p in the selector [x1,...,xn] such that
+# blocks[1][x1], ..., blocks[p][xp] has a repetition. If there is no repetition, returns fail.
+DeclareOperation( "RQ_Selector_FirstConflictWithBijectivity", [ IsList, IsList ] );
+
+# RQ_Selector_NextBijective( selector, blocks )
+# Returns the first state after <selector> that results ina  bijective selection from the blocks
+DeclareOperation( "RQ_Selector_NextBijective", [ IsList, IsList ] );
+
+# this is the end of the selector methods
+
+# RQ_IsotopismRighQuasigroupsPM( Q1, Q2, method ) 
+# returns an isotopism (f,g,h): Q1 --> Q2
+# In the method "via perfect matchings with invariants", it first caclulates blocks of Q1 that f must preserve,
+# while in he method "via perfect matchings with automorphism group", it first calculates the automorphism group of Q2.
+# It tries all choices of f (preserving the blocks, or modulo Aut(Q2)), then all choices of g[1],
+# completes h, and then completes g by finding a perfect matching, if possible.
+DeclareOperation( "RQ_IsotopismRightQuasigroupsPM", [ IsRightQuasigroup, IsRightQuasigroup, IsString ] );  
+
+# now for some auxiliary functions for domain extension of isotopisms
 
 # RQ_ExtendIsotopismByClosingSource( f, g, h, tables1, tables2 )
 # extends partial isotopism [f,g,h]
@@ -417,137 +593,145 @@ DeclareGlobalFunction( "RQ_ExtendIsotopismByClosingSource" );
 # RQ_ExtendIsotopism( f, g, h, tables1, tables2, gens1 )
 DeclareGlobalFunction( "RQ_ExtendIsotopism" );
 
-# RQ_IsotopismAlgebras( category, Q1, Q2, viaPrincipalLoopIsotopes )
-# returns an isotopism from <Q1> onto <Q2>, or fail.
-DeclareOperation( "RQ_IsotopismAlgebras", [ IsOperation, IsRightQuasigroup, IsRightQuasigroup, IsBool ] );
+# RQ_IsotopismQuasigroupsDE( Q1, Q2 )
+# this is the isotopism search "via domain extension"
+DeclareOperation( "RQ_IsotopismQuasigroupsDE", [ IsRightQuasigroup, IsRightQuasigroup ] );
 
-#! @Arguments Q1, Q2
+# RQ_IsotopismLoopsPLI
+# this is the isotopism search "via principal loop isotopes"
+DeclareOperation( "RQ_IsotopismLoopsPLI", [ IsLoop, IsLoop ] );
+
+#! @Arguments Q1, Q2[, method]
 #! @Returns an isotopism from the right quasigroup <Arg>Q1</Arg> onto
 #! the right quasigroup <Arg>Q2</Arg>, if it exists, else returns `fail`.
-#! @Description NOTE: THERE IS NO METHOD FOR RIGHT QUASIGROUPS YET.
-DeclareOperation( "IsotopismRightQuasigroups", [ IsRightQuasigroup, IsRightQuasigroup ] );
-
-#! @Arguments Q1, Q2
-#! @Returns an isotopism from the quasigroup <Arg>Q1</Arg> onto
-#! the quasigroup <Arg>Q2</Arg>, if it exists, else returns `fail`.
-DeclareOperation( "IsotopismQuasigroups", [ IsQuasigroup, IsQuasigroup ] );
+#! The optional argument <Arg>method</Arg> must be set to one of the values
+#! "via perfect matchings with invariants", "via perfect matchings with automorphism group",
+#! "via domain extension" or "via principal loop isotopes". If no method is provided by the user,
+#! "via "via domain extension" for loops and quasigroups, while
+#!  "via perfect matchings with invariants" for right quasigroups.
+DeclareOperation( "IsotopismRightQuasigroups", [ IsRightQuasigroup, IsRightQuasigroup, IsString ] );
 
 #! @BeginExampleSession
-#! gap> Q1 := RandomQuasigroup( 32 );;
-#! gap> G := SymmetricGroup( 32 );;
-#! gap> Q2 := QuasigroupIsotope( Q1, Random( G ), Random( G ), Random( G ) );;
-#! gap> IsotopismQuasigroups( Q1, Q2 );
-#! [ MappingByFunction( <quasigroup of size 32>, <quasigroup of size 32>, function( x ) ... end ),
-#!   MappingByFunction( <quasigroup of size 32>, <quasigroup of size 32>, function( x ) ... end ),
-#!   MappingByFunction( <quasigroup of size 32>, <quasigroup of size 32>, function( x ) ... end ) ]
-#! gap> IsQuasigroupIsotopism( last );
+#! gap> Q1 := RandomRightQuasigroup( 30 );;
+#! gap> Q2 := RightQuasigroupIsotope( Q1, (1,2,3), (10,20,30), (4,30) );;
+#! gap> t := IsotopismRightQuasigroups( Q1, Q2 );
+#! <isotopism of right quasigroups>
+#! gap> Q3 := RightQuasigroupIsotope( Q1, t!.f, t!.g, t!.h );;
+#! gap> MultiplicationTable( Q2 ) = MultiplicationTable( Q3 );
 #! true
 #! @EndExampleSession
 
-#! @Arguments Q1, Q2[, viaPrincipalLoopIsotopes]
-#! @Returns an isotopism from the loop <Arg>Q1</Arg> onto the loop <Arg>Q2</Arg>,
-#! if it exists, else returns `fail`.
-#! @Description If the optional argument <Arg>viaPrincipalLoopIsotopes</Arg> is set to `true`, the method
-#! constructs all principal loop isotopes `Q3` of <Arg>Q1</Arg>, one by one, and checks
-#! for an isomorphism from `Q3` to <Arg>Q2</Arg>.
-DeclareOperation( "IsotopismLoops", [ IsLoop, IsLoop ] );
+#! @Arguments Q1, Q2[, method]
+#! @Returns an isotopism from the quasigroup <Arg>Q1</Arg> onto
+#! the quasigroup <Arg>Q2</Arg>, if it exists, else returns `fail`.
+#! The only difference from `IsotopismRightQuasigroups` is that the arguments <Arg>Q1</Arg>, <Arg>Q2</Arg>
+#! must be quasigroups.
+DeclareOperation( "IsotopismQuasigroups", [ IsQuasigroup, IsQuasigroup, IsString ] );
+
+#! @Arguments Q1, Q2[, method]
+#! @Returns an isotopism from the loop <Arg>Q1</Arg> onto
+#! the loopp <Arg>Q2</Arg>, if it exists, else returns `fail`.
+#! The only difference from `IsotopismRightQuasigroups` is that the arguments <Arg>Q1</Arg>, <Arg>Q2</Arg>
+#! must be loops.
+DeclareOperation( "IsotopismLoops", [ IsLoop, IsLoop, IsString ] );
 
 #! @BeginExampleSession
-#! gap> t := [ [1,2,3,4,5,6], [2,1,6,5,3,4], [3,4,5,2,6,1], [4,6,1,3,2,5], [5,3,4,6,1,2], [6,5,2,1,4,3] ];;
-#! gap> Q1 := LoopByCayleyTable( t );;
+#! gap> Q1 := MoufangLoop( 32, 10 );
 #! gap> Q2 := LoopIsomorph( Q1, (3,4) );;
-#! gap> Q3 := PrincipalLoopIsotope( Q2, Q2.5, Q2.6 );; # a loop isotopic to Q1
-#! gap> IsotopismLoops( Q1, Q3 ); # add optional argument `true` to use a method via principal loop isotopes
-#! [ MappingByFunction( <loop of size 6>, <loop of size 6>, function( x ) ... end ),
-#!   MappingByFunction( <loop of size 6>, <loop of size 6>, function( x ) ... end ),
-#!   MappingByFunction( <loop of size 6>, <loop of size 6>, function( x ) ... end ) ]
+#! gap> Q3 := PrincipalLoopIsotope( Q2, Q2.10, Q2.20 );; # a loop isotopic to Q1
+#! gap> IsotopismLoops( Q1, Q3 ); 
+#! <isotopism of loops>
 #! @EndExampleSession
 
 #! @BeginGroup
 #! @GroupTitle Right quasigroups up to isotopism
 
-# REVISIT: Implement methods for right quasigrops and quasigroups
-
-# auxiliary function ( category, ls, viaPrincipalLoopIsotopes )
+# RQ_AlgebrasUpToIsotopism( category, ls, viaPrincipalLoopIsotopes )
 # given a list <ls> of algebras of type <category>, returns a sublist of <ls> with algebras up to isotopism
-DeclareOperation( "RQ_AlgebrasUpToIsotopism", [ IsOperation, IsList, IsBool ] );
+DeclareOperation( "RQ_AlgebrasUpToIsotopism", [ IsOperation, IsList, IsString ] );
 
-#! @Arguments ls
+#! @Arguments ls[, method]
 #! @Returns a sublist of `ls` consisting of all right quasigroups (quasigroups, loops) in `ls` up to isotopism.
 #! In case of loops, if the optional argument <Arg>viaPrincipalLoopIsotopes</Arg> is set to `true`, uses
 #! a method based on principal loop isotopes.
-#! @Description NOTE: THERE IS NO METHOD FOR RIGHT QUASIGROUPS YET.
-DeclareOperation( "RightQuasigroupsUpToIsotopism", [ IsList ] );
+DeclareOperation( "RightQuasigroupsUpToIsotopism", [ IsList, IsString ] );
 
-#! @Arguments ls
-DeclareOperation( "QuasigroupsUpToIsotopism", [ IsList ] );
+#! @Arguments ls[, method]
+DeclareOperation( "QuasigroupsUpToIsotopism", [ IsList, IsString ] );
 
-#! @Arguments ls[, viaPrincipalLoopIsotopes]
-DeclareOperation( "LoopsUpToIsotopism", [ IsList ] );
+#! @Arguments ls[, method]
+DeclareOperation( "LoopsUpToIsotopism", [ IsList, IsString ] );
 
 #! @EndGroup
-
-# REVISIT: Add IsIsotopicToGroup function?
 
 # AUTOTOPISM GROUPS OF RIGHT QUASIGROUPS
 # _____________________________________________________________________________
 
 #! @Section Autotopism groups of right quasigroups.
 
-#! <P/>NOT IMPLEMENTED YET.
-
-#! @BeginExampleSession
-#! gap> q:=LoopByCayleyTable([[1,2,3,4,5 ],[2,1,4,5,3],[3,4,5,1,2],[4,5,2,3,1],[5,3,1,2,4]]);
-#! <loop of size 5>
-#! gap> f:=[(1,5,4), (2,4,3), (1,5,4)];
-#! [ (1,5,4), (2,4,3), (1,5,4) ]
-#! gap> atp:=AutotopismObject@RightQuasigroups(q,f[1],f[2],f[3]);
-#! IsRightQuasigroupAutotopismObject((1,5,4), (2,4,3), (1,5,4))
-#! gap> AmbientRightQuasigroup(atp);
-#! <loop of size 5>
-#! gap> One(atp);
-#! IsRightQuasigroupAutotopismObject((), (), ())
-#! gap> atp^-4;
-#! IsRightQuasigroupAutotopismObject((1,4,5), (2,3,4), (1,4,5))
-#! @EndExampleSession
-
-#! @Arguments Q,f,g
-DeclareOperation( "AutotopismFromPrincipalLoopIsotope", [ IsLoop, IsLoopElement, IsLoopElement ] );
-
-#! @Arguments i,atp
-DeclareOperation( "AtpOn3nElms@", [ IsPosInt, IsRightQuasigroupHomotopism ] );
-
-#! @Arguments p,atp
-DeclareOperation( "AtpOnnSquare@", [ IsList, IsRightQuasigroupHomotopism ] );
-
-#! @Arguments gens
-DeclareOperation( "AutotopismGroupByGenerators", [ IsList and IsRightQuasigroupHomotopismCollection ] );
-
-#! @Arguments Q, gens, green, yellow, red
-DeclareGlobalFunction( "ExtendAtpGrp" );
+# RQ_HtpOnPairs( ls, t )
+# applies the first two components of the right quasigroup homotopism t to the list ls of length 2
+DeclareOperation( "RQ_HtpOnPairs", [ IsList, IsRightQuasigroupHomotopism ] );
 
 #! @Arguments Q
+#! @Returns the autotopism group of a loop <Arg>Q</Arg>.
+#! Note: There is no method yet for right quasigroups and quasigroups.
 DeclareAttribute( "AutotopismGroup", IsLoop );
 
-#! @BeginExampleSession
-#! gap> Q := RightBolLoop(8,1);
-#! <right Bol loop 8/1>
-#! gap> AutotopismFromPrincipalLoopIsotope( Q, Q.4, Q.3 );
-#! IsRightQuasigroupAutotopismObject((1,3)(2,4)(5,7)(6,8), (1,4)(2,3)(5,8), (1,2)(3,4)(5,6)(7,8))
-#! gap> AutotopismGroup( Q );
-#! <autotopism group with 5 generators>
-#! gap> Size( last );
-#! 128
-#! @EndExampleSession
+# PROBABLY DELETE THE FOLLOWING
 
-#! @Arguments Q
-DeclareGlobalFunction( "LeftAtpInvariant@" );
+# @BeginExampleSession
+# gap> q:=LoopByCayleyTable([[1,2,3,4,5 ],[2,1,4,5,3],[3,4,5,1,2],[4,5,2,3,1],[5,3,1,2,4]]);
+# <loop of size 5>
+# gap> f:=[(1,5,4), (2,4,3), (1,5,4)];
+# [ (1,5,4), (2,4,3), (1,5,4) ]
+# gap> atp:=AutotopismObject@RightQuasigroups(q,f[1],f[2],f[3]);
+# IsRightQuasigroupAutotopismObject((1,5,4), (2,4,3), (1,5,4))
+# gap> AmbientRightQuasigroup(atp);
+# <loop of size 5>
+# gap> One(atp);
+# IsRightQuasigroupAutotopismObject((), (), ())
+# gap> atp^-4;
+# IsRightQuasigroupAutotopismObject((1,4,5), (2,3,4), (1,4,5))
+# @EndExampleSession
 
-#! @Arguments Q
-DeclareGlobalFunction( "RightAtpInvariant@" );
+# @Arguments Q,f,g
+#DeclareOperation( "AutotopismFromPrincipalLoopIsotope", [ IsLoop, IsLoopElement, IsLoopElement ] );
 
-#! @Arguments Q
-DeclareAttribute( "AtpInvariant@", IsLoop );
+# @Arguments i,atp
+#DeclareOperation( "AtpOn3nElms@", [ IsPosInt, IsRightQuasigroupHomotopism ] );
 
-#! @Arguments Q,S,a,b
-DeclareGlobalFunction( "CheckAtpInvariant@" );
+# @Arguments p,atp
+#DeclareOperation( "AtpOnnSquare@", [ IsList, IsRightQuasigroupHomotopism ] );
+
+# @Arguments gens
+#DeclareOperation( "AutotopismGroupByGenerators", [ IsList and IsRightQuasigroupHomotopismCollection ] );
+
+# @Arguments Q, gens, green, yellow, red
+#DeclareGlobalFunction( "ExtendAtpGrp" );
+
+# @Arguments Q
+## PV # DeclareAttribute( "AutotopismGroup", IsLoop );
+
+# @BeginExampleSession
+# gap> Q := RightBolLoop(8,1);
+# <right Bol loop 8/1>
+# gap> AutotopismFromPrincipalLoopIsotope( Q, Q.4, Q.3 );
+# IsRightQuasigroupAutotopismObject((1,3)(2,4)(5,7)(6,8), (1,4)(2,3)(5,8), (1,2)(3,4)(5,6)(7,8))
+# gap> AutotopismGroup( Q );
+# <autotopism group with 5 generators>
+# gap> Size( last );
+# 128
+# @EndExampleSession
+
+# @Arguments Q
+#DeclareGlobalFunction( "LeftAtpInvariant@" );
+
+# @Arguments Q
+#DeclareGlobalFunction( "RightAtpInvariant@" );
+
+# @Arguments Q
+#DeclareAttribute( "AtpInvariant@", IsLoop );
+
+# @Arguments Q,S,a,b
+#DeclareGlobalFunction( "CheckAtpInvariant@" );

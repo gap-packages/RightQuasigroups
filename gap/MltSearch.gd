@@ -15,7 +15,7 @@
 #! is contained in or equal to a given permutation group `G`.
 #
 #! <P/>Since the emphasis here is on the multiplication groups, the results
-#! are returned as right sections of loops, cf. <Ref Sect="Section_Translations"/>.
+#! are returned not as loops but as right sections of loops, cf. <Ref Sect="Section_Translations"/>.
 #! A right section `sec` contained in the symmetric group on `[1..n]` can then be
 #! converted to a loop by the command `LoopByRightSection( [1..n], sec )`.
 

@@ -7,5 +7,4 @@ if fail = LoadPackage("AutoDoc", "2018.02.14") then
     Error("AutoDoc version 2018.02.14 or newer is required.");
 fi;
 
-AutoDoc( rec( scaffold := rec( bib := "bib.xml.bib" ), autodoc := true, extract_examples := true ) );
-
+AutoDoc( rec( scaffold := rec( bib := "bib.xml.bib" ), autodoc := true ) );
