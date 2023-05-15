@@ -5,7 +5,7 @@ SetPackageInfo( rec(
 
 PackageName := "RightQuasigroups",
 Subtitle := "Computing with one-sided quasigroups in GAP.",
-Version := "0.87",
+Version := "0.871",
 Date := "15/05/2023", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
@@ -15,11 +15,11 @@ Persons := [
     IsMaintainer := true,
     FirstNames := "Gábor P.",
     LastName := "Nagy",
-    WWWHome := "https://algebra.math.bme.hu/nagy-gabor",
+    WWWHome := "https://algebra.math.bme.hu/nagy-gabor-peter",
     Email := "nagyg@math.bme.hu",
     PostalAddress := Concatenation(
                "Department of Algebra, Budapest University of Technology\n",
-               "Egry József utca 1\n",
+               "Műegyetem rkp 3\n",
                "H-1111 Budapest (Hungary)" ),
     Place := "Budapest",
     Institution := "Budapest University of Technology and Economics",
