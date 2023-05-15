@@ -325,7 +325,7 @@ function( Q, x )
     local F, pos;
     F := FamilyObj( Q.1 );
     pos := PositionSorted( F!.uSet, x );
-    if pos = fail then
+    if F!.set[ pos ] <> x then
         Error("RQ: <2> must be en element of the underlying set of <1>");
     fi; 
     return F!.set[ pos ]; # 750ms
