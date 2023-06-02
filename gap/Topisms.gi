@@ -589,7 +589,7 @@ function( arg )
 end );
 
 # RQ_AffineAlgebra
-# PROG: constructor OK, calls RQ_AlgebraIsotopeByPerms
+# PROG: constructor OK, calls RQ_AlgebraTwist
 InstallGlobalFunction( RQ_AffineAlgebra,
 function( category, data, style )
     local Q, fu, gv, f, g, u, v, origQ, func, elms;
@@ -1236,7 +1236,7 @@ function( ls, t )
 end );
 
 # AutotopismGroup
-# MATH: Every autotopism of Q decomposes uniquely as a prinipal loop isotopism Q --> Q_{a,b}
+# MATH: Every autotopism of Q decomposes uniquely as a principal loop isotopism Q --> Q_{a,b}
 # followed by an isomorphism Q_{a,b} --> Q. The principal loop isotope Q_{a,b}
 # is isomorphic to Q iff (a,b) lies in the orbit of (1,1)
 # under the action of the autotopism group Atp( Q ) on tuples: (f,g,h)(x,y) = (f(x),g(y)).

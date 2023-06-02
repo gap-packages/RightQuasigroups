@@ -82,7 +82,7 @@ DeclareProperty( "IsBijective", IsRightQuasigroupHomotopism );
 #! Each of the mappings can be a right quasigroup mappings (with source <Arg>Q1</Arg> and range <Arg>Q2</Arg>),
 #! or a transformation, or a permutation (where the latter only makes sense if <Arg>Q1</Arg> equals <Arg>Q2</Arg>).
 #! If the optional argument <Arg>isCanonical</Arg> is set to `true`, all transformations/permutations
-#! are understood as canonical (not parent) transformations/permtuations.
+#! are understood as canonical (not parent) transformations/permutations.
 #! The function performs an explicit check that the provided data give rise to a homotopism.
 #! @Description We also support other formats of the arguments, namely `HomotopismRightQuasigroups( Q, f, g, h[, isCanonical])`
 #! when `Q` is both the source and the range, and `HomotopismRightQuasigroups( f, g, h )`
