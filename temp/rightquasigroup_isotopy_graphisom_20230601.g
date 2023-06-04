@@ -1,18 +1,31 @@
 LoadPackage("rightquasi"); 
 LoadPackage("digraph");
 
+##########################
+###    DECLARATIONS    ###
+##########################
+
+#! Arguments elms
+#! @Description A method to check if the elements of the list <A>elms</A> do generate a 
+#! group of autotopisms of a given right quasigroup. 
 InstallMethod( IsGeneratorsOfMagmaWithInverses,
     "for a collection of right quasigroup homotopisms",
     [ IsRightQuasigroupHomotopismCollection ],
-    elms -> ForAll( elms, x -> Inverse( x ) <> fail ) 
+    elms -> ForAll( elms, x -> 
+        Range( x ) = Range( elms[1] ) 
+        and Source( x ) = Range( elms[1] ) 
+        and Inverse( x ) <> fail 
+    ) 
 );
 
-
+DeclareOperation( "RQ_AutotopismGroupByGeneratorsNC", [ IsRightQuasigroup, IsRightQuasigroupHomotopismCollection ] );
 #! @Arguments Q
-#! @Returns a permutation group <C>G</C> of degree <C>3*n</C>, where <C>n=|Q|</C>. The actions on
-#! <C>[1..n]</C>, <C>[n+1..2*n]</C> and <C>[2*n+1..3*n]</C> correspond to the permutations
-#! <C>f,g,h</C> such that <C>x^f*y^g=(x*y)^h</C> holds. 
+#! @Returns a group consisting of <C>HomotopismRightQuasigroups</C> objects. This group has a
+#! a nice monomorphism to a permutation group of degree $3n$ where $n$ is the order of the 
+#! parent group of <A>Q</A>.
+#! @Arguments Q
 DeclareAttribute( "RQ_AutotopismGroup", IsRightQuasigroup );
+#! @Returns a permutation group whose degree is the order of the parent of <A>Q</A>. 
 DeclareAttribute( "RQ_AutGroupByGraph", IsRightQuasigroup );
 #! @Arguments Q
 #! @Returns a directed graph on $3n+n^2$ vertices, where $n=|Q|$. The vertices $\{1,\ldots,n\}$,
@@ -20,10 +33,25 @@ DeclareAttribute( "RQ_AutGroupByGraph", IsRightQuasigroup );
 #! multiplication table of $Q$. The remaining $n^2$ vertices stand for the triples $(x,y,x*y)$. 
 DeclareAttribute( "RQ_Digraph", IsRightQuasigroup );
 
-# Input: a triple of permutations of degree n
-# Output: a parent permutation of degree 3*n
-DeclareGlobalFunction( "RQ_NiceMonomorphismWithDegree" );
-InstallGlobalFunction( RQ_NiceMonomorphismWithDegree, 
+#! @Arguments t
+#! @Returns a permutation of degree $3n$, where $n$ is the size of the parent right quasigroup
+#! of the source of <A>t</A>. 
+#! @Description The input is a <C>HomotopismRightQuasigroups</C> object. This map is a nice
+#! monomorphism for this category.
+DeclareGlobalFunction( "RQ_NiceMonomorphism" );
+# Input: a parent permutation of degree 3*n
+# Output: a triple of permutations of degree n
+#! @Arguments Q
+#! @Returns the inverse function $f$ of the nice monomorphism <C>HomotopismRightQuasigroups</C> objects
+#! whose source is the right quasigroup <A>Q</A>. The function $f$ maps permutations of degree $3n$ to 
+#! isotopisms of <A>Q</A>, where $n$ is the size of the parent of <A>Q</A>. 
+DeclareGlobalFunction( "RQ_NiceMonomorphismInverse" );
+
+#############################
+###    IMPLEMENTATIONS    ###
+#############################
+
+InstallGlobalFunction( RQ_NiceMonomorphism, 
 function( htop )
     local n;
     n := Size( Parent( Source( htop ) ) );
@@ -32,10 +60,7 @@ function( htop )
     );
 end);
 
-# Input: a parent permutation of degree 3*n
-# Output: a triple of permutations of degree n
-DeclareGlobalFunction( "RQ_NiceMonomorphismInverseWithDegree" );
-InstallGlobalFunction( RQ_NiceMonomorphismInverseWithDegree, 
+InstallGlobalFunction( RQ_NiceMonomorphismInverse, 
 function( rq )
     local n, fun;
     n := Size( Parent( rq ) );
@@ -66,6 +91,30 @@ function( rq )
     return Digraph( (3+n)*n, src, ran );
 end );
 
+InstallMethod( RQ_AutotopismGroupByGeneratorsNC, "for a right quasigroup and a list of autotopisms",
+    [ IsRightQuasigroup, IsRightQuasigroupHomotopismCollection ],
+function( rq, gens )
+    local atpgr, ag, nice;
+    if gens = [ ] then gens := [ IdentityAutotopism( rq ) ]; fi;
+    atpgr := MakeGroupyObj( FamilyObj( gens ), IsGroup, gens, false );
+    ag := Group( List( gens, RQ_NiceMonomorphism ) );
+    nice := GroupHomomorphismByFunction( 
+        atpgr, 
+        ag, 
+        RQ_NiceMonomorphism, 
+        RQ_NiceMonomorphismInverse( rq )
+    );
+    SetNiceMonomorphism( atpgr, nice );
+    SetIsHandledByNiceMonomorphism( atpgr, true );
+    return atpgr;
+end );
+
+InstallMethod( GroupByGenerators, "for a list of autotopisms", 
+    [ IsRightQuasigroupHomotopismCollection ],
+function( gens )
+    return RQ_AutotopismGroupByGeneratorsNC( Source( gens[1] ), AsList( gens ) );
+end );
+
 InstallMethod( RQ_AutotopismGroup, "for right quasigroups",
     [ IsRightQuasigroup ], 
 function( rq )
@@ -78,25 +127,9 @@ function( rq )
         List( [0,1,2], i -> PermList( OnTuples( i*n + [1..n], perm ) - i*n ) ) );
     gens := List( gens, li -> 
         List( li, y -> AsParentPerm( rq, y ) ) );
-    ag := Group( 
-        List( gens, li ->
-            PermList( 
-                Concatenation( List( [1,2,3], i -> (i-1)*npar + ListPerm( li[i], npar ) ) ) 
-            )
-        ) 
-    );
     gens := List( gens, li -> 
         HomotopismRightQuasigroups( rq, rq, li[1], li[2], li[3] ) );
-    atpgr := Group( gens );
-    nice := GroupHomomorphismByFunction( 
-        atpgr, 
-        ag, 
-        RQ_NiceMonomorphismWithDegree, 
-        RQ_NiceMonomorphismInverseWithDegree( rq )
-    );
-    SetNiceMonomorphism( atpgr, nice );
-    SetIsHandledByNiceMonomorphism( atpgr, true );
-    return atpgr;
+    return RQ_AutotopismGroupByGeneratorsNC( rq, gens );
 end );
 
 InstallMethod( RQ_AutGroupByGraph, "for right quasigroups",
@@ -121,7 +154,9 @@ function( rq )
     return ag;
 end );
 
-###
+###########################
+###        TESTS        ###
+###########################
 
 if not IsBound(n) then n:=36; fi;
 
@@ -146,3 +181,10 @@ ag2=AutomorphismGroup(rq);
 
 ig:=RQ_AutotopismGroup(rq); Print( "#time = ", time, "\n");
 Size(ig);
+Exponent(ig);
+
+li:=List([1..5],i->Random(ig));
+h:=Group(li);
+Size(h);
+KnownAttributesOfObject(h);
+
