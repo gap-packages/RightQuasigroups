@@ -29,12 +29,10 @@ gap> S.2;
 r1
 gap> S[8]; # works because it makes sense in the parent
 r8
-gap> AsParentInd( S[5] );
-Error, Variable: 'AsParentInd' must have a value
-not in any function at *stdin*:22
-gap> AsUnderlyingSetElm( Q.6 );
-Error, Variable: 'AsUnderlyingSetElm' must have a value
-not in any function at *stdin*:23
+gap> ParentInd( S[5] );
+6
+gap> UnderlyingSetElm( Q.6 );
+5
 gap> # One, LeftInverse, RightInverse
 gap> Q := AsLoop( Q );;
 gap> One( Q );
@@ -57,6 +55,5 @@ gap> Commutator( Q[1], Q[2] ); # x*y=x, so (1*2)/(2*1)=1
 r1
 gap> Associator( Q[1], Q[2], Q[3] );
 r1
-gap> 
 gap> 
 gap> STOP_TEST( "Elements.tst", 10000 );
