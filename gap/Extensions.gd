@@ -120,10 +120,12 @@ DeclareOperation( "CentralExtensionByNormalSubloop", [ IsLoop, IsLoop ] );
 #! gap> Center( Q );
 #! <associative loop of size 2>
 #! gap> ext := NuclearExtensionByNormalSubloop( Q, Nuc( Q ) );
-#! [ <associative loop of size 4>, <Moufang loop of size 8>, [ (), (), (), (2,4), (), (2,4), (2,4), (2,4) ],
-#!   [ [ 1, 1, 1, 1, 1, 1, 1, 1 ], [ 1, 1, 1, 1, 1, 1, 3, 3 ], [ 1, 3, 1, 1, 3, 1, 1, 1 ], [ 1, 1, 1, 1, 3, 1, 1, 3 ],
-#!       [ 1, 3, 1, 1, 3, 1, 3, 3 ], [ 1, 1, 1, 1, 3, 1, 3, 1 ], [ 1, 3, 1, 1, 1, 1, 1, 3 ], [ 1, 3, 1, 1, 1, 1, 3, 1 ]
-#!      ] ]
+#! [ <associative loop of size 4>, <Moufang loop of size 8>, 
+#!   [ (), (), (), (2,4), (), (2,4), (2,4), (2,4) ], 
+#!   [ [ 1, 1, 1, 1, 1, 1, 1, 1 ], [ 1, 1, 1, 1, 1, 1, 3, 3 ], 
+#!       [ 1, 3, 1, 1, 3, 1, 1, 1 ], [ 1, 1, 1, 1, 3, 1, 1, 3 ], 
+#!       [ 1, 3, 1, 1, 3, 1, 3, 3 ], [ 1, 1, 1, 1, 3, 1, 3, 1 ], 
+#!       [ 1, 3, 1, 1, 1, 1, 1, 3 ], [ 1, 3, 1, 1, 1, 1, 3, 1 ] ] ]
 #! gap> copyQ := LoopByNuclearExtension( ext[1],ext[2],ext[3],ext[4] );;
 #! gap> AsCanonicalPerm( IsomorphismLoops( Q, copyQ ) );
 #! (4,9,11,28,29,24,22,21,20,25,27,12,13,8,6,5)(7,10)(14,30)(15,31)(16,32)(23,26)
@@ -183,8 +185,8 @@ DeclareOperation( "LoopCocyclesInVariety", [ IsLoop, IsPosInt, IsList ] );
 #! gap> Length( coc ); # dimension of the vector space of cocycles
 #! 6
 #! gap> theta := coc[3];; Display( theta ); # one cocycle
-#! [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2),
-#! 0*Z(2), 0*Z(2) ]
+#! [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 
+#! Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ]
 #! gap> theta := List( theta, x -> IntFFE( x ) + 1 );; Display( theta ); # converting cocycle entries to [1..Size(K)]
 #! [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1 ]
 #! gap> theta := AsSquareTable( theta );; Display( theta ); # converting cocycle to square table

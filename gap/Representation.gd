@@ -205,7 +205,6 @@ DeclareOperation( "CategoryOfRightQuasigroup", [ IsRightQuasigroup ] );
 #! <associative quasigroup of size 2 on 0, 1>
 #! gap> String( Q ); # was stored as attribute at first call
 #! "<quasigroup of size 2>"
-#! gap> 
 #! @EndExampleSession
 
 #! @Subsection Displaying right quasigroup elements
@@ -517,8 +516,6 @@ DeclareOperation( "Associator", [ IsRightQuasigroupElement, IsRightQuasigroupEle
 #! l(1,3,2)
 #! gap> Associator( Q[(1,2)], Q[(1,3)], Q[(2,3)] );
 #! l()
-#! LeftQuotient( Q.1, Q.2 ); # LeftDivision is also supported
-#! l(2,3)
 #! @EndExampleSession
 
 #! <P/>Note that right quasigroups that happen to be quasigroups and/or loops mathematically must be explicitly
@@ -692,7 +689,8 @@ DeclareOperation( "CanonicalCopy", [ IsRightQuasigroup ] );
 #! gap> IsIndexBased( R );
 #! true
 #! gap> UnderlyingSet( R ); # no change to the underlying set
-#! [ 0*Z(3), Z(3)^0, Z(3), Z(3^2), Z(3^2)^2, Z(3^2)^3, Z(3^2)^5, Z(3^2)^6, Z(3^2)^7 ]
+#! [ 0*Z(3), Z(3)^0, Z(3), Z(3^2), Z(3^2)^2, Z(3^2)^3, Z(3^2)^5, Z(3^2)^6, 
+#!   Z(3^2)^7 ]
 #! gap> IsCanonical( R ); # underlying set is not [1..n]
 #! false
 #! gap> x := R.2;;
@@ -764,7 +762,8 @@ DeclareAttribute( "GeneratorsSmallest", IsRightQuasigroup );
 #! @BeginExampleSession
 #! gap> Q := AsLoop( GF(8) );;
 #! gap> GeneratorsOfLoop( Q ); # trivial generating set
-#! [ l0*Z(2), lZ(2)^0, lZ(2^3), lZ(2^3)^2, lZ(2^3)^3, lZ(2^3)^4, lZ(2^3)^5, lZ(2^3)^6 ]
+#! [ l0*Z(2), lZ(2)^0, lZ(2^3), lZ(2^3)^2, lZ(2^3)^3, lZ(2^3)^4, lZ(2^3)^5, 
+#!   lZ(2^3)^6 ]
 #! gap> GeneratorsSmallest( Q ); # with respect to lexicographic ordering
 #! [ lZ(2^3)^4, lZ(2^3)^5, lZ(2^3)^6 ]
 #! gap> GeneratorsOfLoop( Q ); # changed since a smaller generating set has been found

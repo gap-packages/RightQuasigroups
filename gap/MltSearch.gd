@@ -65,13 +65,15 @@ DeclareOperation( "OneLoopWithMltGroup", [IsGroup] );
 #! @BeginExampleSession
 #! gap> G := AlternatingGroup( 6 );;
 #! gap> OneLoopWithMltGroup( G, 2, 0 );
-#! [ [ (), (1,2)(3,4,5,6), (1,3)(2,4,6,5), (1,4)(2,5,3,6), (1,5)(2,6,4,3), (1,6)(2,3,5,4) ] ]
+#! [ [ (), (1,2)(3,4,5,6), (1,3)(2,4,6,5), (1,4)(2,5,3,6), 
+#!       (1,5)(2,6,4,3), (1,6)(2,3,5,4) ] ]
 #! gap> Q := LoopByRightSection( [1..6], last[ 1 ] );
 #! <loop of size 6>
 #! gap> MultiplicationGroup( Q ) = G;
 #! true
 #! gap> AllLoopsWithMltInGroup( SymmetricGroup( 4 ), 2, 0);
-#! [ [ (), (1,2)(3,4), (1,3)(2,4), (1,4)(2,3) ], [ (), (1,2)(3,4), (1,3,2,4), (1,4,2,3) ],
+#! [ [ (), (1,2)(3,4), (1,3)(2,4), (1,4)(2,3) ], 
+#!   [ (), (1,2)(3,4), (1,3,2,4), (1,4,2,3) ], 
 #!   [ (), (1,2,3,4), (1,3)(2,4), (1,4,3,2) ] ]
 #! gap> a := AllLoopsWithMltInGroup( PGL(3,3), 3, 0 );; Size(a);
 #! 56

@@ -72,41 +72,43 @@ gap> ConjugationQuandle( ConjugacyClass( G, (1,2,3) ) ); # y^-1*x*y on [ (1,2,3)
 gap> ConjugationQuandle( G, 2 ); # y^-2*x*y^2 on G
 <quandle of size 6>
 
-# doc/_Chapter_Racks_and_quandles.xml:398-412
+# doc/_Chapter_Racks_and_quandles.xml:398-414
 gap> Q := SmallQuandle( 10, 1000 );
-<small quandle 10/1000>
+SmallQuandle( 10, 1000 )
 gap> env := QuandleEnvelope( Q );
-[ Group([ (1,3,2)(7,8) ]), [ 1, 4, 5, 6, 7, 9, 10 ],
-  [ (), (), (1,2,3), (1,3,2)(7,8), (1,2,3), (1,3,2)(7,8), (1,3,2)(7,8) ] ]
+[ Group([ (1,3,2)(7,8) ]), [ 1, 4, 5, 6, 7, 9, 10 ], 
+  [ (), (), (1,2,3), (1,3,2)(7,8), (1,2,3), (1,3,2)(7,8), 
+      (1,3,2)(7,8) ] ]
 gap> Q2 := QuandleByQuandleEnvelope( env );
 <quandle of size 10>
 gap> IsomorphismQuandles( Q, Q2 );
-MappingByFunction( <small quandle 10/1000>, <quandle of size 10>, function( x ) ... end )
+MappingByFunction( SmallQuandle( 10, 1000 ), <quandle of size 10>, fun\
+ction( x ) ... end )
 gap> AsParentTransformation( last );
 IdentityTransformation
 gap> QuandleByQuandleEnvelope( env[1], env[2], env[3] ); # separate arguments also supported for envelopes
 <quandle of size 10>
 
-# doc/_Chapter_Racks_and_quandles.xml:448-454
+# doc/_Chapter_Racks_and_quandles.xml:450-456
 gap> Q := AffineRack( 12, 5, 2, 6 );;
 gap> S := Subrack( Q, [ Q[2] ] );
 <rack of size 2>
 gap> IsSubrack( Q, S );
 true
 
-# doc/_Chapter_Racks_and_quandles.xml:469-473
+# doc/_Chapter_Racks_and_quandles.xml:471-475
 gap> Q := ConjugationQuandle( SymmetricGroup( 3 ) );;
 gap> List( AllSubquandles( Q ), Size );
 [ 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 5, 2, 4, 6, 3 ]
 
-# doc/_Chapter_Racks_and_quandles.xml:491-497
+# doc/_Chapter_Racks_and_quandles.xml:493-499
 gap> Q := ConjugationQuandle( SymmetricGroup( 3 ) );;
 gap> S := QuandleWithGenerators( [ Q[(1,2)], Q[(1,2,3)] ] );
 <quandle of size 5>
 gap> GeneratorsOfMagma( S );
 [ r(1,2), r(1,2,3) ]
 
-# doc/_Chapter_Racks_and_quandles.xml:549-558
+# doc/_Chapter_Racks_and_quandles.xml:551-560
 gap> g := AdjointGroup( DihedralQuandle( 3 ) );
 <fp group on the generators [ q0, q1 ]>
 gap> GeneratorsOfGroup( g );

@@ -20,7 +20,7 @@ gap> CategoryOfRightQuasigroup( Q );
 gap> CategoryOfRightQuasigroup( [ Q, ProjectionRightQuasigroup( 5 ) ] ); # common category
 <Category "IsRightQuasigroup">
 
-# doc/_Chapter_Introduction.xml:196-212
+# doc/_Chapter_Introduction.xml:196-211
 gap> Q := QuasigroupByCayleyTable( [[0,1],[1,0]] );
 <quasigroup of size 2>
 gap> String( Q );
@@ -35,9 +35,8 @@ gap> Print( Q );
 <associative quasigroup of size 2 on 0, 1>
 gap> String( Q ); # was stored as attribute at first call
 "<quasigroup of size 2>"
-gap> 
 
-# doc/_Chapter_Introduction.xml:249-264
+# doc/_Chapter_Introduction.xml:248-263
 gap> Q := AsLoop( Group( (1,2) ) );
 <associative loop of size 2>
 gap> String( Q.1 );
@@ -53,7 +52,7 @@ gap> SetLoopElementsName( Q, "" );; Elements( Q ); # better legibility but perha
 gap> IsPerm( last[1] );
 false
 
-# doc/_Chapter_Introduction.xml:323-335
+# doc/_Chapter_Introduction.xml:322-334
 gap> Q := AsLoop( SymmetricGroup( 3 ) );;
 gap> UnderlyingSetElm( Q.1 );
 ()
@@ -66,7 +65,7 @@ gap> UnderlyingSet( Q );
 gap> CayleyTable( Q );
 [ "abcdef", "badcfe", "ceafbd", "dfbeac", "ecfadb", "fdebca" ]
 
-# doc/_Chapter_Introduction.xml:461-488
+# doc/_Chapter_Introduction.xml:460-487
 gap> Q := RightQuasigroupByFunction( [0..3], function( x,y ) return (x+2*y) mod 4; end ); # index based by default
 <right quasigroup of size 4>
 gap> UnderlyingSet( Q );
@@ -94,7 +93,7 @@ r2
 gap> Q[0]/Q[1]; # RightQuotient and RightDivision are also supported
 r2
 
-# doc/_Chapter_Introduction.xml:499-518
+# doc/_Chapter_Introduction.xml:498-515
 gap> Q := AsLoop( SymmetricGroup( 3 ), ConstructorStyle( false, false ) ); # not index based, arguments not checked
 <associative loop of size 6>
 gap> UnderlyingSet( Q );
@@ -111,10 +110,8 @@ gap> Commutator( Q[(1,2)], Q[(1,3)] );
 l(1,3,2)
 gap> Associator( Q[(1,2)], Q[(1,3)], Q[(2,3)] );
 l()
-LeftQuotient( Q.1, Q.2 ); # LeftDivision is also supported
-l(2,3)
 
-# doc/_Chapter_Introduction.xml:544-567
+# doc/_Chapter_Introduction.xml:541-564
 gap> Q := RightQuasigroupByFunction([0..5], function(x,y) return (x+y) mod 6; end );; Elements( Q ); 
 [ r0, r1, r2, r3, r4, r5 ]
 gap> A := Subrightquasigroup( Q, [2] );
@@ -138,7 +135,7 @@ gap> Display( MultiplicationTable( A ) );
   [  2,  3,  1 ],
   [  3,  1,  2 ] ]
 
-# doc/_Chapter_Introduction.xml:677-702
+# doc/_Chapter_Introduction.xml:674-699
 gap> Q := RightQuasigroupByFunction( GF( 9 ), \+, ConstructorStyle( false, false ) ); # not index based, arguments not checked
 <right quasigroup of size 9>
 gap> IsIndexBased( Q );
@@ -164,13 +161,14 @@ function( x, y ) ... end
 gap> rdiv( Z(3), Z(3) );
 0*Z(3)
 
-# doc/_Chapter_Introduction.xml:706-737
+# doc/_Chapter_Introduction.xml:703-735
 gap> Q := RightQuasigroupByFunction( GF( 9 ), \+, ConstructorStyle( false, false ) );; # same as in the above example, not index based
 gap> R := IndexBasedCopy( Q );;
 gap> IsIndexBased( R );
 true
 gap> UnderlyingSet( R ); # no change to the underlying set
-[ 0*Z(3), Z(3)^0, Z(3), Z(3^2), Z(3^2)^2, Z(3^2)^3, Z(3^2)^5, Z(3^2)^6, Z(3^2)^7 ]
+[ 0*Z(3), Z(3)^0, Z(3), Z(3^2), Z(3^2)^2, Z(3^2)^3, Z(3^2)^5, Z(3^2)^6, 
+  Z(3^2)^7 ]
 gap> IsCanonical( R ); # underlying set is not [1..n]
 false
 gap> x := R.2;;
@@ -196,10 +194,11 @@ gap> C := CanonicalCopy( Q );
 gap> UnderlyingSet( C ); # underlying set has changed to [1..n]
 [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 
-# doc/_Chapter_Introduction.xml:783-795
+# doc/_Chapter_Introduction.xml:781-794
 gap> Q := AsLoop( GF(8) );;
 gap> GeneratorsOfLoop( Q ); # trivial generating set
-[ l0*Z(2), lZ(2)^0, lZ(2^3), lZ(2^3)^2, lZ(2^3)^3, lZ(2^3)^4, lZ(2^3)^5, lZ(2^3)^6 ]
+[ l0*Z(2), lZ(2)^0, lZ(2^3), lZ(2^3)^2, lZ(2^3)^3, lZ(2^3)^4, lZ(2^3)^5, 
+  lZ(2^3)^6 ]
 gap> GeneratorsSmallest( Q ); # with respect to lexicographic ordering
 [ lZ(2^3)^4, lZ(2^3)^5, lZ(2^3)^6 ]
 gap> GeneratorsOfLoop( Q ); # changed since a smaller generating set has been found

@@ -97,16 +97,16 @@ DeclareOperation( "HomotopismRightQuasigroups", [ IsMapping, IsMapping, IsMappin
 #! gap> Q2 := ProjectionRightQuasigroup( 2 );;
 #! gap> f := Transformation( [1,1,2] );; g := Transformation( [2,1,2] );; h := f;;
 #! gap> t := HomotopismRightQuasigroups( Q1, Q2, f, g, h );
-#! <homotopism of quasigroups>
+#! <homotopism of right quasigroups>
 #! gap> IsRightQuasigroupHomotopism( t ); # category/filter check
 #! true
 #! gap> Display( t );
 #! <homotopism of right quasigroups
-#!   source = <associative quandle of size 3>
-#!   range = <associative quandle of size 2>
-#!   f = Transformation( [ 1, 1, 2 ] )
-#!   g = Transformation( [ 2, 1, 2 ] )
-#!   h = Transformation( [ 1, 1, 2 ] )
+#!    source = <associative quandle of size 3>
+#!    range = <associative quandle of size 2>
+#!    f = Transformation( [ 1, 1, 2 ] )
+#!    g = Transformation( [ 2, 1, 2 ] )
+#!    h = Transformation( [ 1, 1, 2 ] )
 #! >
 #! gap> [ Source( t ), Range( t ) ];
 #! [ <associative quandle of size 3>, <associative quandle of size 2> ]
@@ -496,7 +496,7 @@ DeclareGlobalFunction( "AffineQuasigroup" );
 #! gap> f := AsRightQuasigroupMapping( G, LeftInnerMapping( G, G.2, G.3 ) );;
 #! gap> g := f*f;; u := G.1;; v := G.2;;
 #! gap> IsAffineQuasigroupArithmeticForm( G, u, f, v, g ); # suitable for (u*x^f)*(v*y^g)
-#! true 
+#! true
 #! gap> Q := AffineQuasigroup( G, u, f, v, g ); 
 #! <quasigroup of size 10>
 #! @EndExampleSession
@@ -637,6 +637,7 @@ DeclareOperation( "IsotopismLoops", [ IsLoop, IsLoop, IsString ] );
 
 #! @BeginExampleSession
 #! gap> Q1 := MoufangLoop( 32, 10 );
+#! MoufangLoop( 32, 10 )
 #! gap> Q2 := LoopIsomorph( Q1, (3,4) );;
 #! gap> Q3 := PrincipalLoopIsotope( Q2, Q2.10, Q2.20 );; # a loop isotopic to Q1
 #! gap> IsotopismLoops( Q1, Q3 ); 
@@ -677,61 +678,3 @@ DeclareOperation( "RQ_HtpOnPairs", [ IsList, IsRightQuasigroupHomotopism ] );
 #! @Returns the autotopism group of a loop <Arg>Q</Arg>.
 #! Note: There is no method yet for right quasigroups and quasigroups.
 DeclareAttribute( "AutotopismGroup", IsLoop );
-
-# PROBABLY DELETE THE FOLLOWING
-
-# @BeginExampleSession
-# gap> q:=LoopByCayleyTable([[1,2,3,4,5 ],[2,1,4,5,3],[3,4,5,1,2],[4,5,2,3,1],[5,3,1,2,4]]);
-# <loop of size 5>
-# gap> f:=[(1,5,4), (2,4,3), (1,5,4)];
-# [ (1,5,4), (2,4,3), (1,5,4) ]
-# gap> atp:=AutotopismObject@RightQuasigroups(q,f[1],f[2],f[3]);
-# IsRightQuasigroupAutotopismObject((1,5,4), (2,4,3), (1,5,4))
-# gap> AmbientRightQuasigroup(atp);
-# <loop of size 5>
-# gap> One(atp);
-# IsRightQuasigroupAutotopismObject((), (), ())
-# gap> atp^-4;
-# IsRightQuasigroupAutotopismObject((1,4,5), (2,3,4), (1,4,5))
-# @EndExampleSession
-
-# @Arguments Q,f,g
-#DeclareOperation( "AutotopismFromPrincipalLoopIsotope", [ IsLoop, IsLoopElement, IsLoopElement ] );
-
-# @Arguments i,atp
-#DeclareOperation( "AtpOn3nElms@", [ IsPosInt, IsRightQuasigroupHomotopism ] );
-
-# @Arguments p,atp
-#DeclareOperation( "AtpOnnSquare@", [ IsList, IsRightQuasigroupHomotopism ] );
-
-# @Arguments gens
-#DeclareOperation( "AutotopismGroupByGenerators", [ IsList and IsRightQuasigroupHomotopismCollection ] );
-
-# @Arguments Q, gens, green, yellow, red
-#DeclareGlobalFunction( "ExtendAtpGrp" );
-
-# @Arguments Q
-## PV # DeclareAttribute( "AutotopismGroup", IsLoop );
-
-# @BeginExampleSession
-# gap> Q := RightBolLoop(8,1);
-# <right Bol loop 8/1>
-# gap> AutotopismFromPrincipalLoopIsotope( Q, Q.4, Q.3 );
-# IsRightQuasigroupAutotopismObject((1,3)(2,4)(5,7)(6,8), (1,4)(2,3)(5,8), (1,2)(3,4)(5,6)(7,8))
-# gap> AutotopismGroup( Q );
-# <autotopism group with 5 generators>
-# gap> Size( last );
-# 128
-# @EndExampleSession
-
-# @Arguments Q
-#DeclareGlobalFunction( "LeftAtpInvariant@" );
-
-# @Arguments Q
-#DeclareGlobalFunction( "RightAtpInvariant@" );
-
-# @Arguments Q
-#DeclareAttribute( "AtpInvariant@", IsLoop );
-
-# @Arguments Q,S,a,b
-#DeclareGlobalFunction( "CheckAtpInvariant@" );

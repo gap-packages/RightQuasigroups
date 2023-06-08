@@ -85,7 +85,8 @@
 #! gap> AsCanonicalTransformation( S, f );
 #! Transformation( [ 2, 3, 1 ] )
 #! gap> AsRightQuasigroupMapping( S, f ); # parent permutation expected by default
-#! MappingByFunction( <Moufang loop of size 3>, <Moufang loop of size 3>, function( x ) ... end )
+#! MappingByFunction( <Moufang loop of size 3>, <Moufang loop of size 3>,\
+#!  function( x ) ... end )
 #! gap> #
 #! gap> # CONVERTING CANONICAL PERMUTATIONS
 #! gap> #
@@ -97,7 +98,8 @@
 #! gap> AsParentTransformation( S, g );
 #! Transformation( [ 3, 2, 5, 4, 1 ] )
 #! gap> AsRightQuasigroupMapping( S, g, true ); # optional bool needed for canonical
-#! MappingByFunction( <Moufang loop of size 3>, <Moufang loop of size 3>, function( x ) ... end )
+#! MappingByFunction( <Moufang loop of size 3>, <Moufang loop of size 3>,\
+#!  function( x ) ... end )
 #! gap> #
 #! gap> # CONVERTING PARENT TRANSFORMATIONS
 #! gap> #
@@ -109,7 +111,8 @@
 #! gap> AsCanonicalTransformation( S, S, h );
 #! Transformation( [ 2, 3, 1 ] )
 #! gap> AsRightQuasigroupMapping( S, S, h ); # parent transformation expected by default
-#! MappingByFunction( <Moufang loop of size 3>, <Moufang loop of size 3>, function( x ) ... end )
+#! MappingByFunction( <Moufang loop of size 3>, <Moufang loop of size 3>,\
+#!  function( x ) ... end )
 #! gap> #
 #! gap> # CONVERTING CANONICAL TRANSFORMATIONS
 #! gap> #
@@ -117,11 +120,12 @@
 #! gap> AsPermutation( k ); # default GAP function
 #! (1,2,3)
 #! gap> AsParentPerm( S, k );
-#! (1,3,5);
+#! (1,3,5)
 #! gap> AsParentTransformation( S, S, k );
 #! Transformation( [ 3, 2, 5, 4, 1 ] )
 #! gap> AsRightQuasigroupMapping( S, S, k, true ); # optional bool needed for canonical
-#! MappingByFunction( <Moufang loop of size 3>, <Moufang loop of size 3>, function( x ) ... end ) 
+#! MappingByFunction( <Moufang loop of size 3>, <Moufang loop of size 3>,\
+#!  function( x ) ... end )
 #! gap> #
 #! gap> # CONVERTING RIGHT QUASIGROUP MAPPINGS
 #! gap> #
@@ -147,7 +151,8 @@
 #! @BeginExampleSession
 #! gap> Q := MoufangLoop( 12, 1 );;
 #! gap> m := MappingByFunction( Q, Q, x -> x*x );
-#! MappingByFunction( <Moufang loop 12/1>, <Moufang loop 12/1>, function( x ) ... end )
+#! MappingByFunction( MoufangLoop( 12, 1 ), MoufangLoop( 12, 1 ), functio\
+#! n( x ) ... end )
 #! gap> [ Source( m ) = Q, Range( m ) = Q ];
 #! [ true, true ]
 #! gap> Q.2*Q.2 = Q.2^m;
@@ -284,7 +289,8 @@ DeclareOperation( "AsParentTransformation", [ IsMapping ] );
 #! gap> S1 := Subloop( Q, [ Q[(1,2,3)] ] );;
 #! gap> S2 := Subloop( Q, [ Q[(1,4)]*Q[(1,2,3)]*Q[(1,4)] ] );; # conjugate subloop
 #! gap> m := MappingByFunction( S1, S2, x-> Q[(1,4)]*x*Q[(1,4)] ); # conjugation S1 -> S2
-#! MappingByFunction( <associative loop of size 3>, <associative loop of size 3>, function( x ) ... end )
+#! MappingByFunction( <associative loop of size 3>, <associative loop of \
+#! size 3>, function( x ) ... end )
 #! gap> ParentInd( S1 );
 #! [ 1, 9, 13 ]
 #! gap> ParentInd( S2 );

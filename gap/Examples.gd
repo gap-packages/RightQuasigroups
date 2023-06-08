@@ -58,7 +58,8 @@ DeclareOperation( "DisplayLibraryInfo", [ IsString ] );
 
 #! @BeginExampleSession
 #! gap> DisplayLibraryInfo("nilpotent loops");
-#! The library contains all nonassociative nilpotent loops of order less than 12.
+#! The library contains all nonassociative nilpotent loops of order less \
+#! than 12.
 #! ------
 #! Extent of the library:
 #!    2 algebras of order 6
@@ -78,9 +79,9 @@ DeclareOperation( "LibraryAlgebra", [ IsString, IsPosInt, IsPosInt ] );
 
 #! @BeginExampleSession
 #! gap> LibraryAlgebra( "Moufang loops", 64, 10 );
-#! <Moufang loop 64/10>
+#! MoufangLoop( 64, 10 )
 #! gap> MoufangLoop( 64, 10 );
-#! <Moufang loop 64/10>
+#! MoufangLoop( 64, 10 )
 #! @EndExampleSession
 
 #! @Arguments name, filters
@@ -106,9 +107,9 @@ DeclareGlobalFunction( "LibraryAlgebras" );
 
 #! @BeginExampleSession
 #! gap> LibraryAlgebras( "Moufang loops", Size, 81, IsCommutative, false );
-#! [ <Moufang loop 81/3>, <Moufang loop 81/4>, <Moufang loop 81/5> ]
+#! [ MoufangLoop( 81, 3 ), MoufangLoop( 81, 4 ), MoufangLoop( 81, 5 ) ]
 #! gap> MoufangLoops( [65..81], IsCommutative, Exponent, 3 ); 
-#! [ <Moufang loop 81/1> ]
+#! [ MoufangLoop( 81, 1 ) ]
 #! @EndExampleSession
 
 # auxiliary function for the construction of various loops

@@ -287,7 +287,7 @@ DeclareProperty( "IsIsotopicToAbelianGroup", IsQuasigroup );
 #! gap> Q := QuasigroupByFunction( GF(5), \- );
 #! <quasigroup of size 5>
 #! gap> RightPosDisplacementGroup( Q );
-#! Group([ (1,4,5,3,2) ])
+#! Group([ (1,2,3,5,4) ])
 #! gap> LeftDisplacementGroup( Q );
 #! Group([ (1,2,3,5,4) ])
 #! gap> IsIsotopicToGroup( Q );

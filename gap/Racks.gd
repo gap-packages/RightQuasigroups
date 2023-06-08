@@ -375,14 +375,16 @@ DeclareOperation( "QuandleByQuandleEnvelope", [ IsGroup, IsList, IsList ] );
 
 #! @BeginExampleSession
 #! gap> Q := SmallQuandle( 10, 1000 );
-#! <small quandle 10/1000>
+#! SmallQuandle( 10, 1000 )
 #! gap> env := QuandleEnvelope( Q );
-#! [ Group([ (1,3,2)(7,8) ]), [ 1, 4, 5, 6, 7, 9, 10 ],
-#!   [ (), (), (1,2,3), (1,3,2)(7,8), (1,2,3), (1,3,2)(7,8), (1,3,2)(7,8) ] ]
+#! [ Group([ (1,3,2)(7,8) ]), [ 1, 4, 5, 6, 7, 9, 10 ], 
+#!   [ (), (), (1,2,3), (1,3,2)(7,8), (1,2,3), (1,3,2)(7,8), 
+#!       (1,3,2)(7,8) ] ]
 #! gap> Q2 := QuandleByQuandleEnvelope( env );
 #! <quandle of size 10>
 #! gap> IsomorphismQuandles( Q, Q2 );
-#! MappingByFunction( <small quandle 10/1000>, <quandle of size 10>, function( x ) ... end )
+#! MappingByFunction( SmallQuandle( 10, 1000 ), <quandle of size 10>, fun\
+#! ction( x ) ... end )
 #! gap> AsParentTransformation( last );
 #! IdentityTransformation
 #! gap> QuandleByQuandleEnvelope( env[1], env[2], env[3] ); # separate arguments also supported for envelopes

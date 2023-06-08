@@ -15,16 +15,16 @@ gap> Q1 := ProjectionRightQuasigroup( 3 );;
 gap> Q2 := ProjectionRightQuasigroup( 2 );;
 gap> f := Transformation( [1,1,2] );; g := Transformation( [2,1,2] );; h := f;;
 gap> t := HomotopismRightQuasigroups( Q1, Q2, f, g, h );
-<homotopism of quasigroups>
+<homotopism of right quasigroups>
 gap> IsRightQuasigroupHomotopism( t ); # category/filter check
 true
 gap> Display( t );
 <homotopism of right quasigroups
-  source = <associative quandle of size 3>
-  range = <associative quandle of size 2>
-  f = Transformation( [ 1, 1, 2 ] )
-  g = Transformation( [ 2, 1, 2 ] )
-  h = Transformation( [ 1, 1, 2 ] )
+   source = <associative quandle of size 3>
+   range = <associative quandle of size 2>
+   f = Transformation( [ 1, 1, 2 ] )
+   g = Transformation( [ 2, 1, 2 ] )
+   h = Transformation( [ 1, 1, 2 ] )
 >
 gap> [ Source( t ), Range( t ) ];
 [ <associative quandle of size 3>, <associative quandle of size 2> ]
@@ -132,7 +132,7 @@ gap> G := AutomorphicLoop( 10, 1 );; # inner mappings are automorphisms here
 gap> f := AsRightQuasigroupMapping( G, LeftInnerMapping( G, G.2, G.3 ) );;
 gap> g := f*f;; u := G.1;; v := G.2;;
 gap> IsAffineQuasigroupArithmeticForm( G, u, f, v, g ); # suitable for (u*x^f)*(v*y^g)
-true 
+true
 gap> Q := AffineQuasigroup( G, u, f, v, g ); 
 <quasigroup of size 10>
 
@@ -152,8 +152,9 @@ gap> Q3 := RightQuasigroupIsotope( Q1, t!.f, t!.g, t!.h );;
 gap> MultiplicationTable( Q2 ) = MultiplicationTable( Q3 );
 true
 
-# doc/_Chapter_Topisms.xml:604-610
+# doc/_Chapter_Topisms.xml:604-611
 gap> Q1 := MoufangLoop( 32, 10 );
+MoufangLoop( 32, 10 )
 gap> Q2 := LoopIsomorph( Q1, (3,4) );;
 gap> Q3 := PrincipalLoopIsotope( Q2, Q2.10, Q2.20 );; # a loop isotopic to Q1
 gap> IsotopismLoops( Q1, Q3 ); 

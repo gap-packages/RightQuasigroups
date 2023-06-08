@@ -1,9 +1,16 @@
-# multiplication groups
+gap> START_TEST("RightQuasigroups package: CoreMethods.tst");
+gap> SizeScreen([80,23]);
+[ 80, 23 ]
+gap> 
+gap> LoadPackage("RightQuasigroups", false);
+true
+gap> 
+gap> # multiplication groups
 gap> Q := AsQuasigroup( Group( (1,2,3,4,5,6 ) ) );;
 gap> Size( RightMultiplicationGroup( Q ) );
 6
 gap> S := Subquasigroup( Q, [ Q[(1,3,5)(2,4,6)] ] );
-<quasigroup of size 3>
+<associative quasigroup of size 3>
 gap> RightTranslation( S, (1,3,5)(2,4,6) );
 (1,3,5)
 gap> LeftTranslation( S, (1,3,5)(2,4,6) );
@@ -18,8 +25,7 @@ gap> RelativeRightMultiplicationGroup( Q, S );
 Group([ (1,3,5)(2,4,6) ])
 gap> Size( MultiplicationGroup( Q ) );
 6
-
-# inner mappings and inner mapping groups
+gap> # inner mappings and inner mapping groups
 gap> LeftInnerMapping( Q, Q.1, Q.2 );
 ()
 gap> RightInnerMapping( Q, Q.1, Q.2 );
@@ -53,20 +59,21 @@ gap> Size(MiddleInnerMappingGroup( Q ));
 12
 gap> IsSubgroup( LeftInnerMappingGroup(Q), MiddleInnerMappingGroup(Q));
 true
-
-# nuclei
+gap> # nuclei
 gap> LeftNucleus(Q);
-<loop of size 1>
+<trivial group with 1 generator>
 gap> Q := AsLoop( CyclicGroup( 100 ) );;
 gap> RightNucleus(Q);
-<loop of size 100>
+<associative loop of size 100>
 gap> Nuc(Q);
-<loop of size 100>
+<associative loop of size 100>
 gap> Size(Commutant( Q ));
 100
 gap> Center(Q);
-<loop of size 100>
-
-# exponent
+<associative loop of size 100>
+gap> # exponent
 gap> Exponent( Q );
 100
+gap> 
+gap> 
+gap> STOP_TEST( "CoreMethods.tst", 10000 );

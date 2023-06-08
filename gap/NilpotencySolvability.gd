@@ -183,20 +183,22 @@ DeclareAttribute( "CongruenceDerivedLength", IsLoop );
 
 #! @BeginExampleSession
 #! gap> uset := Union( List([0..3], i-> [[i,0],[i,1]] ) ); # the underlying set
-#! [ [ 0, 0 ], [ 0, 1 ], [ 1, 0 ], [ 1, 1 ], [ 2, 0 ], [ 2, 1 ], [ 3, 0 ], [ 3, 1 ] ]
+#! [ [ 0, 0 ], [ 0, 1 ], [ 1, 0 ], [ 1, 1 ], [ 2, 0 ], [ 2, 1 ], 
+#!   [ 3, 0 ], [ 3, 1 ] ]
 #! gap> ct := [[0,1,2,3],[1,3,0,2],[2,0,3,1],[3,2,1,0]];;
 #! gap> mult := function( x, y )
-#! >       if x[2]=0 or y[2]=0 then
-#! >               return [ (x[1]+y[1]) mod 4, (x[2]+y[2]) mod 2 ];
-#! >       else
-#! >               return [ ct[x[1]+1,y[1]+1], (x[2]+y[2]) mod 2 ];
-#! >       fi;
-#! > end;
+#! >         if x[2]=0 or y[2]=0 then
+#! >                 return [ (x[1]+y[1]) mod 4, (x[2]+y[2]) mod 2 ];
+#! >         else
+#! >                 return [ ct[x[1]+1,y[1]+1], (x[2]+y[2]) mod 2 ];
+#! >         fi;
+#! >   end;
 #! function( x, y ) ... end
 #! gap> Q := LoopByFunction( uset, mult ); # Z_4 x Z_2 with one quandrant "replaced" with ct
 #! <loop of size 8>
 #! gap> DerivedSeries( Q );
-#! [ <loop of size 8>, <loop of size 4>, <associative loop of size 1> ]
+#! [ <loop of size 8>, <loop of size 4>, 
+#!   <trivial group with 1 generator> ]
 #! gap> IsSolvable( Q );
 #! true
 #! gap> DerivedLength( Q );
@@ -250,7 +252,7 @@ DeclareAttribute( "FrattiniSubloop", IsLoop );
 
 #! @BeginExampleSession
 #! gap> Q := MoufangLoop(64,5);
-#! <Moufang loop 64/5>
+#! MoufangLoop( 64, 5 )
 #! gap> F := FrattiniSubloop(Q);
 #! <Moufang loop of size 8>
 #! gap> Exponent(Q/F);

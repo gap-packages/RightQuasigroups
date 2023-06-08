@@ -34,7 +34,7 @@ gap> Display( MultiplicationTable( OQ ) );
   [  3,  1,  2 ],
   [  2,  3,  1 ] ]
 gap> B := LeftBolLoop( 8, 1 );
-<left Bol loop 8/1>
+LeftBolLoop( 8, 1 )
 gap> OppositeLoop( B ); # dual properties inherited
 <right Bol loop of size 8>
 
@@ -66,7 +66,7 @@ gap> Subloop( Q, [4] );
 
 # doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:167-173
 gap> AllSubloops( AsLoop( CyclicGroup( 3 ) ) );
-[ <associative loop of size 1>, <associative loop of size 3> ]
+[ <trivial group with 1 generator>, <associative loop of size 3> ]
 gap> P := ProjectionRightQuasigroup( 2 );; 
 gap> Length( AllSubrightquasigroups( P ) ); # every nonempty subset is a subrightquasigroup here
 3
@@ -77,19 +77,19 @@ gap> S := Subloop(Q,[Q.2]);;
 gap> IsMinimalSubloop(S);
 true
 gap> AllMinimalSubloops(Q);
-[ <Moufang loop of size 2>, <Moufang loop of size 2>,
-  <Moufang loop of size 3>, <Moufang loop of size 2>,
-  <Moufang loop of size 2>, <Moufang loop of size 2>,
-  <Moufang loop of size 2>, <Moufang loop of size 2>,
+[ <Moufang loop of size 2>, <Moufang loop of size 2>, 
+  <Moufang loop of size 3>, <Moufang loop of size 2>, 
+  <Moufang loop of size 2>, <Moufang loop of size 2>, 
+  <Moufang loop of size 2>, <Moufang loop of size 2>, 
   <Moufang loop of size 2>, <Moufang loop of size 2> ]
 gap> IsMaximalSubloop(Q,S);
 false
 gap> AllMaximalSubloops(Q);
-[ <Moufang loop of size 6>, <Moufang loop of size 4>,    
-  <Moufang loop of size 4>, <Moufang loop of size 4>,
-  <Moufang loop of size 6>, <Moufang loop of size 6>,
-  <Moufang loop of size 4>, <Moufang loop of size 4>,
-  <Moufang loop of size 4>, <Moufang loop of size 4>,
+[ <Moufang loop of size 6>, <Moufang loop of size 4>, 
+  <Moufang loop of size 4>, <Moufang loop of size 4>, 
+  <Moufang loop of size 6>, <Moufang loop of size 6>, 
+  <Moufang loop of size 4>, <Moufang loop of size 4>, 
+  <Moufang loop of size 4>, <Moufang loop of size 4>, 
   <Moufang loop of size 4>, <Moufang loop of size 4> ]
 
 # doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:289-300
@@ -146,13 +146,13 @@ gap> C := RightQuasigroupCongruenceByPairs( Q, [ [ Q[0],Q[2] ], [ Q[0], Q[1] ] ]
 gap> List( EquivalenceClasses( C ), Elements );
 [ [ r0, r1, r2, r3, r4, r5, r6, r7 ] ]
 
-# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:588-616
+# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:588-617
 gap> # right quasigroup example
 gap> R := RightQuasigroupByCayleyTable( [[2,2,1,1],[3,1,2,2],[4,3,3,3],[1,4,4,4]] );; 
 gap> RMlt := RightMultiplicationGroup( R );
 Group([ (1,2,3,4), (1,2) ])
 gap> AllRightQuasigroupCongruences( R );
-[ <equivalence relation on <right quasigroup of size 4 on 1, 2, 3, 4> >,
+[ <equivalence relation on <right quasigroup of size 4 on 1, 2, 3, 4> >, 
   <equivalence relation on <right quasigroup of size 4 on 1, 2, 3, 4> > ]
 gap> IsSimpleRightQuasigroup( R ); # IsSimple( R ) is also supported
 true
@@ -168,14 +168,15 @@ false
 gap> # loop example
 gap> L := AsLoop( Group((1,2,3,4)) );;
 gap> AllNormalSubloops( L );
-[ <associative loop of size 1>, <associative loop of size 2>, <associative loop of size 4> ]
+[ <trivial group with 1 generator>, <associative loop of size 2>, 
+  <associative loop of size 4> ]
 gap> IsSimpleLoop( L ); # IsSimple( L ) is also supported
 false
 gap> S := Subloop(  L, [ (1,3)(2,4) ] );;
 gap> IsNormal( L, S );
 true
 
-# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:658-675
+# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:659-676
 gap> Q := ProjectionRightQuasigroup( 6 );;
 gap> C := EquivalenceRelationByPartition( Q, [[Q.1,Q.2],[Q.3,Q.4,Q.5],[Q.6]] );;
 gap> [ IsRightQuasigroupCongruence( C ), IsQuasigroupCongruence( C ), IsLoopCongruence( C ) ];
@@ -183,29 +184,29 @@ gap> [ IsRightQuasigroupCongruence( C ), IsQuasigroupCongruence( C ), IsLoopCong
 gap> F := Q/C;
 <associative quandle of size 3>
 gap> Elements( F ); # the inner "r" comes from Q, the outer "r" from F.
-[ r{r1}, r{r3}, r{r6} ]
+[ r<object>, r<object>, r<object> ]
 gap> H := FactorRightQuasigroup( C, ConstructorStyle( false, false ) ); # non-index based version is supported (but not for /)
 <associative quandle of size 3>
 gap> HasMultiplicationTable( H );
 false
 gap> H.1*H.2;
-r{r1}
+r<object>
 gap> CayleyTable( H );   
 [ [ {r1}, {r1}, {r1} ], [ {r3}, {r3}, {r3} ], [ {r6}, {r6}, {r6} ] ]
 
-# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:688-721
+# doc/_Chapter_Direct_products_subalgebras_and_factor_algebras.xml:689-722
 gap> # auxiliary functions
 gap> DotProduct := function( x, y ) return Sum( [1..Length(x)], i -> x[i]*y[i] ); end;;
 gap> CrossProduct := function( x, y ) return [ x[2]*y[3]-x[3]*y[2], x[3]*y[1]-x[1]*y[3], x[1]*y[2]-x[2]*y[1] ]; end;;
 gap> PaigeNorm := function( x ) return x[1]*x[8] - DotProduct( x{[2,3,4]},x{[5,6,7]} ); end;;
 gap> PaigeMult := function( x, y )
-> local a, b, c, d;
-> a := x[1]*y[1] + DotProduct(x{[2,3,4]},y{[5,6,7]});
-> b := x[1]*y{[2,3,4]} + x{[2,3,4]}*y[8] - CrossProduct(x{[5,6,7]},y{[5,6,7]});
-> c := x{[5,6,7]}*y[1] + x[8]*y{[5,6,7]} + CrossProduct(x{[2,3,4]},y{[2,3,4]});
-> d := DotProduct(x{[5,6,7]},y{[2,3,4]})+x[8]*y[8];
-> return Concatenation( [a], b, c, [d] );
-> end;;
+>   local a, b, c, d;
+>   a := x[1]*y[1] + DotProduct(x{[2,3,4]},y{[5,6,7]});
+>   b := x[1]*y{[2,3,4]} + x{[2,3,4]}*y[8] - CrossProduct(x{[5,6,7]},y{[5,6,7]});
+>   c := x{[5,6,7]}*y[1] + x[8]*y{[5,6,7]} + CrossProduct(x{[2,3,4]},y{[2,3,4]});
+>   d := DotProduct(x{[5,6,7]},y{[2,3,4]})+x[8]*y[8];
+>   return Concatenation( [a], b, c, [d] );
+>   end;;
 gap> # Paige loop over GF(2) (index based approach in characteristic 2)
 gap> F := GF(2);;
 gap> S := Filtered( F^8, x -> PaigeNorm( x ) = One( F ) );;

@@ -99,7 +99,7 @@ true
 gap> R := AsRightQuasigroup( M );
 <right quasigroup of size 2>
 gap> Elements( R );
-[ rm1, rm2 ]
+[ r<object>, r<object> ]
 gap> IsQuasigroupMagma( R ); # synonym of IsLatinMagma
 false
 gap> AsQuasigroup( M ); # arguments of constructors are by default not checked!
@@ -532,13 +532,13 @@ gap> S := Difference( GF(p), [ Zero( GF( p ) ) ] );; # nonzero elements of GF(p)
 gap> Q := LoopByFunction( S, \*, ConstructorStyle( false, false ) ); # not index based, no arguments checked
 <loop of size 1000002>
 gap> One( Q );
-lZmodpZObj( 1, 1000003 )
+lZmodpZObj(1,1000003)
 gap> Q.10*Q.100;
-lZmodpZObj( 1000, 1000003 )
+lZmodpZObj(1000,1000003)
 gap> Q.100/Q.10;
-lZmodpZObj( 10, 1000003 )
+lZmodpZObj(10,1000003)
 gap> Inverse( Q.10 );
-lZmodpZObj( 300001, 1000003 )
+lZmodpZObj(300001,1000003)
 ]]></Example>
 
 

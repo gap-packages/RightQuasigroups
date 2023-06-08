@@ -10,22 +10,24 @@
 #
 gap> START_TEST("rightquasigroups06.tst");
 
-# doc/_Chapter_Nilpotency_and_solvability.xml:246-280
+# doc/_Chapter_Nilpotency_and_solvability.xml:246-282
 gap> uset := Union( List([0..3], i-> [[i,0],[i,1]] ) ); # the underlying set
-[ [ 0, 0 ], [ 0, 1 ], [ 1, 0 ], [ 1, 1 ], [ 2, 0 ], [ 2, 1 ], [ 3, 0 ], [ 3, 1 ] ]
+[ [ 0, 0 ], [ 0, 1 ], [ 1, 0 ], [ 1, 1 ], [ 2, 0 ], [ 2, 1 ], 
+  [ 3, 0 ], [ 3, 1 ] ]
 gap> ct := [[0,1,2,3],[1,3,0,2],[2,0,3,1],[3,2,1,0]];;
 gap> mult := function( x, y )
->       if x[2]=0 or y[2]=0 then
->               return [ (x[1]+y[1]) mod 4, (x[2]+y[2]) mod 2 ];
->       else
->               return [ ct[x[1]+1,y[1]+1], (x[2]+y[2]) mod 2 ];
->       fi;
-> end;
+>         if x[2]=0 or y[2]=0 then
+>                 return [ (x[1]+y[1]) mod 4, (x[2]+y[2]) mod 2 ];
+>         else
+>                 return [ ct[x[1]+1,y[1]+1], (x[2]+y[2]) mod 2 ];
+>         fi;
+>   end;
 function( x, y ) ... end
 gap> Q := LoopByFunction( uset, mult ); # Z_4 x Z_2 with one quandrant "replaced" with ct
 <loop of size 8>
 gap> DerivedSeries( Q );
-[ <loop of size 8>, <loop of size 4>, <associative loop of size 1> ]
+[ <loop of size 8>, <loop of size 4>, 
+  <trivial group with 1 generator> ]
 gap> IsSolvable( Q );
 true
 gap> DerivedLength( Q );
@@ -45,7 +47,7 @@ true
 gap> IsAbelianNormalSubloop( Q, C ); # but not abelian in Q
 false
 
-# doc/_Chapter_Nilpotency_and_solvability.xml:347-379
+# doc/_Chapter_Nilpotency_and_solvability.xml:349-381
 gap> K := AsLoop( CyclicGroup( 4 ) );;
 gap> F := LoopByCayleyTable( [ [ "a", "b" ], [ "b", "a" ] ] );;
 gap> AutomorphismGroup( K );
@@ -78,17 +80,19 @@ gap> LoopByCentralExtension( K, F, theta );
 gap> Center( last );
 <associative loop of size 8>
 
-# doc/_Chapter_Nilpotency_and_solvability.xml:418-436
+# doc/_Chapter_Nilpotency_and_solvability.xml:420-440
 gap> Q := MoufangLoop(32,3);;
 gap> Nuc( Q ); # here, the nucleus is commutative and properly contains the center
 <associative loop of size 4>
 gap> Center( Q );
 <associative loop of size 2>
 gap> ext := NuclearExtensionByNormalSubloop( Q, Nuc( Q ) );
-[ <associative loop of size 4>, <Moufang loop of size 8>, [ (), (), (), (2,4), (), (2,4), (2,4), (2,4) ],
-  [ [ 1, 1, 1, 1, 1, 1, 1, 1 ], [ 1, 1, 1, 1, 1, 1, 3, 3 ], [ 1, 3, 1, 1, 3, 1, 1, 1 ], [ 1, 1, 1, 1, 3, 1, 1, 3 ],
-      [ 1, 3, 1, 1, 3, 1, 3, 3 ], [ 1, 1, 1, 1, 3, 1, 3, 1 ], [ 1, 3, 1, 1, 1, 1, 1, 3 ], [ 1, 3, 1, 1, 1, 1, 3, 1 ]
-     ] ]
+[ <associative loop of size 4>, <Moufang loop of size 8>, 
+  [ (), (), (), (2,4), (), (2,4), (2,4), (2,4) ], 
+  [ [ 1, 1, 1, 1, 1, 1, 1, 1 ], [ 1, 1, 1, 1, 1, 1, 3, 3 ], 
+      [ 1, 3, 1, 1, 3, 1, 1, 1 ], [ 1, 1, 1, 1, 3, 1, 1, 3 ], 
+      [ 1, 3, 1, 1, 3, 1, 3, 3 ], [ 1, 1, 1, 1, 3, 1, 3, 1 ], 
+      [ 1, 3, 1, 1, 1, 1, 1, 3 ], [ 1, 3, 1, 1, 1, 1, 3, 1 ] ] ]
 gap> copyQ := LoopByNuclearExtension( ext[1],ext[2],ext[3],ext[4] );;
 gap> AsCanonicalPerm( IsomorphismLoops( Q, copyQ ) );
 (4,9,11,28,29,24,22,21,20,25,27,12,13,8,6,5)(7,10)(14,30)(15,31)(16,32)(23,26)
@@ -97,14 +101,14 @@ gap> copyQ := LoopByCentralExtension( ext );; # extension can also be given as a
 gap> AsCanonicalPerm( IsomorphismLoops( Q, copyQ ) );
 ()
 
-# doc/_Chapter_Nilpotency_and_solvability.xml:481-500
+# doc/_Chapter_Nilpotency_and_solvability.xml:485-504
 gap> F := AsLoop( Group( (1,2), (3,4) ) );; # the Klein group
 gap> coc := LoopCocyclesInVariety( F, 2, [ "x*(y*(x*z)) = (x*(y*x))*z" ] );; # basis of left Bol cocycles
 gap> Length( coc ); # dimension of the vector space of cocycles
 6
 gap> theta := coc[3];; Display( theta ); # one cocycle
-[ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2),
-0*Z(2), 0*Z(2) ]
+[ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 
+Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ]
 gap> theta := List( theta, x -> IntFFE( x ) + 1 );; Display( theta ); # converting cocycle entries to [1..Size(K)]
 [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1 ]
 gap> theta := AsSquareTable( theta );; Display( theta ); # converting cocycle to square table
@@ -117,7 +121,7 @@ gap> Q := LoopByCentralExtension( AsLoop( CyclicGroup(2) ), F, theta );
 gap> IsLeftBolLoop( Q );
 true
 
-# doc/_Chapter_Nilpotency_and_solvability.xml:553-577
+# doc/_Chapter_Nilpotency_and_solvability.xml:557-581
 gap> F := AsLoop( Group( (1,2), (3,4 ) ) );; # Klein group
 gap> coc := LoopCocyclesInVariety( F, 2, [ "x*(y*(x*z)) = (x*(y*x))*z" ] );; Length( coc ); # basis of left Bol cocycles
 6
@@ -142,9 +146,9 @@ true
 gap> Length( LoopsUpToIsomorphism( lps ) ); # filtering up to isomorphism (no isomorphisms in this example)
 10
 
-# doc/_Chapter_Nilpotency_and_solvability.xml:627-636
+# doc/_Chapter_Nilpotency_and_solvability.xml:631-640
 gap> Q := MoufangLoop(64,5);
-<Moufang loop 64/5>
+MoufangLoop( 64, 5 )
 gap> F := FrattiniSubloop(Q);
 <Moufang loop of size 8>
 gap> Exponent(Q/F);
