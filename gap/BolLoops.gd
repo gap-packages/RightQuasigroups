@@ -35,18 +35,18 @@ DeclareAttribute( "AssociatedLeftBruckLoop", IsLeftBolLoop );
 
 #! @EndGroup
 
-#! <P/>A triple $G$, $H_1$, $H_2$ is an <Index>exact group factorization</Index>**exact group factorization**
-#! if $H_1$, $H_2$ are subgroups of $G$ such that $H_1\cap H_2=1$ and $H_1H_2=G$.
-
-#! <P/>Given an exact group factorization $G$, $H_1$, $H_2$, the triple $(G\times G, H_1\times H_2, \{(g,g^{-1}):g\in G\})$
-#! is a loop right folder and the resulting group is automatically a right Bol loop.
-
 #! @Arguments G, H1, H2 
 #! @Returns `true` if `G`, `H1`, `H2` is an exact group factorization, else returns `false`.
+#! @Description A triple $G$, $H_1$, $H_2$ is an <Index>exact group factorization</Index>**exact group factorization**
+#! if $H_1$, $H_2$ are subgroups of $G$ such that $H_1\cap H_2=1$ and $H_1H_2=G$.
 DeclareOperation( "IsExactGroupFactorization", [ IsGroup, IsGroup, IsGroup ] );
 
-#! @Arguments G, H1, H2[, constructorStyle]
-#! @Returns the right Bol loop obtained from the exact group factorization `G`, `H1`, `H2`.
+#! @Arguments G, H1[, H2[, constructorStyle]]
+#! @Returns the right Bol loop obtained from the exact group factorization `G`, `H1`, `H2`. With two arguments `G` 
+#! and `H1`, the group `G` must be a transitive permutation group and `H1` must be a regular subgroup. Then,
+#! `H2` is taken as the stabilizer of a point in `G`. 
+#! @Description Given an exact group factorization $G$, $H_1$, $H_2$, the triple $(G\times G, H_1\times H_2, \{(g,g^{-1}):g\in G\})$
+#! is a loop right folder and the resulting group is automatically a right Bol loop.
 DeclareOperation( "RightBolLoopByExactGroupFactorization", [ IsGroup, IsGroup, IsGroup ] ); 
 
 #! @BeginExampleSession

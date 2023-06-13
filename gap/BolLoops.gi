@@ -84,6 +84,18 @@ function( g, h1, h2 )
     return RightBolLoopByExactGroupFactorization( g, h1, h2, RQ_defaultConstructorStyle );
 end );
 
+InstallOtherMethod( RightBolLoopByExactGroupFactorization, "for group and two subgroups",
+    [IsPermGroup, IsPermGroup ],
+function( g, h )
+    local h2;
+    if IsSubgroup( g, h ) and IsRegular( h, MovedPoints( g ) ) then 
+        h2 := Stabilizer( g, MovedPoints( g )[ 1 ] );
+        return RightBolLoopByExactGroupFactorization( g, h, h2, RQ_defaultConstructorStyle );
+    else
+        Error( "RQ: <2> must be a regular subgroup of <1>." );
+    fi;
+end );
+
 InstallOtherMethod( RightBolLoopByExactGroupFactorization, "for group, two subgroups and record",
     [ IsGroup, IsGroup, IsGroup, IsRecord ],
 function( g, h1, h2, style )
