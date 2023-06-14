@@ -330,6 +330,20 @@ function( arg )
     return t!.source = t!.range;
 end );
 
+#! Arguments elms
+#! @Description A method to check if the elements of a list or collection do generate a 
+#! group of autotopisms of a right quasigroup. 
+InstallMethod( IsGeneratorsOfMagmaWithInverses,
+    "for a collection of right quasigroup homotopisms",
+    [ IsRightQuasigroupHomotopismCollection ],
+    elms -> ForAll( elms, x -> 
+        Range( x ) = Range( elms[1] ) 
+        and Source( x ) = Range( elms[1] ) 
+        and Inverse( x ) <> fail 
+    ) 
+);
+
+
 # TWISTS OF RIGHT QUASIGROUPS
 # _____________________________________________________________________________
 
