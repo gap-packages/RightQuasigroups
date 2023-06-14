@@ -697,8 +697,8 @@ DeclareOperation( "RQ_AutotopismGroupByGeneratorsNC", [ IsRightQuasigroup, IsRig
 
 #! @Arguments Q
 #! @Returns the autotopism group of a loop <Arg>Q</Arg>.
-#! Note: There is no method yet for right quasigroups and quasigroups.
-DeclareAttribute( "AutotopismGroup", IsLoop );
+#! Note: There is no generic method implemented yet for right quasigroups and quasigroups.
+DeclareAttribute( "AutotopismGroup", IsRightQuasigroup );
 
 #! @BeginExampleSession
 #! gap> q := RightBolLoop( 16, 3 );
