@@ -15,7 +15,7 @@ gap> Q := RightBolLoop(21,1);;
 gap> AssociatedRightBruckLoop( Q );
 <right Bruck loop of size 21>
 
-# doc/_Chapter_Bol_loops_Bruck_loops_and_Moufang_loops.xml:61-69
+# doc/_Chapter_Bol_loops_Bruck_loops_and_Moufang_loops.xml:60-68
 gap> G := SymmetricGroup( 5 );;
 gap> H1 := Subgroup( G, [(1,2),(1,3),(1,4)] );;
 gap> H2 := Subgroup( G, [(1,2,3,4,5)] );;

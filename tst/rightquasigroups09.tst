@@ -160,5 +160,13 @@ gap> Q3 := PrincipalLoopIsotope( Q2, Q2.10, Q2.20 );; # a loop isotopic to Q1
 gap> IsotopismLoops( Q1, Q3 ); 
 <isotopism of loops>
 
+# doc/_Chapter_Topisms.xml:677-684
+gap> q := RightBolLoop( 16, 3 );
+RightBolLoop( 16, 3 )
+gap> ag := AutotopismGroup( q );
+<group with 5 generators>
+gap> Size( ag );
+768
+
 #
 gap> STOP_TEST("rightquasigroups09.tst", 1);

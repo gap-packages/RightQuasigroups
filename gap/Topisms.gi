@@ -330,9 +330,6 @@ function( arg )
     return t!.source = t!.range;
 end );
 
-#! Arguments elms
-#! @Description A method to check if the elements of a list or collection do generate a 
-#! group of autotopisms of a right quasigroup. 
 InstallMethod( IsGeneratorsOfMagmaWithInverses,
     "for a collection of right quasigroup homotopisms",
     [ IsRightQuasigroupHomotopismCollection ],
@@ -342,7 +339,6 @@ InstallMethod( IsGeneratorsOfMagmaWithInverses,
         and Inverse( x ) <> fail 
     ) 
 );
-
 
 # TWISTS OF RIGHT QUASIGROUPS
 # _____________________________________________________________________________
@@ -1249,6 +1245,51 @@ function( ls, t )
     return [a,b];
 end );
 
+InstallGlobalFunction( RQ_NiceMonomorphism, 
+function( htop )
+    local n;
+    n := Size( Parent( Source( htop ) ) );
+    return PermList( 
+        Concatenation( List( [1,2,3], i -> (i-1)*n + ListPerm( ComponentOfHomotopism( htop, i), n ) ) ) 
+    );
+end);
+
+InstallGlobalFunction( RQ_NiceMonomorphismInverse, 
+function( rq )
+    local n, fun;
+    n := Size( Parent( rq ) );
+    fun := function( perm )
+        local li;
+        li := List( [0,1,2], i -> PermList( OnTuples( i*n + [1..n], perm ) - i*n ) );
+        return HomotopismRightQuasigroups( rq, rq, li[1], li[2], li[3] );
+    end;
+    return fun;
+end);
+
+InstallMethod( RQ_AutotopismGroupByGeneratorsNC, "for a right quasigroup and a list of autotopisms",
+    [ IsRightQuasigroup, IsRightQuasigroupHomotopismCollection ],
+function( rq, gens )
+    local atpgr, ag, nice;
+    if gens = [ ] then gens := [ IdentityAutotopism( rq ) ]; fi;
+    atpgr := MakeGroupyObj( FamilyObj( gens ), IsGroup, gens, false );
+    ag := Group( List( gens, RQ_NiceMonomorphism ) );
+    nice := GroupHomomorphismByFunction( 
+        atpgr, 
+        ag, 
+        RQ_NiceMonomorphism, 
+        RQ_NiceMonomorphismInverse( rq )
+    );
+    SetNiceMonomorphism( atpgr, nice );
+    SetIsHandledByNiceMonomorphism( atpgr, true );
+    return atpgr;
+end );
+
+InstallMethod( GroupByGenerators, "for a list of autotopisms", 
+    [ IsRightQuasigroupHomotopismCollection ],
+function( gens )
+    return RQ_AutotopismGroupByGeneratorsNC( Source( gens[1] ), AsList( gens ) );
+end );
+
 # AutotopismGroup
 # MATH: Every autotopism of Q decomposes uniquely as a principal loop isotopism Q --> Q_{a,b}
 # followed by an isomorphism Q_{a,b} --> Q. The principal loop isotope Q_{a,b}
@@ -1284,136 +1325,6 @@ function( Q )
     od;
     # convert back to original algebra
     gens := List( gens, t -> AutotopismRightQuasigroup( origQ, t!.f, t!.g, t!.h, true ) ); # data given as canonical
-    return Group( gens );
+    return RQ_AutotopismGroupByGeneratorsNC( Q, gens ); #Group( gens );
 end );
 
-#InstallMethod( AtpOn3nElms@, "for an integer in [1..3n] and an autotopism",
-#    [ IsPosInt, IsRightQuasigroupHomotopism ],
-#function( i, atp )
-#    local n;
-#    n := Size( atp!.source );
-#    if i <= n then 
-#        return i^(atp!.f);
-#    elif i <= 2*n then 
-#        return n+(i-n)^(atp!.g);
-#    else 
-#        return 2*n+(i-2*n)^(atp!.h);
-#    fi;
-#end );
-
-#InstallMethod( AtpOnnSquare@, "for an element of QxQ(xQ) and an autotopism",
-#    [ IsList, IsRightQuasigroupHomotopism ],
-# function( x, atp )
-#    if Length( x ) = 2 then
-#        return [ x[1]^(atp!.f), x[2]^(atp!.g) ];
-#    elif Length( x ) = 3 then 
-#        return [ x[1]^(atp!.f), x[2]^(atp!.g), x[3]^(atp!.h) ];
-#    else
-#        Error( "RQ: <1> must have length 2 or 3." );
-#    fi;
-#end );
-
-#InstallMethod( AutotopismFromPrincipalLoopIsotope, "for loops", 
-#    [ IsLoop, IsLoopElement, IsLoopElement ],
-#function( Q, a, b )
-#    local S, iso, f, g, h;
-#    if not CheckAtpInvariant@( Q, Q, a, b ) then
-#        return fail;
-#    fi;
-#    S := PrincipalLoopIsotope( Q, a, b );
-#    iso := IsomorphismLoops( Q, S );
-#    if iso = fail then
-#        return fail;
-#    fi;                           
-#    h := AsPermutation( iso!.cantraf );
-#    f := h / RightTranslation( Q, a );
-#    g := h / LeftTranslation( Q, b );
-#    #ForAll( Q, x -> ForAll( Q, y -> x^f * y^g = (x * y)^u ) );
-#    return HomotopismRightQuasigroups( Q, f, g, h ); # REVISIT: perhaps set attributes so that it knows it is bijective
-#end );
-
-
-#InstallMethod( AutotopismGroupByGenerators, "for a collection of autotopisms",
-#    [ IsList and IsRightQuasigroupHomotopismCollection ],
-#function( gens )
-#    local g, nice, n;
-#    if gens = [] then 
-#        Error( "RQ: list of generators cannot be empty." );
-#    fi;
-#    g := GroupWithGenerators( gens );
-#    n := Size( gens[1]!.source );
-#    nice := ActionHomomorphism( g, [1 .. 3*n], AtpOn3nElms@ );
-#    SetIsInjective( nice, true );
-#    SetNiceMonomorphism( g, nice );
-#    SetIsHandledByNiceMonomorphism( g, true );
-#    SetGeneratorsOfGroup( g, gens );
-#    return g;
-#end );
-
-#InstallGlobalFunction( ExtendAtpGrp,
-#function( Q, gens, green, yellow, red )
-#    local g, pt, newgen;
-#    if yellow = [] then
-#        return fail;
-#    fi;
-#    pt := yellow[1];
-#    newgen := AutotopismFromPrincipalLoopIsotope( Q, pt[2], pt[1] );
-#    if newgen <> fail then
-#        Add( gens, newgen );
-#        Add( green, pt );
-#    else
-#        Add( red, pt );
-#    fi;
-#    g := AutotopismGroupByGenerators( gens );
-#    yellow := Difference( Cartesian( Q, Q ),
-#        Union( List( Concatenation( green, red ), x -> Orbit( g, x, AtpOnnSquare@) ) ) 
-#    );
-#    return yellow;
-#end );
-
-#InstallMethod( AutotopismGroup, "for a loop",
-#    [ IsLoop ],
-#function( Q )
-#    local ag, gens, green, yellow, red;
-#    ag := AutomorphismGroup(Q);
-#    gens := List( GeneratorsOfGroup( ag ), u -> HomotopismRightQuasigroups( Q, u, u, u ) );
-#    green := []; red := []; yellow := Cartesian( Q, Q );
-#    while yellow <> [] do
-#        yellow := ExtendAtpGrp( Q, gens, green, yellow, red );
-#    od;
-#    return AutotopismGroupByGenerators( gens );
-#end );
-
-#InstallGlobalFunction( LeftAtpInvariant@, 
-#function( Q, a )
-#    return SortedList( List( LeftTranslation( Q, a )^(-1)*LeftSection( Q ), CycleStructurePerm ) );
-#end );
-
-#InstallGlobalFunction( RightAtpInvariant@, 
-#function( Q, a )
-#    return SortedList( List( RightTranslation( Q, a )^(-1)*RightSection( Q ), CycleStructurePerm ) );
-#end );
-
-#InstallMethod( AtpInvariant@, "for a loop",
-#    [ IsLoop ],
-#function( Q )
-#    local S, left,right;
-#    if IsCanonical( Q ) then
-#        S := Q;
-#    else
-#        S := CanonicalCopy( Q );
-#    fi;
-#    left := List( S, a -> LeftAtpInvariant@( S, a ) );
-#    right := List( S, a -> RightAtpInvariant@( S, a ) );
-#    return [ left, right ];
-#end );
-
-#InstallGlobalFunction( CheckAtpInvariant@, 
-#function( Q, S, a, b )
-#    local invQ, invS;
-#    a := Position( Elements( S ), a );
-#    b := Position( Elements( S ), b );
-#    invQ := AtpInvariant@( Q );
-#    invS := AtpInvariant@( S );
-#    return invQ[1][1] = invS[1][b] and invQ[2][1] = invS[2][a];     
-#end );

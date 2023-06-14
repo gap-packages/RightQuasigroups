@@ -29,6 +29,7 @@
 DeclareCategory( "IsRightQuasigroupHomotopism", IsMultiplicativeElementWithInverse ); 
 # PROG: Not every homotopism is invertible but we allow it as an option.
 
+
 #! @EndGroup
 
 DeclareCategoryCollections( "IsRightQuasigroupHomotopism" );
@@ -55,7 +56,6 @@ DeclareAttribute( "Range", IsRightQuasigroupHomotopism );
 #! be also accessed directly via `t!.source`, `t!.range`, `t!.f`, `t!.g` and `t!.h`.
 #! @Description The three components are stored as parent transformations or as parent permutations (when the source equals the range).
 DeclareOperation( "ComponentOfHomotopism", [ IsRightQuasigroupHomotopism, IsInt ] );
-
 #! @EndGroup
 
 #! @BeginGroup
@@ -674,7 +674,37 @@ DeclareOperation( "LoopsUpToIsotopism", [ IsList, IsString ] );
 # applies the first two components of the right quasigroup homotopism t to the list ls of length 2
 DeclareOperation( "RQ_HtpOnPairs", [ IsList, IsRightQuasigroupHomotopism ] );
 
+#! @Arguments t
+#! @Returns a permutation of degree $3n$, where $n$ is the size of the parent right quasigroup
+#! of the source of <Arg>t</Arg>. 
+#! @Description The input is a <C>HomotopismRightQuasigroups</C> object. This map is a nice
+#! monomorphism for this category.
+DeclareGlobalFunction( "RQ_NiceMonomorphism" );
+
+# Input: a parent permutation of degree 3*n
+# Output: a triple of permutations of degree n
+#! @Arguments Q
+#! @Returns the inverse function $f$ of the nice monomorphism <C>HomotopismRightQuasigroups</C> objects
+#! whose source is the right quasigroup <Arg>Q</Arg>. The function $f$ maps permutations of degree $3n$ to 
+#! isotopisms of <Arg>Q</Arg>, where $n$ is the size of the parent of <Arg>Q</Arg>. 
+DeclareGlobalFunction( "RQ_NiceMonomorphismInverse" );
+
+#! @Arguments Q,gens
+#! @Returns a group consisting of <C>HomotopismRightQuasigroups</C> objects. This group has a
+#! a nice monomorphism to a permutation group of degree $3n$ where $n$ is the order of the 
+#! parent group of <Arg>Q</Arg>.
+DeclareOperation( "RQ_AutotopismGroupByGeneratorsNC", [ IsRightQuasigroup, IsRightQuasigroupHomotopismCollection ] );
+
 #! @Arguments Q
 #! @Returns the autotopism group of a loop <Arg>Q</Arg>.
 #! Note: There is no method yet for right quasigroups and quasigroups.
 DeclareAttribute( "AutotopismGroup", IsLoop );
+
+#! @BeginExampleSession
+#! gap> q := RightBolLoop( 16, 3 );
+#! RightBolLoop( 16, 3 )
+#! gap> ag := AutotopismGroup( q );
+#! <group with 5 generators>
+#! gap> Size( ag );
+#! 768
+#! @EndExampleSession
