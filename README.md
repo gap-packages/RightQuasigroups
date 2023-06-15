@@ -23,7 +23,7 @@ git clone https://github.com/gap-packages/RightQuasigroups.git
 ```
 ### Suggested package **Digraphs**
 
-- Computation of isomorphisms and isotopisms of right quasigroups can be speed up by using the associated colored digraph. 
+- Computation of isomorphisms and isotopisms of right quasigroups can be speeded up by using the associated colored digraph. 
 - The GAP package [Digraphs](https://digraphs.github.io/Digraphs/) is attempted to load with **RightQuasigroups**, but **RightQuasigroups** is loaded even when **Digraphs** is not available. 
 - As **Digraphs** requires compiled kernel modules, its installation needs slightly more attention.
 
