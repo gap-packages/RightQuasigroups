@@ -674,7 +674,14 @@ DeclareOperation( "LoopsUpToIsotopism", [ IsList, IsString ] );
 # applies the first two components of the right quasigroup homotopism t to the list ls of length 2
 DeclareOperation( "RQ_HtpOnPairs", [ IsList, IsRightQuasigroupHomotopism ] );
 
-#! <P/>TODO: EXPLAIN NICE MONOMORPHISMS
+#! <P/>The autotopism group of a right quasigroup consist of abstract homotopism &GAP; objects. While the group 
+#! operations are defined for them, the computation of size, center and other important group theoretical 
+#! concepts is very slow. In this case, &GAP; recommends to use a `NiceMonomorphism` into a group $G$, whose 
+#! representation allows fast generic methods. For autotopisms of a right quasigroup $Q$, $G$ is the 
+#! symmetric group on $3n$ points, where $n$ is the size of the parent of $Q$. If the triple $(f,g,h)$
+#! defines an autotopism of $Q$, then its nice monomorphic image acts on $\{1,\ldots,n\}$ as the parent
+#! permutation of $f$, on $\{n+1,\ldots,2n\}$ as the conjugate of the parent permutation of $g$, and on 
+#! $\{2n+1,\ldots,3n\}$ as the conjugate of the parent permutation of $h$.
 
 
 #! @Arguments t
