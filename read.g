@@ -22,6 +22,11 @@ ReadPackage( "RightQuasigroups", "gap/MoufangModifications.gi");    # Quarter mo
 ReadPackage( "RightQuasigroups", "gap/Convert.gi");                 # Converting between numerical bases
 ReadPackage( "RightQuasigroups", "gap/Racks.gi");                   # Rack and quandles   
 ReadPackage( "RightQuasigroups", "gap/Examples.gi");                # Libraries of loops, racks and quandles
+
+if IsPackageMarkedForLoading( "Digraphs", "1.6" ) then
+    ReadPackage( "RightQuasigroups", "gap/TopismsViaDigraphs.gi" );
+fi;
+
 #ReadPackage( "RightQuasigroups", "gap/file1.gi" );       # create file, replace filename and uncomment
 #ReadPackage( "RightQuasigroups", "gap/file2.gi" );       # 
 #ReadPackage( "RightQuasigroups", "gap/file3.gi" );       # 

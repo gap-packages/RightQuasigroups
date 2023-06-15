@@ -674,6 +674,9 @@ DeclareOperation( "LoopsUpToIsotopism", [ IsList, IsString ] );
 # applies the first two components of the right quasigroup homotopism t to the list ls of length 2
 DeclareOperation( "RQ_HtpOnPairs", [ IsList, IsRightQuasigroupHomotopism ] );
 
+#! <P/>TODO: EXPLAIN NICE MONOMORPHISMS
+
+
 #! @Arguments t
 #! @Returns a permutation of degree $3n$, where $n$ is the size of the parent right quasigroup
 #! of the source of <Arg>t</Arg>. 
