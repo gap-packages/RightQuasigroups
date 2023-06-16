@@ -9,17 +9,17 @@
     Computing with one-sided quasigroups in &GAP;.
   </Subtitle>
   <Version>
-    0.872
+    0.9-beta
   </Version>
   <Author>
     Gábor P. Nagy<Alt Only="LaTeX"><Br/></Alt>
 <Address>
-Department of Algebra, Budapest University of Technology<Br/>
-Műegyetem rkp 3<Br/>
-H-1111 Budapest (Hungary)<Br/>
+Bolyai Institute of the University of Szeged<Br/>
+Aradi vértanúk tere 1<Br/>
+H-6720 Szeged (Hungary)<Br/>
 </Address>
-<Email>nagyg@math.bme.hu</Email>
-<Homepage>https://algebra.math.bme.hu/nagy-gabor-peter</Homepage>
+<Email>nagyg@math.u-szeged.hu</Email>
+<Homepage>http://www.math.u-szeged.hu/~nagyg</Homepage>
 
   </Author>
   <Author>
@@ -35,6 +35,6 @@ USA<Br/>
 
   </Author>
   <Date>
-    15 June 2023
+    16 June 2023
   </Date>
   </TitlePage>

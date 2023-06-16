@@ -5,8 +5,8 @@ SetPackageInfo( rec(
 
 PackageName := "RightQuasigroups",
 Subtitle := "Computing with one-sided quasigroups in GAP.",
-Version := "0.872",
-Date := "15/06/2023", # dd/mm/yyyy format
+Version := "0.9-beta",
+Date := "16/06/2023", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -15,22 +15,22 @@ Persons := [
     IsMaintainer := true,
     FirstNames := "Gábor P.",
     LastName := "Nagy",
-    WWWHome := "https://algebra.math.bme.hu/nagy-gabor-peter",
-    Email := "nagyg@math.bme.hu",
-    PostalAddress := Concatenation(
-               "Department of Algebra, Budapest University of Technology\n",
-               "Műegyetem rkp 3\n",
-               "H-1111 Budapest (Hungary)" ),
-    Place := "Budapest",
-    Institution := "Budapest University of Technology and Economics",
-    # WWWHome := "http://www.math.u-szeged.hu/~nagyg",
-    # Email := "nagyg@math.u-szeged.hu",
+    # WWWHome := "https://algebra.math.bme.hu/nagy-gabor-peter",
+    # Email := "nagyg@math.bme.hu",
     # PostalAddress := Concatenation(
-    #            "Bolyai Institute of the University of Szeged\n",
-    #            "Aradi vértanúk tere 1\n",
-    #            "H-6720 Szeged (Hungary)" ),
-    # Place := "Szeged",
-    # Institution := "University of Szeged",
+    #            "Institute of Mathematics, Budapest University of Technology and Economics\n",
+    #            "Műegyetem rkp 3\n",
+    #            "H-1111 Budapest (Hungary)" ),
+    # Place := "Budapest",
+    # Institution := "Budapest University of Technology and Economics",
+    WWWHome := "http://www.math.u-szeged.hu/~nagyg",
+    Email := "nagyg@math.u-szeged.hu",
+    PostalAddress := Concatenation(
+               "Bolyai Institute of the University of Szeged\n",
+               "Aradi vértanúk tere 1\n",
+               "H-6720 Szeged (Hungary)" ),
+    Place := "Szeged",
+    Institution := "University of Szeged",
   ),
   rec(
     IsAuthor := true,
