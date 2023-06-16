@@ -54,7 +54,7 @@ SourceRepository := rec(
   URL := "https://github.com/gap-packages/RightQuasigroups" 
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome := "https://github.com/gap-packages/RightQuasigroups/",
+PackageWWWHome := "https://gap-packages.github.io/RightQuasigroups/",
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 README_URL     := Concatenation( ~.PackageWWWHome, "README.md" ),
 ArchiveURL     := Concatenation( ~.PackageWWWHome,

@@ -1,6 +1,6 @@
 # The GAP package RightQuasigroups
 
-* Website: coming soon
+* Website: https://gap-packages.github.io/RightQuasigroups/
 * Repository: https://github.com/gap-packages/RightQuasigroups
 
 This package implements basic methods for calculations with finite,
