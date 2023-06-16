@@ -1,0 +1,24 @@
+  
+  [1X13 [33X[0;0YRightQuasigroups automatic generated documentation[133X[101X
+  
+  
+  [1X13.1 [33X[0;0YRightQuasigroups automatic generated documentation of attributes[133X[101X
+  
+  [1X13.1-1 RQ_Digraph[101X
+  
+  [33X[1;0Y[29X[2XRQ_Digraph[102X( [3XQ[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya  directed  graph  on  [23X3n+n^2[123X vertices, where [23Xn=|Q|[123X. The vertices
+            [23X\{1,\ldots,n\}[123X,  [23X\{n+1,\ldots,2n\}[123X,  [23X\{2n+1,\ldots,3n\}[123X  represent
+            the  rows,  columns  and symbols of the multiplication table of [23XQ[123X.
+            The remaining [23Xn^2[123X vertices stand for the triples [23X(x,y,x*y)[123X.[133X
+  
+  [1X13.1-2 RQ_BlissCanonicalLabeling4Morphism[101X
+  
+  [33X[1;0Y[29X[2XRQ_BlissCanonicalLabeling4Morphism[102X( [3XQ[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya permutation of degree [23Xn[123X, where [23Xn=|Q|[123X.[133X
+  
+  [1X13.1-3 RQ_BlissCanonicalLabeling4Topism[101X
+  
+  [33X[1;0Y[29X[2XRQ_BlissCanonicalLabeling4Topism[102X( [3XQ[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya permutation of degree [23X3n[123X, where [23Xn=|Q|[123X.[133X
+  

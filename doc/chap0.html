@@ -1,11 +1,840 @@
-<!DOCTYPE html>
-<html lang="en">
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<meta charset="UTF-8" />
-	<title>Placeholder</title>
+<title>GAP (RightQuasigroups) - Contents</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
 </head>
-<body>
-<h1>Placeholder!</h1>
-<a href="..">Back</a>
+<body class="chap0"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap0_mj.html">[MathJax on]</a></p>
+<p><a id="X7D2C85EC87DD46E5" name="X7D2C85EC87DD46E5"></a></p>
+<div class="pcenter">
+
+<h1>RightQuasigroups</h1>
+
+
+<h2>Computing with one-sided quasigroups in <strong class="pkg">GAP</strong>.</h2>
+
+<p>
+    0.9-beta</p>
+
+<p>
+    16 June 2023
+  </p>
+
+</div>
+<p><b>
+    Gábor P. Nagy
+
+
+
+
+  </b>
+<br />Email: <span class="URL"><a href="mailto:nagyg@math.u-szeged.hu">nagyg@math.u-szeged.hu</a></span>
+<br />Homepage: <span class="URL"><a href="http://www.math.u-szeged.hu/~nagyg">http://www.math.u-szeged.hu/~nagyg</a></span>
+<br />Address: <br />Bolyai Institute of the University of Szeged<br /> Aradi vértanúk tere 1<br /> H-6720 Szeged (Hungary)<br />
+</p><p><b>
+    Petr Vojtěchovský
+
+
+
+
+  </b>
+<br />Email: <span class="URL"><a href="mailto:petr@math.du.edu">petr@math.du.edu</a></span>
+<br />Homepage: <span class="URL"><a href="http://www.math.du.edu/~petr/">http://www.math.du.edu/~petr/</a></span>
+<br />Address: <br />Department of Mathematics, University of Denver<br /> 2390 S York St<br /> Denver, CO 80208<br /> USA<br />
+</p>
+
+<p><a id="X8537FEB07AF2BEC8" name="X8537FEB07AF2BEC8"></a></p>
+
+<div class="contents">
+<h3>Contents<a id="contents" name="contents"></a></h3>
+
+<div class="ContChap"><a href="chap1.html#X7DFB63A97E67C0A1">1 <span class="Heading">Introduction</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X801B322681A65601">1.1 <span class="Heading">Main features of the package</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7CAC5F127A4DC0E7">1.2 <span class="Heading">Categories and representations for right quasigroups, quasigroups and loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7839B3727C888897">1.2-1 <span class="Heading">Categories and representations for right quasigroup elements and right quasigroups</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7DEBA9278509A6B3">1.2-2 <span class="Heading">Categories and representations for quasigroup elements and quasigroups</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X8236DACC839FB454">1.2-3 <span class="Heading">Categories and representations for loop elements and loops</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X826AE46A7F24C8B3">1.2-4 CategoryOfRightQuasigroup</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7CEFBA13867B394C">1.3 <span class="Heading">Displaying right quasigroups and their elements</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7EEB1A8C7CCC9C22">1.3-1 <span class="Heading">Displaying right quasigroups, quasigroups and loops</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7C3BA1AD87DC5643">1.3-2 <span class="Heading">Displaying right quasigroup elements</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7B4B7A13786E9D37">1.3-3 <span class="Heading">Changing the name of right quasigroup elements</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7B36037780974644">1.4 <span class="Heading">The underlying set</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X856D980A80B31F07">1.4-1 UnderlyingSetElm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7A8F98987D8BFD23">1.4-2 UnderlyingSet</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7E1688248710925A">1.4-3 ChangeUnderlyingSet</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7C4C9F7C7E2E80CF">1.5 <span class="Heading">Accessing elements and elementwise right quasigroup operations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X81E0D0ED8497BC26">1.5-1 RightQuotient</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7C2CA61B80AD4D23">1.5-2 LeftQuotient</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X841ED6617BB649AD">1.5-3 <span class="Heading">Inverses in loops</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X789B59D0781C42F1">1.5-4 <span class="Heading">Powers, order and exponent</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X8126427A8131670C">1.5-5 Commutator</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X8201DE5C7F6B7B82">1.5-6 Associator</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7A085DF783B91AEB">1.6 <span class="Heading">First examples</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7ECE815C8590BAA4">1.7 <span class="Heading">The parent right quasigroup</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X81DECB427F4826CD">1.8 <span class="Heading">Index based and canonical right quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7E63F40387CF7950">1.8-1 ParentInd</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X8486A7CF797AB7BC">1.8-2 IsIndexBased</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X8149F2B67D474ABB">1.8-3 IndexBasedCopy</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7E7B759786945501">1.8-4 IsCanonical</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X80993D1187C29097">1.8-5 CanonicalCopy</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X86E32404878D45C7">1.9 <span class="Heading">Generators and comparison of right quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X86F83A587E035600">1.9-1 SmallGeneratingSet</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X86F270ED860EA4D0">1.9-2 GeneratorsSmallest</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7E2E2D5B87A21A1F">1.10 <span class="Heading">Non-qualified operations</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X81A4F98982C4C7EC">1.11 <span class="Heading">*Direct access to the parent right quasigroup record</span></a>
+</span>
+</div>
+</div>
+<div class="ContChap"><a href="chap2.html#X86EC0F0A78ECBC10">2 <span class="Heading">Constructors</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X85C8B48C7BEC8AB6">2.1 <span class="Heading">Optional arguments in constructors</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X80E84D0F7D40E242">2.1-1 SetDefaultConstructorStyle</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7BA1BDBA7B9F3234">2.1-2 ConstructorStyle</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X8560CC1E7E8A1885">2.2 <span class="Heading">Converting betwen right quasigroups, quasigroups and loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7D87E38D80C1A86D">2.2-1 <span class="Heading">IsRightQuasigroupMagma, IsLeftQuasigroupMagma, IsQuasigroupMagma and IsLoopMagma</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7F1DF7D48504ED59">2.2-2 <span class="Heading">AsRightQuasigroup, AsQuasigroup and AsLoop</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7869753A7A885B34">2.3 <span class="Heading">*A two-step constructor</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X86899C287BAB72D1">2.3-1 RQ_AlgebraShell</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X864F834981EF2BE8">2.3-2 RQ_AddDefaultOperations</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7B7456197A8D26BD">2.4 <span class="Heading">Constructors by Cayley table</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X780FCF678129564C">2.4-1 <span class="Heading">Cayley tables versus multiplication tables</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7DD68FCB87A86746">2.4-2 <span class="Heading">Cayley tables and multiplication tables of right quasigroups</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X864B858784D742FC">2.4-3 <span class="Heading">Constructing division tables from multiplication tables</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7827BF877AA87246">2.4-4 <span class="Heading">Testing Cayley tables</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X85E643BD7FE009D2">2.4-5 <span class="Heading">Normalizing Cayley tables</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E3A5E5F7BE83FA5">2.4-6 <span class="Heading">Creating right quasigroups by Cayley table</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7C3B24557B307202">2.5 <span class="Heading">Constructors by function</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X785728C6829DA37B">2.5-1 <span class="Heading">Arguments used in constructors by function</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X862F2F417A0B6541">2.5-2 IsRightQuasigroupFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X805BE6867C2E6B20">2.5-3 IsQuasigroupFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X825EE4387A43A5F6">2.5-4 IsLoopFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7CCC98D87C1DFAAD">2.5-5 <span class="Heading">Multiplication, right division and left division functions</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8421D2987B7DE45C">2.5-6 RightQuasigroupByFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7822BB1380836F5C">2.5-7 QuasigroupByFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X79C3DEDD7E7849A5">2.5-8 LoopByFunction</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X788082C77E5972A9">2.6 <span class="Heading">Constructors by right section</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X80615CD28059A239">2.6-1 <span class="Heading">Testing right sections</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X78B527387800FBDC">2.6-2 <span class="Heading">Constructing right quasigroups, quasigroups and loops by right section</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7DE999187CC72932">2.7 <span class="Heading">Constructors by right folder (transversal)</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7DF636EE78282F6E">2.7-1 <span class="Heading">Checking right folders</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7CFE9A578647BFB0">2.7-2 <span class="Heading">Creating right quasigroups, quasigroups and loops by right folders</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X830DE89B7B506B15">2.8 <span class="Heading">Constructors for special types of right quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X80BD0B6A7CD3B2B0">2.8-1 ProjectionRightQuasigroup</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7A04B2F57C9C0B43">2.9 <span class="Heading">Random right quasigroups, quasigroups and loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X86B7174179FB2352">2.9-1 RandomRightQuasigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7AE29A1A7AA5C25A">2.9-2 <span class="Heading">Random quasigroups and loops</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X854230F28413C6A2">2.9-3 RandomNilpotentLoop</a></span>
+</div></div>
+</div>
+<div class="ContChap"><a href="chap3.html#X7A0F54567D54CF6C">3 <span class="Heading">Direct products, subalgebras and factor algebras</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X81F9478B83BEF1AF">3.1 <span class="Heading">Direct product of right quasigroups</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X85EB330A87D6857B">3.2 <span class="Heading">Opposite quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7865FC8D7854C2E3">3.2-1 <span class="Heading">Opposite quasigroups and loops</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7DF5989886BE611E">3.3 <span class="Heading">Subalgebras</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X83B506F5803D7770">3.3-1 <span class="Heading">Testing for subalgebras</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X794D95147920C10B">3.3-2 <span class="Heading">Constructing subalgebras</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7829B313876D5C35">3.3-3 <span class="Heading">All subalgebras</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7B81239B7C8C5254">3.3-4 <span class="Heading">Testing minimal subalgebras</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8523FBF57C70E1FD">3.3-5 <span class="Heading">All minimal subalgebras</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X81F26B9C79D516B3">3.3-6 <span class="Heading">Testing maximal subalgebras</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7F50B3F282F53344">3.3-7 <span class="Heading">All maximal subalgebras</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7A43C1DF835C4299">3.4 <span class="Heading">Cosets and transversals</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7BF8B87D8121FBBF">3.4-1 RightTransversal</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X861C5CC97E0901B2">3.4-2 LeftTransversal</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X852E2582803ABADD">3.5 <span class="Heading">Right quasigroups by generators</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X87BE4D0C7CA70695">3.5-1 <span class="Heading">RightQuasigroup, Quasigroup and Loop</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7EFFDFB37EC11996">3.5-2 <span class="Heading">RightQuasigroupByGenerators, QuasigroupByGenerators and LoopByGenerators</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7943CD7381916A09">3.5-3 <span class="Heading">RightQuasigroupWithGenerators, QuasigroupWithGenerators and LoopWithGenerators</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X86F9C3F08626EA6F">3.6 <span class="Heading">Intersections and joins of right quasigroups</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X82BD951079E3C349">3.7 <span class="Heading">Congruences</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X814ED6EE848AC131">3.7-1 <span class="Heading">Checking right quasigroup congruences</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X84A1A1157B80D9A0">3.7-2 <span class="Heading">Congruences generated by partition</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X83E8828C845E5003">3.7-3 <span class="Heading">Congruences generated by pairs</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8761BE9B787D9632">3.7-4 <span class="Heading">All congruences</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X82DDA72B834ABD8D">3.8 <span class="Heading">Normality and simplicity</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X836C52FB7DF25B9E">3.8-1 AllNormalSubloops</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X798EF3CC7E896C1C">3.8-2 <span class="Heading">Testing right quasigroups for simplicity</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X800399CC879ADD91">3.9 <span class="Heading">Factor algebras</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7F8629117C8B1422">3.9-1 <span class="Heading">Constructing factor algebras</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X81AF1E9C7F22C760">3.10 <span class="Heading">An example of the factor construction: Paige loops</span></a>
+</span>
+</div>
+</div>
+<div class="ContChap"><a href="chap4.html#X81106768871C276F">4 <span class="Heading">Mappings, transformations and permutations of right quasigroups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X8372074486AAC9EB">4.1 <span class="Heading">Mappings, transformations and permutations</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X809F0CB8795CE362">4.2 <span class="Heading">Right quasigroup mapppings</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X827D8C307D6A37B1">4.2-1 <span class="Heading">IsRightQuasigroupMapping, IsQuasigroupMapping, IsLoopMapping</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X82F342E6783402F3">4.2-2 AsRightQuasigroupMapping</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X8625B3897FEB526E">4.3 <span class="Heading">Canonical permutations and parent permutations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7AC5F57584132B96">4.3-1 IsCanonicalPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7B43498D7DB897BD">4.3-2 IsParentPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7911AFFB87362C39">4.3-3 AsCanonicalPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X83BDDFAC79162437">4.3-4 AsParentPerm</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X81A111407DE04F9E">4.4 <span class="Heading">Canonical transformations and parent transformations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X78CBAF5C7F7C1193">4.4-1 IsCanonicalTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X81D554C48215850F">4.4-2 IsParentTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7F68205186BD8B70">4.4-3 AsCanonicalTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7CA334737C472C70">4.4-4 AsParentTransformation</a></span>
+</div></div>
+</div>
+<div class="ContChap"><a href="chap5.html#X7E0365AF7CAFF2DF">5 <span class="Heading">Associated permutation groups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X78AA3D177CCA49FF">5.1 <span class="Heading">Translations and sections</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7E497FCD787C985B">5.1-1 RightTranslation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X78584018789E4D0E">5.1-2 LeftTranslation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7F4CF4B0851E7235">5.1-3 <span class="Heading">Sections</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7AF75B397C3E23AF">5.2 <span class="Heading">Multiplication groups and relative multiplication groups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X78ED50F578A88046">5.2-1 <span class="Heading">Multiplication groups</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X78A885027C9A439B">5.2-2 LeftMultiplicationSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8521593280EC6E05">5.2-3 <span class="Heading">Relative multiplication groups</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7884CEE3829DDC9E">5.3 <span class="Heading">Inner mappings and inner mapping groups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7A4D75D386B4D6B8">5.3-1 <span class="Heading">Inner mappings</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8740D61178ACD217">5.3-2 <span class="Heading">Inner mapping groups</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X83ED285B7C0EED61">5.4 <span class="Heading">Displacement groups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X80EF79DD79638DB0">5.4-1 <span class="Heading">Right displacement groups</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X85F8CF12879B13C3">5.4-2 <span class="Heading">Left displacement groups</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X80FCFCCD7B5D216D">5.4-3 IsIsotopicToGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X85E9E5B47C2574D9">5.4-4 IsIsotopicToAbelianGroup</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X806709E27F118086">5.5 <span class="Heading">Realizing permutation groups as multiplication groups of loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8434C74F841F6EBF">5.5-1 AllLoopsWithMltInGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7D469E327A612D9E">5.5-2 AllNonassociativeLoopsWithMltInGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7AE137E5787A29E4">5.5-3 OneLoopWithMltInGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7D3244297F256D27">5.5-4 OneNonassociativeLoopWithMltInGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X863FFA5C7B7078E2">5.5-5 AllLoopsWithMltGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8525F22C7CFE1119">5.5-6 OneLoopWithMltGroup</a></span>
+</div></div>
+</div>
+<div class="ContChap"><a href="chap6.html#X7EB823F1823BE234">6 <span class="Heading">Nilpotency and solvability</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7E0C18087C472EA6">6.1 <span class="Heading">Nuclei, commutant and center</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X877BF80078DC3F7A">6.1-1 <span class="Heading">Nuclei</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X87F9B4C783C1B9F7">6.1-2 Commutant</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8523415779DC2418">6.1-3 Center</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7A4D23D682F45E9B">6.2 <span class="Heading">Nilpotency for loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X80B21F1482A45064">6.2-1 NilpotencyClassOfLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7CF1D1B47BA69C61">6.2-2 IsNilpotentLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X796082BD83444865">6.2-3 UpperCentralSeriesOfLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X879AE0A57983A368">6.2-4 LowerCentralSeriesOfLoop</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X829A274082453AFF">6.3 <span class="Heading">Solvability and congruence solvability for loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X781375E981909CCB">6.3-1 AssociatorSubloop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X85C0F29D7E08A5B4">6.3-2 IsSolvableLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B93E8338098EA99">6.3-3 DerivedSubloop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7DDC86537C7688E8">6.3-4 DerivedSeriesOfLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7D3462FD83620D77">6.3-5 DerivedLength</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A4BFB197DEDB853">6.3-6 CommutatorOfNormalSubloops</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7D83750C7D59A4C5">6.3-7 IsAbelianNormalSubloop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X87B88B6A8299D756">6.3-8 IsCongruenceSolvableLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X79A8A79081150BA4">6.3-9 CongruenceDerivedSeriesOfLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7923C6BE81B89020">6.3-10 CongruenceDerivedLength</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X835E8C7D7D00A5AE">6.4 <span class="Heading">Nuclear and central extensions of loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8548C5C17DD1E60F">6.4-1 IsLoopCocycle</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X87BEE5987E838DFE">6.4-2 LoopByNuclearExtension</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A49ED86819A0F93">6.4-3 LoopByCentralExtension</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A413E8F86572F3D">6.4-4 AsSquareTable</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8754116680773266">6.4-5 NuclearExtensionByNormalSubloop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X80604A5C84B5408A">6.4-6 CentralExtensionByNormalSubloop</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7E2A6C6E83E83542">6.5 <span class="Heading">All central extensions in a variety of loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F4DD38278DAD119">6.5-1 LoopCocyclesInVariety</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8142783284BABDA8">6.5-2 LoopCoboundaries</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C2998337F3D460C">6.5-3 LoopCocyclesModAction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7BBCAC987B6DBBD4">6.5-4 AllLoopCocyclesInVariety</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7908FE63797E2AE4">6.5-5 AllLoopCentralExtensionsInVariety</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X8401718E80FA6F34">6.6 <span class="Heading">Frattini subalgebra</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7CD31B4C85AC5F65">6.6-1 FrattiniSubrightquasigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X847CBD7F85F18F05">6.6-2 FrattiniSubquasigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X809490687E9B5CD8">6.6-3 FrattiniSubloop</a></span>
+</div></div>
+</div>
+<div class="ContChap"><a href="chap7.html#X7C36E2F07EF2D994">7 <span class="Heading">Properties of right quasigroups, quasigroups and loops</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7AEB9CFF825ED614">7.1 <span class="Heading">Parser</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X861BDBD1805D8B92">7.1-1 <span class="Heading">Building terms from strings</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7E52257B80D03E65">7.1-2 <span class="Heading">Verifying identities</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7C31EE0D813BB6AE">7.1-3 <span class="Heading">*How evaluation of identities with the parser works</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X78AD3BFE78905C6A">7.2 <span class="Heading">Properties of magmas</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X83CDE74D8610577B">7.2-1 <span class="Heading">Testing properties of magmas and right quasigroups</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X86A9D00D7D86D430">7.3 <span class="Heading">Properties of right quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X79C0AC5B8647506A">7.3-1 IsFaithfulRightQuasigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7E58EE8B808DC687">7.3-2 IsProjectionRightQuasigroup</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X84C12E667BB4A664">7.4 <span class="Heading">Properties of quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7A32558786094FCE">7.4-1 IsSemisymmetric</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X787E77DA7A5FFD2E">7.4-2 IsTotallySymmetric</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7CD9E42B78847031">7.4-3 IsSteinerQuasigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X86D928A47B50BF68">7.4-4 IsEntropic</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X799488BB84503A92">7.5 <span class="Heading">Inverse properties of loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X861806A0819E0FC3">7.5-1 HasTwosidedInverses</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7EC09F33866964C6">7.5-2 <span class="Heading">Right and left inverse properties</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7D6EE389834522B2">7.5-3 HasWeakInverseProperty</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7E16F5487916D660">7.5-4 <span class="Heading">Automorphic and antiautomorphic inverse properties</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7C7F567E829960C0">7.6 <span class="Heading">Loops of Bol-Moufang type</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7AC2FDC385F9381C">7.6-1 <span class="Heading">Testing for loops of Bol-Moufang type</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X86B05C2579674382">7.6-2 IsNuclearSquareLoop</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X83A501387E1AC371">7.7 <span class="Heading">Power alternative loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7DB9267B85096FA4">7.7-1 <span class="Heading">Testing for power alternative loops</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7B160F0780192484">7.8 <span class="Heading">Conjugacy closed loops and Osborn loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7AB09D3380E626BE">7.8-1 <span class="Heading">Testing for conjugacy closed loops</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X86CF486F808ED13C">7.8-2 IsOsbornLoop</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X878C9D247FB0D56E">7.9 <span class="Heading">Additional varieties of loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7B1A473282641B20">7.9-1 IsCodeLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7F483B8B7F91CB0A">7.9-2 IsSteinerLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7B7DE0CF7C674239">7.9-3 <span class="Heading">Bruck loops</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X793B22EA8643C667">7.9-4 <span class="Heading">Automorphic loops</span></a>
+</span>
+</div></div>
+</div>
+<div class="ContChap"><a href="chap8.html#X7AA78DB6815E123F">8 <span class="Heading">Homomorphisms, isomorphisms and automorphisms</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X822F70BA85814F1A">8.1 <span class="Heading">Homomorphisms, isomorphisms and automorphisms of right quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X852FE33883890DEE">8.1-1 <span class="Heading">Testing homomorphisms</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X85DAC9E583D8EFB9">8.1-2 <span class="Heading">Testing isomorphisms</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7F53A21185D506C0">8.1-3 <span class="Heading">Testing endomorphisms</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7E6FFC6B8710483D">8.1-4 <span class="Heading">Testing automorphisms</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7B9BAA9B8539A276">8.1-5 <span class="Heading">Homomorphisms by images</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7A2B095A8662C626">8.1-6 KernelRelationOfMapping</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7D9276D67FBE3FE0">8.1-7 <span class="Heading">Kernel of loop homomorphisms</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X78C5775E7B605EEF">8.1-8 <span class="Heading">Natural homomorphism by congruence</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7F8C42818116DB98">8.1-9 <span class="Heading">Natural homomorphism by normal subloop</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7D6B9FFE7F9DEFA2">8.2 <span class="Heading">Isomorphs of right quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X83B0619A80B7B313">8.2-1 <span class="Heading">Isomorphs</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7CDF5CC47A9AE872">8.3 <span class="Heading">Right quasigroups up to isomorphisms</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X85EF2A0E7C96E83B">8.3-1 IsomorphismDiscriminator</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X85FD215285153778">8.3-2 AreEqualIsomorphismDiscriminators</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X793DE9D58270D7DD">8.3-3 <span class="Heading">IsomorphismRightQuasigroups, IsomorphismQuasigroups, IsomorphismLoops</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X822CAD3884B6CE94">8.3-4 <span class="Heading">Right quasigroups up to isomorphism</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X80D040A77F4A860C">8.4 <span class="Heading">Automorphism groups of right quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7E284E3784927F3E">8.4-1 AutomorphismGroup</a></span>
+</div></div>
+</div>
+<div class="ContChap"><a href="chap9.html#X7A61D9A6797F69A1">9 <span class="Heading">Homotopisms, isotopisms and autotopisms</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X84A22FF682967754">9.1 <span class="Heading">Homotopisms, isotopism and autotopisms of right quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7B9322A17FEE75BE">9.1-1 <span class="Heading">Representing homotopisms in <strong class="pkg">GAP</strong></span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7E3EDDCA7BAFB08D">9.1-2 <span class="Heading">Attributes of homotopisms</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X82A15B907BB84CB6">9.1-3 <span class="Heading">Properties of homotopisms</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X83D6B3A78276416F">9.1-4 <span class="Heading">Creating homotopisms</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X876C9E1F80699761">9.1-5 <span class="Heading">Creating autotopisms</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X827B053B8631FB0A">9.1-6 <span class="Heading">Operations with homotopisms</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X810DE9477E87A0E6">9.1-7 <span class="Heading">Testing homotopism data</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X80BB7E3E7B748897">9.1-8 <span class="Heading">Testing isotopism data</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7E1BBC9D7A1EE535">9.1-9 <span class="Heading">Testing autotopism data</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X7F1C64D282F3128D">9.2 <span class="Heading">Twists of right quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7BBA721E8434B3FC">9.2-1 <span class="Heading">RightQuasigroupTwist, QuasigroupTwist and LoopTwist</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X80BDFD068010BD4D">9.3 <span class="Heading">Isotopes of right quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7E9E1BC082A26818">9.3-1 RightQuasigroupIsotope</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X78B2C4877CEBA62C">9.3-2 QuasigroupIsotope</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7D5CBA7E82B1DAC0">9.3-3 LoopIsotope</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7DF4A90B873F25F7">9.3-4 PrincipalLoopIsotope</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X8635F739800C7CFD">9.4 <span class="Heading">Affine right quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7EE71D9A7C68916F">9.4-1 IsAffineRightQuasigroupArithmeticForm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X85EFAB7078B8BE21">9.4-2 IsAffineQuasigroupArithmeticForm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X81D7DB9E8579CD24">9.4-3 AffineRightQuasigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X86A2437087EACE69">9.4-4 AffineQuasigroup</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X8211257E81281568">9.5 <span class="Heading">Right quasigroups up to isotopism</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7AD0041286B5080B">9.5-1 IsotopismDiscriminator</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X79C16888787FF2C6">9.5-2 AreEqualIsotopismDiscriminators</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X82E84144794F4FB7">9.5-3 ArePossiblyIsotopicRightQuasigroups</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X84DDBB8783435C23">9.5-4 IsotopismRightQuasigroups</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7B559DDD8504F74E">9.5-5 IsotopismQuasigroups</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X817BBE5F82383B08">9.5-6 IsotopismLoops</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X8211257E81281568">9.5-7 <span class="Heading">Right quasigroups up to isotopism</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X82A8ECEC7EE85D13">9.6 <span class="Heading">Autotopism groups of right quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X796F2B38846E7E1B">9.6-1 RQ_NiceMonomorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7B57D0E9842C1F3F">9.6-2 RQ_NiceMonomorphismInverse</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X835C93C47B557232">9.6-3 RQ_AutotopismGroupByGeneratorsNC</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X86A01F40857DFC21">9.6-4 AutotopismGroup</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X7C2FE7D6853A68F9">9.7 <span class="Heading">Topisms using the associated colored digraph</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X82533375830CA142">9.7-1 RQ_Digraph</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X8441323F7D66B5DD">9.7-2 RQ_BlissCanonicalLabeling4Morphism</a></span>
+</div></div>
+</div>
+<div class="ContChap"><a href="chap10.html#X7AE3D55A7D72FDEE">10 <span class="Heading">Bol loops, Bruck loops and Moufang loops</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X79B8BD5B79D05851">10.1 <span class="Heading">Bol loops and Bruck loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7F9585C47DA78A6E">10.1-1 <span class="Heading">Associated Bruck loop</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7A989541808DD000">10.1-2 IsExactGroupFactorization</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7B24AEF57B9C946E">10.1-3 RightBolLoopByExactGroupFactorization</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X83E73A767D79FAFD">10.2 <span class="Heading">Triality for Moufang loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X871FBF6586F11745">10.2-1 TrialityPermGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X84DD7D2B7AF9BDD0">10.2-2 TrialityPcGroup</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X7CE2DCE383227512">10.3 <span class="Heading">Quarter modifications of Moufang loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X80E913D68047DD8C">10.3-1 CheinLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7C3D409D87B3C239">10.3-2 <span class="Heading">*Cyclic modification</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X8328D46D79AD7543">10.3-3 <span class="Heading">*Dihedral modification</span></a>
+</span>
+</div></div>
+</div>
+<div class="ContChap"><a href="chap11.html#X79FBC1F2864C28EB">11 <span class="Heading">Racks and quandles</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap11.html#X82725F6E7828D473">11.1 <span class="Heading">Testing properties of racks and quandles</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7E50B20E85D6ED8A">11.1-1 <span class="Heading">IsRack and IsQuandle</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X87F3279F874F6A1D">11.1-2 <span class="Heading">IsHomogeneousRack and IsHomogeneousQuandle</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7AB8029F81723378">11.1-3 <span class="Heading">IsConnectedRack and IsConnectedQuandle</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X791EB74C7D64E695">11.1-4 <span class="Heading">IsLatinRack and IsLatinQuandle</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X8617805E7A6593CB">11.1-5 <span class="Heading">IsProjectionRack and IsProjectionQuandle</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7A1F435882501269">11.1-6 <span class="Heading">IsPermutationalRack and IsPermutationalQuandle</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X83499C277D169EB4">11.1-7 <span class="Heading">IsFaithfulRack and IsFaithfulQuandle</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap11.html#X790E0C0F7AF82839">11.2 <span class="Heading">Constructors for racks</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X870756E379474906">11.2-1 PermutationalRack</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X87BF8D3A83C980C8">11.2-2 CyclicRack</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7B50D2297EA13A72">11.2-3 IsAffineRackArithmeticForm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X87359C5384312CB0">11.2-4 AffineRack</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap11.html#X81B873537BF7215B">11.3 <span class="Heading">Constructors for quandles</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X83929C8979472E1E">11.3-1 IsAffineQuandleArithmeticForm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7D07F3FF80114B44">11.3-2 AffineQuandle</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X85672B5080B5D262">11.3-3 DihedralQuandle</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X84309A5B7DF5760D">11.3-4 CoreOfGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7A27EED18304A01E">11.3-5 CoreOfRightBolLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7C8633967D92F9EA">11.3-6 <span class="Heading">GalkinQuandle and HomogeneousQuandle</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X82013FC97875ADBC">11.3-7 ConjugationQuandle</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap11.html#X862B9AF9843AA023">11.4 <span class="Heading">Rack envelopes and quandle envelopes: The Joyce-Blackburn representation</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X841A4D657F2D0AE2">11.4-1 <span class="Heading">IsRackEnvelope and IsQuandleEnvelope</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7D200C2D83FE158D">11.4-2 <span class="Heading">RackEnvelope and QuandleEnvelope</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X81F0417D7EA5504B">11.4-3 RackByRackEnvelope</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap11.html#X8440413D8146C267">11.5 <span class="Heading">Subracks and subquandles</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7EACDAF081352D14">11.5-1 <span class="Heading">Testing subracks and subquandles</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7E879779877E2A39">11.5-2 <span class="Heading">Creating subracks and subquandles</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7A34F665876B0F53">11.5-3 <span class="Heading">All subracks and subquandles</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X80773F578384A0CF">11.5-4 <span class="Heading">Racks and quandles by generators</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap11.html#X7B2647047A89F64B">11.6 <span class="Heading">Isomorphisms and isotopisms of racks and quandles</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X86082383814A82A5">11.6-1 <span class="Heading">IsomorphismRacks, IsomorphismQuandles</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7C45E9B67C1BB14D">11.6-2 <span class="Heading">Racks and quandles up to isomorphism</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap11.html#X7F53D3F18465885F">11.7 <span class="Heading">Groups associated with racks and quandles</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X79A9BF8A84FC4590">11.7-1 AdjointGroup</a></span>
+</div></div>
+</div>
+<div class="ContChap"><a href="chap12.html#X83A0A65D8513243F">12 <span class="Heading">Libraries of loops, racks and quandles</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12.html#X819A0DD7849F2743">12.1 <span class="Heading">*A typical library</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12.html#X84501B687CC9466B">12.2 <span class="Heading">Accessing algebras in the library</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X7CAE6DC5877BCC88">12.2-1 DisplayLibraryInfo</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X7A95E96483D498F7">12.2-2 LibraryAlgebra</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X7EA435FA87C759DE">12.2-3 LibraryAlgebras</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12.html#X836C325A8049129E">12.3 <span class="Heading">Library of left Bol loops and right Bol loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X8709CD0E7CD48DCB">12.3-1 <span class="Heading">LeftBolLoop and RightBolLoop</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X813F6F2E855C1D32">12.3-2 <span class="Heading">LeftBolLoops and RightBolLoops</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12.html#X86A3DB5086D1A766">12.4 <span class="Heading">Library of left Bruck loops and right Bruck loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X83B5CE137B0186BF">12.4-1 <span class="Heading">LeftBruckLoop and RightBruckLoop</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X817A2C6178C2746E">12.4-2 <span class="Heading">LeftBruckLoops and RightBruckLoops</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12.html#X84F2F01382FB0230">12.5 <span class="Heading">Library of Moufang Loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X7BEE32D77D88E7A7">12.5-1 MoufangLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X853AD11379D4B270">12.5-2 MoufangLoops</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12.html#X82BECEE07ACD765C">12.6 <span class="Heading">Library of code loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X7EFA5DFA867812D7">12.6-1 CodeLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X81BDAE8480218EF5">12.6-2 CodeLoops</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12.html#X7948C1D085A54B5B">12.7 <span class="Heading">Library of Steiner loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X7EBE85D981283EBD">12.7-1 SteinerLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X84B78F7185746B6A">12.7-2 SteinerLoops</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12.html#X78F1039884910D93">12.8 <span class="Heading">Library of conjugacy closed loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X840E04F97AC5B542">12.8-1 <span class="Heading">LCCLoop, LeftConjugacyClosedLoop, RCCLoop and RightConjugacyClosedLoop</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X840E04F97AC5B542">12.8-2 <span class="Heading">LCCLoop, LeftConjugacyClosedLoop, RCCLoop and RightConjugacyClosedLoop</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X798BC601843E8916">12.8-3 <span class="Heading">CCLoop and ConjugacyClosedLoop</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X78FBDA797E8F80C8">12.8-4 <span class="Heading">CCLoops and ConjugacyClosedLoops</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12.html#X85F593B87CF58864">12.9 <span class="Heading">Library of small loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X8224748A85568871">12.9-1 SmallLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X8101C94778EB6D70">12.9-2 SmallLoops</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12.html#X7AFAD469812AA5B5">12.10 <span class="Heading">Library of Paige loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X7D0935857A98F184">12.10-1 PaigeLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X7EBF2C2E86F087D7">12.10-2 PaigeLoops</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12.html#X8693B3737F6494FC">12.11 <span class="Heading">Library of nilpotent loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X7ADB174985CEC454">12.11-1 NilpotentLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X8481BFF27E19148F">12.11-2 NilpotentLoops</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12.html#X866225AB797154BC">12.12 <span class="Heading">Library of automorphic loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X826565077BBCCCE9">12.12-1 AutomorphicLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X8603471785CCF55A">12.12-2 AutomorphicLoops</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12.html#X7B62D07E7A9224AB">12.13 <span class="Heading">Library of interesting loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X7AE9F142857F4379">12.13-1 InterestingLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X80F7FDD97B0F7ACA">12.13-2 InterestingLoops</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12.html#X7C07A57A7AA957AD">12.14 <span class="Heading">Library of small racks</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X86917427845B1564">12.14-1 SmallRack</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X78F3FF8579E6F065">12.14-2 SmallRacks</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12.html#X85F2ABFB7BA65ECF">12.15 <span class="Heading">Library of small quandles</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X85DD270B7F61DA66">12.15-1 SmallQuandle</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X7C6430D7836E20F9">12.15-2 SmallQuandles</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12.html#X86FFA9A27EDA76AD">12.16 <span class="Heading">Library of connected quandles</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X829697E48460BB24">12.16-1 ConnectedQuandle</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X78C1102681E84FDC">12.16-2 ConnectedQuandles</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12.html#X85C027E983006D62">12.17 <span class="Heading">Library of small loops up to isotopism</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X7BEE76AF8095BB0F">12.17-1 ItpSmallLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X7DD5DB807C9A4190">12.17-2 ItpSmallLoops</a></span>
+</div></div>
+</div>
+<div class="ContChap"><a href="chapBib.html"><span class="Heading">References</span></a></div>
+<div class="ContChap"><a href="chapInd.html"><span class="Heading">Index</span></a></div>
+<br />
+</div>
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
 </body>
 </html>

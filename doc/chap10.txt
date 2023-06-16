@@ -1,0 +1,158 @@
+  
+  [1X10 [33X[0;0YBol loops, Bruck loops and Moufang loops[133X[101X
+  
+  
+  [1X10.1 [33X[0;0YBol loops and Bruck loops[133X[101X
+  
+  [33X[0;0YA  right  Bruck  loop is a right Bol loop satisfying the automorphic inverse
+  property. If [23XQ[123X is a right Bol loop in which the squaring map [23Xx\mapsto x^2[123X is
+  a   permutation,   then   [23X(Q,\circ)[123X   with   multiplication   [23Xx\circ   y   =
+  ((x(yy))x)^{1/2}[123X is a right Bruck loop, the right Bruck loop [13Xassociated[113X with
+  [23XQ[123X.  Here,  [23Xx^{1/2}[123X  is  the square-root of [23Xx[123X, the unique element [23Xy[123X of [23XQ[123X such
+  that [23Xy^2=x[123X.[133X
+  
+  [33X[0;0YFor  a left Bol loop in which squaring is a permutation, the associated left
+  Bruck loop is defined by [23Xx\circ y = (x((yy)x))^{1/2}[123X.[133X
+  
+  
+  [1X10.1-1 [33X[0;0YAssociated Bruck loop[133X[101X
+  
+  [33X[1;0Y[29X[2XAssociatedRightBruckLoop[102X( [3XQ[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XAssociatedLeftBruckLoop[102X( [3XQ[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ythe  right  (left) Bruck loop associated with the right (left) Bol
+            loop [10XQ[110X. The returned loop is index based iff [10XQ[110X is index based.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := RightBolLoop(21,1);;[127X[104X
+    [4X[25Xgap>[125X [27XAssociatedRightBruckLoop( Q );[127X[104X
+    [4X[28X<right Bruck loop of size 21>[128X[104X
+  [4X[32X[104X
+  
+  [1X10.1-2 IsExactGroupFactorization[101X
+  
+  [33X[1;0Y[29X[2XIsExactGroupFactorization[102X( [3XG[103X, [3XH1[103X, [3XH2[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  [10XG[110X,  [10XH1[110X, [10XH2[110X is an exact group factorization, else returns
+            [10Xfalse[110X.[133X
+  
+  [33X[0;0YA  triple  [23XG[123X,  [23XH_1[123X,  [23XH_2[123X  is  an  [13Xexact  group factorization[113X if [23XH_1[123X, [23XH_2[123X are
+  subgroups of [23XG[123X such that [23XH_1\cap H_2=1[123X and [23XH_1H_2=G[123X.[133X
+  
+  [1X10.1-3 RightBolLoopByExactGroupFactorization[101X
+  
+  [33X[1;0Y[29X[2XRightBolLoopByExactGroupFactorization[102X( [3XG[103X, [3XH1[103X[, [3XH2[103X[, [3XconstructorStyle[103X]] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  right Bol loop obtained from the exact group factorization [10XG[110X,
+            [10XH1[110X,  [10XH2[110X.  With  two  arguments  [10XG[110X  and  [10XH1[110X,  the group [10XG[110X must be a
+            transitive  permutation  group  and [10XH1[110X must be a regular subgroup.
+            Then, [10XH2[110X is taken as the stabilizer of a point in [10XG[110X.[133X
+  
+  [33X[0;0YGiven  an  exact  group  factorization  [23XG[123X,  [23XH_1[123X, [23XH_2[123X, the triple [23X(G\times G,
+  H_1\times  H_2,  \{(g,g^{-1}):g\in  G\})[123X  is  a  loop  right  folder and the
+  resulting group is automatically a right Bol loop.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG := SymmetricGroup( 5 );;[127X[104X
+    [4X[25Xgap>[125X [27XH1 := Subgroup( G, [(1,2),(1,3),(1,4)] );;[127X[104X
+    [4X[25Xgap>[125X [27XH2 := Subgroup( G, [(1,2,3,4,5)] );;[127X[104X
+    [4X[25Xgap>[125X [27XIsExactGroupFactorization( G, H1, H2 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XRightBolLoopByExactGroupFactorization( G, H1, H2 );[127X[104X
+    [4X[28X<right Bol loop of size 120>[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.2 [33X[0;0YTriality for Moufang loops[133X[101X
+  
+  [33X[0;0YLet  [23XG[123X be a group and [23X\sigma[123X, [23X\rho[123X be automorphisms of [23XG[123X satisfying [23X\sigma^2
+  =  \rho^3  =  (\sigma \rho)^2 = 1[123X. Below we write automorphisms as exponents
+  and [23X[g,\sigma][123X for [23Xg^{-1}g^\sigma[123X. We say that the triple [23X(G,\rho,\sigma)[123X is
+  a  [13Xgroup with triality[113X if [23X[g, \sigma] [g,\sigma]^\rho [g,\sigma]^{\rho^2} =1[123X
+  holds  for  all  [23Xg  \in  G[123X.  It is known that one can associate a group with
+  triality  [23X(G,\rho,\sigma)[123X  in  a  canonical  way  with a Moufang loop [23XQ[123X. See
+  [NVe03] for more details.[133X
+  
+  [33X[0;0YFor any Moufang loop [23XQ[123X, we can calculate the triality group as a permutation
+  group acting on [23X3|Q|[123X points. If the multiplication group of [23XQ[123X is polycyclic,
+  then  we can also represent the triality group as a pc group. In both cases,
+  the  automorphisms [23X\sigma[123X and [23X\rho[123X are in the same family as the elements of
+  [23XG[123X.[133X
+  
+  [1X10.2-1 TrialityPermGroup[101X
+  
+  [33X[1;0Y[29X[2XTrialityPermGroup[102X( [3XQ[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya  record  with components [10XG[110X, [10Xrho[110X, [10Xsigma[110X, where [10XG[110X is the canonical
+            group  with  triality  associated  with a Moufang loop [3XQ[103X, and [10Xrho[110X,
+            [10Xsigma[110X  are the corresponding triality automorphisms. We allow [3XQ[103X to
+            be a group.[133X
+  
+  [1X10.2-2 TrialityPcGroup[101X
+  
+  [33X[1;0Y[29X[2XTrialityPcGroup[102X( [3XQ[103X ) [32X operation[133X
+  
+  [33X[0;0YThis  is  a  variation  of  [10XTrialityPermGroup[110X in which [10XG[110X is returned as a pc
+  group.[133X
+  
+  
+  [1X10.3 [33X[0;0YQuarter modifications of Moufang loops[133X[101X
+  
+  [33X[0;0YDrápal  [Dr\03]  described  two  prominent families of extensions of Moufang
+  loops.   The  common  feature  of  these  extensions  is  that  they  modify
+  multiplication  tables  of  groups  or  other  Moufang  loops in exactly one
+  quarter  of  the  mutliplication  table.  It turns out that these extensions
+  suffice  to  obtain  all nonassociative Moufang loops of order at most 64 if
+  one starts with so-called Chein loops. We call the two constructions [13XMoufang
+  modifications[113X.  The  library  of  Moufang  loops used to be based on Moufang
+  modifications. See [DVe06] for details.[133X
+  
+  [1X10.3-1 CheinLoop[101X
+  
+  [33X[1;0Y[29X[2XCheinLoop[102X( [3XG[103X[, [3XconstructorStyle[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  Chein loop constructed from the group [10XG[110X, that is, the Moufang
+            loop on [10X[0,1] x G[110X with multiplication[133X
+  
+  
+  [24X          [33X[0;10Y(0,x)(0,y)   =   (0,xy),\  (0,x)(1,y)  =  (1,yx),\,  (1,x)(0,y)  =
+            (1,xy^{-1}),\ (1,x)(1,y) = (0,yx^{-1}).[133X
+  
+  [124X
+  
+            [33X[0;10YThe resulting Moufang loop is associative iff [10XG[110X is commutative.[133X
+  
+  
+  [1X10.3-2 [33X[0;0Y*Cyclic modification[133X[101X
+  
+  [33X[1;0Y[29X[2XLoopByCyclicModification[102X( [3XQ[103X, [3XS[103X, [3Xa[103X, [3Xh[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10YThe  cyclic  modification  of  a  Moufang  loop [3XQ[103X obtained from [3XS[103X,
+            [3Xa[103X[23X=\alpha[123X and [3Xh[103X as described below. We allow [3XS[103X to be normal subloop
+            of  [3XL[103X  or a list of elements of [3XL[103X generating a normal subloop. The
+            returned loop will always be index based.[133X
+  
+  [33X[0;0YAssume  that  [23XQ[123X is a Moufang loop with a normal subloop [23XS[123X such that [23XQ/S[123X is a
+  cyclic  group of order [23X2m[123X. Let [23Xh\in S\cap Z(L)[123X. Let [23X\alpha[123X be a generator of
+  [23XQ/S[123X and write [23XQ = \bigcup_{i\in M} \alpha^i[123X, where [23XM=\{-m+1[123X, [23X\dots[123X, [23Xm\}[123X. Let
+  [23X\sigma:\mathbb{Z}\to  M[123X  be defined by [23X\sigma(i)=0[123X if [23Xi\in M[123X, [23X\sigma(i)=1[123X if
+  [23Xi>m[123X,  and  [23X\sigma(i)=-1[123X  if [23Xi<-m+1[123X. Introduce a new multiplication [23X*[123X on [23XQ[123X by
+  [23Xx*y  = xyh^{\sigma(i+j)}[123X, where [23Xx\in \alpha^i[123X, [23Xy\in\alpha^j[123X, [23Xi\in M[123X and [23Xj\in
+  M[123X. Then [23X(Q,*)[123X is a Moufang loop, a [13Xcyclic modification[113X of [23XQ[123X.[133X
+  
+  
+  [1X10.3-3 [33X[0;0Y*Dihedral modification[133X[101X
+  
+  [33X[1;0Y[29X[2XLoopByDihedralModification[102X( [3XQ[103X, [3XS[103X, [3Xe[103X, [3Xf[103X, [3Xh[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10YThe  dihedral modification of a Moufang loop [3XQ[103X obtained from [3XS[103X, [3Xe[103X,
+            [3Xf[103X  and  [3Xh[103X as described below. We allow [3XS[103X to be normal subloop of [3XL[103X
+            or  a  list  of  elements  of  [3XL[103X  generating a normal subloop. The
+            returned loop will always be index based.[133X
+  
+  [33X[0;0YLet  [23XQ[123X be a Moufang loop with a normal subloop [23XS[123X such that [23XQ/S[123X is a dihedral
+  group  of order [23X4m[123X, with [23Xm\ge 1[123X. Let [23XM[123X and [23X\sigma[123X be efined as in the cyclic
+  case.   Let   [23X\beta[123X,   [23X\gamma[123X   be   two   involutions   of  [23XQ/S[123X  such  that
+  [23X\alpha=\beta\gamma[123X  generates  a  cyclic  subgroup  of  [23XQ/S[123X of order [23X2m[123X. Let
+  [23Xe\in\beta[123X  and  [23Xf\in\gamma[123X be arbitrary. Then [23XQ[123X can be written as a disjoint
+  union  [23XQ=\bigcup_{i\in  M}(\alpha^i\cup e\alpha^i)[123X, and also [23XQ=\bigcup_{i\in
+  M}(\alpha^i\cup    \alpha^if)[123X.   Let   [23XG_0=\bigcup_{i\in   M}\alpha^i[123X,   and
+  [23XG_1=L\setminus  G_0[123X.  Let  [23Xh\in  S\cap  N(L)\cap  Z(G_0)[123X.  Introduce  a  new
+  multiplication   [23X*[123X   on   [23XQ[123X   by   [23Xx*y   =   xyh^{(-1)^r\sigma(i+j)}[123X,  where
+  [23Xx\in\alpha^i\cup e\alpha^i[123X, [23Xy\in\alpha^j\cup \alpha^jf[123X, [23Xi\in M[123X, [23Xj\in M[123X, [23Xy\in
+  G_r[123X  and  [23Xr\in\{0,1\}[123X. Then [23X(Q,*)[123X is a Moufang loop, a [13Xdihedral modification[113X
+  of [23XQ[123X.[133X
+  

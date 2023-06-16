@@ -1,0 +1,767 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (RightQuasigroups) - Chapter 2: Constructors</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap2"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap2_mj.html">[MathJax on]</a></p>
+<p><a id="X86EC0F0A78ECBC10" name="X86EC0F0A78ECBC10"></a></p>
+<div class="ChapSects"><a href="chap2.html#X86EC0F0A78ECBC10">2 <span class="Heading">Constructors</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X85C8B48C7BEC8AB6">2.1 <span class="Heading">Optional arguments in constructors</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X80E84D0F7D40E242">2.1-1 SetDefaultConstructorStyle</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7BA1BDBA7B9F3234">2.1-2 ConstructorStyle</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X8560CC1E7E8A1885">2.2 <span class="Heading">Converting betwen right quasigroups, quasigroups and loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7D87E38D80C1A86D">2.2-1 <span class="Heading">IsRightQuasigroupMagma, IsLeftQuasigroupMagma, IsQuasigroupMagma and IsLoopMagma</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7F1DF7D48504ED59">2.2-2 <span class="Heading">AsRightQuasigroup, AsQuasigroup and AsLoop</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7869753A7A885B34">2.3 <span class="Heading">*A two-step constructor</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X86899C287BAB72D1">2.3-1 RQ_AlgebraShell</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X864F834981EF2BE8">2.3-2 RQ_AddDefaultOperations</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7B7456197A8D26BD">2.4 <span class="Heading">Constructors by Cayley table</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X780FCF678129564C">2.4-1 <span class="Heading">Cayley tables versus multiplication tables</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7DD68FCB87A86746">2.4-2 <span class="Heading">Cayley tables and multiplication tables of right quasigroups</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X864B858784D742FC">2.4-3 <span class="Heading">Constructing division tables from multiplication tables</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7827BF877AA87246">2.4-4 <span class="Heading">Testing Cayley tables</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X85E643BD7FE009D2">2.4-5 <span class="Heading">Normalizing Cayley tables</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E3A5E5F7BE83FA5">2.4-6 <span class="Heading">Creating right quasigroups by Cayley table</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7C3B24557B307202">2.5 <span class="Heading">Constructors by function</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X785728C6829DA37B">2.5-1 <span class="Heading">Arguments used in constructors by function</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X862F2F417A0B6541">2.5-2 IsRightQuasigroupFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X805BE6867C2E6B20">2.5-3 IsQuasigroupFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X825EE4387A43A5F6">2.5-4 IsLoopFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7CCC98D87C1DFAAD">2.5-5 <span class="Heading">Multiplication, right division and left division functions</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8421D2987B7DE45C">2.5-6 RightQuasigroupByFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7822BB1380836F5C">2.5-7 QuasigroupByFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X79C3DEDD7E7849A5">2.5-8 LoopByFunction</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X788082C77E5972A9">2.6 <span class="Heading">Constructors by right section</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X80615CD28059A239">2.6-1 <span class="Heading">Testing right sections</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X78B527387800FBDC">2.6-2 <span class="Heading">Constructing right quasigroups, quasigroups and loops by right section</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7DE999187CC72932">2.7 <span class="Heading">Constructors by right folder (transversal)</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7DF636EE78282F6E">2.7-1 <span class="Heading">Checking right folders</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7CFE9A578647BFB0">2.7-2 <span class="Heading">Creating right quasigroups, quasigroups and loops by right folders</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X830DE89B7B506B15">2.8 <span class="Heading">Constructors for special types of right quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X80BD0B6A7CD3B2B0">2.8-1 ProjectionRightQuasigroup</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7A04B2F57C9C0B43">2.9 <span class="Heading">Random right quasigroups, quasigroups and loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X86B7174179FB2352">2.9-1 RandomRightQuasigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7AE29A1A7AA5C25A">2.9-2 <span class="Heading">Random quasigroups and loops</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X854230F28413C6A2">2.9-3 RandomNilpotentLoop</a></span>
+</div></div>
+</div>
+
+<h3>2 <span class="Heading">Constructors</span></h3>
+
+<p>In this chapter we describe most constructor methods for right quasigroups.</p>
+
+<p><a id="X85C8B48C7BEC8AB6" name="X85C8B48C7BEC8AB6"></a></p>
+
+<h4>2.1 <span class="Heading">Optional arguments in constructors</span></h4>
+
+<p>Almost all constructors in <strong class="pkg">RightQuasigroups</strong> (exceptions will be noted) allow an optional argument <code class="code">constructorStyle</code>, a record that determines if the constructed right quasigroup will be index based (cf. Section <a href="chap1.html#X81DECB427F4826CD"><span class="RefLink">1.8</span></a>) and if the arguments of the constuctor will be checked.</p>
+
+<p>The default value of this optional record is <code class="code">RQ_defaultConstructorStyle := rec( indexBased := true, checkArguments := false )</code>. This means that all created right quasigroups will be index based and no arguments of the constructors will be checked, unless otherwise specified by the user.</p>
+
+<p>The default constructor style for all constructors can be changed by calling <code class="code">SetDefaultConstructorStyle</code>.</p>
+
+<p>The constructor style can also be specified as an optional argument of a given constructor, either direcly, e.g., <code class="code">rec( indexBased := false, checkArguments := false )</code>, or by inserting the record returned by <code class="code">ConstructorStyle</code>. Furthermore, in the former case we allow the provided constructor style to be incomplete, that is, having only one (or none) of the components <code class="code">indexBased</code> and <code class="code">checkArguments</code>; the missing components are assumed to have default values then.</p>
+
+<p><em>Note:</em> As far as checking of arguments in right quasigroup constructors of <strong class="pkg">RightQuasigroups</strong> is concerned, the optional component <code class="code">constructorStyle.checkArguments</code> intends to replace the standard naming mechanism of <strong class="pkg">GAP</strong> in which <code class="code">FunctionNC</code> does not check its arguments while the corresponding <code class="code">Function</code> does. The <code class="code">NC</code> convention is kept outside of the constructors.</p>
+
+<p><a id="X80E84D0F7D40E242" name="X80E84D0F7D40E242"></a></p>
+
+<h5>2.1-1 SetDefaultConstructorStyle</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetDefaultConstructorStyle</code>( <var class="Arg">indexBased</var>, <var class="Arg">checkArguments</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> and changes the default constructor style according to the bool values <var class="Arg">indexBased</var> and <var class="Arg">checkArguments</var>.</p>
+
+<p><a id="X7BA1BDBA7B9F3234" name="X7BA1BDBA7B9F3234"></a></p>
+
+<h5>2.1-2 ConstructorStyle</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConstructorStyle</code>( <var class="Arg">indexBased</var>, <var class="Arg">checkArguments</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the record with elements named <code class="code">indexBased</code> and <code class="code">checkArguments</code> set to bool values <var class="Arg">indexBased</var> and <var class="Arg">checkArguments</var>, respectively. The returned record can then be used as an optional argument in constructors.</p>
+
+<p><a id="X8560CC1E7E8A1885" name="X8560CC1E7E8A1885"></a></p>
+
+<h4>2.2 <span class="Heading">Converting betwen right quasigroups, quasigroups and loops</span></h4>
+
+<p>While <strong class="pkg">GAP</strong> does not automatically recognize a right quasigroup as a quasigroup or a loop (if it happens to be one mathematically), it is possible to test these properties and convert the algebras up and down as desired.</p>
+
+<p><a id="X7D87E38D80C1A86D" name="X7D87E38D80C1A86D"></a></p>
+
+<h5>2.2-1 <span class="Heading">IsRightQuasigroupMagma, IsLeftQuasigroupMagma, IsQuasigroupMagma and IsLoopMagma</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightQuasigroupMagma</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftQuasigroupMagma</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsQuasigroupMagma</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLoopMagma</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if the magma <var class="Arg">M</var> is a right quasigroup (resp. left quasigroup, quasigroup, loop) mathematically, else returns <code class="code">false</code>.</p>
+
+<p>We also support <code class="code">IsLatinMagma</code> as a synonym of <code class="code">IsQuasigroupMagma</code> since the multiplication table of quasigroups are Latin squares.</p>
+
+<p>Note that an explicit check will be carried out by each of <code class="code">IsRightQuasigroupMagma</code>, <code class="code">IsLeftQuasigroupMagma</code>, <code class="code">IsQuasigroupMagma</code> and <code class="code">IsLoopMagma</code> even if the underlying magma is declared to be a right quasigroup, quasigroup, loop, group, etc. To check only if a magma <code class="code">M</code> contains a neutral element, it is also possible to call the <strong class="pkg">GAP</strong> function <code class="code">MultiplicativeNeutralElement( M )</code>, which returns a neutral element of <code class="code">M</code> if one exists and <code class="code">fail</code> otherwise.</p>
+
+<p><a id="X7F1DF7D48504ED59" name="X7F1DF7D48504ED59"></a></p>
+
+<h5>2.2-2 <span class="Heading">AsRightQuasigroup, AsQuasigroup and AsLoop</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsRightQuasigroup</code>( <var class="Arg">M</var>[, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsQuasigroup</code>( <var class="Arg">M</var>[, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsLoop</code>( <var class="Arg">M</var>[, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the right quasigroup, quasigroup or loop, respectively, corresponding to the magma or additive group <var class="Arg">M</var> that is mathematically a right quasigroup, quasigroup or loop, else returns <code class="code">fail</code>. If <var class="Arg">M</var> is an additive group, the additive operation is used as multiplication. See Section <a href="chap2.html#X85C8B48C7BEC8AB6"><span class="RefLink">2.1</span></a> for the optional argument <var class="Arg">constructorStyle</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := MagmaByMultiplicationTable( [ [1,1], [2,2] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements( M );</span>
+[ m1, m2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRightQuasigroupMagma( M );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := AsRightQuasigroup( M );</span>
+&lt;right quasigroup of size 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements( R );</span>
+[ r&lt;object&gt;, r&lt;object&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsQuasigroupMagma( R ); # synonym of IsLatinMagma</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsQuasigroup( M ); # arguments of constructors are by default not checked!</span>
+&lt;quasigroup of size 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsQuasigroup( M, rec( checkArguments := true ) ); # the optional argument will force a check</span>
+fail
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group((1,2,3));; IsLoopMagma( G );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := AsLoop( G ); # multiplicative group</span>
+&lt;associative loop of size 3&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements( L );</span>
+[ l(), l(1,2,3), l(1,3,2) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsRightQuasigroup(GF(7)^2); # additive group</span>
+&lt;associative right quasigroup of size 49&gt;
+</pre></div>
+
+<p><a id="X7869753A7A885B34" name="X7869753A7A885B34"></a></p>
+
+<h4>2.3 <span class="Heading">*A two-step constructor</span></h4>
+
+<p>Most constructors of <strong class="pkg">RightQuasigroups</strong> work in two steps. In the first step, a shell of an algebra is created, with the underlying set and elements stored but with no multiplication function assigned. In the second step, the multiplication function is added, depending on the data provided by the user in the constructor.</p>
+
+<p>The reason for this approach, which is particularly useful for non-index based right quasigroups, is that the multiplication function might depend on data that needs to be stored in the right quasigroup and be accessible. The first step creates the desired <strong class="pkg">GAP</strong> object so that the multiplication function added in the second step can point to the stored data.</p>
+
+<p><a id="X86899C287BAB72D1" name="X86899C287BAB72D1"></a></p>
+
+<h5>2.3-1 RQ_AlgebraShell</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RQ_AlgebraShell</code>( <var class="Arg">category</var>, <var class="Arg">S</var>[, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an algebra shell of the appropriate category on the underlying set <var class="Arg">S</var>. The value of <var class="Arg">category</var> must be <code class="code">IsRightQuasigroup</code>, <code class="code">IsQuasigroup</code> or <code class="code">IsLoop</code>.</p>
+
+<p>Note: The value of <var class="Arg">constructorStyle</var><code class="code">.checkArguments</code> of the optional argument <var class="Arg">constructorStyle</var> does not come into play and need not be specified.</p>
+
+<p><a id="X864F834981EF2BE8" name="X864F834981EF2BE8"></a></p>
+
+<h5>2.3-2 RQ_AddDefaultOperations</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RQ_AddDefaultOperations</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code></p>
+
+<p>This method adds all required unary and binary operations to the right quasigroup shell <var class="Arg">Q</var>. The implied right division is always added. The implied left division is added if <var class="Arg">Q</var> is a declared quasigroup. The implied neutral element is added if <var class="Arg">Q</var> is a declared loop. Let <code class="code">F = FamilyObj( </code><var class="Arg">Q</var><code class="code">.1 )</code>. If <var class="Arg">Q</var> is index based, it is assumed that <code class="code">F!.multTable</code> is bound. If <var class="Arg">Q</var> is not index based, it is assumed that <code class="code">F!.mult</code> is bound.</p>
+
+<p>The following simple examples illustrates the approach, first for non-index based algebras:</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := RQ_AlgebraShell( IsRightQuasigroup, GF(5), rec( indexBased := false ) );</span>
+&lt;right quasigroup shell of size 5&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := FamilyObj( Q.1 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F!.mult := function(x,y) return x+y; end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q; # still a shell since right division is not bound</span>
+&lt;right quasigroup shell of size 5&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q.1*Q.1; # multiplication already works since Q is not index based and F!.mult is bound</span>
+r0*Z(5)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RQ_AddDefaultOperations( Q );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q; # all needed operations for the right quasigroup are now bound</span>
+&lt;right quasigroup of size 5&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q.1/Q.1;</span>
+r0*Z(5)
+</pre></div>
+
+<p>And now for index based algebras:</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := RQ_AlgebraShell( IsRightQuasigroup, GF(5) );</span>
+&lt;right quasigroup shell of size 5&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := FamilyObj( Q.1 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F!.multTable := List( GF(5), x-&gt; List( GF(5), y -&gt; Position( Elements(GF(5)), x+y ) ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q; # still a shell since right division is not bound</span>
+&lt;right quasigroup shell of size 5&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q.1*Q.1; # multiplication already works since Q is index based and F!.multTable is bound</span>
+r0*Z(5)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RQ_AddDefaultOperations( Q );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q; # all needed operations for the right quasigroup are now bound</span>
+&lt;right quasigroup of size 5&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q.1/Q.1;</span>
+r0*Z(5)
+</pre></div>
+
+<p><a id="X7B7456197A8D26BD" name="X7B7456197A8D26BD"></a></p>
+
+<h4>2.4 <span class="Heading">Constructors by Cayley table</span></h4>
+
+<p><a id="X780FCF678129564C" name="X780FCF678129564C"></a></p>
+
+<h5>2.4-1 <span class="Heading">Cayley tables versus multiplication tables</span></h5>
+
+<p>Given a right quasigroup <code class="code">Q</code> of size <span class="Math">n</span> with underlying set <span class="Math">S</span>, the <em>Cayley table</em> of <code class="code">Q</code> is the <span class="Math">n\times n</span> array with rows and columns implictly labeled by the elements of (the sorted list) <span class="Math">S</span> such that the cell in row <span class="Math">x</span> and column <span class="Math">y</span> contains the element <span class="Math">xy\in S</span>.</p>
+
+<p>In accordance with <strong class="pkg">GAP</strong> conventions, given a magma <code class="code">M</code> of size <span class="Math">n</span> with <span class="Math">m_i</span> denoting the <span class="Math">i</span>th element of <code class="code">M</code>, the <em>multiplication table</em> of <code class="code">Q</code> is the <span class="Math">n\times n</span> array with rows and columns implicitly labeled by <span class="Math">[1..n]</span> such that the cell in row <span class="Math">i</span> and column <span class="Math">j</span> contains <span class="Math">k</span> if <span class="Math">m_im_j=m_k</span>.</p>
+
+<p>Analogous conventions apply to right division and left division.</p>
+
+<p><em>Note:</em> It is also possible to form an <span class="Math">n\times n</span> array with rows and columns implicitly labeled by <strong class="pkg">GAP</strong> elements of <code class="code">Q</code> so that the cell in row <code class="code">x</code> and column <code class="code">y</code> contains the <strong class="pkg">GAP</strong> element <code class="code">x*y</code>. Such a table can be quickly constructed from the Cayley table <code class="code">ct</code> of <code class="code">Q</code> by <code class="code">List( ct, row -&gt; List( row, x -&gt; Q[x] ) )</code>, for instance. We do not introduce terminology for such tables, nor do we provide any methods for dealing with them.</p>
+
+<p><a id="X7DD68FCB87A86746" name="X7DD68FCB87A86746"></a></p>
+
+<h5>2.4-2 <span class="Heading">Cayley tables and multiplication tables of right quasigroups</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MultiplicationTable</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CayleyTable</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightDivisionTable</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightDivisionCayleyTable</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftDivisionTable</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftDivisionCayleyTable</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the multiplication table, Cayley table, right division table, right division Cayley table, left division table and left division Cayley table of right quasigroup <var class="Arg">Q</var>, respectively. For the left divisions, <var class="Arg">Q</var> must be a declared quasigroup.</p>
+
+<p>Note that the Cayley tables are not stored as attributes since they are cheap to calculate and they are affected by a possible change of the underlying set of <var class="Arg">Q</var>.</p>
+
+<p><a id="X864B858784D742FC" name="X864B858784D742FC"></a></p>
+
+<h5>2.4-3 <span class="Heading">Constructing division tables from multiplication tables</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightDivisionTableFromMultiplicationTable</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftDivisionTableFromMultiplicationTable</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>It is possible to construct a right division table from the multiplication table of a right quasigroup <var class="Arg">Q</var> of size <span class="Math">n</span> in <span class="Math">O(n^2)</span>, rather than naively in <span class="Math">O(n^3)</span>. The fast algorithm is used in the above two methods which return the right division table and the left division table of a right quasigroup <var class="Arg">Q</var>, respectively. For the left division, <var class="Arg">Q</var> must be a declared quasigroup.</p>
+
+<p><a id="X7827BF877AA87246" name="X7827BF877AA87246"></a></p>
+
+<h5>2.4-4 <span class="Heading">Testing Cayley tables</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightQuasigroupCayleyTable</code>( <var class="Arg">ct</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsQuasigroupCayleyTable</code>( <var class="Arg">ct</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLoopCayleyTable</code>( <var class="Arg">ct</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <var class="Arg">ct</var> is a Cayley table of a right quasigroup, quasigroup or loop, respectively, otherwise returns <code class="code">false</code>. The underlying set it understood to be the ordered set of elements contained in the first column of <var class="Arg">ct</var>. This is a logical choice for right quasigroups.</p>
+
+<p><a id="X85E643BD7FE009D2" name="X85E643BD7FE009D2"></a></p>
+
+<h5>2.4-5 <span class="Heading">Normalizing Cayley tables</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NormalizedRightQuasigroupCayleyTable</code>( <var class="Arg">ct</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NormalizedQuasigroupCayleyTable</code>( <var class="Arg">ct</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a normalized version of the (right) quasigroup Cayley table <var class="Arg">ct</var>.</p>
+
+<p>A right quasigroup Cayley table is <em>normalized</em> if the entries in the first column are sorted. Every right quasigroup Cayley table can be normalized by permuting its rows.</p>
+
+<p>A quasigroup Cayley table is <em>normalized</em> if the entires in the first column and the entries in the first row are sorted. Every right quasigroup Cayley table can be normalized by permuting its rows and columns.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ct := [[1,1],[0,0]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NormalizedRightQuasigroupCayleyTable( ct );</span>
+[ [ 0, 0 ], [ 1, 1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ct := [["b","a"],["a","b"]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NormalizedQuasigroupCayleyTable( ct );</span>
+[ [ "a", "b" ], [ "b", "a" ] ]
+</pre></div>
+
+<p><a id="X7E3A5E5F7BE83FA5" name="X7E3A5E5F7BE83FA5"></a></p>
+
+<h5>2.4-6 <span class="Heading">Creating right quasigroups by Cayley table</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightQuasigroupByCayleyTable</code>( <var class="Arg">ct</var>[, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasigroupByCayleyTable</code>( <var class="Arg">ct</var>[, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopByCayleyTable</code>( <var class="Arg">ct</var>[, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the right quasigroup, quasigroup or loop with Cayley table <var class="Arg">ct</var>, respectively. See Section <a href="chap2.html#X85C8B48C7BEC8AB6"><span class="RefLink">2.1</span></a> for the optional argument <var class="Arg">constructorStyle</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ct := [ [ "red", "white", "white" ], [ "blue", "blue", "red" ], [ "white", "red", "blue" ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRightQuasigroupCayleyTable( ct );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := RightQuasigroupByCayleyTable( ct );</span>
+&lt;right quasigroup of size 3&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements( Q ); # note the ordering of the elements induced by "blue" &lt; "red" &lt; "white"</span>
+[ rblue, rred, rwhite ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrintArray( CayleyTable( Q ) ); # rows and column are implicitly labeled "blue", "red", "white"</span>
+[ [    red,  white,  white ],
+  [   blue,   blue,    red ],
+  [  white,    red,   blue ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( MultiplicationTable( Q ) ); # rows and columns are implicitly labeled 1, 2, 3</span>
+[ [  2,  3,  3 ],
+  [  1,  1,  2 ],
+  [  3,  2,  1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsQuasigroupCayleyTable( ct );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t := [ [0,1], [1,0] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ IsQuasigroupCayleyTable( t ), IsLoopCayleyTable( t ) ];</span>
+[ true, true ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QuasigroupByCayleyTable( t );</span>
+&lt;quasigroup of size 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoopByCayleyTable( t );</span>
+&lt;loop of size 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">One( last );</span>
+l0
+</pre></div>
+
+<p><a id="X7C3B24557B307202" name="X7C3B24557B307202"></a></p>
+
+<h4>2.5 <span class="Heading">Constructors by function</span></h4>
+
+<p>In this section we describe how to construct right quasigroups, quasigroups and loops by functions.</p>
+
+<p>To fix terminology, we say that a function <span class="Math">f:S\times S\to S</span> is a <em>right quasigroup function</em> if for every <span class="Math">x\in S</span> the function <span class="Math">R_x:S\to S</span> defined by <span class="Math">R_x(y) = f(y,x)</span> is a permutation of <span class="Math">S</span>. A right quasigroup function <span class="Math">f:S\times S\to S</span> is a <em>quasigroup function</em> if for every <span class="Math">x\in S</span> the function <span class="Math">L_x:S\to S</span> defined by <span class="Math">L_x(y) = f(x,y)</span> is a permutation of <span class="Math">S</span>. Finally, a quasigroup function <span class="Math">f:S\times S\to S</span> is a <em>loop function</em> if there is <span class="Math">e\in S</span> such that <span class="Math">f(e,x)=x=f(x,e)</span> for every <span class="Math">x\in S</span>.</p>
+
+<p><a id="X785728C6829DA37B" name="X785728C6829DA37B"></a></p>
+
+<h5>2.5-1 <span class="Heading">Arguments used in constructors by function</span></h5>
+
+<p>When constructing right quasigroups, quasigroups and loops by function(s), <strong class="pkg">RightQuasigroups</strong> assumes that the arguments are given as follows:</p>
+
+
+<ul>
+<li><p>The first argument is the underlying set <code class="code">S</code> of the algebra.</p>
+
+</li>
+<li><p>The second argument is the multiplication function.</p>
+
+</li>
+<li><p>Optional arguments that lie in the filter <code class="code">IsFunction</code> correspond to right division and left division, in this order. (In particular, it is not possible to specify left division without first specifying right division.)</p>
+
+</li>
+<li><p>The first optional argument that lies in <code class="code">S</code> is the neutral element.</p>
+
+</li>
+<li><p>If the last optional argument is a record, it is the constructor style, else the default constructor style will be used.</p>
+
+</li>
+</ul>
+<p>If the optional right division function is not given, it will be automatically inferred from the multiplication function. In case of quasigroups an loops, if the optional left division function is not given, it will be automatically inferred from the multiplication function. Likewise, in case of loops, if the optional neutral element is not given, it will be automatically inferred from the multiplication function.</p>
+
+<p>Note that providing the division functions as arguments of non-index based algebras will typically make the division operations faster than by relying on the inferred divisions. For instance, if <span class="Math">f(x,y)=x+y</span> is the multiplication function and the user also provides the right division function <span class="Math">g(x,y) = x-y</span>, the right division will be performed faster than the default right division that searches for the first element <span class="Math">z</span> such that <span class="Math">x=f(z,y)</span>.</p>
+
+<p>Similar conventions hold for the methods that check whether given function(s) constitute right quasigroup, quasigroup or loop function(s), except that the constructor style is void and the missing operations are not automatically inferred from the multiplication.</p>
+
+<p><a id="X862F2F417A0B6541" name="X862F2F417A0B6541"></a></p>
+
+<h5>2.5-2 IsRightQuasigroupFunction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightQuasigroupFunction</code>( <var class="Arg">S</var>, <var class="Arg">mult</var>[, <var class="Arg">rdiv</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <var class="Arg">mult</var> is a right quasigroup function on <var class="Arg">S</var>, else returns <code class="code">false</code>. (See Subsection <a href="chap2.html#X785728C6829DA37B"><span class="RefLink">2.5-1</span></a> for how the optional arguments are treated.) If <var class="Arg">rdiv</var> is given, it is checked that it is the right division on <var class="Arg">S</var> corresponding to the multiplication <var class="Arg">mult</var>.</p>
+
+<p><a id="X805BE6867C2E6B20" name="X805BE6867C2E6B20"></a></p>
+
+<h5>2.5-3 IsQuasigroupFunction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsQuasigroupFunction</code>( <var class="Arg">S</var>, <var class="Arg">mult</var>[, <var class="Arg">rdiv</var>, <var class="Arg">ldiv</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <var class="Arg">mult</var> is a quasigroup function on <var class="Arg">S</var>, else returns <code class="code">false</code>. (See Subsection <a href="chap2.html#X785728C6829DA37B"><span class="RefLink">2.5-1</span></a> for how the optional arguments are treated.) If <var class="Arg">rdiv</var> is given, it is checked that it is the right division on <var class="Arg">S</var> corresponding to the multiplication <var class="Arg">mult</var>. If <var class="Arg">ldiv</var> is given, it is checked that it is the left division on <var class="Arg">S</var> corresponding to the multiplication <var class="Arg">mult</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mult := function( x, y ) return (x+2*y) mod 4; end;</span>
+function( x, y ) ... end
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRightQuasigroupFunction( [0..3], mult );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsQuasigroupFunction( [0..3], mult );</span>
+false
+</pre></div>
+
+<p><a id="X825EE4387A43A5F6" name="X825EE4387A43A5F6"></a></p>
+
+<h5>2.5-4 IsLoopFunction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLoopFunction</code>( <var class="Arg">S</var>, <var class="Arg">mult</var>[, <var class="Arg">rdiv</var>, <var class="Arg">ldiv</var>, <var class="Arg">one</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <var class="Arg">mult</var> is a loop function on <var class="Arg">S</var>, else returns <code class="code">false</code>. (See Subsection <a href="chap2.html#X785728C6829DA37B"><span class="RefLink">2.5-1</span></a> for how the optional arguments are treated.) If <var class="Arg">rdiv</var> is given, it is checked that it is the right division on <var class="Arg">S</var> corresponding to the multiplication <var class="Arg">mult</var>. If <var class="Arg">ldiv</var> is given, it is checked that it is the left division on <var class="Arg">S</var> corresponding to the multiplication <var class="Arg">mult</var>. If <var class="Arg">one</var> is given, it is checked that it is is the neutral element with respect to <var class="Arg">mult</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mult := \+;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rdiv := \-;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ldiv := function( x,y ) return -x+y; end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">one := Zero( GF(5) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLoopFunction( GF(5), mult ); </span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLoopFunction( GF(5), mult, rdiv );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLoopFunction( GF(5), mult, rdiv, ldiv );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLoopFunction( GF(5), mult, one );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLoopFunction( GF(5), mult, rdiv, one );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLoopFunction( GF(5), mult, rdiv, ldiv, one );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLoopFunction( GF(5), mult, ldiv ); # returns false because right division is expected before left division</span>
+false
+</pre></div>
+
+<p><a id="X7CCC98D87C1DFAAD" name="X7CCC98D87C1DFAAD"></a></p>
+
+<h5>2.5-5 <span class="Heading">Multiplication, right division and left division functions</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MultiplicationFunction</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightDivisionFunction</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftDivisionFunction</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns, respectively, the multiplication function, right division function and left division function of right quasigroup <var class="Arg">Q</var> as a <strong class="pkg">GAP</strong> function. For the left division, <var class="Arg">Q</var> must be a declared quasigroup. If the requested function is not bound, returns <code class="code">fail</code>. See Section <a href="chap1.html#X81DECB427F4826CD"><span class="RefLink">1.8</span></a> for more details on multiplication and division functions in index based and non-index based right quasigroups.</p>
+
+<p><a id="X8421D2987B7DE45C" name="X8421D2987B7DE45C"></a></p>
+
+<h5>2.5-6 RightQuasigroupByFunction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightQuasigroupByFunction</code>( <var class="Arg">S</var>, <var class="Arg">mult</var>[, <var class="Arg">rdiv</var>][, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: a right quasigroup with underlying set <var class="Arg">S</var> and multiplication function <var class="Arg">mult</var>. If <var class="Arg">rdiv</var> is given, it becomes the right division function, else the right division function is automatically inferred from <var class="Arg">mult</var>. See Subsection <a href="chap2.html#X785728C6829DA37B"><span class="RefLink">2.5-1</span></a> for the optional argument <var class="Arg">constructorStyle</var>.</p>
+
+<p><a id="X7822BB1380836F5C" name="X7822BB1380836F5C"></a></p>
+
+<h5>2.5-7 QuasigroupByFunction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasigroupByFunction</code>( <var class="Arg">S</var>, <var class="Arg">mult</var>[, <var class="Arg">rdiv</var>, <var class="Arg">ldiv</var>][, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: a quasigroup with underlying set <var class="Arg">S</var> and multiplication function <var class="Arg">mult</var>. If <var class="Arg">rdiv</var> (resp. <var class="Arg">ldiv</var>) is given, it is set as the right (resp. left) division function, else the right (resp. left) division function is automatically inferred from <var class="Arg">mult</var>. See Subsection <a href="chap2.html#X785728C6829DA37B"><span class="RefLink">2.5-1</span></a> for the optional argument <var class="Arg">constructorStyle</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GF(5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mult := function( x, y ) return x+2*y; end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsQuasigroupFunction( S, mult );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QuasigroupByFunction( S, mult ); # it is not necessary to provide right division and left division</span>
+&lt;quasigroup of size 5&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rdiv := function( x, y ) return x-2*y; end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ldiv := function( x, y ) return (y-x)/2; end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsQuasigroupFunction( S, mult, rdiv, ldiv ); </span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QuasigroupByFunction( S, mult, rdiv, ldiv ); # but calculations will be faster if the divisions are provided</span>
+&lt;quasigroup of size 5&gt;
+</pre></div>
+
+<p><a id="X79C3DEDD7E7849A5" name="X79C3DEDD7E7849A5"></a></p>
+
+<h5>2.5-8 LoopByFunction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopByFunction</code>( <var class="Arg">S</var>, <var class="Arg">mult</var>[, <var class="Arg">rdiv</var>, <var class="Arg">ldiv</var>, <var class="Arg">one</var>][, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: a loop with underlying set <var class="Arg">S</var> and multiplication function <var class="Arg">mult</var>. If <var class="Arg">rdiv</var> (resp. <var class="Arg">ldiv</var>) is given, it is set as the right (resp. left) division function, else the right (resp. left) division function is automatically inferred from <var class="Arg">mult</var>. If <var class="Arg">one</var> is given, it is set as the neutral element, else it is automatically inferred from <var class="Arg">mult</var>. See Subsection <a href="chap2.html#X785728C6829DA37B"><span class="RefLink">2.5-1</span></a> for the optional argument <var class="Arg">constructorStyle</var>.</p>
+
+<p>The following constructor produces a loop of size just over 1 million near instantaneously since nothing is checked.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p := 1000003;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Difference( GF(p), [ Zero( GF( p ) ) ] );; # nonzero elements of GF(p)</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := LoopByFunction( S, \*, ConstructorStyle( false, false ) ); # not index based, no arguments checked</span>
+&lt;loop of size 1000002&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">One( Q );</span>
+lZmodpZObj(1,1000003)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q.10*Q.100;</span>
+lZmodpZObj(1000,1000003)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q.100/Q.10;</span>
+lZmodpZObj(10,1000003)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Inverse( Q.10 );</span>
+lZmodpZObj(300001,1000003)
+</pre></div>
+
+<p><a id="X788082C77E5972A9" name="X788082C77E5972A9"></a></p>
+
+<h4>2.6 <span class="Heading">Constructors by right section</span></h4>
+
+<p>For a right quasigroup <span class="Math">(Q,\cdot)</span>, the <em>right section</em> is the ordered tuple <span class="Math">R_Q = (R_x:x\in Q)</span> of right translations of <span class="Math">Q</span>. Since <span class="Math">xy = R_y(x)</span>, the multiplication in <span class="Math">(Q,\cdot)</span> can be fully reconstructed from its right section.</p>
+
+<p>A right section <span class="Math">(Q,R_Q)</span> is a <em>quasigroup right section</em> (resp. <em> loop right section</em>) if the corresponding right quasigroup is a quasigroup (resp. loop).</p>
+
+<p>In <strong class="pkg">RightQuasigroups</strong>, a right section consists of the underlying set <span class="Math">S</span> of size <span class="Math">n</span> and an ordered collection of <span class="Math">n</span> group elements that act on <span class="Math">S</span>. Implicit right sections are also allowed, that is, a set <span class="Math">S</span> of size <span class="Math">n</span> and an ordered collection of permutations on <span class="Math">[1..n]</span>, in which case <span class="Math">x^f=y</span> if and only if <span class="Math">x</span> is the <span class="Math">i</span>th element of <span class="Math">S</span>, <span class="Math">i^f=j</span> and <span class="Math">y</span> is the <span class="Math">j</span>th element of <span class="Math">S</span>.</p>
+
+<p><a id="X80615CD28059A239" name="X80615CD28059A239"></a></p>
+
+<h5>2.6-1 <span class="Heading">Testing right sections</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightSection</code>( [<var class="Arg">S</var>, ]<var class="Arg">section</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsQuasigroupRightSection</code>( [<var class="Arg">S</var>, ]<var class="Arg">section</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLoopRightSection</code>( [<var class="Arg">S</var>, ]<var class="Arg">section</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <var class="Arg">section</var> is a right section (resp. quasigroup right section, loop right section) on <var class="Arg">S</var>, else returns <code class="code">false</code>. If <var class="Arg">S</var> is omitted, <var class="Arg">section</var> must be a list of permutations; the underlying set is then understood to be <code class="code">[1..Length(</code><var class="Arg">section</var><code class="code">)]</code>.</p>
+
+<p><a id="X78B527387800FBDC" name="X78B527387800FBDC"></a></p>
+
+<h5>2.6-2 <span class="Heading">Constructing right quasigroups, quasigroups and loops by right section</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightQuasigroupByRightSection</code>( [<var class="Arg">S</var>, ]<var class="Arg">section</var>[, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasigroupByRightSection</code>( [<var class="Arg">S</var>, ]<var class="Arg">section</var>[, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopByRightSection</code>( [<var class="Arg">S</var>, ]<var class="Arg">section</var>[, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a right quasigroup, quasigroup or loop on <var class="Arg">S</var> with right section <var class="Arg">section</var>, respectively. If <var class="Arg">S</var> is omitted, <var class="Arg">section</var> must be a list of permutations; the underlying set is then understood to be <code class="code">[1..Length(</code><var class="Arg">section</var><code class="code">)]</code>. See Section <a href="chap2.html#X85C8B48C7BEC8AB6"><span class="RefLink">2.1</span></a> for the optional argument <var class="Arg">constructorStyle</var>.</p>
+
+<p>Here is an example of a right quasigroup constructed by a right section consisting of permutations.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">section := [ (), (1,2,3,4), (), (1,3)(2,4) ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRightSection( [1..4], section );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRightSection( section ); # the underlying set can be omitted</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRightSection( "abcd", section ); # implicit permutation action on the set ['a','b','c','d']</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsQuasigroupRightSection( [1..4], section );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := RightQuasigroupByRightSection( section ); # the underlying set can be omitted</span>
+&lt;right quasigroup of size 4&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q[3]*Q[2];</span>
+r4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightQuasigroupByRightSection( "abcd", section );</span>
+&lt;right quasigroup of size 4&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements( last );</span>
+[ r'a', r'b', r'c', r'd' ]
+</pre></div>
+
+<p>Here is an example of a right quasigroup constructed by a right section consisting of group elements acting on the underlying set, in this case of matrices acting on <code class="code">GF(2)^2</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">i := Z(2)*[[1,0],[0,1]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m := Z(2)*[[1,1],[0,1]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">section := [m,m,i,i];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRightSection( GF(2)^2, section );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := RightQuasigroupByRightSection( GF(2)^2, section );</span>
+&lt;right quasigroup of size 4&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q.1;</span>
+r[ 0*Z(2), 0*Z(2) ]
+</pre></div>
+
+<p>We conclude with an example of a loop constructed by a right section. Note that the neutral element is not the first element of the underlying set.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">section := [(1,2),()];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsQuasigroupRightSection( [1,2], section );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QuasigroupByRightSection( [1,2], section );</span>
+&lt;quasigroup of size 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLoopRightSection( [1,2], section );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoopByRightSection( [1,2], section );</span>
+&lt;loop of size 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">One( last );</span>
+l2
+</pre></div>
+
+<p><a id="X7DE999187CC72932" name="X7DE999187CC72932"></a></p>
+
+<h4>2.7 <span class="Heading">Constructors by right folder (transversal)</span></h4>
+
+<p>The triple <span class="Math">(G,H,T)</span> is a <em>right folder</em> if <span class="Math">G</span> is a group, <span class="Math">H</span> is a subgroup of <span class="Math">G</span> and <span class="Math">T</span> is a right transversal to <span class="Math">H</span> in <span class="Math">G</span>.</p>
+
+<p>Given a right folder <span class="Math">(G,H,T)</span>, we can define a magma <span class="Math">(T,\circ)</span> by setting <span class="Math">x\circ y = z</span> iff <span class="Math">xy\in Hz</span>, for <span class="Math">x,y,z\in T</span>. Then <span class="Math">(T,\circ)</span> is always a right quasigroup. Not every right quasigroup is obtained in this way.</p>
+
+<p>The right folder <span class="Math">(G,H,T)</span> is a <em>quasigroup right folder</em> (resp. <em>loop right folder</em>) if <span class="Math">(T,\circ)</span> is a quasigroup (resp. loop). Group-theoretically, <span class="Math">(G,H,T)</span> is a quasigroup right folder iff <span class="Math">T</span> is a right transversal to every conjugate <span class="Math">H^g</span> of <span class="Math">H</span> in <span class="Math">G</span>. Furthermore, a quasigroup right folder <span class="Math">(G,H,T)</span> is a loop right folder iff <span class="Math">T</span> intersects the core of <span class="Math">H</span> in <span class="Math">G</span>, i.e., the normal subgroup <span class="Math">\bigcap_{g\in G}H^g</span>.</p>
+
+<p>Up to isomorphism, every quasigroup (resp. loop) is obtained as <span class="Math">(T,\circ)</span> for some quasigroup (resp. loop) folder <span class="Math">(G,H,T)</span>.</p>
+
+<p>In functions that require right folders, we allow two types of arguments:</p>
+
+
+<ul>
+<li><p>a single argument which is a <strong class="pkg">GAP</strong> right transversal <code class="code">T</code> (in which case the group and subgroup are implicit as <code class="code">G=T!.group</code> and <code class="code">H=T!.subgroup</code>),</p>
+
+</li>
+<li><p>three arguments <code class="code">G</code>, <code class="code">H</code>, <code class="code">T</code> standing for the right folder <code class="code">(G,H,T)</code>, where <code class="code">T</code> can be a subset of <code class="code">G</code> or a <strong class="pkg">GAP</strong> right transversal to <code class="code">H</code> in <code class="code">G</code>.</p>
+
+</li>
+</ul>
+<p>The reason for the second option is that while <strong class="pkg">GAP</strong> calculates a right transversal to <code class="code">H</code> in <code class="code">G</code> via <code class="code">RightTransversal( G, H )</code>, it might not be the desired right transversal required for the construction of a particular right quasigroup, quasigroup or loop.</p>
+
+<p><a id="X7DF636EE78282F6E" name="X7DF636EE78282F6E"></a></p>
+
+<h5>2.7-1 <span class="Heading">Checking right folders</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightFolder</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsQuasigroupRightFolder</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLoopRightFolder</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if the argument is a right folder (resp. quasigroup right folder, loop right folder). See above for the two possible formats of the argument <var class="Arg">arg</var>, that is, <code class="code">T</code> or <code class="code">G,H,T</code>.</p>
+
+<p><a id="X7CFE9A578647BFB0" name="X7CFE9A578647BFB0"></a></p>
+
+<h5>2.7-2 <span class="Heading">Creating right quasigroups, quasigroups and loops by right folders</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightQuasigroupByRightFolder</code>( <var class="Arg">arg</var>[, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasigroupByRightFolder</code>( <var class="Arg">arg</var>[, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopByRightFolder</code>( <var class="Arg">arg</var>[, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a right quasigroup (resp. quasigroup or loop) from the given right folder (resp. quasigroup right folder, loop right folder). See above for the two possible formats of the argument <var class="Arg">arg</var>, that is, <code class="code">T</code> or <code class="code">G,H,T</code>. See Section <a href="chap2.html#X85C8B48C7BEC8AB6"><span class="RefLink">2.1</span></a> for the optional argument <var class="Arg">constructorStyle</var>.</p>
+
+<p>Here is an example of a right quasigroup constructed from a right folder.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SymmetricGroup( 5 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := Subgroup( G, [ (1,2),(1,3) ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := RightTransversal( G, H );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ IsRightFolder( T ), IsRightFolder( G, H, T ) ];</span>
+[ true, true ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q1 := RightQuasigroupByRightFolder( T );</span>
+&lt;right quasigroup of size 20&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q2 := RightQuasigroupByRightFolder( G, H, T );</span>
+&lt;right quasigroup of size 20&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q3 := RightQuasigroupByRightFolder( G, H, Elements( T ) );</span>
+&lt;right quasigroup of size 20&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsCanonicalPerm( IsomorphismRightQuasigroups( Q1, Q2 ) );</span>
+()
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UnderlyingSet( Q1 ) = Elements( T );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsQuasigroupRightFolder( T );</span>
+false
+</pre></div>
+
+<p>And here is an example of a loop constructed from a (trivial) right folder.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SymmetricGroup( 2 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := Subgroup( G, [()] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := RightTransversal( G, H );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsQuasigroupRightFolder( T );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLoopRightFolder( T );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QuasigroupByRightFolder( T );</span>
+&lt;quasigroup of size 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoopByRightFolder( T );</span>
+&lt;loop of size 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements( last );</span>
+[ l(), l(1,2) ]
+</pre></div>
+
+<p><a id="X830DE89B7B506B15" name="X830DE89B7B506B15"></a></p>
+
+<h4>2.8 <span class="Heading">Constructors for special types of right quasigroups</span></h4>
+
+<p>Here we collect a few constructors for special types of right quasigroups.</p>
+
+<p><a id="X80BD0B6A7CD3B2B0" name="X80BD0B6A7CD3B2B0"></a></p>
+
+<h5>2.8-1 ProjectionRightQuasigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectionRightQuasigroup</code>( <var class="Arg">S</var>[, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the projection right quasigroup on the set <var class="Arg">S</var> that is, a magma on <var class="Arg">S</var> with mutliplication <code class="code">x*y=x</code>. We also allow <var class="Arg">S</var> to be a positive integer <code class="code">n</code>, in which case the underlying set will be <code class="code">[1..n]</code>.</p>
+
+<p>Note: The value of <var class="Arg">constructorStyle</var><code class="code">.checkArguments</code> of the optional argument <var class="Arg">constructorStyle</var> does not come into play and need not be specified.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ProjectionRightQuasigroup( [1..1000], rec( indexBased := false ) );; # 16 ms to construct, </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := ProjectionRightQuasigroup( [1..1000] );; # 375 ms to construct</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q.123*Q.456;</span>
+r123
+</pre></div>
+
+<p><a id="X7A04B2F57C9C0B43" name="X7A04B2F57C9C0B43"></a></p>
+
+<h4>2.9 <span class="Heading">Random right quasigroups, quasigroups and loops</span></h4>
+
+<p>Random right quasigroups are easy to construct since the right translations of individual elements are independent from each other. It therefore suffices to construct their right section <span class="Math">(R_x:x\in Q)</span> as a random tuple of permutations of <span class="Math">Q</span>.</p>
+
+<p>Random quasigroups and loops are harder to construct. The Jacobson and Matthews random walk method for random latin squares is implemented in <strong class="pkg">RightQuasigroups</strong> with some ad hoc mixing parameters. We always start with the multiplication table of the cyclic group of order <span class="Math">n</span> and perform certain random local changes in the multiplication table. It is proved by Jacobson and Matthews that the resulting random walk visits all latin squares uniformly. If a loop is desired, we normalize the random latin square in the last step.</p>
+
+<p><a id="X86B7174179FB2352" name="X86B7174179FB2352"></a></p>
+
+<h5>2.9-1 RandomRightQuasigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomRightQuasigroup</code>( <var class="Arg">S</var>[, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a random right quasigroup on the underlying set <var class="Arg">S</var>. We also allow <var class="Arg">S</var> to be a positive integer <code class="code">n</code>, in which case the underlying set will be <code class="code">[1..n]</code>.</p>
+
+<p>Note: The value of <var class="Arg">constructorStyle</var><code class="code">.checkArguments</code> of the optional argument <var class="Arg">constructorStyle</var> does not come into play and need not be specified.</p>
+
+<p><a id="X7AE29A1A7AA5C25A" name="X7AE29A1A7AA5C25A"></a></p>
+
+<h5>2.9-2 <span class="Heading">Random quasigroups and loops</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomQuasigroup</code>( <var class="Arg">S</var>[, <var class="Arg">iter</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomLoop</code>( <var class="Arg">S</var>[, <var class="Arg">iter</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a random quasigroup (loop) on the underlying set <var class="Arg">S</var>, using <var class="Arg">iter</var> number of random steps to move into an initial position in the Jacobson and Matthews algorithm. We also allow <var class="Arg">S</var> to be a positive integer <code class="code">n</code>, in which case the underlying set will be <code class="code">[1..n]</code>. If the optional argument <var class="Arg">iter</var> is not given, its value will be set to <span class="Math">n^3</span>. The resulting quasigroup or loop will be always index based (since the algorithm constructs a multiplication table anyway).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomRightQuasigroup( 4 );</span>
+&lt;right quasigroup of size 4&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements( RandomQuasigroup( ["a","b","c"] ) );</span>
+[ qa, qb, qc ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomLoop( ["a","b","c"] );</span>
+&lt;loop of size 3&gt;
+</pre></div>
+
+<p><a id="X854230F28413C6A2" name="X854230F28413C6A2"></a></p>
+
+<h5>2.9-3 RandomNilpotentLoop</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomNilpotentLoop</code>( <var class="Arg">lst</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a random nilpotent loop. <var class="Arg">lst</var> must be a list of positive integers and/or finite abelian groups. If <var class="Arg">lst</var><code class="code"> = [a1,..,am]</code> and <code class="code">a1</code> is an integer, returns a central extension of a random abelian group of order <code class="code">a1</code> by <code class="code">RandomNilpotentLoop( [a2,...,am] )</code>. If <var class="Arg">lst</var><code class="code"> = [a1,..,am]</code> and <code class="code">a1</code> is an abelian group, returns a central extension of <code class="code">a1</code> by <code class="code">RandomNilpotentLoop( [a2,...,am] )</code>.</p>
+
+<p>To determine the nilpotency class <code class="code">c</code> of the resulting loop, assume that <var class="Arg">lst</var> has length at least 2, contains only integers bigger than 1 (the "1" entries are trivial), and let <code class="code">m</code> be the last entry of <var class="Arg">lst</var>. If <code class="code">m&gt;2</code> then <code class="code">c=Length(</code><var class="Arg">lst</var><code class="code">)</code>, else <code class="code">c = Length(</code><var class="Arg">lst</var><code class="code">)-1</code>.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

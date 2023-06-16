@@ -1,0 +1,775 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (RightQuasigroups) - Chapter 1: Introduction</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap1"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap1.html">[MathJax off]</a></p>
+<p><a id="X7DFB63A97E67C0A1" name="X7DFB63A97E67C0A1"></a></p>
+<div class="ChapSects"><a href="chap1_mj.html#X7DFB63A97E67C0A1">1 <span class="Heading">Introduction</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X801B322681A65601">1.1 <span class="Heading">Main features of the package</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7CAC5F127A4DC0E7">1.2 <span class="Heading">Categories and representations for right quasigroups, quasigroups and loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7839B3727C888897">1.2-1 <span class="Heading">Categories and representations for right quasigroup elements and right quasigroups</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7DEBA9278509A6B3">1.2-2 <span class="Heading">Categories and representations for quasigroup elements and quasigroups</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8236DACC839FB454">1.2-3 <span class="Heading">Categories and representations for loop elements and loops</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X826AE46A7F24C8B3">1.2-4 CategoryOfRightQuasigroup</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7CEFBA13867B394C">1.3 <span class="Heading">Displaying right quasigroups and their elements</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7EEB1A8C7CCC9C22">1.3-1 <span class="Heading">Displaying right quasigroups, quasigroups and loops</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7C3BA1AD87DC5643">1.3-2 <span class="Heading">Displaying right quasigroup elements</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7B4B7A13786E9D37">1.3-3 <span class="Heading">Changing the name of right quasigroup elements</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7B36037780974644">1.4 <span class="Heading">The underlying set</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X856D980A80B31F07">1.4-1 UnderlyingSetElm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7A8F98987D8BFD23">1.4-2 UnderlyingSet</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7E1688248710925A">1.4-3 ChangeUnderlyingSet</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7C4C9F7C7E2E80CF">1.5 <span class="Heading">Accessing elements and elementwise right quasigroup operations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X81E0D0ED8497BC26">1.5-1 RightQuotient</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7C2CA61B80AD4D23">1.5-2 LeftQuotient</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X841ED6617BB649AD">1.5-3 <span class="Heading">Inverses in loops</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X789B59D0781C42F1">1.5-4 <span class="Heading">Powers, order and exponent</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8126427A8131670C">1.5-5 Commutator</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8201DE5C7F6B7B82">1.5-6 Associator</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7A085DF783B91AEB">1.6 <span class="Heading">First examples</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7ECE815C8590BAA4">1.7 <span class="Heading">The parent right quasigroup</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X81DECB427F4826CD">1.8 <span class="Heading">Index based and canonical right quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7E63F40387CF7950">1.8-1 ParentInd</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8486A7CF797AB7BC">1.8-2 IsIndexBased</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8149F2B67D474ABB">1.8-3 IndexBasedCopy</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7E7B759786945501">1.8-4 IsCanonical</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X80993D1187C29097">1.8-5 CanonicalCopy</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X86E32404878D45C7">1.9 <span class="Heading">Generators and comparison of right quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X86F83A587E035600">1.9-1 SmallGeneratingSet</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X86F270ED860EA4D0">1.9-2 GeneratorsSmallest</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7E2E2D5B87A21A1F">1.10 <span class="Heading">Non-qualified operations</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X81A4F98982C4C7EC">1.11 <span class="Heading">*Direct access to the parent right quasigroup record</span></a>
+</span>
+</div>
+</div>
+
+<h3>1 <span class="Heading">Introduction</span></h3>
+
+<p><strong class="pkg">RightQuasigroups</strong> is a package for <strong class="pkg">GAP</strong> that supports calculations with finite right quasigroups, quasigroups, loops and various varieties of right quasigroups, such as racks and quandles.</p>
+
+<p>First time users should read Section <a href="chap1_mj.html#X801B322681A65601"><span class="RefLink">1.1</span></a>, skim the rest of this chapter and look inside Chapter <a href="chap2_mj.html#X86EC0F0A78ECBC10"><span class="RefLink">2</span></a> for examples on how right quasigroups are constructed.</p>
+
+<p>Most functions are intuitively named and can be traced in the manual from the index.</p>
+
+<p>Sections and subsections marked by * are for users who wish to understand the inner workings of the package.</p>
+
+<p><a id="X801B322681A65601" name="X801B322681A65601"></a></p>
+
+<h4>1.1 <span class="Heading">Main features of the package</span></h4>
+
+<p><em>Representation</em><br /> Right quasigroups, quasigroups and loops are represented as a subcategory of magmas in <strong class="pkg">GAP</strong>. See Section <a href="chap1_mj.html#X7CAC5F127A4DC0E7"><span class="RefLink">1.2</span></a> for more technical details and Section <a href="chap1_mj.html#X7CEFBA13867B394C"><span class="RefLink">1.3</span></a> for how right quasigroups and their elements are displayed.</p>
+
+<p><em>Underlying set</em><br /> Every right quasigroup has <strong class="pkg">GAP</strong> elements and also has an underlying set. The underlying set is used to display <strong class="pkg">GAP</strong> elements nicely and in Cayley tables. Furthermore, the underlying set plays an important role in right quasigroups that are not index based (see below) because the multiplication operation is then based on the underlying set. For index based right quasigroups, the underlying set is cosmetic and can be changed. See Section <a href="chap1_mj.html#X7B36037780974644"><span class="RefLink">1.4</span></a>.</p>
+
+<p><em>Arithmetic operations</em><br /> Right quasigroups come equipped with the arithmetic operations of multiplication and right division. Quasigroups have additionally a left division operation, and loops have also a neutral element with respect to multiplication. See Section <a href="chap1_mj.html#X7C4C9F7C7E2E80CF"><span class="RefLink">1.5</span></a>.</p>
+
+<p><em>Index based and non-index based right quasigroups</em><br /> Every right quasigroup is constructed either as an <em>index based</em> right quasigroup or as a right quasigroup that is not index based. Generally speaking, index based right quasigroups take longer to construct, cannot be very large (thousands of elements) and can be calculated with fast, while non-index based right quasigroups are constructed quickly, can be very large (millions of elements) but only basic methods will work for them. The fundamental piece of data for index based right quasigroups is the multiplication table, while for non-index based right quasigroups it is the multiplication function on the underlying set. See Section <a href="chap1_mj.html#X81DECB427F4826CD"><span class="RefLink">1.8</span></a>.</p>
+
+<p>Most constructors accept an optional argument that determines whether the resulting right quasigroup will be index based and whether arguments will be checked. By default, the resulting right quasigroups will be index based and arguments will not be checked (!). See Chapter <a href="chap2_mj.html#X86EC0F0A78ECBC10"><span class="RefLink">2</span></a>.</p>
+
+<p><em>Parent</em><br /> The parent mechanism is employed in <strong class="pkg">GAP</strong> and in <strong class="pkg">RightQuasigroups</strong> to save memory and to take advantage of the containment of subalgebras in their enveloping algebras. An element of a right quasigroup <code class="code">Q</code> knows into which parent right quasigroup it belongs and it therefore has access to all data stored in the parent quasigroup. See Sections <a href="chap1_mj.html#X7ECE815C8590BAA4"><span class="RefLink">1.7</span></a> and <a href="chap1_mj.html#X81A4F98982C4C7EC"><span class="RefLink">1.11</span></a>.</p>
+
+<p><em>Mappings</em><br /> <strong class="pkg">RightQuasigroups</strong> uses three kinds of mappings: <strong class="pkg">GAP</strong> mappings, transformations, and permutations. Transformations that represent mappings between two right quasigroups, as well as permutations that represent bijective mappings on a right quasigroup, are indexed either with respect to the order of elements in the source and range quasigroups (so called <em>canonical tranformations</em> and <em>canonical permutations</em>) or with respect to their parents (so called <em>parent tranformations</em> and <em>parent permutations</em>). See Chapter <a href="chap4_mj.html#X81106768871C276F"><span class="RefLink">4</span></a>.</p>
+
+<p>The package works with parent permutations as much as possible, cf. Chapter <a href="chap5_mj.html#X7E0365AF7CAFF2DF"><span class="RefLink">5</span></a>. But canonical permutations are useful in the context of multiplication tables, and transformations are useful for left translations of right quasigroups, for instance.</p>
+
+<p><em>Info class</em><br /> The info class for the package is called <code class="code">InfoRightQuasigroups</code> and its initial value is set to 1, which will only print information on tasks that are assumed to take a long time to execute, such as reading and initializing a large data file. The user can prevent all messages from <strong class="pkg">RightQuasigroups</strong> by calling <code class="code">SetInfoLevel( InfoRightQuasigroups, 0 )</code>. On the other hand, setting the info level higher for <code class="code">InfoRightQuasigroups</code> might result in additional messages.</p>
+
+<p><em>Global variables</em><br /> Finally, global variables and auxiliary functions in <strong class="pkg">RightQuasigroups</strong> start with the prefix <code class="code">RQ_</code> and they are not fully documented in this manual. More information on these functions can be found in the declaration files <code class="code">gap\*.gd</code>.</p>
+
+<p><a id="X7CAC5F127A4DC0E7" name="X7CAC5F127A4DC0E7"></a></p>
+
+<h4>1.2 <span class="Heading">Categories and representations for right quasigroups, quasigroups and loops</span></h4>
+
+<p>Given a magma <span class="SimpleMath">\((Q,\cdot)\)</span> and <span class="SimpleMath">\(x\in Q\)</span>, the <em>right translation</em> by <span class="SimpleMath">\(x\)</span> in <span class="SimpleMath">\(Q\)</span> is the mapping <span class="SimpleMath">\(R_x:Q\to Q\)</span> defined by <span class="SimpleMath">\(R_x(y)=yx\)</span>, while the <em>left translation</em> by <span class="SimpleMath">\(x\)</span> in <span class="SimpleMath">\(Q\)</span> is the mapping <span class="SimpleMath">\(L_x:Q\to Q\)</span> defined by <span class="SimpleMath">\(L_x(y)=xy\)</span>. The binary operation <span class="SimpleMath">\(\cdot\)</span> will be referred to as <em>multiplication</em>.</p>
+
+<p>A magma <span class="SimpleMath">\((Q,\cdot)\)</span> is a <em>right quasigroup</em> if for every <span class="SimpleMath">\(x\in Q\)</span> the right translation <span class="SimpleMath">\(R_x\)</span> is a permutation of <span class="SimpleMath">\(Q\)</span>. We then denote <span class="SimpleMath">\(R_x^{-1}(y)\)</span> by <span class="SimpleMath">\(y/x\)</span> and refer to <span class="SimpleMath">\(/\)</span> as <em>right division</em>.</p>
+
+<p>Dually, a magma <span class="SimpleMath">\((Q,\cdot)\)</span> is a <em>left quasigroup</em> if for every <span class="SimpleMath">\(x\in Q\)</span> the left translation <span class="SimpleMath">\(L_x\)</span> is a permutation of <span class="SimpleMath">\(Q\)</span>. We then denote <span class="SimpleMath">\(L_x^{-1}(y)\)</span> by <span class="SimpleMath">\(x\backslash y\)</span> and refer to <span class="SimpleMath">\(\backslash\)</span> as <em>left division</em>.</p>
+
+<p>If <span class="SimpleMath">\((Q,\cdot)\)</span> is both a right quasigroup and a left quasigroup, it is a <em>quasigroup</em>.</p>
+
+<p>A <em>loop</em> is a quasigroup <span class="SimpleMath">\((Q,\cdot)\)</span> with a neutral element <span class="SimpleMath">\(e\in Q\)</span> satisfying <span class="SimpleMath">\(x\cdot e=x=e\cdot x\)</span> for every <span class="SimpleMath">\(x\in Q\)</span>.</p>
+
+<p>In <strong class="pkg">GAP</strong>, right quasigroups and their elements are constructs that mimic the mathematical objects. The set on which a right quasigroup is based is called the <em>underlying set</em>, cf. Section <a href="chap1_mj.html#X7CEFBA13867B394C"><span class="RefLink">1.3</span></a>.</p>
+
+<p>From a universal-algebraic point of view, right quasigroups, quasigroups and loops have different signatures, which is why there are separate, nested representations for the three kinds of algebras and their elements.</p>
+
+<p><a id="X7839B3727C888897" name="X7839B3727C888897"></a></p>
+
+<h5>1.2-1 <span class="Heading">Categories and representations for right quasigroup elements and right quasigroups</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightQuasigroupElement</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightQuasigroupElmRep</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightQuasigroup</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code>.</p>
+
+<p>These are the <strong class="pkg">GAP</strong> categories and representations for right quasigroup elements and right quasigroups. <code class="code">IsRightQuasigroupElement</code> is contained in the filter <code class="code">IsMultiplicativeElement</code>, <code class="code">IsRightQuasigroupElmRep</code> is contained in the filters <code class="code">IsPositionalObjectRep</code> and <code class="code">IsMultiplicativeElement</code>, and <code class="code">IsRightQuasigroup</code> is contained in the filter <code class="code">IsMagma</code>.</p>
+
+<p><a id="X7DEBA9278509A6B3" name="X7DEBA9278509A6B3"></a></p>
+
+<h5>1.2-2 <span class="Heading">Categories and representations for quasigroup elements and quasigroups</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsQuasigroupElement</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsQuasigroupElmRep</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsQuasigroup</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+
+<p>These are the <strong class="pkg">GAP</strong> categories and representations for quasigroup elements and quasigroups. <code class="code">IsQuasigroupElement</code> is contained in the filter <code class="code">IsRightQuasigroupElement</code>, <code class="code">IsQuasigroupElmRep</code> is contained in the filters <code class="code">IsPositionalObjectRep</code> and <code class="code">IsMultiplicativeElement</code>, and <code class="code">IsQuasigroup</code> is contained in the filter <code class="code">IsRightQuasigroup</code>.</p>
+
+<p><a id="X8236DACC839FB454" name="X8236DACC839FB454"></a></p>
+
+<h5>1.2-3 <span class="Heading">Categories and representations for loop elements and loops</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLoopElement</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLoopElmRep</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLoop</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+
+<p>These are the <strong class="pkg">GAP</strong> categories and representations for loop elements and loops. <code class="code">IsLoopElement</code> is contained in the filters <code class="code">IsQuasigroupElement</code> and <code class="code">IsMultiplicativeElementWithInverse</code>, <code class="code">IsLoopElmRep</code> is contained in the filters <code class="code">IsPositionalObjectRep</code> and <code class="code">IsMultiplicativeElementWithInverse</code>, and <code class="code">IsLoop</code> is contained in the filters <code class="code">IsQuasigroup</code> and <code class="code">IsMultiplicativeElementWithInverseCollection</code>.</p>
+
+<p>Note that these declarations do not imply that every loop element has an inverse.</p>
+
+<p><a id="X826AE46A7F24C8B3" name="X826AE46A7F24C8B3"></a></p>
+
+<h5>1.2-4 CategoryOfRightQuasigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CategoryOfRightQuasigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: If the argument is a right quasigroup, returns the smallest category from among <code class="code">IsRightQuasigroup</code>, <code class="code">IsQuasigroup</code> and <code class="code">IsLoop</code> into which the right quasigroup belongs. If the argument is a list of right quasigroups, returns the smallest category from among <code class="code">IsRightQuasigroup</code>, <code class="code">IsQuasigroup</code> and <code class="code">IsLoop</code> into which all the right quasigroups on the list belong.</p>
+
+<p>All declared right quasigroups, quasigroups and loops belong to the filter <code class="code">IsRightQuasigroup</code>. It is often useful to know if a right quasigroup is in fact declared as a quasigroup or a loop, which is what the above method furnishes.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := QuasigroupByCayleyTable( [[0,1],[1,0]] ); # declared quasigroup, in fact a group mathematically</span>
+&lt;quasigroup of size 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ IsMagma( Q ), IsRightQuasigroup( Q ), IsQuasigroup( Q ), IsLoop( Q ), IsGroup( Q ) ];</span>
+[ true, true, true, false, false ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CategoryOfRightQuasigroup( Q );</span>
+&lt;Category "IsQuasigroup"&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CategoryOfRightQuasigroup( [ Q, ProjectionRightQuasigroup( 5 ) ] ); # common category</span>
+&lt;Category "IsRightQuasigroup"&gt;
+</pre></div>
+
+<p><a id="X7CEFBA13867B394C" name="X7CEFBA13867B394C"></a></p>
+
+<h4>1.3 <span class="Heading">Displaying right quasigroups and their elements</span></h4>
+
+<p><a id="X7EEB1A8C7CCC9C22" name="X7EEB1A8C7CCC9C22"></a></p>
+
+<h5>1.3-1 <span class="Heading">Displaying right quasigroups, quasigroups and loops</span></h5>
+
+<p>The <code class="code">View</code>, <code class="code">Display</code> and <code class="code">Print</code> methods are implemented for right quasigroups as dynamic methods that display (some) currently known information about the object.</p>
+
+<p>If <code class="code">Q</code> has a name (typically when <code class="code">Q</code> is a library object), <code class="code">View( Q )</code> prints <code class="code">Name( Q )</code>, e.g., <code class="code">&lt;Moufang loop 64/12&gt;</code>. In all other situations, <code class="code">View( Q )</code> reveals at least the size of <code class="code">Q</code>, as in <code class="code">&lt;right quasigroup of size 8&gt;</code>, <code class="code">&lt;quasigroup of size 8&gt;</code> or <code class="code">&lt;loop of size 8&gt;</code>, depending on whether <code class="code">Q</code> is declared as a right quasigroup, quasigroup or loop. Once additional properties of <code class="code">Q</code> become known, one of the strongest properties of <code class="code">Q</code> is also included in <code class="code">View( Q )</code>, e.g., <code class="code">&lt;associative loop of order n&gt;</code>.</p>
+
+<p><code class="code">Print(Q)</code> and <code class="code">Display( Q )</code> additionally displays up to the first 5 elements of the underlying set of <code class="code">Q</code>.</p>
+
+<p>The <code class="code">String</code> attribute is also implemented for right quasigroups. Initially it behaves as <code class="code">View</code>, except that the returned value is returned as a string, not just displayed in the terminal window. Since <code class="code">String</code> is an attribute, the value is set at first call and does not change dynamically, unlike <code class="code">View</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := QuasigroupByCayleyTable( [[0,1],[1,0]] );</span>
+&lt;quasigroup of size 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">String( Q );</span>
+"&lt;quasigroup of size 2&gt;"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsAssociative( Q );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q;</span>
+&lt;associative quasigroup of size 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Q );</span>
+&lt;associative quasigroup of size 2 on 0, 1&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Print( Q );</span>
+&lt;associative quasigroup of size 2 on 0, 1&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">String( Q ); # was stored as attribute at first call</span>
+"&lt;quasigroup of size 2&gt;"
+</pre></div>
+
+<p><a id="X7C3BA1AD87DC5643" name="X7C3BA1AD87DC5643"></a></p>
+
+<h5>1.3-2 <span class="Heading">Displaying right quasigroup elements</span></h5>
+
+<p>The <code class="code">View</code>, <code class="code">Display</code> and <code class="code">Print</code> methods are implemented for right quasigroup elements.</p>
+
+<p>By default, if <code class="code">x</code> is an element of a right quasigroup <code class="code">Q</code> and <code class="code">e</code> is the underlying element of <code class="code">x</code>, both <code class="code">View( x )</code> and <code class="code">Display( x )</code> display the character <code class="code">r</code> or <code class="code">q</code> or <code class="code">l</code> (depending on whether <code class="code">Q</code> is declared as a right quasigroup, a quasigroup or a loop), followed by the result of <code class="code">View( e )</code>. The method <code class="code">Print( x )</code> behaves similarly, except that it calls <code class="code">Print( e )</code>.</p>
+
+<p>The <code class="code">String</code> attribute is also implemented for right quasigroup elements. It returns the same value as <code class="code">View</code>, except that the returned value is a string. Since right quasigroup elements are not attribute storing, the attribute <code class="code">String</code> is dynamic.</p>
+
+<p><a id="X7B4B7A13786E9D37" name="X7B4B7A13786E9D37"></a></p>
+
+<h5>1.3-3 <span class="Heading">Changing the name of right quasigroup elements</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetRightQuasigroupElementsName</code>( <var class="Arg">Q</var>, <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetQuasigroupElementsName</code>( <var class="Arg">Q</var>, <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetLoopElementsName</code>( <var class="Arg">Q</var>, <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code>.</p>
+
+<p>Changes the name of all elements of the parent of <var class="Arg">Q</var> for the purposes of displaying so that the name of every element starts with the prefix (string) <var class="Arg">s</var>. Note that it is possible to change the prefix to an empty string, in which case the elements of the parent of <var class="Arg">Q</var> will be displayed exactly as the elements of the underlying set; this improves legibility but might lead to confusion.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := AsLoop( Group( (1,2) ) );</span>
+&lt;associative loop of size 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">String( Q.1 );</span>
+"l()"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements( Q );</span>
+[ l(), l(1,2) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetLoopElementsName( Q, "g" );; Elements( Q );</span>
+[ g(), g(1,2) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">String( Q.1 ); # dynamic since right quasigroup elements are not attribute storing</span>
+"g()"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetLoopElementsName( Q, "" );; Elements( Q ); # better legibility but perhaps confusing</span>
+[ (), (1,2) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPerm( last[1] );</span>
+false
+</pre></div>
+
+<p><a id="X7B36037780974644" name="X7B36037780974644"></a></p>
+
+<h4>1.4 <span class="Heading">The underlying set</span></h4>
+
+<p>Every right quasigroup <code class="code">Q</code> consists of <strong class="pkg">GAP</strong> elements returned via <code class="code">Elements( Q )</code>. In addition, every right quasigroup also has an underlying set accesible via <code class="code">UnderlyingSet( Q )</code>. The underlying set is used in displaying <strong class="pkg">GAP</strong> elements of right quasigroups (cf. Section <a href="chap1_mj.html#X7CEFBA13867B394C"><span class="RefLink">1.3</span></a>) and in Cayley tables (cf. Section <a href="chap2_mj.html#X7B7456197A8D26BD"><span class="RefLink">2.4</span></a>).</p>
+
+<p>If a right quasigroup is not index based (cf. Section <a href="chap1_mj.html#X81DECB427F4826CD"><span class="RefLink">1.8</span></a>), then the underlying set plays a critical role since its elements are used as arguments of the multiplication function. In non-index based right quasigroups the underlying set is merely cosmetic and can be changed at any time.</p>
+
+<p><a id="X856D980A80B31F07" name="X856D980A80B31F07"></a></p>
+
+<h5>1.4-1 UnderlyingSetElm</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingSetElm</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: If <var class="Arg">obj</var> is a right quasigroup element, returns the corresponding element of the underlying set. If <var class="Arg">obj</var> is a list of right quasigroup elements (possibly from different right quasigroups), returns the list of the corresponding elements of the underlying set. If <var class="Arg">obj</var> is a right quasigroup, returns the underlying set of <var class="Arg">obj</var>.</p>
+
+<p><a id="X7A8F98987D8BFD23" name="X7A8F98987D8BFD23"></a></p>
+
+<h5>1.4-2 UnderlyingSet</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingSet</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the underlying set of the right quasigroup <var class="Arg">Q</var>. Note that <code class="code">UnderlyingSet( </code><var class="Arg">Q</var><code class="code"> )</code> has the same effect as <code class="code">UnderlyingSetElm( </code><var class="Arg">Q</var><code class="code"> )</code>.</p>
+
+<p><a id="X7E1688248710925A" name="X7E1688248710925A"></a></p>
+
+<h5>1.4-3 ChangeUnderlyingSet</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChangeUnderlyingSet</code>( <var class="Arg">Q</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code>.</p>
+
+<p>If <var class="Arg">Q</var> is a right quasigroup that is index based and its own parent, <code class="code">ChangeUnderlyingSet( </code><var class="Arg">Q</var><code class="code">, </code><var class="Arg">S</var><code class="code"> )</code> changes the underlying set of <var class="Arg">Q</var> to <var class="Arg">S</var>. If the Cayley table of <var class="Arg">Q</var> was previously stored, it will be automtically recalculated. The argument <var class="Arg">S</var> must be a collection and it is internally sorted.</p>
+
+<p>Note that is it not possible to change the underlying set of a non-index based right quasigroup because the multiplication function then depends on the underlying set and it would have to be changed as well. In addition, we do not support changing the underlying set for a single element or for a list of elements because the underlying set of a parent quasigroup is sorted and the order might not be maintained by local changes.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := AsLoop( SymmetricGroup( 3 ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UnderlyingSetElm( Q.1 );</span>
+()
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UnderlyingSet( Q );</span>
+[ (), (2,3), (1,2), (1,2,3), (1,3,2), (1,3) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChangeUnderlyingSet( Q, ['a','b','c','d','e','f'] );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UnderlyingSet( Q );</span>
+"abcdef"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CayleyTable( Q );</span>
+[ "abcdef", "badcfe", "ceafbd", "dfbeac", "ecfadb", "fdebca" ]
+</pre></div>
+
+<p><a id="X7C4C9F7C7E2E80CF" name="X7C4C9F7C7E2E80CF"></a></p>
+
+<h4>1.5 <span class="Heading">Accessing elements and elementwise right quasigroup operations</span></h4>
+
+<p>The <span class="SimpleMath">\(i\)</span>th element of a right quasigroup <code class="code">Q</code> can be obtained by <code class="code">Elements( Q )[ i ]</code>.</p>
+
+<p>The <span class="SimpleMath">\(i\)</span>th element of the parent <code class="code">Parent( Q )</code> or a right quasigroup <code class="code">Q</code> can be obtained by <code class="code">Q.i</code> (see Section <a href="chap1_mj.html#X7ECE815C8590BAA4"><span class="RefLink">1.7</span></a>). Note that <code class="code">Q.i</code> need not be the same element as <code class="code">Elements( Q )[ i ]</code>, in fact, it need not even be an element of <code class="code">Q</code>.</p>
+
+<p>Finally, if <code class="code">x</code> is an element of the underlying set of <code class="code">Parent( Q )</code>, the corresponding element of <code class="code">Parent( Q )</code> is obtained by <code class="code">Q[x]</code>. Note that <code class="code">Q[x]</code> therefore need not be an element of <code class="code">Q</code>.</p>
+
+<p>The product of two right quasigroup elements <code class="code">x</code> and <code class="code">y</code> is obtained by <code class="code">x*y</code>. The right quotient of <code class="code">x</code> and <code class="code">y</code> is obtained via <code class="code">x/y</code>, <code class="code">RightQuotient( x, y )</code> or <code class="code">RightDivision( x, y )</code>. In case of quasigroups, the left division is obtained via <code class="code">LeftQuotient( x, y )</code> or <code class="code">LeftDivision( x, y )</code> but not by <code class="code">x\y</code> since <code class="code">\</code> is not supported in <strong class="pkg">GAP</strong> as a binary operation symbol.</p>
+
+<p>For each of these operations, one of the two arguments can be a list of right quasigroup elements or a right quasigroup, in which case the corresponding list is returned. We allow <code class="code">x*Q</code> etc even if <code class="code">x</code> is an element of <code class="code">Parent(Q)</code>, not necessarily an element of <code class="code">Q</code>.</p>
+
+<p><a id="X81E0D0ED8497BC26" name="X81E0D0ED8497BC26"></a></p>
+
+<h5>1.5-1 RightQuotient</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightQuotient</code>( <var class="Arg">x</var>, <var class="Arg">y</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the right quotient of right quasigroup elements <var class="Arg">x</var> and <var class="Arg">y</var>, that is, the unique element <code class="code">z</code> such that <var class="Arg">x</var><code class="code"> = z*</code><var class="Arg">y</var>. The synonym <code class="code">RightDivision( </code><var class="Arg">x</var><code class="code">, </code><var class="Arg">y</var><code class="code"> )</code> is also supported.</p>
+
+<p><a id="X7C2CA61B80AD4D23" name="X7C2CA61B80AD4D23"></a></p>
+
+<h5>1.5-2 LeftQuotient</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftQuotient</code>( <var class="Arg">x</var>, <var class="Arg">y</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the left quotient of quasigroup elements <var class="Arg">x</var> and <var class="Arg">y</var>, that is, the unique element <code class="code">z</code> such that <var class="Arg">y</var><code class="code"> = </code><var class="Arg">x</var><code class="code">*z</code>. The synonym <code class="code">LeftDivision( </code><var class="Arg">x</var><code class="code">, </code><var class="Arg">y</var><code class="code"> )</code> is also supported.</p>
+
+<p><a id="X841ED6617BB649AD" name="X841ED6617BB649AD"></a></p>
+
+<h5>1.5-3 <span class="Heading">Inverses in loops</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; One</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightInverse</code>( <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftInverse</code>( <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>In a loop <code class="code">Q</code>, the neutral element is returned by <code class="code">One( Q )</code>. Note that the neutral element need not be the first element <code class="code">Elements( Q )[ 1 ]</code> of <code class="code">Q</code>.</p>
+
+<p>If <code class="code">e</code> is the neutral element of <code class="code">Q</code>, then for every <code class="code">x</code> in <code class="code">Q</code> there are <code class="code">y</code> and <code class="code">z</code> in <code class="code">Q</code> such that <code class="code">x*y = z*x = e</code>. The element <code class="code">y</code> is the <em>right inverse</em> of <code class="code">x</code> and is returned by <code class="code">RightInverse( x )</code>. Dually, the element <code class="code">z</code> is the <em>left inverse</em> of <code class="code">x</code> and is returned by <code class="code">LeftInverse( x )</code>.</p>
+
+<p>If the two inverses of <code class="code">x</code> coincide, the <em>two-sided inverse</em> of <code class="code">x</code> is returned by <code class="code">Inverse(x)</code> or by <code class="code">x^-1</code>.</p>
+
+<p><a id="X789B59D0781C42F1" name="X789B59D0781C42F1"></a></p>
+
+<h5>1.5-4 <span class="Heading">Powers, order and exponent</span></h5>
+
+<p>Products without specified parentheses are evalutated from left to right, i.e., <code class="code">x*y*z = (x*y)*z</code>.</p>
+
+<p>A magma <code class="code">M</code> is said to be <em>power associative</em> if for every <code class="code">x</code> in <code class="code">M</code> the submagma generated by <code class="code">x</code> is a group. In particular, powers <code class="code">x^n</code> are well-defined in power associative magmas. Even if <code class="code">M</code> is not power-associative, <code class="code">x^n</code> with positive <code class="code">n</code> returns the element of <code class="code">M</code> obtained from the binary expansion of the exponent <code class="code">n</code>.</p>
+
+<p>If <code class="code">M</code> is a magma with neutral element <code class="code">e</code> and <code class="code">x</code> is an element of <code class="code">M</code>, then <code class="code">Order( x )</code> returns the smallest nonnegative integer <code class="code">n</code> such that <code class="code">x^n=e</code>, if possible, else returns <code class="code">fail</code>. Note that in view of the above remarks, <code class="code">Order( x )</code> always returns a nonnegative integer if <code class="code">x</code> is an element of a finite loop.</p>
+
+<p>The exponent <code class="code">Exponent( Q )</code> returns the smallest nonnegative integer <code class="code">n</code> such that <code class="code">x^n</code> is the neutral element of <code class="code">Q</code>, if such an integer exists, else it returns <code class="code">fail</code>. Note again that <code class="code">Exponent( Q )</code> will never fail for a finite loop <code class="code">Q</code> in <strong class="pkg">RightQuasigroups</strong>, even if <code class="code">Q</code> is not power associative.</p>
+
+<p>If <code class="code">n</code> is negative and <code class="code">x</code> has a two-sided inverse, then <code class="code">x^n</code> is calculated as <code class="code">(x^(-1))^(-n)</code>.</p>
+
+<p><a id="X8126427A8131670C" name="X8126427A8131670C"></a></p>
+
+<h5>1.5-5 Commutator</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Commutator</code>( <var class="Arg">x</var>, <var class="Arg">y</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the commutator of <code class="code">x</code> and <code class="code">y</code>, that is, the unique element <code class="code">z = (x*y)/(y*x)</code> satisfying <code class="code">x*y = z*(y*x)</code>. This is a logical choice for the elementwise commutator in right quasigroups.</p>
+
+<p>Group-like commutators are obtained via <code class="code">Comm( x, y )</code>. If <code class="code">x</code> and <code class="code">y</code> are quasigroup elements, <code class="code">Comm( x, y )</code> returns the unique element <code class="code">z = LeftQuotient( y*x, x*y )</code> that satisfies <code class="code">x*y = (y*x)*z</code>. When the underlying quasigroup is a loop with two-sided inverses in which the antiautomorphic inverse property <span class="SimpleMath">\((xy)^{-1}=y^{-1}x^{-1}\)</span> and the left inverse property <span class="SimpleMath">\(x^{-1}(xy) = y\)</span> hold, then <code class="code">Comm( x, y )</code> coincides with the <strong class="pkg">GAP</strong> commutator <code class="code">x^(-1)*y^(-1)*x*y</code>.</p>
+
+<p><a id="X8201DE5C7F6B7B82" name="X8201DE5C7F6B7B82"></a></p>
+
+<h5>1.5-6 Associator</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Associator</code>( <var class="Arg">x</var>, <var class="Arg">y</var>, <var class="Arg">z</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the associator of <code class="code">x</code>, <code class="code">y</code> and <code class="code">z</code>, that is, the unique element <code class="code">u = (x*(y*z))/((x*y)*z)</code> satisfying <code class="code">x*(y*z) = u*((x*y)*z)</code>.</p>
+
+<p><a id="X7A085DF783B91AEB" name="X7A085DF783B91AEB"></a></p>
+
+<h4>1.6 <span class="Heading">First examples</span></h4>
+
+<p>Arithmetic operations in right quasigroups (quasigroup, loops) are carried out either via tables or via functions, depending on whether the algebra in question is index based or not. See Section <a href="chap1_mj.html#X81DECB427F4826CD"><span class="RefLink">1.8</span></a> for more information on index based versus non-index based right quasigroups, Section <a href="chap2_mj.html#X7B7456197A8D26BD"><span class="RefLink">2.4</span></a> for details on multiplication tables and Cayley tables, and Section <a href="chap2_mj.html#X7C3B24557B307202"><span class="RefLink">2.5</span></a> for details on how functions can be used as arithmetic operations.</p>
+
+<p>Chapter <a href="chap2_mj.html#X86EC0F0A78ECBC10"><span class="RefLink">2</span></a> contains a comprehensive list of right quasigroup constructors. Here we present two examples, starting with a right quasigroup constructor based on a multiplication function.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := RightQuasigroupByFunction( [0..3], function( x,y ) return (x+2*y) mod 4; end ); # index based by default</span>
+&lt;right quasigroup of size 4&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UnderlyingSet( Q );</span>
+[ 0, 1, 2, 3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements( Q ); # default prefix "r" is assigned to right quasigroup elements</span>
+[ r0, r1, r2, r3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ Elements(Q)[1], Q.1, Q[0] ]; # three ways of accessing elements</span>
+[ r0, r0, r0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( CayleyTable( Q ) ); # based on the underlying set</span>
+[ [  0,  2,  0,  2 ],
+  [  1,  3,  1,  3 ],
+  [  2,  0,  2,  0 ],
+  [  3,  1,  3,  1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( MultiplicationTable( Q ) ); # based on [1..n], here [1..4]</span>
+[ [  1,  3,  1,  3 ],
+  [  2,  4,  2,  4 ],
+  [  3,  1,  3,  1 ],
+  [  4,  2,  4,  2 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mult := MultiplicationFunction( Q ); # based on [1..n] since Q is index based</span>
+function( i, j ) ... end
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mult( 1, 1 );</span>
+1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q[0]*Q[1];</span>
+r2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q[0]/Q[1]; # RightQuotient and RightDivision are also supported</span>
+r2
+</pre></div>
+
+<p>If, as in the above example, the remaining operations (right division, left division, neutral element) are not provided by the user, they are automatically inferred from the given multiplication function depending on the type of algebra under construction. This might (and typically will) lead to slower division operations in the non-index based case. For instance, if only the multiplication function for a right quasigroup <code class="code">Q</code> is given and <code class="code">Q</code> is not index based, then the right quotient <code class="code">x/y</code> is obtained by locating the first (and only) element <code class="code">z</code> of <code class="code">Q</code> such that <code class="code">x = z*y</code>; this is slow when <code class="code">Q</code> is large.</p>
+
+<p>Here is an example of a loop constructor based on a conversion from a group.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := AsLoop( SymmetricGroup( 3 ), ConstructorStyle( false, false ) ); # not index based, arguments not checked</span>
+&lt;associative loop of size 6&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UnderlyingSet( Q );</span>
+[ (), (2,3), (1,2), (1,2,3), (1,3,2), (1,3) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements( Q ); # default prefix "l" is assigned to loop elements</span>
+[ l(), l(2,3), l(1,2), l(1,2,3), l(1,3,2), l(1,3) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mult := MultiplicationFunction( Q ); # based on the underlying set since Q is not index based</span>
+&lt;Operation "*"&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mult( (1,2), (1,3) );</span>
+(1,2,3)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">One( Q );</span>
+l()
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Commutator( Q[(1,2)], Q[(1,3)] );</span>
+l(1,3,2)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Associator( Q[(1,2)], Q[(1,3)], Q[(2,3)] );</span>
+l()
+</pre></div>
+
+<p>Note that right quasigroups that happen to be quasigroups and/or loops mathematically must be explicitly declared as such in <strong class="pkg">GAP</strong> to make quasigroup and/or loop methods available to them. For instance, the above loop of size 6 is an associative loop (that is, a group), but it will not be automatically recognized as a group by <strong class="pkg">GAP</strong>. There are methods provided that check if a given right quasigroup is mathematically a quasigroup or a loop, cf. Section <a href="chap2_mj.html#X8560CC1E7E8A1885"><span class="RefLink">2.2</span></a>.</p>
+
+<p><a id="X7ECE815C8590BAA4" name="X7ECE815C8590BAA4"></a></p>
+
+<h4>1.7 <span class="Heading">The parent right quasigroup</span></h4>
+
+<p>The parent mechanism is employed in <strong class="pkg">GAP</strong> and in <strong class="pkg">RightQuasigroups</strong> to save memory and to take advantage of the containment of subalgebras in the enveloping algebras. The parent <code class="code">Parent( Q )</code> of a right quasigorup <code class="code">Q</code> is the largest right quasigroup from which <code class="code">Q</code> has been constructed as a subalgebra. In more detail, if <code class="code">Q</code> is constructed as a subalgebra of a right quasigroup <code class="code">P</code> then <code class="code">Parent( Q ) = Parent( P )</code>, while if <code class="code">Q</code> is not constructed as a subalgebra of some right quasigroup then <code class="code">Parent( Q ) = Q</code>.</p>
+
+<p>Right quasigroup elements are created automatically every time a new right quasigroup is constructed, with one exception: When <code class="code">Q</code> is constructed as a subalgebra then the elements of <code class="code">Q</code> are inherited from <code class="code">Parent( Q )</code>. In particular, if <code class="code">x</code> is any element of <code class="code">Q</code> then <code class="code">F = FamilyObj( x )</code> points to <code class="code">Parent( Q )</code> and many attributes of <code class="code">Parent( Q )</code> can be accessed via <code class="code">F</code> (see Section <a href="chap1_mj.html#X81A4F98982C4C7EC"><span class="RefLink">1.11</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := RightQuasigroupByFunction([0..5], function(x,y) return (x+y) mod 6; end );; Elements( Q ); </span>
+[ r0, r1, r2, r3, r4, r5 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := Subrightquasigroup( Q, [2] );</span>
+&lt;right quasigroup of size 3&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements( A );</span>
+[ r0, r2, r4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Parent( A ) = Q;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements( A )[ 3 ]; # the 3rd element of A</span>
+r4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A.3; # the 3rd element of the parent of A</span>
+r2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A[4]; # the element of the parent of A corresponding to the given underlying element</span>
+r4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( CayleyTable( A ) );</span>
+[ [  0,  2,  4 ],
+  [  2,  4,  0 ],
+  [  4,  0,  2 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( MultiplicationTable( A ) );</span>
+[ [  1,  2,  3 ],
+  [  2,  3,  1 ],
+  [  3,  1,  2 ] ]
+</pre></div>
+
+<p><a id="X81DECB427F4826CD" name="X81DECB427F4826CD"></a></p>
+
+<h4>1.8 <span class="Heading">Index based and canonical right quasigroups</span></h4>
+
+<p>Every right quasigroup <code class="code">Q</code> is constructed either as an <em>index based</em> right quasigroup or as a right quasigroup that is not index based.</p>
+
+<p>Generally speaking, index based right quasigroups take longer to construct, cannot be very large (thousands of elements) and can be calculated with fast, while non-index based right quasigroups are constructed quickly, can be very large (millions of elements) but only basic methods will work for them.</p>
+
+<p>If <code class="code">Q</code> is an index based right quasigroup of size <span class="SimpleMath">\(n\)</span>, then the multiplication and divisions in <code class="code">Q</code> are carried out via multiplication and division tables. The multiplication and division functions might then be present as functions <span class="SimpleMath">\([1..n]\times[1..n]\to[1..n]\)</span> but they are not directly involved in carrying out arithmetic operations.</p>
+
+<p>If <code class="code">Q</code> is a non-index based right quasigroup on the underlying set <span class="SimpleMath">\(S\)</span>, then the multiplication and divisions in <code class="code">Q</code> are carried out via multiplication and division functions <span class="SimpleMath">\(S\times S\to S\)</span>. The multiplication and division tables might then be present but they are not directly involved in carrying out arithmetic operations.</p>
+
+<p>In more details, if <code class="code">Q</code> is a right quasigroup with parent <code class="code">P</code> of size <span class="SimpleMath">\(n\)</span>, <code class="code">x</code> is an an element of <code class="code">Q</code> and <code class="code">F=FamilyObj( x )</code>, then:</p>
+
+
+<ul>
+<li><p>If <code class="code">Q</code> is index based:</p>
+
+
+<ul>
+<li><p><code class="code">x![1]</code> is the position of <code class="code">x</code> among the elements of <code class="code">P</code>, i.e., the index of <code class="code">x</code> (see below),</p>
+
+</li>
+<li><p>the multiplication table of <code class="code">P</code> is precalculated and stored as F!.multTable (the attribute <code class="code">MultiplicationTable( Q )</code> is set when requested for the first time),</p>
+
+</li>
+<li><p>the division tables of <code class="code">P</code> are calculated and stored at first usage of the respective divisions,</p>
+
+</li>
+<li><p>the multiplication and division functions of <code class="code">P</code>, if present, are functions <span class="SimpleMath">\([1..n]\times[1..n]\to [1..n]\)</span> but all arithmetic operations are handled via tables,</p>
+
+</li>
+<li><p>the fundamental piece of data is <code class="code">F!.multTable</code>, the multiplication table of <code class="code">P</code>.</p>
+
+</li>
+</ul>
+</li>
+<li><p>If <code class="code">Q</code> is not index based:</p>
+
+
+<ul>
+<li><p><code class="code">x![1]</code> is the element of the underlying set <span class="SimpleMath">\(S\)</span> of <code class="code">Q</code> corresponding to <code class="code">x</code>,</p>
+
+</li>
+<li><p>the mutliplication and division tables of <code class="code">P</code> are not precalculated,</p>
+
+</li>
+<li><p>the multiplication and division functions of <code class="code">P</code> are possibly slow functions <span class="SimpleMath">\(S\times S\to S\)</span>, often based on some additional data provided by the user in the constructor,</p>
+
+</li>
+<li><p>the fundamental piece of data is <code class="code">F!.mult</code>, the multiplication function of <code class="code">P</code>.</p>
+
+</li>
+</ul>
+</li>
+</ul>
+<p>A right quasigroup of size <span class="SimpleMath">\(n\)</span> is said to be <em>canonical</em> if it is index based, is its own parent and the underlying set is <span class="SimpleMath">\([1..n]\)</span>. Many computationally intensive methods of <strong class="pkg">RightQuasigroups</strong> internally work with canonical right quasigroups.</p>
+
+<p><a id="X7E63F40387CF7950" name="X7E63F40387CF7950"></a></p>
+
+<h5>1.8-1 ParentInd</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ParentInd</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the index of the object <var class="Arg">arg</var>. If <var class="Arg">arg</var> is a right quasigroup element, it returns the index of <var class="Arg">arg</var>, that is, the position of <var class="Arg">arg</var> among the elements of the parent right quasigroup. If the argument is a list of right quasigroup elements, it returns the corresponding list of indices. If the argument is a right quasigroup, it returns the corresponding list of indices and stores the result as an attribute. Finally, if <var class="Arg">arg</var> is a right quasigroup mapping with source <code class="code">Q1</code> and range <code class="code">Q2</code>, the function calls <code class="code">AsParentPerm( </code><var class="Arg">arg</var><code class="code"> )</code> if <code class="code">Q1 = Q2</code> and <var class="Arg">arg</var> is bijective, else it calls <code class="code">AsParentTransformation( </code><var class="Arg">arg</var><code class="code"> )</code>.</p>
+
+<p><a id="X8486A7CF797AB7BC" name="X8486A7CF797AB7BC"></a></p>
+
+<h5>1.8-2 IsIndexBased</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIndexBased</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if the right quasigroup <var class="Arg">Q</var> is index based, else returns <code class="code">false</code>.</p>
+
+<p><a id="X8149F2B67D474ABB" name="X8149F2B67D474ABB"></a></p>
+
+<h5>1.8-3 IndexBasedCopy</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndexBasedCopy</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a copy of <var class="Arg">Q</var> that has the same underlying set as <var class="Arg">Q</var>, is index based and is its own parent. An effort is made to inherit properties from <var class="Arg">Q</var>.</p>
+
+<p>Note that there is no general method available for converting index based right quasigroups into right quasigroups that are not index based.</p>
+
+<p><a id="X7E7B759786945501" name="X7E7B759786945501"></a></p>
+
+<h5>1.8-4 IsCanonical</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCanonical</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if the right quasigroup <var class="Arg">Q</var> of size <span class="SimpleMath">\(n\)</span> is canonical, else returns <code class="code">false</code>.</p>
+
+<p><a id="X80993D1187C29097" name="X80993D1187C29097"></a></p>
+
+<h5>1.8-5 CanonicalCopy</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalCopy</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a canonical copy of the right quasigroup <var class="Arg">Q</var>. An effort is made to inherit properties from <var class="Arg">Q</var>.</p>
+
+<p>Note that there is no general method available for converting canonical right quasigroups into right quasigroups that are not canonical.</p>
+
+<p>The following example illustrates basic features of non-index based right quasigroups.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := RightQuasigroupByFunction( GF( 9 ), \+, ConstructorStyle( false, false ) ); # not index based, arguments not checked</span>
+&lt;right quasigroup of size 9&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIndexBased( Q );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Q.2;</span>
+rZ(3)^0
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x![1]; # the underlying element</span>
+Z(3)^0
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x*x;</span>
+rZ(3)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := FamilyObj( x );</span>
+&lt;Family: "RightQuasigroupFam"&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ IsBound( F!.mult ), IsBound( F!.rdiv ), IsBound( F!.ldiv ) ]; # no left division in a right quasigroup</span>
+[ true, true, false ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ IsBound( F!.multTable ), IsBound( F!.rdivTable ), IsBound( F!.ldivTable ) ]; # no tables are bound</span>
+[ false, false, false ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mult := MultiplicationFunction( Q );</span>
+&lt;Operation "+"&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mult( Z(3), Z(3) );</span>
+Z(3)^0
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rdiv := RightDivisionFunction( Q ); # the constructor does not know that this really is &lt;Operation "-"&gt;</span>
+function( x, y ) ... end
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rdiv( Z(3), Z(3) );</span>
+0*Z(3)
+</pre></div>
+
+<p>Note how things change in index based and canonical copies.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := RightQuasigroupByFunction( GF( 9 ), \+, ConstructorStyle( false, false ) );; # same as in the above example, not index based</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := IndexBasedCopy( Q );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIndexBased( R );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UnderlyingSet( R ); # no change to the underlying set</span>
+[ 0*Z(3), Z(3)^0, Z(3), Z(3^2), Z(3^2)^2, Z(3^2)^3, Z(3^2)^5, Z(3^2)^6, 
+  Z(3^2)^7 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCanonical( R ); # underlying set is not [1..n]</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := R.2;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x![1]; # the index of x in the parent of R (here R itself)</span>
+2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x*x;</span>
+rZ(3)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := FamilyObj( R.1 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ IsBound( F!.mult ), IsBound( F!.rdiv ), IsBound( F!.ldiv ) ]; # if bound then based on respective tables</span>
+[ true, true, false ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ IsBound( F!.multTable ), IsBound( F!.rdivTable ), IsBound( F!.ldivTable ) ]; # division tables will be bound when divisions are called </span>
+[ true, false, false ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x/x;</span>
+r0*Z(3)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBound( F!.rdivTable );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mult := MultiplicationFunction( R ); # the multiplication function is based on indices</span>
+function( i, j ) ... end
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mult( 1, 1 );</span>
+1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C := CanonicalCopy( Q );</span>
+&lt;right quasigroup of size 9&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UnderlyingSet( C ); # underlying set has changed to [1..n]</span>
+[ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+</pre></div>
+
+<p><a id="X86E32404878D45C7" name="X86E32404878D45C7"></a></p>
+
+<h4>1.9 <span class="Heading">Generators and comparison of right quasigroups</span></h4>
+
+<p><code class="code">GeneratorsOfRightQuasigroup</code>, <code class="code">GeneratorsOfQuasigroup</code> and <code class="code">GeneratorsOfLoop</code> are supported as synonyms of <code class="code">GeneratorsOfMagma</code>.</p>
+
+<p><a id="X86F83A587E035600" name="X86F83A587E035600"></a></p>
+
+<h5>1.9-1 SmallGeneratingSet</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallGeneratingSet</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a small generating set of a right quasigroup <var class="Arg">Q</var> obtained by a greedy algorithm that starts with the empty set of generators and in every steps adds the first element of <var class="Arg">Q</var> that enlarges the generated subalgebra the most. There is no guarantee that <code class="code">SmallGeneratingSet</code> will return a generating set of smallest possible cardinality. If the returned set <code class="code">gens</code> of generators is smaller in cardinality than <code class="code">GeneratorsOfRightQuasigroup( </code><var class="Arg">Q</var><code class="code"> )</code>, the value of <code class="code">GeneratorsOfRightQuasigroup( </code><var class="Arg">Q</var><code class="code"> )</code> is automatically set to <code class="code">gens</code>.</p>
+
+<p><a id="X86F270ED860EA4D0" name="X86F270ED860EA4D0"></a></p>
+
+<h5>1.9-2 GeneratorsSmallest</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsSmallest</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the smallest generating set of <var class="Arg">Q</var> with respect to the lexicographic ordering based on the linear ordering of elements of <var class="Arg">Q</var>. If the returned set <code class="code">gens</code> of generators is smaller in cardinality than <code class="code">GeneratorsOfRightQuasigroup( </code><var class="Arg">Q</var><code class="code"> )</code>, the value of <code class="code">GeneratorsOfRightQuasigroup( </code><var class="Arg">Q</var><code class="code"> )</code> is automatically set to <code class="code">gens</code>.</p>
+
+<p>If <code class="code">A</code> and <code class="code">B</code> are right quasigroups with the same parent, cf. Section <a href="chap1_mj.html#X7ECE815C8590BAA4"><span class="RefLink">1.7</span></a>, then <code class="code">A&lt;B</code> iff <code class="code">GeneratorsSmallest( A )&lt;GeneratorsSmallest( B )</code>. When two right quasigroups do not have the same parent, they cannot be compared.</p>
+
+<p>There is a fast test for equality of two right quasigroups <code class="code">A</code>, <code class="code">B</code> that avoids calling <code class="code">GeneratorsSmallest</code>.</p>
+
+<p>Just like with other <strong class="pkg">GAP</strong> objects, if <code class="code">A = B</code> returns <code class="code">true</code>, this does not imply that <code class="code">A</code> and <code class="code">B</code> are identical <strong class="pkg">GAP</strong> objects, merely that they have the same parent and consist of the same elements. In particular, if <code class="code">A = Parent( A )</code> holds then <code class="code">A</code> is not necessarily its own parent; it might be a subalgebra of <code class="code">Parent( A )</code> that happens to contain all elements of <code class="code">Parent( A )</code>. (One can call <code class="code">IsIdenticalObj( A, Parent( A ) )</code> to check whether <code class="code">A</code> truly is its own parent.)</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := AsLoop( GF(8) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsOfLoop( Q ); # trivial generating set</span>
+[ l0*Z(2), lZ(2)^0, lZ(2^3), lZ(2^3)^2, lZ(2^3)^3, lZ(2^3)^4, lZ(2^3)^5, 
+  lZ(2^3)^6 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsSmallest( Q ); # with respect to lexicographic ordering</span>
+[ lZ(2^3)^4, lZ(2^3)^5, lZ(2^3)^6 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsOfLoop( Q ); # changed since a smaller generating set has been found</span>
+[ lZ(2^3)^4, lZ(2^3)^5, lZ(2^3)^6 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallGeneratingSet( Q ); # with respect to greedy algorithm</span>
+[ lZ(2)^0, lZ(2^3), lZ(2^3)^2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsOfLoop( Q ); # not changed since no smaller generating set has been found</span>
+[ lZ(2^3)^4, lZ(2^3)^5, lZ(2^3)^6 ]
+</pre></div>
+
+<p><a id="X7E2E2D5B87A21A1F" name="X7E2E2D5B87A21A1F"></a></p>
+
+<h4>1.10 <span class="Heading">Non-qualified operations</span></h4>
+
+<p>There are several so-called <em>non-qualified operations</em> in <strong class="pkg">GAP</strong>. These are operations which are not attributes or properties but whose result depends on the type of the argument. As far as <strong class="pkg">RightQuasigroups</strong> is concerned, the non-qualified operations are <code class="code">DerivedSeries</code>, <code class="code">IsNilpotent</code>, <code class="code">IsSimple</code>, <code class="code">IsSolvable</code>, <code class="code">LowerCentralSeries</code> and <code class="code">UpperCentralSeries</code>. For all such operations we provide qualified methods, e.g., <code class="code">DerivedSeriesOfLoop( Q )</code> called with a loop <code class="code">Q</code> as argument, but also support the non-qualified versions, e.g., <code class="code">DerivedSeries( Q )</code>.</p>
+
+<p><a id="X81A4F98982C4C7EC" name="X81A4F98982C4C7EC"></a></p>
+
+<h4>1.11 <span class="Heading">*Direct access to the parent right quasigroup record</span></h4>
+
+<p>Let <code class="code">Q</code> be a right quasigroup, <code class="code">F</code> the family object of any element of <code class="code">Q</code> (that is, <code class="code">F = FamilyObj(Q.1)</code>) and <code class="code">P</code> the parent of <code class="code">Q</code> (see Section <a href="chap1_mj.html#X7ECE815C8590BAA4"><span class="RefLink">1.7</span></a>). Then:</p>
+
+
+<ul>
+<li><p><code class="code">F!.cayleyTable</code> is the Cayley table of <code class="code">P</code>.</p>
+
+</li>
+<li><p><code class="code">F!.indexBased</code> determines is <code class="code">P</code> and hence also <code class="code">Q</code> are index based.</p>
+
+</li>
+<li><p><code class="code">F!.ldiv</code> is the left division function of <code class="code">P</code>, if <code class="code">Q</code> is a declared quasigroup.</p>
+
+</li>
+<li><p><code class="code">F!.ldivTable</code> is the left division table of <code class="code">P</code>, if <code class="code">Q</code> is a declared quasigroup.</p>
+
+</li>
+<li><p><code class="code">F!.mult</code> is the multiplication function of <code class="code">P</code>.</p>
+
+</li>
+<li><p><code class="code">F!.multTable</code> is the multiplication table of <code class="code">P</code>.</p>
+
+</li>
+<li><p><code class="code">F!.names</code> is the prefix used for all elements of <code class="code">P</code>.</p>
+
+</li>
+<li><p><code class="code">F!.one</code> is the neutral element of <code class="code">P</code> and hence also of <code class="code">Q</code>, if <code class="code">Q</code> is a declared loop.</p>
+
+</li>
+<li><p><code class="code">F!.parent</code> is <code class="code">P</code>.</p>
+
+</li>
+<li><p><code class="code">F!.rdiv</code> is the right division function of <code class="code">P</code>.</p>
+
+</li>
+<li><p><code class="code">F!.rdivTable</code> is the right division table of <code class="code">P</code>.</p>
+
+</li>
+<li><p><code class="code">F!.rSection</code> is the right section for <code class="code">P</code>.</p>
+
+</li>
+<li><p><code class="code">F!.set</code> is the set of <strong class="pkg">GAP</strong> elements of <code class="code">P</code>.</p>
+
+</li>
+<li><p><code class="code">F!.size</code> is the size of <code class="code">P</code>.</p>
+
+</li>
+<li><p><code class="code">F!.uSet</code> is the underlying set of <code class="code">P</code>. Note that if <code class="code">Q</code> is a proper subalgebra of <code class="code">P</code> then <code class="code">UnderlyingSet( Q )</code> is a proper subset of <code class="code">F!.uSet</code>.</p>
+
+</li>
+</ul>
+<p>Note that not all of the above components of <code class="code">F</code> are necessarily bound, depending on the constructor used for <code class="code">P</code>. To see the list of bound components, call <code class="code">NamesOfComponents( F )</code>.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

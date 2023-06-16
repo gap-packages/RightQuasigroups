@@ -1,0 +1,408 @@
+  
+  [1X7 [33X[0;0YProperties of right quasigroups, quasigroups and loops[133X[101X
+  
+  [33X[0;0YIn  this chapter we present functions that check various properties of right
+  quasigroups,  quasigroups  and  loops,  some  on  the  level  of magmas. Any
+  identity  of  right  quasigroups,  quasigroups  and loops can be verified or
+  refuted  with  the  custom-built  parser.  Specific  (and  typically faster)
+  methods   are   provided   for  many  identities  and  properties  of  right
+  quasigroups,  and  we  recommend  using them, rather than the generic parser
+  method, whenever possible.[133X
+  
+  
+  [1X7.1 [33X[0;0YParser[133X[101X
+  
+  [33X[0;0Y[5XRightQuasigroups[105X contains a simple, custom-built parser for parsing of right
+  quasigroup,  quasigroup  and  loop  terms  and  for  verification  of  right
+  quasigroup, quasigroup and loop identities. For the purposes of the parser:[133X
+  
+  [30X    [33X[0;6Yvariables are lower case characters [10Xa[110X, ..., [10Xz[110X,[133X
+  
+  [30X    [33X[0;6Ythe multiplication operation is denoted by [10X*[110X,[133X
+  
+  [30X    [33X[0;6Ythe right division operation is denoted by [10X/[110X,[133X
+  
+  [30X    [33X[0;6Ythe  left division operation is denoted by [10X|[110X (since [10X\[110X behaves badly in
+        [5XGAP[105X strings) and is only allowed in quasigroup and loop terms,[133X
+  
+  [30X    [33X[0;6Ythe neutral element is denoted by [10X1[110X and is only allowed in loop terms,[133X
+  
+  [30X    [33X[0;6Yparentheses  and brackets [10X([110X, [10X[[110X, [10X{[110X and [10X)[110X, [10X][110X, [10X}[110X are allowed and they are
+        all treated as [10X([110X and [10X)[110X, respectively,[133X
+  
+  [30X    [33X[0;6Ythe  three  binary  operations have the same priority and if terms are
+        not fully parenthesized, the term is parsed from right to left, (e.g.,
+        [10Xx*y\z[110X  is  parsed  as  [10X(x*y)\z[110X) in accordance with [5XGAP[105X conventions for
+        parsing of products,[133X
+  
+  [30X    [33X[0;6Yspaces are allowed and ignorred,[133X
+  
+  [30X    [33X[0;6Yno other characters are allowed.[133X
+  
+  
+  [1X7.1-1 [33X[0;0YBuilding terms from strings[133X[101X
+  
+  [33X[1;0Y[29X[2XRightQuasigroupTermFromString[102X( [3Xs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XQuasigroupTermFromString[102X( [3Xs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLoopTermFromString[102X( [3Xs[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  right quasigroup (quasigroup, loop) term corresponding to the
+            string  [10Xs[110X. The term is returned as a structured list mimicking the
+            infix tree for the term.[133X
+  
+  [33X[0;0YIt  is  possible to verify identities directly in [5XGAP[105X. For instance, [10XForAll(
+  Q, x -> ForAll( Q, y -> ForAll( Q, z -> x*(y*z) = (x*y)*z ) ) )[110X returns [10Xtrue[110X
+  iff [10XQ[110X is associative.[133X
+  
+  [33X[0;0YFor  the convenience of the user, we support checking of identities in right
+  quasigroups,  quasigroups and loops by the custom-built parser. Despite some
+  effort  to  make  the  checking fast, it is about half as fast as the direct
+  check using [5XGAP[105X code.[133X
+  
+  
+  [1X7.1-2 [33X[0;0YVerifying identities[133X[101X
+  
+  [33X[1;0Y[29X[2XRightQuasigroupSatisfiesIdentity[102X( [3XQ[103X, [3Xs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XQuasigroupSatisfiesIdentity[102X( [3XQ[103X, [3Xs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLoopSatisfiesIdentity[102X( [3XQ[103X, [3Xs[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  the  right quasigroup (quasigroup, loop) [10XQ[110X satisfies the
+            right  quasigroup  (quasigroup,  loop) identity represented by the
+            string  [10Xs[110X. If [10XQ[110X does not satisfy [10Xs[110X, the function returns a list of
+            variables of [10Xs[110X and their values in [10XQ[110X that violate [10Xs[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := AsLoop( CyclicGroup( 6 ) );;[127X[104X
+    [4X[25Xgap>[125X [27XLoopSatisfiesIdentity( Q, "x*y=y*x" );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XLoopSatisfiesIdentity( Q, "x*x=1" );[127X[104X
+    [4X[28X[ [ 'x', lf1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XRightQuasigroupTermFromString("x*(y/z)");[127X[104X
+    [4X[28X[ 24, '*', [ 25, '/', 26 ] ][128X[104X
+    [4X[25Xgap>[125X [27XQuasigroupTermFromString("(a|b)/(c*d)"); # note the symbol | for left division[127X[104X
+    [4X[28X[ [ 1, '|', 2 ], '/', [ 3, '*', 4 ] ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X7.1-3 [33X[0;0Y*How evaluation of identities with the parser works[133X[101X
+  
+  [33X[0;0YTo  speed  up  evaluation  of identities, the parser produces terms in which
+  variables  have  been  replaced  by  their  positions in the global variable
+  string  [10XRQ_parserVarNames = "abcedfghijklmnopqrstuvwxyz"[110X. The current values
+  of  all  variables are stored in the global list [10XRQ_parserVars[110X of length 26.
+  The  current  value  of the neutral element is stored in the global variable
+  [10XRQ_parserOne[110X.   A   term   [10Xt[110X   produced   by  [10XRightQuasigroupTermFromString[110X,
+  [10XQuasigroupTermFromString[110X   or   [10XLoopTermFromString[110X  is  then  evaluated  via
+  [10XRQ_EvaluateTerm( t )[110X.[133X
+  
+  
+  [1X7.2 [33X[0;0YProperties of magmas[133X[101X
+  
+  [33X[0;0YThe  following  list  summarizes  (mostly  equational)  properties of magmas
+  tested  in  [5XRightQuasigroups[105X. All identities are universally quantified with
+  respect to all variables.[133X
+  
+  [30X    [33X[0;6Y[13X3-power associative[113X: [23Xx(xx)=(xx)x[123X[133X
+  
+  [30X    [33X[0;6Y[13Xalternative[113X: [23Xx(xy) = (xx)y[123X and [23Xx(yy)=(xy)y[123X[133X
+  
+  [30X    [33X[0;6Y[13Xassociative[113X: [23Xx(yz)=(xy)z[123X[133X
+  
+  [30X    [33X[0;6Y[13Xcommutative[113X: [23Xxy=yx[123X[133X
+  
+  [30X    [33X[0;6Y[13Xdiassociative[113X: every submagma generated by two elements is associative[133X
+  
+  [30X    [33X[0;6Y[13Xflexible[113X: [23Xx(yx)=(xy)x[123X[133X
+  
+  [30X    [33X[0;6Y[13Xidempotent[113X: [23Xxx=x[123X[133X
+  
+  [30X    [33X[0;6Y[13Xleft alternative[113X: [23Xx(xy)=(xx)y[123X[133X
+  
+  [30X    [33X[0;6Y[13Xleft self-distributive[113X: [23Xx(yz)=(xy)(xz)[123X[133X
+  
+  [30X    [33X[0;6Y[13Xpower  associative[113X:  every  submagma  generated by a single element is
+        associative[133X
+  
+  [30X    [33X[0;6Y[13Xright alternative[113X: [23Xx(yy)=(xy)y[123X[133X
+  
+  [30X    [33X[0;6Y[13Xright self-distributive[113X: [23X(xy)z=(xz)(yz)[123X[133X
+  
+  [30X    [33X[0;6Y[13Xself-distributive[113X: [23Xx(yz)=(xy)(xz)[123X and [23X(xy)z=(xz)(yz)[123X[133X
+  
+  [30X    [33X[0;6Y[13Xunipotent[113X: [23Xxx=yy[123X[133X
+  
+  [33X[0;0YSome  of  these  methods  for  magmas  are  already  available in [5XGAP[105X, e.g.,
+  [10XIsCommutative[110X. In such a case, we provide a new method for right quasigroups
+  that takes advantage of right translations as permutations.[133X
+  
+  
+  [1X7.2-1 [33X[0;0YTesting properties of magmas and right quasigroups[133X[101X
+  
+  [33X[1;0Y[29X[2XIs3PowerAssociative[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsAlternative[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsAssociative[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsCommutative[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsDiassociative[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsFlexible[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsIdempotent[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsLeftAlternative[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsLeftSelfDistributive[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsPowerAssociative[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsRightAlternative[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsRightSelfDistributive[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsSelfDistributive[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsUnipotent[102X( [3XQ[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  [10XQ[110X  is  a  magma  with  the  property in the title of the
+            function, else returns [10Xfalse[110X[133X
+  
+  
+  [1X7.3 [33X[0;0YProperties of right quasigroups[133X[101X
+  
+  [1X7.3-1 IsFaithfulRightQuasigroup[101X
+  
+  [33X[1;0Y[29X[2XIsFaithfulRightQuasigroup[102X( [3XQ[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  [3XQ[103X  is  a  faithful  right  quasigroup,  that is, a right
+            quasigroup for which the mapping [23Xx\mapsto R_x[123X is injective.[133X
+  
+  [1X7.3-2 IsProjectionRightQuasigroup[101X
+  
+  [33X[1;0Y[29X[2XIsProjectionRightQuasigroup[102X( [3XQ[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  [3XQ[103X  is  a  projection  right quasigroup, that is, a right
+            quasigroup satisfying the identity [23Xxy=x[123X.[133X
+  
+  
+  [1X7.4 [33X[0;0YProperties of quasigroups[133X[101X
+  
+  [1X7.4-1 IsSemisymmetric[101X
+  
+  [33X[1;0Y[29X[2XIsSemisymmetric[102X( [3XQ[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  [10XQ[110X  is  a semisymmetric quasigroup (that is, a quasigroup
+            satisfying [10X(x*y)*x=y[110X for all [10Xx[110X, [10Xy[110X), else returns [10Xfalse[110X.[133X
+  
+  [1X7.4-2 IsTotallySymmetric[101X
+  
+  [33X[1;0Y[29X[2XIsTotallySymmetric[102X( [3XQ[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X if [10XQ[110X is a totally symmetric quasigroup (that is, a quasigroup
+            that is semisymmetric and commutative), else returns [10Xfalse[110X.[133X
+  
+  [1X7.4-3 IsSteinerQuasigroup[101X
+  
+  [33X[1;0Y[29X[2XIsSteinerQuasigroup[102X( [3XQ[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  [10XQ[110X is a Steiner quasigroup (that is, a quasigroup that is
+            idempotent  and  totally  symmetric),  else returns [10Xfalse[110X. We also
+            support the synonym [10XIsMedial[110X.[133X
+  
+  [1X7.4-4 IsEntropic[101X
+  
+  [33X[1;0Y[29X[2XIsEntropic[102X( [3XQ[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  [10XQ[110X  is  an  entropic  quasigroup  (that  is, a quasigroup
+            satisfying  [10X(x*u)*(v*y)  =  (x*v)*(u*y)[110X  for all [10Xx[110X, [10Xy[110X, [10Xu[110X, [10Xv[110X), else
+            returns [10Xfalse[110X. We also support the synonym [10XIsMedial[110X.[133X
+  
+  
+  [1X7.5 [33X[0;0YInverse properties of loops[133X[101X
+  
+  [33X[0;0YIn  a loop [23XQ[123X with neutral element [23Xe[123X, for every [23Xx\in Q[123X there is a unique left
+  inverse  [23Xx^\ell[123X  of [23Xx[123X satisfying [23Xx^\ell x = e[123X and a unique right inverse [23Xx^r[123X
+  of  [23Xx[123X  satisfying [23Xxx^r=e[123X, cf. Section [14X1.5[114X. If [23Xx^ell = x^r[123X then the two-sided
+  inverse of [23Xx[123X is denoted by [23Xx^{-1}[123X.[133X
+  
+  [1X7.5-1 HasTwosidedInverses[101X
+  
+  [33X[1;0Y[29X[2XHasTwosidedInverses[102X( [3XQ[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X if [10XQ[110X is a loop with two-sided inverses, else returns [10Xfalse[110X.[133X
+  
+  
+  [1X7.5-2 [33X[0;0YRight and left inverse properties[133X[101X
+  
+  [33X[1;0Y[29X[2XHasRightInverseProperty[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XHasLeftInverseProperty[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XHasInverseProperty[102X( [3XQ[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  the  loop  [10XQ[110X  has the right inverse property (resp. left
+            inverse property, inverse property), else returns [10Xfalse[110X.[133X
+  
+  [33X[0;0YA  loop  [23XQ[123X  has  the [13Xright inverse property[113X (resp. [13Xleft inverse property[113X) if
+  [23X(xy)y^r=x[123X  (resp.  [23Xx^\ell(xy)=y[123X)  holds for all [23Xx,y\in Q[123X. It has the [13Xinverse
+  property[113X  if  it  is  has  the  right  inverse property and the left inverse
+  property. In all three cases, the loop automatically has two-sided inverses.[133X
+  
+  [1X7.5-3 HasWeakInverseProperty[101X
+  
+  [33X[1;0Y[29X[2XHasWeakInverseProperty[102X( [3XQ[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X if the loop [10XQ[110X has the weak inverse property.[133X
+  
+  [33X[0;0YA loop [23XQ[123X has the [13Xweak inverse property[113X if [23X(xy)^\ell x = y^\ell[123X holds for all
+  [23Xx,y\in  Q[123X. The dual identity [23Xx(yx)^r = y^r[123X is equivalent to the weak inverse
+  property. A weak inverse property loop does not necessarily posses two-sided
+  inverses.[133X
+  
+  
+  [1X7.5-4 [33X[0;0YAutomorphic and antiautomorphic inverse properties[133X[101X
+  
+  [33X[1;0Y[29X[2XHasAutomorphicInverseProperty[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XHasAntiautomorphicInverseProperty[102X( [3XQ[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  the  loop  [10XQ[110X has the automorphic inverse property (resp.
+            antiautomorphic inverse property), else returns [10Xfalse[110X.[133X
+  
+  [33X[0;0YA  loop [23XQ[123X has the [13Xautomorphic inverse property[113X if [23X(xy)^r = x^r y^r[123X holds for
+  all  [23Xx,y\in  Q[123X (the dual identity [23X(xy)^\ell = x^\ell y^\ell[123X is equivalent to
+  it  in  loops).  An  automorphic  inverse property loop does not necessarily
+  posses two-sided inverses. A loop [23XQ[123X has the [13Xantiautomorphic inverse property[113X
+  if  [23X(xy)^r  =  y^r x^r[123X holds for all [23Xx,y\in Q[123X (the dual identity [23X(xy)^\ell =
+  y^\ell  x^\ell[123X  is  equivalent  to  it in loops). An antiautomorphic inverse
+  property  loop automatically possesses two-sided inverses and the definining
+  identity can therefore be restated as [23X(xy)^{-1}=y^{-1}x^{-1}[123X.[133X
+  
+  
+  [1X7.6 [33X[0;0YLoops of Bol-Moufang type[133X[101X
+  
+  [33X[0;0YA  loop  identity  is  said  to  be  of [13XBol-Moufang type[113X if two of its three
+  variables  occur  once on each side, the third variable occurs twice on each
+  side, and the order in which the variables appear on both sides is the same,
+  cf.  [23X((xy)x)z=x(y(xz))[123X.  A  variety of loops is of [13XBol-Moufang type[113X if it is
+  defined by a single identity of Bol-Moufang type. It can be shown that there
+  are  precisey  14  varieties  of loops of Bol-Moufang type; the 11 varieties
+  included  in  the  list  below plus the already introduced associative loops
+  (aka  groups),  flexible loops, left alternative loops and right alternative
+  loops.[133X
+  
+  [33X[0;0YHere  are  the 11 varieties of loops of Bol-Moufang type not yet introduced.
+  In  some  cases  there are several equivalent identities of Bol-Moufang type
+  for the given variety but we only list one such identity.[133X
+  
+  [30X    [33X[0;6Y[13XC loops[113X: [23Xx(y(yz))=((xy)y)z[123X[133X
+  
+  [30X    [33X[0;6Y[13Xextra loops[113X: [23Xx(y(zx))=((xy)z)x[123X[133X
+  
+  [30X    [33X[0;6Y[13XLC loops[113X: [23X(xx)(yz)=(x(xy))z[123X[133X
+  
+  [30X    [33X[0;6Y[13Xleft Bol loops[113X: [23Xx(y(xz)) = (x(yx))z[123X[133X
+  
+  [30X    [33X[0;6Y[13Xleft nuclear square loops[113X: [23X(xx)(yz)=((xx)y)z[123X[133X
+  
+  [30X    [33X[0;6Y[13Xmiddle nuclear square loops[113X: [23Xx((yy)z)=(x(yy))z[123X[133X
+  
+  [30X    [33X[0;6Y[13XMoufang loops[113X: [23X(xy)(zx)=(x(yz))x[123X[133X
+  
+  [30X    [33X[0;6Y[13XRC loops[113X: [23Xx((yz)z)=(xy)(zz)[123X[133X
+  
+  [30X    [33X[0;6Y[13Xright Bol loops[113X: [23Xx((yz)y)=((xy)z)y[123X[133X
+  
+  [30X    [33X[0;6Y[13Xright nuclear square loops[113X: [23Xx(y(zz))=(xy)(zz)[123X[133X
+  
+  
+  [1X7.6-1 [33X[0;0YTesting for loops of Bol-Moufang type[133X[101X
+  
+  [33X[1;0Y[29X[2XIsCLoop[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsExtraLoop[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsLCLoop[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsLeftBolLoop[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsLeftNuclearSquareLoop[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsMiddleNuclearSquareLoop[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsMoufangLoop[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsRCLoop[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsRightBolLoop[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsRightNuclearSquareLoop[102X( [3XQ[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if the loop [10XQ[110X has the property in the title of the function,
+            else returns [10Xfalse[110X.[133X
+  
+  [1X7.6-2 IsNuclearSquareLoop[101X
+  
+  [33X[1;0Y[29X[2XIsNuclearSquareLoop[102X( [3XQ[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  [10XQ[110X  is  a  [13Xnuclear square loop[113X (that is, a loop where the
+            square  of every element lies in the nucleus), else returns [10Xfalse[110X.
+            The  variety  of  nuclear  square  loops  is  technically  not  of
+            Bol-Moufang  type,  but can be obtained by interesecting varieties
+            of Bol-Moufang type.[133X
+  
+  
+  [1X7.7 [33X[0;0YPower alternative loops[133X[101X
+  
+  [33X[0;0YA  loop [23XQ[123X is [13Xright power alternative[113X (resp. [13Xleft power alternative[113X) if it is
+  power  associative  and  [23X(xy^n)y^m  =  xy^{n+m}[123X (resp. [23Xx^n(x^my) = x^{n+m}y[123X)
+  holds for all [23Xx,y\in Q[123X and all integers [23Xn[123X, [23Xm[123X. A loop is [13Xpower alternative[113X if
+  it is both right and left power alternative.[133X
+  
+  
+  [1X7.7-1 [33X[0;0YTesting for power alternative loops[133X[101X
+  
+  [33X[1;0Y[29X[2XIsRightPowerAlternative[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsLeftPowerAlternative[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsPowerAlternative[102X( [3XQ[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  the  loop [10XQ[110X is right power alternative (resp. left power
+            alternative, power alternative), else returns [10Xfalse[110X.[133X
+  
+  
+  [1X7.8 [33X[0;0YConjugacy closed loops and Osborn loops[133X[101X
+  
+  [33X[0;0YA  loop  [23XQ[123X  is  [13Xright  conjugacy  closed[113X  (aka  [13XRCC[113X) if for all [23Xx,y\in Q[123X the
+  permutation  [23XR_x^{-1}R_yR_x[123X  is  a  right  translation.  Dually,  [23XQ[123X  is [13Xleft
+  conjugacy   closed[113X   (aka   [13XLCC[113X)   if  for  all  [23Xx,y\in  Q[123X  the  permutation
+  [23XL_x^{-1}L_yL_x[123X  is a left translation. A loop [23XQ[123X is [13Xconjugacy closed[113X (aka [13XCC[113X)
+  if it is both RCC and LCC.[133X
+  
+  
+  [1X7.8-1 [33X[0;0YTesting for conjugacy closed loops[133X[101X
+  
+  [33X[1;0Y[29X[2XIsRightConjugacyClosedLoop[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsLeftConjugacyClosedLoop[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsConjugacyClosedLoop[102X( [3XQ[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YThe synonyms [10XIsRCCLoop[110X, [10XIsLCCLoop[110X and [10XIsCCLoop[110X are also supported.[133X
+  
+  [1X7.8-2 IsOsbornLoop[101X
+  
+  [33X[1;0Y[29X[2XIsOsbornLoop[102X( [3XQ[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  [10XQ[110X  is  an  Osborn  loop  (that  is,  a  loop  satisfying
+            [23Xy\backslash (x(zx)) = ((y/x)z)x[123X), else returns [10Xfalse[110X.[133X
+  
+  
+  [1X7.9 [33X[0;0YAdditional varieties of loops[133X[101X
+  
+  [1X7.9-1 IsCodeLoop[101X
+  
+  [33X[1;0Y[29X[2XIsCodeLoop[102X( [3XQ[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  [10XQ[110X is a code loop, else returns [10Xfalse[110X. A loop [23XQ[123X is a [13Xcode
+            loop[113X if it a Moufang loop containing a central subloop [23XZ[123X of size [23X2[123X
+            such that [23XQ/Z[123X is an elementary abelian [23X2[123X-group.[133X
+  
+  [1X7.9-2 IsSteinerLoop[101X
+  
+  [33X[1;0Y[29X[2XIsSteinerLoop[102X( [3XQ[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  [10XQ[110X  is  a Steiner loop, else retunrs [10Xfalse[110X. A loop [23XQ[123X is a
+            [13XSteiner loop[113X if it is an inverse property loop of exponent at most
+            [23X2[123X.[133X
+  
+  
+  [1X7.9-3 [33X[0;0YBruck loops[133X[101X
+  
+  [33X[1;0Y[29X[2XIsRightBruckLoop[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsLeftBruckLoop[102X( [3XQ[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  [10XQ[110X  is  a  right Bruck loop (resp. left Bruck loop), else
+            returns [10Xfalse[110X.[133X
+  
+  [33X[0;0YA  loop [23XQ[123X is a [13Xright Bruck loop[113X (aka [13Xright K-loop[113X) if it is right Bol an has
+  the  automorphic  inverse  property. A loop [23XQ[123X is a [13Xleft Bruck loop[113X (aka [13Xleft
+  K-loop[113X)  if  it  is  left  Bol and has the automorphic inverse property. The
+  synonyms [10XIsRightKLoop[110X and [10XIsLeftKLoop[110X are also supported.[133X
+  
+  
+  [1X7.9-4 [33X[0;0YAutomorphic loops[133X[101X
+  
+  [33X[1;0Y[29X[2XIsRightAutomorphicLoop[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsMiddleAutomorphicLoop[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsLeftAutomorphicLoop[102X( [3XQ[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsAutomorphicLoop[102X( [3XQ[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  [10XQ[110X  is a right automorphic loop (resp. middle automorphic
+            loop,  left  automorphic  loop,  automorphic  loop),  else returns
+            [10Xfalse[110X.[133X
+  
+  [33X[0;0YA  loop  [23XQ[123X is a [13Xright automorphic loop[113X (aka [13Xright A-loop[113X) if all right inner
+  mapping  of  [23XQ[123X are automorphisms of [23XQ[123X. A loop [23XQ[123X is a [13Xmiddle automorphic loop[113X
+  (aka [13Xmiddle A-loop[113X) if all its middle inner mappings are automorphisms of [23XQ[123X.
+  A  loop [23XQ[123X is a [13Xleft automorphic loop[113X (aka [13Xleft A-loop[113X) if all its left inner
+  mappings  are  automorphisms  of  [23XQ[123X.  A  loop  [23XQ[123X is an [13Xautomorphic loop[113X (aka
+  [13XA-loop[113X) if all its inner mappings are automorphisms of [23XQ[123X.[133X
+  
+  [33X[0;0YThe  synonyms  [10XIsRightALoop[110X, [10XIsMiddleALoop[110X, [10XIsLeftALoop[110X and [10XIsALoop[110X are also
+  supported.[133X
+  

@@ -1,0 +1,683 @@
+  
+  [1X9 [33X[0;0YHomotopisms, isotopisms and autotopisms[133X[101X
+  
+  
+  [1X9.1 [33X[0;0YHomotopisms, isotopism and autotopisms of right quasigroups[133X[101X
+  
+  [33X[0;0YA  triple  of  mappings  [23Xt  =  (f,g,h):(Q_1,\cdot)\to  (Q_2,*)[123X between right
+  quasigroups is a [13Xhomotopism[113X if [23Xf(x)*g(y) = h(x\cdot y)[123X for every [23Xx,y\in Q_1[123X.
+  The  right quasigroup [23XQ_1[123X is the source of [23Xt[123X, [23XQ_2[123X is the range of [23Xt[123X, and the
+  mappings  [23Xf[123X, [23Xg[123X, [23Xh[123X are the components of [23Xt[123X. If [23Xf[123X, [23Xg[123X, [23Xh[123X are also bijections, [23Xt[123X
+  is an [13Xisotopism[113X. An isotopism with [23X(Q_1,\cdot) = (Q_2,*)[123X is an [13Xautotopism[113X.[133X
+  
+  
+  [1X9.1-1 [33X[0;0YRepresenting homotopisms in [5XGAP[105X[101X[1X[133X[101X
+  
+  [33X[1;0Y[29X[2XIsRightQuasigroupHomotopism[102X( [3Xobject[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X.[133X
+  
+  [33X[0;0YIn   [5XRightQuasigroups[105X,   homotopisms  are  represented  by  a  [5XGAP[105X  category
+  [10XIsRightQuasigroupHomotopism[110X  that stores attributes and whose objects can be
+  multiplied  and  inverted.  Homotopisms keep track of the source, the range,
+  and the three mappings. If the source is equal to the range, the mappins are
+  stored   as  parent  permutations,  otherwise  they  are  stored  as  parent
+  transformations.[133X
+  
+  
+  [1X9.1-2 [33X[0;0YAttributes of homotopisms[133X[101X
+  
+  [33X[1;0Y[29X[2XSource[102X( [3Xt[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRange[102X( [3Xt[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XComponentOfHomotopism[102X( [3Xt[103X, [3Xi[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  source,  range  and  the  [3Xi[103Xth  component  of  a homotopism [3Xt[103X,
+            respectively.  The  attributes  can  be also accessed directly via
+            [10Xt!.source[110X, [10Xt!.range[110X, [10Xt!.f[110X, [10Xt!.g[110X and [10Xt!.h[110X.[133X
+  
+  [33X[0;0YThe  three  components  are  stored  as  parent transformations or as parent
+  permutations (when the source equals the range).[133X
+  
+  
+  [1X9.1-3 [33X[0;0YProperties of homotopisms[133X[101X
+  
+  [33X[1;0Y[29X[2XIsInjective[102X( [3Xt[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsSurjective[102X( [3Xt[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsBijective[102X( [3Xt[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YReturns  [10Xtrue[110X  if  (every  component  of)  the  homotopism  [3Xt[103X  is injective,
+  surjective and bijective, respectively.[133X
+  
+  
+  [1X9.1-4 [33X[0;0YCreating homotopisms[133X[101X
+  
+  [33X[1;0Y[29X[2XHomotopismRightQuasigroups[102X( [3XQ1[103X, [3XQ2[103X, [3Xf[103X, [3Xg[103X, [3Xh[103X[, [3XisCanonical[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya  homotopism  from  right  quasigroup  [3XQ1[103X  to right quasigroup [3XQ2[103X
+            according  to the three mappings [3Xf[103X, [3Xg[103X, [3Xh[103X. Each of the mappings can
+            be a right quasigroup mappings (with source [3XQ1[103X and range [3XQ2[103X), or a
+            transformation,  or  a  permutation  (where  the latter only makes
+            sense  if  [3XQ1[103X  equals [3XQ2[103X). If the optional argument [3XisCanonical[103X is
+            set  to  [10Xtrue[110X,  all transformations/permutations are understood as
+            canonical  (not parent) transformations/permutations. The function
+            performs  an  explicit check that the provided data give rise to a
+            homotopism.[133X
+  
+  [33X[0;0YWe    also    support    other    formats    of    the   arguments,   namely
+  [10XHomotopismRightQuasigroups(  Q,  f,  g, h[, isCanonical])[110X when [10XQ[110X is both the
+  source  and  the  range,  and [10XHomotopismRightQuasigroups( f, g, h )[110X when the
+  three mappings are right quasigroup mappings (which keep track of the source
+  and  the  range).  Note  that  in  the  last  format  the  optional argument
+  [3XisCanonical[103X is not supported because it is meaningless.[133X
+  
+  [33X[0;0YHere is an example of a constructor for a homotopism:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ1 := ProjectionRightQuasigroup( 3 );;[127X[104X
+    [4X[25Xgap>[125X [27XQ2 := ProjectionRightQuasigroup( 2 );;[127X[104X
+    [4X[25Xgap>[125X [27Xf := Transformation( [1,1,2] );; g := Transformation( [2,1,2] );; h := f;;[127X[104X
+    [4X[25Xgap>[125X [27Xt := HomotopismRightQuasigroups( Q1, Q2, f, g, h );[127X[104X
+    [4X[28X<homotopism of right quasigroups>[128X[104X
+    [4X[25Xgap>[125X [27XIsRightQuasigroupHomotopism( t ); # category/filter check[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( t );[127X[104X
+    [4X[28X<homotopism of right quasigroups[128X[104X
+    [4X[28X   source = <associative quandle of size 3>[128X[104X
+    [4X[28X   range = <associative quandle of size 2>[128X[104X
+    [4X[28X   f = Transformation( [ 1, 1, 2 ] )[128X[104X
+    [4X[28X   g = Transformation( [ 2, 1, 2 ] )[128X[104X
+    [4X[28X   h = Transformation( [ 1, 1, 2 ] )[128X[104X
+    [4X[28X>[128X[104X
+    [4X[25Xgap>[125X [27X[ Source( t ), Range( t ) ];[127X[104X
+    [4X[28X[ <associative quandle of size 3>, <associative quandle of size 2> ][128X[104X
+    [4X[25Xgap>[125X [27XComponentOfHomotopism( t, 2 ); # the second component, g[127X[104X
+    [4X[28XTransformation( [ 2, 1, 2 ] )[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YAnd  here  is  an  example  of  a constructor for a homotopism with the same
+  source  and  range.  The  homotopism  is  immediately  recognized  to  be an
+  autotopism since the three given mappings are permutations.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := QuasigroupByFunction( [0..4], function( x,y ) return (x+y) mod 5; end );;[127X[104X
+    [4X[25Xgap>[125X [27Xf := (1,2,3,4,5);; g := (2,4,1,3,5);; h := (3,1,4,2,5);; # +1, +2, +3[127X[104X
+    [4X[25Xgap>[125X [27Xt := HomotopismRightQuasigroups( Q, f, g, h );[127X[104X
+    [4X[28X<autotopism of quasigroups>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( t );[127X[104X
+    [4X[28X<autotopism of quasigroups[128X[104X
+    [4X[28X   source = range = <quasigroup of size 5>[128X[104X
+    [4X[28X   f = (1,2,3,4,5)[128X[104X
+    [4X[28X   g = (1,3,5,2,4)[128X[104X
+    [4X[28X   h = (1,4,2,5,3)[128X[104X
+    [4X[28X>[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X9.1-5 [33X[0;0YCreating autotopisms[133X[101X
+  
+  [33X[1;0Y[29X[2XAutotopismRightQuasigroup[102X( [3XQ[103X, [3Xf[103X, [3Xg[103X, [3Xh[103X[, [3XisCanonical[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Yan  autotopism  of  a  right  quasigroup  [3XQ[103X according to the three
+            bijections    [3Xf[103X,    [3Xg[103X,    [3Xh[103X.    The    function    differs    from
+            [10XHomotopismRightQuasigroups(  Q,  f,  g,  h )[110X in that it explicitly
+            checks that the provided mappings are bijective. The format of the
+            mappings  and  the  optional  argument  [10XisCanonical[110X  behave as for
+            [10XHomotopismRightQuasigroups[110X.[133X
+  
+  
+  [1X9.1-6 [33X[0;0YOperations with homotopisms[133X[101X
+  
+  [33X[1;0Y[29X[2XIdentityAutotopism[102X( [3XQ[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  identity  autotopism  on the right quasigroup [3XQ[103X. The identity
+            autotopism     can     also     be     obtained     by     calling
+            [10XHomotopismRightQuasigroups(  Q,  (),  (), () )[110X. Finally, given any
+            homotopism  [10Xt[110X  with  source  [10XQ[110X,  the  method  [10XOne( t )[110X returns the
+            identity autotopism on [10XQ[110X.[133X
+  
+  [33X[0;0YHomotopism  can  be  compared,  multiplied (composed from left to right) and
+  inverted (if they are bijective).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := QuasigroupByFunction( [0..4], function( x, y ) return (x+y) mod 5; end );;[127X[104X
+    [4X[25Xgap>[125X [27Xf := RightTranslation( Q, 1 );; g := LeftTranslation( Q, 2 );; h := RightTranslation( Q, 3 );;[127X[104X
+    [4X[25Xgap>[125X [27Xt := HomotopismRightQuasigroups( Q, f, g, h );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( t*t );[127X[104X
+    [4X[28X<autotopism of quasigroups[128X[104X
+    [4X[28X   source = range = <quasigroup of size 5>[128X[104X
+    [4X[28X   f = (1,3,5,2,4)[128X[104X
+    [4X[28X   g = (1,5,4,3,2)[128X[104X
+    [4X[28X   h = (1,2,3,4,5)[128X[104X
+    [4X[28X>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( t^-1 );[127X[104X
+    [4X[28X<autotopism of quasigroups[128X[104X
+    [4X[28X   source = range = <quasigroup of size 5>[128X[104X
+    [4X[28X   f = (1,5,4,3,2)[128X[104X
+    [4X[28X   g = (1,4,2,5,3)[128X[104X
+    [4X[28X   h = (1,3,5,2,4)[128X[104X
+    [4X[28X>[128X[104X
+    [4X[25Xgap>[125X [27XOne( t );[127X[104X
+    [4X[28X<identity autotopism>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( last );[127X[104X
+    [4X[28X<identity autotopism on <quasigroup of size 5>>[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X9.1-7 [33X[0;0YTesting homotopism data[133X[101X
+  
+  [33X[1;0Y[29X[2XIsHomotopismRightQuasigroups[102X( [3XQ1[103X, [3XQ2[103X, [3Xf[103X, [3Xg[103X, [3Xh[103X[, [3XisCanonical[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XIsHomotopismQuasigroups[102X( [3XQ1[103X, [3XQ2[103X, [3Xf[103X, [3Xg[103X, [3Xh[103X[, [3XisCanonical[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XIsHomotopismLoops[102X( [3XQ1[103X, [3XQ2[103X, [3Xf[103X, [3Xg[103X, [3Xh[103X[, [3XisCanonical[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  the  data  provided  in  the  arguments  gives rise to a
+            homotopism  of right quasigroups (quasigroups, loops). Accepts the
+            same      type     of     arguments     as     the     constructor
+            [10XHomotopismRightQuasigroups[110X.[133X
+  
+  
+  [1X9.1-8 [33X[0;0YTesting isotopism data[133X[101X
+  
+  [33X[1;0Y[29X[2XIsIsotopismRightQuasigroups[102X( [3XQ1[103X, [3XQ2[103X, [3Xf[103X, [3Xg[103X, [3Xh[103X[, [3XisCanonical[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XIsIsotopismQuasigroups[102X( [3XQ1[103X, [3XQ2[103X, [3Xf[103X, [3Xg[103X, [3Xh[103X[, [3XisCanonical[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XIsIsotopismLoops[102X( [3XQ1[103X, [3XQ2[103X, [3Xf[103X, [3Xg[103X, [3Xh[103X[, [3XisCanonical[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  the  data  provided by in the arguments gives rise to an
+            isotopism  of  right quasigroups (quasigroups, loops). Accepts the
+            same      type     of     arguments     as     the     constructor
+            [10XHomotopismRightQuasigroups[110X.[133X
+  
+  
+  [1X9.1-9 [33X[0;0YTesting autotopism data[133X[101X
+  
+  [33X[1;0Y[29X[2XIsAutotopismRightQuasigroups[102X( [3XQ[103X, [3Xf[103X, [3Xg[103X, [3Xh[103X[, [3XisCanonical[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XIsAutotopismQuasigroups[102X( [3XQ[103X, [3Xf[103X, [3Xg[103X, [3Xh[103X[, [3XisCanonical[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XIsAutotopismLoops[102X( [3XQ[103X, [3Xf[103X, [3Xg[103X, [3Xh[103X[, [3XisCanonical[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  the  data  provided by in the arguments gives rise to an
+            isotopism  of  right quasigroups (quasigroups, loops). Accepts the
+            same      type     of     arguments     as     the     constructor
+            [10XHomotopismRightQuasigroups[110X with the same source and range.[133X
+  
+  
+  [1X9.2 [33X[0;0YTwists of right quasigroups[133X[101X
+  
+  [33X[0;0YIn  this  section  we  introduce  a  natural  construction  that encompasses
+  isomorphs, isotopes and affine constructions as special cases.[133X
+  
+  [33X[0;0YGiven   a   magma   [23XQ[123X   and   three   mappings   [23Xf,g,h:Q\to   Q[123X,  the  [13Xtwist[113X
+  [23X\mathrm{Tw}(Q,f,g,h)[123X  of [23XQ[123X via [23X(f,g,h)[123X is defined to be the magma [23X(Q,*)[123X with
+  multiplication [23Xx*y = h(f(x)g(y))[123X.[133X
+  
+  [33X[0;0YIf  [23XQ[123X  is  a  right  quasigroup,  the  twist [23X\mathrm{Tw}(Q,f,g,h)[123X is a right
+  quasigroup  iff  both  [23Xf[123X  and  [23Xh[123X  are  bijections  of [23XQ[123X. Moreover, the twist
+  [23X\mathrm{Tw}(Q,f,g,h)[123X is a quasigroup iff all three [23Xf[123X, [23Xg[123X and [23Xh[123X are bijections
+  of [23XQ[123X. Finally, if [23X\mathrm{Tw}(Q,f,g,h)[123X is a quasigroup then it is a loop iff
+  [23Xg^{-1}(f(x)\backslash  h^{-1}(x))[123X  is  equal  to  [23Xf^{-1}(h^{-1}(x)/g(x))[123X and
+  independent of [23Xx[123X.[133X
+  
+  [33X[0;0YFor  the convenience of the reader, functions that work with twists accept a
+  wide   variety  of  arguments  representing  mappings.  The  conventions  on
+  arguments  here  are  analogous  to those for isomorphs, cf. Section [14X8.2[114X. In
+  more detail:[133X
+  
+  [30X    [33X[0;6YThe  functions are named according to the type of algebra they return,
+        not  according  to  the  type  of  algebra  they require as input. For
+        instance,  [10XLoopTwist[110X  returns  a  loop but it accepts a quasigroup (or
+        loop).[133X
+  
+  [30X    [33X[0;6YThe  arguments  [3Xf[103X, [3Xg[103X, [3Xh[103X are mandatory and each can be given as a right
+        quasigroup mapping, a transformation or a permutation. The arguments [3Xf[103X
+        and [3Xh[103X must always give rise to bijections. If a quasigroup is supposed
+        to be returned, then also [3Xg[103X must give rise to a bijection. Finally, if
+        a   loop   is  supposed  to  be  returned  then  [23Xg^{-1}(f(x)\backslash
+        h^{-1}(x))[123X  must be equal to [23Xf^{-1}(h^{-1}(x)/g(x))[123X and independent of
+        [23Xx[123X.[133X
+  
+  [30X    [33X[0;6YIf  [3Xf[103X is given as a transformation/permutation, the argument [3XQ[103X is also
+        required,  and  it must be a right quasigroup, quasigroup or loop. The
+        returned algebra will have the same underlying set as [3XQ[103X. If [3Xf[103X is given
+        as a right quasigroup mapping, its source will be used as [3XQ[103X.[133X
+  
+  [30X    [33X[0;6YAny   subset   of   the   two   optional   arguments  [3XisCanonical[103X  and
+        [3XconstructorStyle[103X can be given.[133X
+  
+  [30X    [33X[0;6YIf  the  optional  argument  [3XisCanonical[103X is given and set to [10Xtrue[110X, the
+        permutation/transformation   [3Xf[103X   is   interpreted   as   a   canonical
+        permutation/transformation,  else  it  is  by  default  interpreted as
+        parent permutation/transformation. (See Chapter [14X4[114X.)[133X
+  
+  [30X    [33X[0;6YSee Section [14X2.1[114X for the optional argument [3XconstructorStyle[103X.[133X
+  
+  
+  [1X9.2-1 [33X[0;0YRightQuasigroupTwist, QuasigroupTwist and LoopTwist[133X[101X
+  
+  [33X[1;0Y[29X[2XRightQuasigroupTwist[102X( [[3XQ[103X, ][3Xf[103X, [3Xg[103X, [3Xh[103X[, [3XisCanonical[103X, [3XconstructorStyle[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XQuasigroupTwist[102X( [[3XQ[103X, ][3Xf[103X, [3Xg[103X, [3Xh[103X[, [3XisCanonical[103X, [3XconstructorStyle[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XLoopTwist[102X( [[3XQ[103X, ][3Xf[103X, [3Xg[103X, [3Xh[103X[, [3XisCanonical[103X, [3XconstructorStyle[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe  twist  of  the  right  quasigroup [3XQ[103X via [3Xf[103X, [3Xg[103X, [3Xh[103X, that is, the
+            right  quasigroup  (quasigroup,  loop)  on the underlying set of [3XQ[103X
+            with  multiplication  [23Xx*y = h(f(x)g(y))[123X. See above for conventions
+            on the arguments.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := MoufangLoop( 12, 1 );;[127X[104X
+    [4X[25Xgap>[125X [27Xf := (1,2,3);; g := Transformation( [3,3,3] );; h := MappingByFunction( Q, Q, x->x^-1 );; # note various formats[127X[104X
+    [4X[25Xgap>[125X [27XT := RightQuasigroupTwist( Q, f, g, h ); # f and h must be bijective [127X[104X
+    [4X[28X<right quasigroup of size 12>[128X[104X
+    [4X[25Xgap>[125X [27XQuasigroupTwist( Q,  f, (1,12), h ); # g must be bijective for quasigroups[127X[104X
+    [4X[28X<quasigroup of size 12>[128X[104X
+    [4X[25Xgap>[125X [27Xf := RightTranslation( Q, Q.2 )^-1;; g := LeftTranslation( Q, Q.3 )^-1;;[127X[104X
+    [4X[25Xgap>[125X [27XLoopTwist( Q, f, g, (), ConstructorStyle( true, true ) ); # principal loop isotope[127X[104X
+    [4X[28X<loop of size 12>[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X9.3 [33X[0;0YIsotopes of right quasigroups[133X[101X
+  
+  [33X[0;0YIf [23Xt=(f,g,h):(Q,\cdot)\to (Q,*)[123X is an isotopism, then [23Xx*y = h(f^{-1}(x)\cdot
+  g^{-1}(y))[123X for all [23Xx,y\in Q[123X, and [23X(Q,*)[123X is called an [13Xisotope[113X of [23X(Q,\cdot)[123X via
+  [23Xf[123X,  [23Xg[123X,  [23Xh[123X. (Note that isotopes are special cases of twists, as introduced in
+  Section  [14X9.2[114X.)  The isotope [23X(Q,*)[123X is a (right) quasigroup iff [23X(Q,\cdot)[123X is a
+  (right) quasigroup, but an isotope of a loop might not be a loop.[133X
+  
+  [33X[0;0YGiven  a  quasigroup [23X(Q,\cdot,/,\backslash)[123X and [23Xa,b\in Q[123X, the [13Xprincipal loop
+  isotope[113X   via   [23Xa,b[123X   is   defined   as   [23X(Q,\circ)[123X,   where   [23Xx\circ   y  =
+  (x/a)\cdot(b\backslash  y)[123X.  The  principal  loop isotope is automatically a
+  loop with neutral element [23Xb\cdot a[123X.[133X
+  
+  [1X9.3-1 RightQuasigroupIsotope[101X
+  
+  [33X[1;0Y[29X[2XRightQuasigroupIsotope[102X( [[3XQ[103X, ][3Xf[103X, [3Xg[103X, [3Xh[103X[, [3XisCanonical[103X, [3XconstructorStyle[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe  isotope of the right quasigroup [3XQ[103X via isotopism [3Xf[103X, [3Xg[103X, [3Xh[103X, that
+            is,  the  right  quasigroup  on  the  underlying  set  of  [3XQ[103X  with
+            multiplication  [23Xx*y  =  h(f^{-1}(x)g^{-1}(y))[123X. See Section [14X9.2[114X for
+            conventions on the arguments.[133X
+  
+  [1X9.3-2 QuasigroupIsotope[101X
+  
+  [33X[1;0Y[29X[2XQuasigroupIsotope[102X( [[3XQ[103X, ][3Xf[103X, [3Xg[103X, [3Xh[103X[, [3XisCanonical[103X, [3XconstructorStyle[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe  isotope  of  the quasigroup [3XQ[103X via isotopism [3Xf[103X, [3Xg[103X, [3Xh[103X, that is,
+            the  quasigroup on the underlying set of [3XQ[103X with multiplication [23Xx*y
+            =  h(f^{-1}(x)g^{-1}(y))[123X.  See  Section [14X9.2[114X for conventions on the
+            arguments.[133X
+  
+  [1X9.3-3 LoopIsotope[101X
+  
+  [33X[1;0Y[29X[2XLoopIsotope[102X( [[3XQ[103X, ][3Xf[103X, [3Xg[103X, [3Xh[103X[, [3XisCanonical[103X, [3XconstructorStyle[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe  loop  isotope of the quasigroup [3XQ[103X via isotopism [3Xf[103X, [3Xg[103X, [3Xh[103X, that
+            is,  the loop on the underlying set of [3XQ[103X with multiplication [23Xx*y =
+            h(f^{-1}(x)g^{-1}(y))[123X.  See  Section  [14X9.2[114X  for  conventions on the
+            arguments.[133X
+  
+  [33X[0;0YWarning:  Unless  the  constructor  style specifies that arguments should be
+  checked, they will not be checked and the returned algebra might not have an
+  identity element despite being declared a loop.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xstyle := ConstructorStyle( false, false );;[127X[104X
+    [4X[25Xgap>[125X [27XP := QuasigroupByFunction( [0..99999], function(x,y) return (x-y) mod 10^5; end, style );[127X[104X
+    [4X[28X<quasigroup of size 100000>[128X[104X
+    [4X[25Xgap>[125X [27Xf := (1,10,100,1000,10000,100000);; g := (3,4);; h := ();;[127X[104X
+    [4X[25Xgap>[125X [27XR := QuasigroupIsotope( P, f, g, h, style );[127X[104X
+    [4X[28X<quasigroup of size 100000>[128X[104X
+    [4X[25Xgap>[125X [27XR.1000*R.4;[127X[104X
+    [4X[28Xq97[128X[104X
+  [4X[32X[104X
+  
+  [1X9.3-4 PrincipalLoopIsotope[101X
+  
+  [33X[1;0Y[29X[2XPrincipalLoopIsotope[102X( [3XQ[103X, [3Xa[103X, [3Xb[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  loop  isotope  of the quasigroup [3XQ[103X via its elements [3Xa[103X, [3Xb[103X. The
+            resulting  loop  has  the same underlying set as [3XQ[103X and its neutral
+            element corresponds to [3Xb[103X[10X*[110X[3Xa[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := QuasigroupByFunction( GF(11), \- );;[127X[104X
+    [4X[25Xgap>[125X [27XP := PrincipalLoopIsotope( Q, Q.3, Q.4 );[127X[104X
+    [4X[28X<loop of size 11>[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingSetElm( Q.4*Q.3 ) = UnderlyingSetElm( One( P ) );[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X9.4 [33X[0;0YAffine right quasigroups[133X[101X
+  
+  [33X[0;0YLet  [23XQ[123X  be  a loop, let [23Xf,g[123X be endomorphisms of [23XQ[123X and [23Xu,v\in Q[123X. Define a new
+  multiplication [23X*[123X on [23XQ[123X by [23Xx*y = (f(x)u)(g(y)v)[123X and denote the resulting magma
+  by   [23X\mathrm{Aff}(Q,f,u,g,v)[123X.   Then   [23X\mathrm{Aff}(Q,f,u,g,v)[123X  is  a  right
+  quasigroup  iff  [23Xf[123X is an automorphism of [23XQ[123X and it is a quasigroup iff both [23Xf[123X
+  and    [23Xg[123X   are   automorphisms   of   [23XQ[123X.   Analogous   comments   hold   for
+  [23X\mathrm{Aff}(Q,f,u,v,g)[123X,             [23X\mathrm{Aff}(Q,u,f,g,v)[123X             and
+  [23X\mathrm{Aff}(Q,u,f,v,g)[123X,   where  the  multiplication  formula  is  obtained
+  according    to   the   order   of   the   arguments.   For   instance,   in
+  [23X\mathrm{Aff}(Q,u,f,g,v)[123X the multiplication is given by [23Xx*y = (uf(x))(g(y)v)[123X.[133X
+  
+  [33X[0;0YAny  such  (right)  quasigroup  is said to be [13Xaffine over the loop[113X [23XQ[123X and the
+  parameters constitute its [13Xarithmetic form[113X .[133X
+  
+  [33X[0;0YNote  that  affine  right  quasigroups  are  instances  of  twists  of right
+  quasigroups,  cf.  Section [14X9.2[114X. Also note that if [23XQ[123X is an abelian group then
+  all four formulas reduce to [23Xx*y = f(x)g(y)uv[123X, and we can replace [23Xu[123X, [23Xv[123X with a
+  single element [23Xc[123X.[133X
+  
+  [33X[0;0YSeveral   different   formats   of   arithmetic   forms   are  supported  in
+  [5XRightQuasigroups[105X:[133X
+  
+  [30X    [33X[0;6Y[10X(n,f,g,c)[110X  for  four integers such that [10Xn[110X is positive, [10XGcd(n,f)=1[110X (and
+        [10XGcd(n,g)=1[110X  for  quasigroups).  The  multiplication is then defined on
+        [10X[0..n-1][110X by [10X(f*x + g*y +c) mod n[110X.[133X
+  
+  [30X    [33X[0;6Y[10X(F,f,g,c)[110X,  where  [10XF[110X  is a field, [10Xf[110X is a nonzero element of [10XF[110X and [10Xg[110X, [10Xc[110X
+        are   elements   of   [10XF[110X  (and  [10Xg[110X  is  nonzero  for  quasigroups).  The
+        multiplication is then defined on [10XF[110X by [10Xf*x + g*y +c[110X.[133X
+  
+  [30X    [33X[0;6Y[10X(G,f,g,c)[110X, where [10XG[110X is an abelian group or an abelian additive group, [10Xf[110X
+        is  an  automorphism  of  [10XG[110X,  [10Xg[110X  is  an endomorphism of [10XG[110X, and [10Xc[110X is an
+        element  of [10XG[110X (and [10Xg[110X is bijective for quasigroups). The multiplication
+        is  then  defined  on  [10XG[110X by [10Xx^f+y^g+c[110X if [10XG[110X is an additive group and by
+        [10Xx^f*y^g*c[110X otherwise.[133X
+  
+  [30X    [33X[0;6Y[10X(G,f,u,g,v)[110X, where [10XG[110X is a loop, a group, or an additive group, [10Xf[110X is an
+        automorphisms  of  [10XG[110X, [10Xg[110X is an endomorphisms of [10XG[110X and [10Xu[110X, [10Xv[110X are elements
+        of  [10XG[110X (and [10Xg[110X is bijective for quasigroups). The multiplication is then
+        defined   on  [10XG[110X  by  [10X(x^f+u)+(y^g+v)[110X  in  the  additive  case  and  by
+        [10X(x^f*u)*(y^g*v)[110X otherwise.[133X
+  
+  [30X    [33X[0;6YThe three variations [10X(G,f,u,v,g)[110X, [10X(G,u,f,g,v)[110X and [10X(G,u,f,v,g)[110X are also
+        supported.[133X
+  
+  [1X9.4-1 IsAffineRightQuasigroupArithmeticForm[101X
+  
+  [33X[1;0Y[29X[2XIsAffineRightQuasigroupArithmeticForm[102X( [3Xarg[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if the arguments constitute an arithmetic form for an affine
+            right  quasigroup,  else returns [10Xfalse[110X. See above for the possible
+            formats of arithmetic forms.[133X
+  
+  [1X9.4-2 IsAffineQuasigroupArithmeticForm[101X
+  
+  [33X[1;0Y[29X[2XIsAffineQuasigroupArithmeticForm[102X( [3Xarg[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if the arguments constitute an arithmetic form for an affine
+            quasigroup, else returns [10Xfalse[110X. See above for the possible formats
+            of arithmetic forms.[133X
+  
+  [1X9.4-3 AffineRightQuasigroup[101X
+  
+  [33X[1;0Y[29X[2XAffineRightQuasigroup[102X( [3Xarg[103X[, [3XconstructorStyle[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe  affine right quasigroup by the arithmetic form [3Xarg[103X. See above
+            for  the possible formats of arithmetic forms. If a loop [10XG[110X is part
+            of  the  arithmetic  form,  the right quasigroup is returned as an
+            isotope of [3XG[103X. In all other cases the code first internally creates
+            a suitble right quasigroup [10XG[110Xand then returns an isotope of [10XQ[110X.[133X
+  
+  [1X9.4-4 AffineQuasigroup[101X
+  
+  [33X[1;0Y[29X[2XAffineQuasigroup[102X( [3Xarg[103X[, [3XconstructorStyle[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe  affine  quasigroup  by the arithmetic form [3Xarg[103X. See above for
+            the  possible  formats of arithmetic forms. Also see the remark on
+            isotopy under [10XAffineRightQuasigroup[110X.[133X
+  
+  [33X[0;0YHere  are  four  examples  of  affine  (right) quasigroups, constructed from
+  various arithmetic forms. First over [10X([0..n-1],+)[110X:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XIsAffineRightQuasigroupArithmeticForm( 10, 3, 5, 1 ); # suitable for (3*x+5*y+1) mod 10[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsAffineQuasigroupArithmeticForm( 10, 3, 5, 1 ); # gcd(10,5) <> 1[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XQ := AffineRightQuasigroup( 10, 3, 5, 1 );[127X[104X
+    [4X[28X<right quasigroup of size 10>[128X[104X
+    [4X[25Xgap>[125X [27XQ := AffineRightQuasigroup( 100000, 333, 777, 5, ConstructorStyle(false,false) ); # non-index based example[127X[104X
+    [4X[28X<right quasigroup of size 100000>[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNext over a finite field:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF := GF(9);; f := Z(9);; g := Z(9)^3;; c := Z(9)^5;;[127X[104X
+    [4X[25Xgap>[125X [27XIsAffineQuasigroupArithmeticForm( F, f, g, c ); # suitable for f*x+g*y+c[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XAffineQuasigroup( F, f, g, c );[127X[104X
+    [4X[28X<quasigroup of size 9>[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNext over an abelian group:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG := CyclicGroup(10);; A := AutomorphismGroup( G );; f := A.1;; g := A.2;; c := G.1;;[127X[104X
+    [4X[25Xgap>[125X [27XIsAffineQuasigroupArithmeticForm( G, f, g, c ); # suitable for x^f*y^g*c[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XAffineQuasigroup( G, f, g, c );[127X[104X
+    [4X[28X<quasigroup of size 10>[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNext over a group:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG := DihedralGroup(12);;[127X[104X
+    [4X[25Xgap>[125X [27Xf := MappingByFunction( G, G, x->x^(G.1) );; g := MappingByFunction( G, G, x->x^(G.2) );; u := G.1;; v := G.2;;[127X[104X
+    [4X[25Xgap>[125X [27XIsAffineQuasigroupArithmeticForm( G, f, u, g, v ); # suitable for (x^f*u)*(y^g*v)[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XAffineQuasigroup( G, f, u, g, v ); [127X[104X
+    [4X[28X<quasigroup of size 12>[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YAnd  finally  over a loop. Note that the left translations (which are parent
+  permutations) must be converted into loop mappings in the example.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG := AutomorphicLoop( 10, 1 );; # inner mappings are automorphisms here[127X[104X
+    [4X[25Xgap>[125X [27Xf := AsRightQuasigroupMapping( G, LeftInnerMapping( G, G.2, G.3 ) );;[127X[104X
+    [4X[25Xgap>[125X [27Xg := f*f;; u := G.1;; v := G.2;;[127X[104X
+    [4X[25Xgap>[125X [27XIsAffineQuasigroupArithmeticForm( G, u, f, v, g ); # suitable for (u*x^f)*(v*y^g)[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XQ := AffineQuasigroup( G, u, f, v, g ); [127X[104X
+    [4X[28X<quasigroup of size 10>[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X9.5 [33X[0;0YRight quasigroups up to isotopism[133X[101X
+  
+  [33X[0;0YWe   support   four   methods  for  calculating  isotopisms  between  loops,
+  quasigroups and right quasigroups [23XQ_1[123X, [23XQ_2[123X:[133X
+  
+  [30X    [33X[0;6Y"via  perfect  matchings  with  invariants"  (default method for right
+        quasigroups):   considers   all   possible  [23Xf[123X  that  preserve  certain
+        invariants  of  right  quasigroups,  then  completes  the isotopism by
+        finding a perfect matching in a bipartite graph,[133X
+  
+  [30X    [33X[0;6Y"via   perfect  matchings  with  automorphism  group":  considers  all
+        possible  [23Xf[123X  modulo the automorphism group of [23XQ1[123X, then employs perfect
+        matchings as above,[133X
+  
+  [30X    [33X[0;6Y"via domain extension" (for quasigroups and loops only, default method
+        for  quasigroups  and loops): attempts to find an isotopism [23X(f,g,h)[123X by
+        iteratively enlarging the domains of [23Xf[123X, [23Xg[123X and [23Xh[123X,[133X
+  
+  [30X    [33X[0;6Y"via  principal  loop isotopes" (for loops only): constructs principal
+        loop  isotopes  of  [23XQ1[123X  one  by  one  and checks if any one of them is
+        isomrphic to [23XQ2[123X.[133X
+  
+  [1X9.5-1 IsotopismDiscriminator[101X
+  
+  [33X[1;0Y[29X[2XIsotopismDiscriminator[102X( [3XQ[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya  certain invariant [23Xm[123X of the right quasigroup [3XQ[103X that is preserved
+            by isotopisms. (Strictly speaking, only the sorted version of [23Xm[123X is
+            preserved  under  isotopisms, see [10XAreEqualIsotopismDscriminators[110X.)
+            In more detail, [23Xm[123X is the list [23X(m_x:x\in Q)[123X, [23Xm_x[123X is the sorted list
+            [23X(m_{x,y}:y\in Q)[123X, and [23Xm_{x,y}[123X is the number of occurrences of [23Xy[123X in
+            the row indexed by [23Xx[123X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := RightQuasigroupByCayleyTable([[1,1,1],[2,3,2],[3,2,3]]);;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(IsotopismDiscriminator( Q ) );[127X[104X
+    [4X[28X[ [  0,  0,  3 ],[128X[104X
+    [4X[28X  [  0,  1,  2 ],[128X[104X
+    [4X[28X  [  0,  1,  2 ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X9.5-2 AreEqualIsotopismDiscriminators[101X
+  
+  [33X[1;0Y[29X[2XAreEqualIsotopismDiscriminators[102X( [3XD1[103X, [3XD2[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  when  the two isotopism discriminators [3XD1[103X, [3XD2[103X calculated via
+            [10XIsotopismDiscriminator[110X are the same. When [10Xfalse[110X is returned, it is
+            guaranteed  that  the  corresponding  right  quasigroups  are  not
+            isotopic.[133X
+  
+  [1X9.5-3 ArePossiblyIsotopicRightQuasigroups[101X
+  
+  [33X[1;0Y[29X[2XArePossiblyIsotopicRightQuasigroups[102X( [3XQ1[103X, [3XQ2[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xfalse[110X  if the method determined that [3XQ1[103X, [3XQ2[103X are not isotopic right
+            quasigroups,  based  on  their  isotopism discrininators (and some
+            additional  invariants  in  the  case  of  loops).  When  [10Xtrue[110X  is
+            returned, the two right quasigroups might be isotopic.[133X
+  
+  [1X9.5-4 IsotopismRightQuasigroups[101X
+  
+  [33X[1;0Y[29X[2XIsotopismRightQuasigroups[102X( [3XQ1[103X, [3XQ2[103X[, [3Xmethod[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan   isotopism  from  the  right  quasigroup  [3XQ1[103X  onto  the  right
+            quasigroup  [3XQ2[103X,  if  it  exists,  else  returns [10Xfail[110X. The optional
+            argument  [3Xmethod[103X  must  be  set  to one of the values "via perfect
+            matchings   with   invariants",   "via   perfect   matchings  with
+            automorphism group", "via domain extension" or "via principal loop
+            isotopes".  If no method is provided by the user, "via "via domain
+            extension" for loops and quasigroups, while "via perfect matchings
+            with invariants" for right quasigroups.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ1 := RandomRightQuasigroup( 30 );;[127X[104X
+    [4X[25Xgap>[125X [27XQ2 := RightQuasigroupIsotope( Q1, (1,2,3), (10,20,30), (4,30) );;[127X[104X
+    [4X[25Xgap>[125X [27Xt := IsotopismRightQuasigroups( Q1, Q2 );[127X[104X
+    [4X[28X<isotopism of right quasigroups>[128X[104X
+    [4X[25Xgap>[125X [27XQ3 := RightQuasigroupIsotope( Q1, t!.f, t!.g, t!.h );;[127X[104X
+    [4X[25Xgap>[125X [27XMultiplicationTable( Q2 ) = MultiplicationTable( Q3 );[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X9.5-5 IsotopismQuasigroups[101X
+  
+  [33X[1;0Y[29X[2XIsotopismQuasigroups[102X( [3XQ1[103X, [3XQ2[103X[, [3Xmethod[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan  isotopism from the quasigroup [3XQ1[103X onto the quasigroup [3XQ2[103X, if it
+            exists,    else   returns   [10Xfail[110X.   The   only   difference   from
+            [10XIsotopismRightQuasigroups[110X  is  that  the  arguments [3XQ1[103X, [3XQ2[103X must be
+            quasigroups.[133X
+  
+  [1X9.5-6 IsotopismLoops[101X
+  
+  [33X[1;0Y[29X[2XIsotopismLoops[102X( [3XQ1[103X, [3XQ2[103X[, [3Xmethod[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan  isotopism  from  the  loop [3XQ1[103X onto the loopp [3XQ2[103X, if it exists,
+            else     returns     [10Xfail[110X.     The     only     difference    from
+            [10XIsotopismRightQuasigroups[110X  is  that  the  arguments [3XQ1[103X, [3XQ2[103X must be
+            loops.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ1 := MoufangLoop( 32, 10 );[127X[104X
+    [4X[28XMoufangLoop( 32, 10 )[128X[104X
+    [4X[25Xgap>[125X [27XQ2 := LoopIsomorph( Q1, (3,4) );;[127X[104X
+    [4X[25Xgap>[125X [27XQ3 := PrincipalLoopIsotope( Q2, Q2.10, Q2.20 );; # a loop isotopic to Q1[127X[104X
+    [4X[25Xgap>[125X [27XIsotopismLoops( Q1, Q3 ); [127X[104X
+    [4X[28X<isotopism of loops>[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X9.5-7 [33X[0;0YRight quasigroups up to isotopism[133X[101X
+  
+  [33X[1;0Y[29X[2XRightQuasigroupsUpToIsotopism[102X( [3Xls[103X[, [3Xmethod[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XQuasigroupsUpToIsotopism[102X( [3Xls[103X[, [3Xmethod[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XLoopsUpToIsotopism[102X( [3Xls[103X[, [3Xmethod[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya  sublist of [10Xls[110X consisting of all right quasigroups (quasigroups,
+            loops)  in  [10Xls[110X  up to isotopism. In case of loops, if the optional
+            argument  [3XviaPrincipalLoopIsotopes[103X  is  set to [10Xtrue[110X, uses a method
+            based on principal loop isotopes.[133X
+  
+  
+  [1X9.6 [33X[0;0YAutotopism groups of right quasigroups[133X[101X
+  
+  [33X[0;0YThe  autotopism  group  of a right quasigroup consist of abstract homotopism
+  [5XGAP[105X   objects.  While  the  group  operations  are  defined  for  them,  the
+  computation  of  size, center and other important group theoretical concepts
+  is  very slow. In this case, [5XGAP[105X recommends to use a [10XNiceMonomorphism[110X into a
+  group  [23XG[123X,  whose representation allows fast generic methods. For autotopisms
+  of  a  right quasigroup [23XQ[123X, [23XG[123X is the symmetric group on [23X3n[123X points, where [23Xn[123X is
+  the  size of the parent of [23XQ[123X. If the triple [23X(f,g,h)[123X defines an autotopism of
+  [23XQ[123X,  then  its  nice  monomorphic  image acts on [23X\{1,\ldots,n\}[123X as the parent
+  permutation  of  [23Xf[123X,  on  [23X\{n+1,\ldots,2n\}[123X  as  the  conjugate of the parent
+  permutation  of  [23Xg[123X, and on [23X\{2n+1,\ldots,3n\}[123X as the conjugate of the parent
+  permutation of [23Xh[123X.[133X
+  
+  [1X9.6-1 RQ_NiceMonomorphism[101X
+  
+  [33X[1;0Y[29X[2XRQ_NiceMonomorphism[102X( [3Xt[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya  permutation  of  degree  [23X3n[123X,  where [23Xn[123X is the size of the parent
+            right quasigroup of the source of [3Xt[103X.[133X
+  
+  [33X[0;0YThe  input  is  a  [10XHomotopismRightQuasigroups[110X  object.  This  map  is a nice
+  monomorphism for this category.[133X
+  
+  [1X9.6-2 RQ_NiceMonomorphismInverse[101X
+  
+  [33X[1;0Y[29X[2XRQ_NiceMonomorphismInverse[102X( [3XQ[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe    inverse    function    [23Xf[123X    of    the   nice   monomorphism
+            [10XHomotopismRightQuasigroups[110X  objects  whose  source  is  the  right
+            quasigroup  [3XQ[103X.  The  function  [23Xf[123X maps permutations of degree [23X3n[123X to
+            isotopisms of [3XQ[103X, where [23Xn[123X is the size of the parent of [3XQ[103X.[133X
+  
+  [1X9.6-3 RQ_AutotopismGroupByGeneratorsNC[101X
+  
+  [33X[1;0Y[29X[2XRQ_AutotopismGroupByGeneratorsNC[102X( [3XQ[103X, [3Xgens[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya  group  consisting  of  [10XHomotopismRightQuasigroups[110X objects. This
+            group  has  a a nice monomorphism to a permutation group of degree
+            [23X3n[123X where [23Xn[123X is the order of the parent group of [3XQ[103X.[133X
+  
+  [1X9.6-4 AutotopismGroup[101X
+  
+  [33X[1;0Y[29X[2XAutotopismGroup[102X( [3XQ[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ythe autotopism group of a loop [3XQ[103X. Note: There is no generic method
+            implemented yet for right quasigroups and quasigroups.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xq := RightBolLoop( 16, 3 );[127X[104X
+    [4X[28XRightBolLoop( 16, 3 )[128X[104X
+    [4X[25Xgap>[125X [27Xag := AutotopismGroup( q );[127X[104X
+    [4X[28X<group with 5 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSize( ag );[127X[104X
+    [4X[28X768[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X9.7 [33X[0;0YTopisms using the associated colored digraph[133X[101X
+  
+  [33X[0;0YLet  [23X(M,*)[123X  be  a  magma of order [23Xn[123X, [23XM=\{m_1,\ldots,m_n\}[123X. Define the set [23XT[123X,
+  which consists of triples [23X\{i,j,k\}[123X, [23X1\leq i \leq n < j \leq 2n < k \leq 3n[123X,
+  such  that  [23X\{i,j,k\}  \in T[123X if and only if [23Xm_i*m_{j-n} = m_{k-2n}[123X. Clearly,
+  [23X|T|=n^2[123X.  Define [23XV=\{1,\ldots,3n\} \cup T[123X and [23XE=\{(i,t) : 1\leq i \leq 3n, i
+  \in  t\in  T\}[123X. Then [23X\Gamma=(V,E)[123X is a directed graph on [23X3n+n^2[123X vertices. We
+  call  [23X\Gamma[123X  the  [13Xdigraph  associated  to [23XM[123X[113X. If we define the color classes
+  [23X\{1,\ldots,n\}[123X,  [23X\{n+1,\ldots,2n\}[123X, [23X\{2n+1,\ldots,3n\}[123X and [23XT[123X on the vertices
+  of [23X\Gamma[123X, then we speak of the [13Xcolored digraph associated to[113X [23XM[123X.[133X
+  
+  [33X[0;0YTwo  colored  digraphs are isomorphic, if there is a bijection between their
+  vertices,  which  preserves adjacency and colors. Two magmas are isotopic if
+  and  only  if  their  associated colored digraphs are isomorphic. There is a
+  one-to-one  correspondance  between  autotopisms  of  a magma and the (color
+  preserving) automorphisms of the associated colored digraph.[133X
+  
+  [33X[0;0YWe  use  the BLISS interface of the [5XDigraphs[105X package to compute isomorphisms
+  and  automorphisms  of  colored digraphs. As a by-product of Brendon McKay's
+  graph  automorphism  algorithm,  we  obtain  a [13Xcanonical labeling[113X of [23X\Gamma[123X.
+  Canonical labelings may speed up the search for isomorphisms between colored
+  digraphs.  However,  canonical  labeling of graphs are not uniquely defined,
+  they may depend on the software version and the hardware specifications.[133X
+  
+  [1X9.7-1 RQ_Digraph[101X
+  
+  [33X[1;0Y[29X[2XRQ_Digraph[102X( [3XQ[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ythe colored directed graph on [23X3n+n^2[123X vertices, where [23Xn=|Q|[123X.[133X
+  
+  [1X9.7-2 RQ_BlissCanonicalLabeling4Morphism[101X
+  
+  [33X[1;0Y[29X[2XRQ_BlissCanonicalLabeling4Morphism[102X( [3XQ[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRQ_BlissCanonicalLabeling4Topism[102X( [3XQ[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya permutation of degree [23Xn[123X or [23X3n[123X, where [23Xn=|Q|[123X.[133X
+  
+  [33X[0;0YLet  [23XQ,S[123X  be  two  right  quasigroups  and  [23Xu,v[123X the permutations returned by
+  [10XRQ_BlissCanonicalLabeling4Morphism[110X. Let [23XQ'[123X be the isomorph of [23XQ[123X via [23Xuv^{-1}[123X.
+  Then  [23XQ[123X  and  [23XS[123X  are  isomorphic  if  and  only  if  [23XQ'[123X  and [23XS[123X have the same
+  multiplication  table.  Similarly,  let  [23Xw,z[123X be the permutations returned by
+  [10XRQ_BlissCanonicalLabeling4Topism[110X.  The  map  [23Xwz^{-1}[123X  induces three mappings
+  [23Xg,f,h:Q\to  S[123X.  Let  [23XQ'[123X  be  the  right  quasigroup  isotope of [23XQ[123X w.r.t. the
+  mappings  [23Xf,g,h[123X.  Then [23XQ[123X and [23XS[123X are isotopic if and only if [23XQ'[123X and [23XS[123X have the
+  same multiplication table.[133X
+  

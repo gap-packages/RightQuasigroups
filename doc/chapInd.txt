@@ -1,0 +1,635 @@
+  
+  
+  [1XIndex[101X
+  
+  3-power associative magma 7.2 
+  abelian subloop 6.3 
+  [2XAdjointGroup[102X, for IsRack 11.7-1 
+  affine quandle 11.3 
+  affine quasigroup 9.4 
+  affine rack 11.2-2 
+  affine right quasigroup 9.4 
+  [2XAffineQuandle[102X 11.3-2 
+  [2XAffineQuasigroup[102X 9.4-4 
+  [2XAffineRack[102X 11.2-4 
+  [2XAffineRightQuasigroup[102X 9.4-3 
+  [2XAllLoopCentralExtensionsInVariety[102X, for IsLoop, IsPosInt, IsList 6.5-5 
+  [2XAllLoopCocyclesInVariety[102X, for IsLoop, IsPosInt, IsList 6.5-4 
+  [2XAllLoopCongruences[102X, for IsLoop 3.7-4 
+  [2XAllLoopsWithMltGroup[102X, for IsGroup 5.5-5 
+  [2XAllLoopsWithMltInGroup[102X, for IsGroup 5.5-1 
+  [2XAllMaximalSubloops[102X, for IsLoop 3.3-7 
+  [2XAllMaximalSubquasigroups[102X, for IsQuasigroup 3.3-7 
+  [2XAllMaximalSubrightquasigroups[102X, for IsRightQuasigroup 3.3-7 
+  [2XAllMinimalSubloops[102X, for IsLoop 3.3-5 
+  [2XAllMinimalSubquasigroups[102X, for IsQuasigroup 3.3-5 
+  [2XAllMinimalSubrightquasigroups[102X, for IsRightQuasigroup 3.3-5 
+  [2XAllNonassociativeLoopsWithMltInGroup[102X, for IsGroup 5.5-2 
+  [2XAllNormalSubloops[102X, for IsLoop 3.8-1 
+  [2XAllQuasigroupCongruences[102X, for IsQuasigroup 3.7-4 
+  [2XAllRightQuasigroupCongruences[102X, for IsRightQuasigroup 3.7-4 
+  [2XAllSubloops[102X, for IsLoop 3.3-3 
+  [2XAllSubquandles[102X, for IsQuandle 11.5-3 
+  [2XAllSubquasigroups[102X, for IsQuasigroup 3.3-3 
+  [2XAllSubracks[102X, for IsRack 11.5-3 
+  [2XAllSubrightquasigroups[102X, for IsRightQuasigroup 3.3-3 
+  alternative magma 7.2 
+  antiautomorphic inverse property 7.5-4 
+  [2XAreEqualIsomorphismDiscriminators[102X, for IsList, IsList 8.3-2 
+  [2XAreEqualIsotopismDiscriminators[102X, for IsList, IsList 9.5-2 
+  [2XArePossiblyIsotopicRightQuasigroups[102X, for IsRightQuasigroup, IsRightQuasigroup 9.5-3 
+  arithmetic form of affine (right) quasigroup 9.4 
+  [2XAsCanonicalPerm[102X, for IsMapping 4.3-3 
+  [2XAsCanonicalTransformation[102X, for IsMapping 4.4-3 
+  [2XAsLoop[102X, for IsDomain 2.2-2 
+  [2XAsParentPerm[102X, for IsMapping 4.3-4 
+  [2XAsParentTransformation[102X, for IsMapping 4.4-4 
+  [2XAsQuasigroup[102X, for IsDomain 2.2-2 
+  [2XAsRightQuasigroup[102X, for IsDomain 2.2-2 
+  [2XAsRightQuasigroupMapping[102X, for IsRightQuasigroup, IsRightQuasigroup, IsTransformation 4.2-2 
+  associated right Bruck loop 10.1 
+  [2XAssociatedLeftBruckLoop[102X, for IsLeftBolLoop 10.1-1 
+  [2XAssociatedRightBruckLoop[102X, for IsRightBolLoop 10.1-1 
+  associative magma 7.2 
+  [2XAssociator[102X, for IsRightQuasigroupElement, IsRightQuasigroupElement, IsRightQuasigroupElement 1.5-6 
+  associator subloop 6.3-1 
+  [2XAssociatorSubloop[102X, for IsLoop 6.3-1 
+  [2XAsSquareTable[102X, for IsList 6.4-4 
+  automorphic inverse property 7.5-4 
+  automorphic loop 7.9-4 
+  [2XAutomorphicLoop[102X, for IsPosInt, IsPosInt 12.12-1 
+  [2XAutomorphicLoops[102X 12.12-2 
+  automorphism, of right quasigroups 8.1 
+  [2XAutomorphismGroup[102X, for IsRightQuasigroup 8.4-1 
+  autotopism, right quasigroups 9.1 
+  [2XAutotopismGroup[102X, for IsRightQuasigroup 9.6-4 
+  [2XAutotopismRightQuasigroup[102X 9.1-5 
+  C loops 7.6 
+  canonical right quasigroup 1.8 
+  [2XCanonicalCopy[102X, for IsRightQuasigroup 1.8-5 
+  [2XCategoryOfRightQuasigroup[102X, for IsRightQuasigroup 1.2-4 
+  Cayley table 2.4-1 
+  [2XCayleyTable[102X, for IsRightQuasigroup 2.4-2 
+  [2XCCLoop[102X, for IsPosInt, IsPosInt 12.8-3 
+  [2XCCLoops[102X 12.8-4 
+  center 6.1 
+  [2XCenter[102X, for IsRightQuasigroup 6.1-3 
+  [2XCentralExtensionByNormalSubloop[102X, for IsLoop, IsLoop 6.4-6 
+  [2XChangeUnderlyingSet[102X, for IsRightQuasigroup, IsCollection 1.4-3 
+  [2XCheinLoop[102X, for IsGroup 10.3-1 
+  classically solvable loop 6.3 
+  cocycle 6.4 
+  code loop 7.9-1 
+  [2XCodeLoop[102X, for IsPosInt, IsPosInt 12.6-1 
+  [2XCodeLoops[102X 12.6-2 
+  commutant 6.1 
+  [2XCommutant[102X, for IsRightQuasigroup 6.1-2 
+  commutative magma 7.2 
+  [2XCommutator[102X, for IsRightQuasigroupElement, IsRightQuasigroupElement 1.5-5 
+  [2XCommutatorOfNormalSubloops[102X, for IsLoop, IsLoop, IsLoop 6.3-6 
+  [2XComponentOfHomotopism[102X, for IsRightQuasigroupHomotopism, IsInt 9.1-2 
+  congruence 3.7 
+  congruence solvable loop 6.3 
+  [2XCongruenceDerivedLength[102X, for IsLoop 6.3-10 
+  [2XCongruenceDerivedSeriesOfLoop[102X, for IsLoop 6.3-9 
+  conjugacy closed loop 7.8 
+  [2XConjugacyClosedLoop[102X, for IsPosInt, IsPosInt 12.8-3 
+  [2XConjugacyClosedLoops[102X 12.8-4 
+  [2XConjugationQuandle[102X 11.3-7 
+  [2XConnectedQuandle[102X, for IsPosInt, IsPosInt 12.16-1 
+  [2XConnectedQuandles[102X 12.16-2 
+  [2XConstructorStyle[102X, for IsBool, IsBool 2.1-2 
+  [2XCoreOfGroup[102X, for IsGroup 11.3-4 
+  [2XCoreOfRightBolLoop[102X, for IsRightBolLoop 11.3-5 
+  [2XCyclicRack[102X, for IsPosInt 11.2-2 
+  derived subloop 6.3-3 
+  [2XDerivedLength[102X, for IsLoop 6.3-5 
+  [2XDerivedSeriesOfLoop[102X, for IsLoop 6.3-4 
+  [2XDerivedSubloop[102X, for IsLoop 6.3-3 
+  diassociative magma 7.2 
+  [2XDihedralQuandle[102X, for IsPosInt 11.3-3 
+  [2XDisplayLibraryInfo[102X, for IsString 12.2-1 
+  division, left 1.2 
+      right 1.2 
+  endomorphism, of right quasigroups 8.1 
+  exact group factorization 10.1-2 
+  extension 6.4 
+      central 6.4 
+      nuclear 6.4 
+  extra loops 7.6 
+  [2XFactorLoop[102X, for IsEquivalenceRelation 3.9-1 
+  [2XFactorQuasigroup[102X, for IsEquivalenceRelation 3.9-1 
+  [2XFactorRightQuasigroup[102X, for IsEquivalenceRelation 3.9-1 
+  flexible magma 7.2 
+  Frattini subalgebra 6.6 
+  Frattini subloop 6.6 
+  [2XFrattiniSubloop[102X, for IsLoop 6.6-3 
+  [2XFrattiniSubquasigroup[102X, for IsQuasigroup 6.6-2 
+  [2XFrattiniSubrightquasigroup[102X, for IsRightQuasigroup 6.6-1 
+  Galkin quandle 11.3-5 
+  [2XGalkinQuandle[102X, for IsGroup, IsGroup, IsMapping 11.3-6 
+  [2XGeneratorsSmallest[102X, for IsRightQuasigroup 1.9-2 
+  group with triality 10.2 
+  [2XHasAntiautomorphicInverseProperty[102X, for IsLoop 7.5-4 
+  [2XHasAutomorphicInverseProperty[102X, for IsLoop 7.5-4 
+  [2XHasInverseProperty[102X, for IsLoop 7.5-2 
+  [2XHasLeftInverseProperty[102X, for IsLoop 7.5-2 
+  [2XHasRightInverseProperty[102X, for IsLoop 7.5-2 
+  [2XHasTwosidedInverses[102X, for IsLoop 7.5-1 
+  [2XHasWeakInverseProperty[102X, for IsLoop 7.5-3 
+  homomorphis, of right quasigroups 8.1 
+  homotopism, right quasigroups 9.1 
+  [2XHomotopismRightQuasigroups[102X, for IsMapping, IsMapping, IsMapping 9.1-4 
+  idempotent magma 7.2 
+  identity of Bol-Moufang type 7.6 
+  [2XIdentityAutotopism[102X, for IsRightQuasigroup 9.1-6 
+  index based right quasigroup 1.1  1.8 
+  [2XIndexBasedCopy[102X, for IsRightQuasigroup 1.8-3 
+  inner mapping group 5.3 
+  inner mappings 5.3 
+  [2XInnerMappingGroup[102X, for IsLoop 5.3-2 
+  [2XInterestingLoop[102X, for IsPosInt, IsPosInt 12.13-1 
+  [2XInterestingLoops[102X 12.13-2 
+  inverse property 7.5-2 
+  [2XIs3PowerAssociative[102X, for IsMagma 7.2-1 
+  [2XIsAbelianNormalSubloop[102X, for IsLoop, IsLoop 6.3-7 
+  [2XIsAffineQuandleArithmeticForm[102X, for IsPosInt, IsInt 11.3-1 
+  [2XIsAffineQuasigroupArithmeticForm[102X 9.4-2 
+  [2XIsAffineRackArithmeticForm[102X, for IsPosInt, IsInt, IsInt, IsInt 11.2-3 
+  [2XIsAffineRightQuasigroupArithmeticForm[102X 9.4-1 
+  [2XIsAlternative[102X, for IsMagma 7.2-1 
+  [2XIsAssociative[102X, for IsRightQuasigroup 7.2-1 
+  [2XIsAutomorphicLoop[102X, for IsLoop 7.9-4 
+  [2XIsAutotopismLoops[102X 9.1-9 
+  [2XIsAutotopismQuasigroups[102X 9.1-9 
+  [2XIsAutotopismRightQuasigroups[102X 9.1-9 
+  [2XIsBijective[102X, for IsRightQuasigroupHomotopism 9.1-3 
+  [2XIsCanonical[102X, for IsRightQuasigroup 1.8-4 
+  [2XIsCanonicalPerm[102X, for IsRightQuasigroup, IsPerm 4.3-1 
+  [2XIsCanonicalTransformation[102X, for IsRightQuasigroup, IsRightQuasigroup, IsTransformation 4.4-1 
+  [2XIsCLoop[102X, for IsLoop 7.6-1 
+  [2XIsCodeLoop[102X, for IsLoop 7.9-1 
+  [2XIsCommutative[102X, for IsRightQuasigroup 7.2-1 
+  [2XIsCongruenceSolvableLoop[102X, for IsLoop 6.3-8 
+  [2XIsConjugacyClosedLoop[102X, for IsLoop 7.8-1 
+  [2XIsConnectedQuandle[102X, for IsRightQuasigroup 11.1-3 
+  [2XIsConnectedRack[102X, for IsRightQuasigroup 11.1-3 
+  [2XIsDiassociative[102X, for IsMagma 7.2-1 
+  [2XIsEntropic[102X, for IsQuasigroup 7.4-4 
+  [2XIsExactGroupFactorization[102X, for IsGroup, IsGroup, IsGroup 10.1-2 
+  [2XIsExtraLoop[102X, for IsLoop 7.6-1 
+  [2XIsFaithfulQuandle[102X, for IsRightQuasigroup 11.1-7 
+  [2XIsFaithfulRack[102X, for IsRightQuasigroup 11.1-7 
+  [2XIsFaithfulRightQuasigroup[102X, for IsRightQuasigroup 7.3-1 
+  [2XIsFlexible[102X, for IsMagma 7.2-1 
+  [2XIsHomogeneousQuandle[102X, for IsRightQuasigroup 11.1-2 
+  [2XIsHomogeneousRack[102X, for IsRightQuasigroup 11.1-2 
+  [2XIsHomotopismLoops[102X 9.1-7 
+  [2XIsHomotopismQuasigroups[102X 9.1-7 
+  [2XIsHomotopismRightQuasigroups[102X 9.1-7 
+  [2XIsIdempotent[102X, for IsMagma 7.2-1 
+  [2XIsIndexBased[102X, for IsRightQuasigroup 1.8-2 
+  [2XIsInjective[102X, for IsRightQuasigroupHomotopism 9.1-3 
+  [2XIsIsotopicToAbelianGroup[102X, for IsQuasigroup 5.4-4 
+  [2XIsIsotopicToGroup[102X, for IsQuasigroup 5.4-3 
+  [2XIsIsotopismLoops[102X 9.1-8 
+  [2XIsIsotopismQuasigroups[102X 9.1-8 
+  [2XIsIsotopismRightQuasigroups[102X 9.1-8 
+  [2XIsLatinQuandle[102X, for IsRightQuasigroup 11.1-4 
+  [2XIsLatinRack[102X, for IsRightQuasigroup 11.1-4 
+  [2XIsLCLoop[102X, for IsLoop 7.6-1 
+  [2XIsLeftAlternative[102X, for IsMagma 7.2-1 
+  [2XIsLeftAutomorphicLoop[102X, for IsLoop 7.9-4 
+  [2XIsLeftBolLoop[102X, for IsLoop 7.6-1 
+  [2XIsLeftBruckLoop[102X, for IsLoop 7.9-3 
+  [2XIsLeftConjugacyClosedLoop[102X, for IsLoop 7.8-1 
+  [2XIsLeftNuclearSquareLoop[102X, for IsLoop 7.6-1 
+  [2XIsLeftPowerAlternative[102X, for IsLoop 7.7-1 
+  [2XIsLeftQuasigroupMagma[102X, for IsMagma 2.2-1 
+  [2XIsLeftSelfDistributive[102X, for IsMagma 7.2-1 
+  [2XIsLoop[102X, for IsQuasigroup and IsMultiplicativeElementWithInverseCollection 1.2-3 
+  [2XIsLoopAutomorphism[102X, for IsMapping 8.1-4 
+  [2XIsLoopCayleyTable[102X, for IsRectangularTable 2.4-4 
+  [2XIsLoopCocycle[102X, for IsLoop, IsLoop, IsRectangularTable 6.4-1 
+  [2XIsLoopCongruence[102X, for IsEquivalenceRelation 3.7-1 
+  [2XIsLoopElement[102X, for IsQuasigroupElement and IsMultiplicativeElementWithInverse 1.2-3 
+  [2XIsLoopElmRep[102X, for IsPositionalObjectRep and IsMultiplicativeElementWithInverse 1.2-3 
+  [2XIsLoopEndomorphism[102X, for IsMapping 8.1-3 
+  [2XIsLoopFunction[102X 2.5-4 
+  [2XIsLoopHomomorphism[102X, for IsMapping 8.1-1 
+  [2XIsLoopIsomorphism[102X, for IsMapping 8.1-2 
+  [2XIsLoopMagma[102X, for IsMagma 2.2-1 
+  [2XIsLoopMapping[102X, for IsMapping 4.2-1 
+  [2XIsLoopRightFolder[102X, for IsRightTransversal 2.7-1 
+  [2XIsLoopRightSection[102X, for IsCollection, IsCollection 2.6-1 
+  [2XIsMaximalSubloop[102X, for IsLoop, IsLoop 3.3-6 
+  [2XIsMaximalSubquasigroup[102X, for IsQuasigroup, IsQuasigroup 3.3-6 
+  [2XIsMaximalSubrightquasigroup[102X, for IsRightQuasigroup , IsRightQuasigroup 3.3-6 
+  [2XIsMiddleAutomorphicLoop[102X, for IsLoop 7.9-4 
+  [2XIsMiddleNuclearSquareLoop[102X, for IsLoop 7.6-1 
+  [2XIsMinimalSubloop[102X, for IsLoop 3.3-4 
+  [2XIsMinimalSubquasigroup[102X, for IsQuasigroup 3.3-4 
+  [2XIsMinimalSubrightquasigroup[102X, for IsRightQuasigroup 3.3-4 
+  [2XIsMoufangLoop[102X, for IsLoop 7.6-1 
+  [2XIsNilpotentLoop[102X, for IsLoop 6.2-2 
+  [2XIsNuclearSquareLoop[102X, for IsLoop 7.6-2 
+  isomorph 8.2 
+  isomorphism, of right quasigroups 8.1 
+  [2XIsomorphismDiscriminator[102X, for IsRightQuasigroup 8.3-1 
+  [2XIsomorphismLoops[102X, for IsLoop, IsLoop 8.3-3 
+  [2XIsomorphismQuandles[102X, for IsQuandle, IsQuandle 11.6-1 
+  [2XIsomorphismQuasigroups[102X, for IsQuasigroup, IsQuasigroup 8.3-3 
+  [2XIsomorphismRacks[102X, for IsRack, IsRack 11.6-1 
+  [2XIsomorphismRightQuasigroups[102X, for IsRightQuasigroup, IsRightQuasigroup 8.3-3 
+  [2XIsOsbornLoop[102X, for IsLoop 7.8-2 
+  isotope 9.3 
+  isotopism, right quasigroups 9.1 
+  [2XIsotopismDiscriminator[102X, for IsRightQuasigroup 9.5-1 
+  [2XIsotopismLoops[102X, for IsLoop, IsLoop, IsString 9.5-6 
+  [2XIsotopismQuasigroups[102X, for IsQuasigroup, IsQuasigroup, IsString 9.5-5 
+  [2XIsotopismRightQuasigroups[102X, for IsRightQuasigroup, IsRightQuasigroup, IsString 9.5-4 
+  [2XIsParentPerm[102X, for IsRightQuasigroup, IsPerm 4.3-2 
+  [2XIsParentTransformation[102X, for IsRightQuasigroup, IsRightQuasigroup, IsTransformation 4.4-2 
+  [2XIsPermutationalQuandle[102X, for IsRightQuasigroup 11.1-6 
+  [2XIsPermutationalRack[102X, for IsRightQuasigroup 11.1-6 
+  [2XIsPowerAlternative[102X, for IsLoop 7.7-1 
+  [2XIsPowerAssociative[102X, for IsMagma 7.2-1 
+  [2XIsProjectionQuandle[102X, for IsRightQuasigroup 11.1-5 
+  [2XIsProjectionRack[102X, for IsRightQuasigroup 11.1-5 
+  [2XIsProjectionRightQuasigroup[102X, for IsRightQuasigroup 7.3-2 
+  [2XIsQuandle[102X, for IsRightQuasigroup 11.1-1 
+  [2XIsQuandleEnvelope[102X, for IsGroup, IsList, IsList 11.4-1 
+  [2XIsQuasigroup[102X, for IsRightQuasigroup and IsQuasigroupAux 1.2-2 
+  [2XIsQuasigroupAutomorphism[102X, for IsMapping 8.1-4 
+  [2XIsQuasigroupCayleyTable[102X, for IsRectangularTable 2.4-4 
+  [2XIsQuasigroupCongruence[102X, for IsEquivalenceRelation 3.7-1 
+  [2XIsQuasigroupElement[102X, for IsRightQuasigroupElement and IsQuasigroupElementAux 1.2-2 
+  [2XIsQuasigroupElmRep[102X, for IsPositionalObjectRep and IsMultiplicativeElement 1.2-2 
+  [2XIsQuasigroupEndomorphism[102X, for IsMapping 8.1-3 
+  [2XIsQuasigroupFunction[102X 2.5-3 
+  [2XIsQuasigroupHomomorphism[102X, for IsMapping 8.1-1 
+  [2XIsQuasigroupIsomorphism[102X, for IsMapping 8.1-2 
+  [2XIsQuasigroupMagma[102X, for IsMagma 2.2-1 
+  [2XIsQuasigroupMapping[102X, for IsMapping 4.2-1 
+  [2XIsQuasigroupRightFolder[102X, for IsRightTransversal 2.7-1 
+  [2XIsQuasigroupRightSection[102X, for IsCollection, IsCollection 2.6-1 
+  [2XIsRack[102X, for IsRightQuasigroup 11.1-1 
+  [2XIsRackEnvelope[102X, for IsGroup, IsList, IsList 11.4-1 
+  [2XIsRCLoop[102X, for IsLoop 7.6-1 
+  [2XIsRightAlternative[102X, for IsMagma 7.2-1 
+  [2XIsRightAutomorphicLoop[102X, for IsLoop 7.9-4 
+  [2XIsRightBolLoop[102X, for IsLoop 7.6-1 
+  [2XIsRightBruckLoop[102X, for IsLoop 7.9-3 
+  [2XIsRightConjugacyClosedLoop[102X, for IsLoop 7.8-1 
+  [2XIsRightFolder[102X, for IsRightTransversal 2.7-1 
+  [2XIsRightNuclearSquareLoop[102X, for IsLoop 7.6-1 
+  [2XIsRightPowerAlternative[102X, for IsLoop 7.7-1 
+  [2XIsRightQuasigroup[102X, for IsMagma and IsRightQuasigroupAux 1.2-1 
+  [2XIsRightQuasigroupAutomorphism[102X, for IsMapping 8.1-4 
+  [2XIsRightQuasigroupCayleyTable[102X, for IsRectangularTable 2.4-4 
+  [2XIsRightQuasigroupCongruence[102X, for IsEquivalenceRelation 3.7-1 
+  [2XIsRightQuasigroupElement[102X, for IsMultiplicativeElement 1.2-1 
+  [2XIsRightQuasigroupElmRep[102X, for IsPositionalObjectRep and IsMultiplicativeElement 1.2-1 
+  [2XIsRightQuasigroupEndomorphism[102X, for IsMapping 8.1-3 
+  [2XIsRightQuasigroupFunction[102X 2.5-2 
+  [2XIsRightQuasigroupHomomorphism[102X, for IsMapping 8.1-1 
+  [2XIsRightQuasigroupHomotopism[102X, for IsMultiplicativeElementWithInverse 9.1-1 
+  [2XIsRightQuasigroupIsomorphism[102X, for IsMapping 8.1-2 
+  [2XIsRightQuasigroupMagma[102X, for IsMagma 2.2-1 
+  [2XIsRightQuasigroupMapping[102X, for IsMapping 4.2-1 
+  [2XIsRightSection[102X, for IsCollection, IsCollection 2.6-1 
+  [2XIsRightSelfDistributive[102X, for IsMagma 7.2-1 
+  [2XIsSelfDistributive[102X, for IsMagma 7.2-1 
+  [2XIsSemisymmetric[102X, for IsQuasigroup 7.4-1 
+  [2XIsSimpleLoop[102X, for IsLoop 3.8-2 
+  [2XIsSimpleQuasigroup[102X, for IsQuasigroup 3.8-2 
+  [2XIsSimpleRightQuasigroup[102X, for IsRightQuasigroup 3.8-2 
+  [2XIsSolvableLoop[102X, for IsLoop 6.3-2 
+  [2XIsSteinerLoop[102X, for IsLoop 7.9-2 
+  [2XIsSteinerQuasigroup[102X, for IsQuasigroup 7.4-3 
+  [2XIsSubloop[102X, for IsLoop, IsLoop 3.3-1 
+  [2XIsSubquandle[102X, for IsQuandle, IsQuandle 11.5-1 
+  [2XIsSubquasigroup[102X, for IsQuasigroup, IsQuasigroup 3.3-1 
+  [2XIsSubrack[102X, for IsRack, IsRack 11.5-1 
+  [2XIsSubrightquasigroup[102X, for IsRightQuasigroup, IsRightQuasigroup 3.3-1 
+  [2XIsSurjective[102X, for IsRightQuasigroupHomotopism 9.1-3 
+  [2XIsTotallySymmetric[102X, for IsQuasigroup 7.4-2 
+  [2XIsUnipotent[102X, for IsMagma 7.2-1 
+  [2XItpSmallLoop[102X, for IsPosInt, IsPosInt 12.17-1 
+  [2XItpSmallLoops[102X 12.17-2 
+  [2XKernelOfLoopHomomorphism[102X, for IsMapping 8.1-7 
+  [2XKernelOfLoopHomomorphismNC[102X, for IsMapping 8.1-7 
+  [2XKernelRelationOfMapping[102X, for IsMapping 8.1-6 
+  LC loops 7.6 
+  [2XLCCLoop[102X, for IsPosInt, IsPosInt 12.8-1 
+  [2XLCCLoops[102X 12.8-2 
+  left alternative magma 7.2 
+  left automorphic loop 7.9-4 
+  left Bol loops 7.6 
+  left Bruck loop 7.9-3 
+  left conjugacy closed loop> 7.8 
+  left coset 3.4-1 
+  left inner mapping 5.3 
+  left inner mapping group 5.3 
+  left inverse 1.5-3 
+  left inverse property 7.5-2 
+  left multiplication group 5.2 
+  left nuclear square loops 7.6 
+  left nucleus 6.1 
+  left self-distributive magma 7.2 
+  left transversal 3.4-1 
+  [2XLeftBolLoop[102X, for IsPosInt, IsPosInt 12.3-1 
+  [2XLeftBolLoops[102X 12.3-2 
+  [2XLeftBruckLoop[102X, for IsPosInt, IsPosInt 12.4-1 
+  [2XLeftBruckLoops[102X 12.4-2 
+  [2XLeftConjugacyClosedLoop[102X, for IsPosInt, IsPosInt 12.8-1 
+  [2XLeftConjugacyClosedLoops[102X 12.8-2 
+  [2XLeftDisplacementGroup[102X, for IsQuasigroup 5.4-2 
+  [2XLeftDivisionCayleyTable[102X, for IsQuasigroup 2.4-2 
+  [2XLeftDivisionFunction[102X, for IsQuasigroup 2.5-5 
+  [2XLeftDivisionTable[102X, for IsQuasigroup 2.4-2 
+  [2XLeftDivisionTableFromMultiplicationTable[102X, for IsRectangularTable 2.4-3 
+  [2XLeftInnerMapping[102X, for IsQuasigroup, IsQuasigroupElement, IsQuasigroupElement 5.3-1 
+  [2XLeftInnerMappingGroup[102X, for IsLoop 5.3-2 
+  [2XLeftInverse[102X, for IsLoopElement 1.5-3 
+  [2XLeftMultiplicationGroup[102X, for IsQuasigroup 5.2-1 
+  [2XLeftMultiplicationSemigroup[102X, for IsRightQuasigroup 5.2-2 
+  [2XLeftNegDisplacementGroup[102X, for IsQuasigroup 5.4-2 
+  [2XLeftNucleus[102X, for IsRightQuasigroup 6.1-1 
+  [2XLeftPosDisplacementGroup[102X, for IsQuasigroup 5.4-2 
+  [2XLeftQuotient[102X, for IsQuasigroupElement, IsQuasigroupElement 1.5-2 
+  [2XLeftSection[102X, for IsRightQuasigroup 5.1-3 
+  [2XLeftTranslation[102X, for IsRightQuasigroup, IsObject 5.1-2 
+  [2XLeftTransversal[102X, for IsRightQuasigroup, IsRightQuasigroup 3.4-2 
+  [2XLibraryAlgebra[102X, for IsString, IsPosInt, IsPosInt 12.2-2 
+  [2XLibraryAlgebras[102X 12.2-3 
+  loop 1.2 
+  [2XLoop[102X 3.5-1 
+  loop, octonion 12.5 
+      Paige 12.10 
+      sedenion 12.13 
+  loop congruence 3.7 
+  loop function 2.5 
+  loop right folder 2.7 
+  loop right section 2.6 
+  [2XLoopByCayleyTable[102X, for IsRectangularTable 2.4-6 
+  [2XLoopByCentralExtension[102X, for IsLoop, IsLoop, IsRectangularTable 6.4-3 
+  [2XLoopByCyclicModification[102X 10.3-2 
+  [2XLoopByDihedralModification[102X 10.3-3 
+  [2XLoopByFunction[102X 2.5-8 
+  [2XLoopByGenerators[102X 3.5-2 
+  [2XLoopByNuclearExtension[102X, for IsLoop, IsLoop, IsList, IsRectangularTable 6.4-2 
+  [2XLoopByRightFolder[102X, for IsRightTransversal 2.7-2 
+  [2XLoopByRightSection[102X, for IsCollection, IsCollection 2.6-2 
+  [2XLoopCoboundaries[102X, for IsLoop, IsPosInt 6.5-2 
+  [2XLoopCocyclesInVariety[102X, for IsLoop, IsPosInt, IsList 6.5-1 
+  [2XLoopCocyclesModAction[102X, for IsLoop, IsPosInt, IsList, IsList 6.5-3 
+  [2XLoopCongruenceByPairs[102X, for IsLoop, IsList 3.7-3 
+  [2XLoopCongruenceByPartition[102X, for IsLoop, IsList 3.7-2 
+  [2XLoopHomomorphismByImages[102X, for IsLoop, IsLoop 8.1-5 
+  [2XLoopIsomorph[102X 8.2-1 
+  [2XLoopIsotope[102X 9.3-3 
+  [2XLoopSatisfiesIdentity[102X, for IsLoop, IsString 7.1-2 
+  [2XLoopsUpToIsomorphism[102X, for IsList 8.3-4 
+  [2XLoopsUpToIsotopism[102X, for IsList, IsString 9.5-7 
+  [2XLoopTermFromString[102X, for IsString 7.1-1 
+  [2XLoopTwist[102X 9.2-1 
+  [2XLoopWithGenerators[102X 3.5-3 
+  [2XLowerCentralSeriesOfLoop[102X, for IsLoop 6.2-4 
+  maximal subloop 3.3-5 
+  maximal suquasigroup 3.3-5 
+  maximal surightquasigroup 3.3-5 
+  middle automorphic loop 7.9-4 
+  middle inner mapping 5.3 
+  middle inner mapping group 5.3 
+  middle nuclear square loops 7.6 
+  middle nucleus 6.1 
+  [2XMiddleInnerMapping[102X, for IsQuasigroup, IsQuasigroupElement 5.3-1 
+  [2XMiddleInnerMappingGroup[102X, for IsQuasigroup 5.3-2 
+  [2XMiddleNucleus[102X, for IsRightQuasigroup 6.1-1 
+  minimal subloop 3.3-3 
+  minimal subquasigroup 3.3-3  3.3-3 
+  modification, cyclic 10.3-2 
+      dihedral 10.3-3 
+      Moufang 10.3 
+  Moufang loops 7.6 
+  [2XMoufangLoop[102X, for IsPosInt, IsPosInt 12.5-1 
+  [2XMoufangLoops[102X 12.5-2 
+  multiplication 1.2 
+  multiplication group 5.2 
+  multiplication table 2.4-1 
+  [2XMultiplicationFunction[102X, for IsRightQuasigroup 2.5-5 
+  [2XMultiplicationGroup[102X, for IsQuasigroup 5.2-1 
+  [2XMultiplicationTable[102X, for IsRightQuasigroup 2.4-2 
+  [2XNaturalHomomorphismByCongruence[102X, for IsEquivalenceRelation 8.1-8 
+  [2XNaturalHomomorphismByCongruenceNC[102X, for IsEquivalenceRelation 8.1-8 
+  [2XNaturalHomomorphismByNormalSubloop[102X, for IsLoop, IsLoop 8.1-9 
+  [2XNaturalHomomorphismByNormalSubloopNC[102X, for IsLoop, IsLoop 8.1-9 
+  nilpotency class 6.2 
+  [2XNilpotencyClassOfLoop[102X, for IsLoop 6.2-1 
+  nilpotent loop 6.2 
+  [2XNilpotentLoop[102X, for IsPosInt, IsPosInt 12.11-1 
+  [2XNilpotentLoops[102X 12.11-2 
+  non-generator 6.6 
+  normal subloop 3.8 
+  normalized quasigroup Cayley table 2.4-5 
+  normalized right quasigroup Cayley table 2.4-5 
+  [2XNormalizedQuasigroupCayleyTable[102X, for IsRectangularTable 2.4-5 
+  [2XNormalizedRightQuasigroupCayleyTable[102X, for IsRectangularTable 2.4-5 
+  [2XNuc[102X, for IsRightQuasigroup 6.1-1 
+  nuclear square loop 7.6-2 
+  [2XNuclearExtensionByNormalSubloop[102X, for IsLoop, IsLoop 6.4-5 
+  nucles 6.1 
+  octonion loop 12.5 
+  [2XOne[102X, for IsLoopElement 1.5-3 
+  [2XOneLoopWithMltGroup[102X, for IsGroup 5.5-6 
+  [2XOneLoopWithMltInGroup[102X, for IsGroup 5.5-3 
+  [2XOneNonassociativeLoopWithMltInGroup[102X, for IsGroup 5.5-4 
+  opposite quasigroup 3.2 
+  [2XOppositeLoop[102X, for IsLoop 3.2-1 
+  [2XOppositeQuasigroup[102X, for IsQuasigroup 3.2-1 
+  Osborn loop 7.8-2 
+  Paige loop 12.10 
+  [2XPaigeLoop[102X, for IsPosInt 12.10-1 
+  [2XPaigeLoops[102X 12.10-2 
+  parent 1.7 
+  [2XParentInd[102X, for IsRightQuasigroup 1.8-1 
+  permutation, canonical 4.1 
+      parent 4.1 
+  [2XPermutationalRack[102X, for IsPosInt, IsPerm 11.2-1 
+  power alternative loop 7.7 
+  power associative 1.5-4 
+  power associative magma 7.2 
+  principal loop isotope 9.3 
+  [2XPrincipalLoopIsotope[102X, for IsQuasigroup, IsQuasigroupElement, IsQuasigroupElement 9.3-4 
+  [2XProjectionRightQuasigroup[102X, for IsCollection 2.8-1 
+  quandle 11. 
+  [2XQuandle[102X 11.5-4 
+  quandle envelope 11.4 
+  [2XQuandleByGenerators[102X 11.5-4 
+  [2XQuandleByQuandleEnvelope[102X, for IsGroup, IsList, IsList 11.4-3 
+  [2XQuandleEnvelope[102X, for IsQuandle 11.4-2 
+  [2XQuandlesUpToIsomorphism[102X, for IsList 11.6-2 
+  [2XQuandleWithGenerators[102X 11.5-4 
+  quasigroup 1.2 
+  [2XQuasigroup[102X 3.5-1 
+  quasigroup, left 1.2 
+      right 1.2 
+  quasigroup congruence 3.7 
+  quasigroup function 2.5 
+  quasigroup right folder 2.7 
+  quasigroup right section 2.6 
+  [2XQuasigroupByCayleyTable[102X, for IsRectangularTable 2.4-6 
+  [2XQuasigroupByFunction[102X 2.5-7 
+  [2XQuasigroupByGenerators[102X 3.5-2 
+  [2XQuasigroupByRightFolder[102X, for IsRightTransversal 2.7-2 
+  [2XQuasigroupByRightSection[102X, for IsCollection, IsCollection 2.6-2 
+  [2XQuasigroupCongruenceByPairs[102X, for IsQuasigroup, IsList 3.7-3 
+  [2XQuasigroupCongruenceByPartition[102X, for IsQuasigroup, IsList 3.7-2 
+  [2XQuasigroupHomomorphismByImages[102X, for IsQuasigroup, IsQuasigroup 8.1-5 
+  [2XQuasigroupIsomorph[102X 8.2-1 
+  [2XQuasigroupIsotope[102X 9.3-2 
+  [2XQuasigroupSatisfiesIdentity[102X, for IsQuasigroup, IsString 7.1-2 
+  [2XQuasigroupsUpToIsomorphism[102X, for IsList 8.3-4 
+  [2XQuasigroupsUpToIsotopism[102X, for IsList, IsString 9.5-7 
+  [2XQuasigroupTermFromString[102X, for IsString 7.1-1 
+  [2XQuasigroupTwist[102X 9.2-1 
+  [2XQuasigroupWithGenerators[102X 3.5-3 
+  rack 11. 
+  [2XRack[102X 11.5-4 
+  rack, connected 11. 
+      homogeneous 11. 
+      latin 11. 
+  rack envelope 11.4 
+  [2XRackByGenerators[102X 11.5-4 
+  [2XRackByRackEnvelope[102X, for IsGroup, IsList, IsList 11.4-3 
+  [2XRackEnvelope[102X, for IsRack 11.4-2 
+  [2XRacksUpToIsomorphism[102X, for IsList 11.6-2 
+  [2XRackWithGenerators[102X 11.5-4 
+  [2XRandomLoop[102X, for IsCollection 2.9-2 
+  [2XRandomNilpotentLoop[102X, for IsList 2.9-3 
+  [2XRandomQuasigroup[102X, for IsCollection 2.9-2 
+  [2XRandomRightQuasigroup[102X, for IsCollection 2.9-1 
+  [2XRange[102X, for IsRightQuasigroupHomotopism 9.1-2 
+  RC loops 7.6 
+  [2XRCCLoop[102X, for IsPosInt, IsPosInt 12.8-1 
+  [2XRCCLoops[102X 12.8-2 
+  relative left multiplication group 5.2 
+  relative multiplication group 5.2 
+  relative right multiplication group 5.2 
+  [2XRelativeLeftMultiplicationGroup[102X, for IsQuasigroup, IsQuasigroup 5.2-3 
+  [2XRelativeMultiplicationGroup[102X, for IsQuasigroup, IsQuasigroup 5.2-3 
+  [2XRelativeRightMultiplicationGroup[102X, for IsRightQuasigroup, IsRightQuasigroup 5.2-3 
+  right alternative magma 7.2 
+  right automorphic loop 7.9-4 
+  right Bol loops 7.6 
+  right Bruck loop 7.9-3 
+  right conjugacy closed loop 7.8 
+  right coset 3.4 
+  right folder 2.7 
+  right inner mapping 5.3 
+  right inner mapping group 5.3 
+  right inverse 1.5-3 
+  right inverse property 7.5-2 
+  right multiplication group 5.2 
+  right nuclear square loops 7.6 
+  right nucleus 6.1 
+  right power alternative loop 7.7 
+  right power alternative loops 7.7 
+  right quasigroup congruence 3.7 
+  right quasigroup function 2.5 
+  right section 2.6 
+  right self-distributive magma 7.2 
+  right transversal 3.4 
+  [2XRightBolLoop[102X, for IsPosInt, IsPosInt 12.3-1 
+  [2XRightBolLoopByExactGroupFactorization[102X, for IsGroup, IsGroup, IsGroup 10.1-3 
+  [2XRightBolLoops[102X 12.3-2 
+  [2XRightBruckLoop[102X, for IsPosInt, IsPosInt 12.4-1 
+  [2XRightBruckLoops[102X 12.4-2 
+  [2XRightConjugacyClosedLoop[102X, for IsPosInt, IsPosInt 12.8-1 
+  [2XRightConjugacyClosedLoops[102X 12.8-2 
+  [2XRightDisplacementGroup[102X, for IsRightQuasigroup 5.4-1 
+  [2XRightDivisionCayleyTable[102X, for IsRightQuasigroup 2.4-2 
+  [2XRightDivisionFunction[102X, for IsRightQuasigroup 2.5-5 
+  [2XRightDivisionTable[102X, for IsRightQuasigroup 2.4-2 
+  [2XRightDivisionTableFromMultiplicationTable[102X, for IsRectangularTable 2.4-3 
+  [2XRightInnerMapping[102X, for IsRightQuasigroup, IsRightQuasigroupElement, IsRightQuasigroupElement 5.3-1 
+  [2XRightInnerMappingGroup[102X, for IsRightQuasigroup 5.3-2 
+  [2XRightInverse[102X, for IsLoopElement 1.5-3 
+  [2XRightMultiplicationGroup[102X, for IsRightQuasigroup 5.2-1 
+  [2XRightNegDisplacementGroup[102X, for IsRightQuasigroup 5.4-1 
+  [2XRightNucleus[102X, for IsRightQuasigroup 6.1-1 
+  [2XRightPosDisplacementGroup[102X, for IsRightQuasigroup 5.4-1 
+  [2XRightQuasigroup[102X 3.5-1 
+  [2XRightQuasigroupByCayleyTable[102X, for IsRectangularTable 2.4-6 
+  [2XRightQuasigroupByFunction[102X 2.5-6 
+  [2XRightQuasigroupByGenerators[102X 3.5-2 
+  [2XRightQuasigroupByRightFolder[102X, for IsRightTransversal 2.7-2 
+  [2XRightQuasigroupByRightSection[102X, for IsCollection, IsCollection 2.6-2 
+  [2XRightQuasigroupCongruenceByPairs[102X, for IsRightQuasigroup, IsList 3.7-3 
+  [2XRightQuasigroupCongruenceByPartition[102X, for IsRightQuasigroup, IsList 3.7-2 
+  [2XRightQuasigroupHomomorphismByImages[102X, for IsRightQuasigroup, IsRightQuasigroup 8.1-5 
+  [2XRightQuasigroupIsomorph[102X 8.2-1 
+  [2XRightQuasigroupIsotope[102X 9.3-1 
+  [2XRightQuasigroupSatisfiesIdentity[102X, for IsRightQuasigroup, IsString 7.1-2 
+  [2XRightQuasigroupsUpToIsomorphism[102X, for IsList 8.3-4 
+  [2XRightQuasigroupsUpToIsotopism[102X, for IsList, IsString 9.5-7 
+  [2XRightQuasigroupTermFromString[102X, for IsString 7.1-1 
+  [2XRightQuasigroupTwist[102X 9.2-1 
+  [2XRightQuasigroupWithGenerators[102X 3.5-3 
+  [2XRightQuotient[102X, for IsRightQuasigroupElement, IsRightQuasigroupElement 1.5-1 
+  [2XRightSection[102X, for IsRightQuasigroup 5.1-3 
+  [2XRightTranslation[102X, for IsRightQuasigroup, IsObject 5.1-1 
+  [2XRightTransversal[102X, for IsRightQuasigroup, IsRightQuasigroup 3.4-1 
+  [2XRQ_AddDefaultOperations[102X, for IsRightQuasigroup 2.3-2 
+  [2XRQ_AlgebraShell[102X, for IsOperation, IsCollection 2.3-1 
+  [2XRQ_AutotopismGroupByGeneratorsNC[102X, for IsRightQuasigroup, IsRightQuasigroupHomotopismCollection 9.6-3 
+  [2XRQ_BlissCanonicalLabeling4Morphism[102X, for IsRightQuasigroup 9.7-2 
+  [2XRQ_BlissCanonicalLabeling4Topism[102X, for IsRightQuasigroup 9.7-2 
+  [2XRQ_Digraph[102X, for IsRightQuasigroup 9.7-1 
+  [2XRQ_NiceMonomorphism[102X 9.6-1 
+  [2XRQ_NiceMonomorphismInverse[102X 9.6-2 
+  sedenion loop 12.13 
+  self-distributive magma 7.2 
+  [2XSetDefaultConstructorStyle[102X, for IsBool, IsBool 2.1-1 
+  [2XSetLoopElementsName[102X, for IsLoop, IsString 1.3-3 
+  [2XSetQuasigroupElementsName[102X, for IsQuasigroup, IsString 1.3-3 
+  [2XSetRightQuasigroupElementsName[102X, for IsRightQuasigroup, IsString 1.3-3 
+  simple right quasigroup 3.8-1 
+  [2XSmallGeneratingSet[102X, for IsRightQuasigroup 1.9-1 
+  [2XSmallLoop[102X, for IsPosInt, IsPosInt 12.9-1 
+  [2XSmallLoops[102X 12.9-2 
+  [2XSmallQuandle[102X, for IsPosInt, IsPosInt 12.15-1 
+  [2XSmallQuandles[102X 12.15-2 
+  [2XSmallRack[102X, for IsPosInt, IsPosInt 12.14-1 
+  [2XSmallRacks[102X 12.14-2 
+  [2XSource[102X, for IsRightQuasigroupHomotopism 9.1-2 
+  Steiner loop 7.9-2 
+  [2XSteinerLoop[102X, for IsPosInt, IsPosInt 12.7-1 
+  [2XSteinerLoops[102X 12.7-2 
+  subloop 3.3 
+  [2XSubloop[102X, for IsLoop, IsList 3.3-2 
+  [2XSubquandle[102X, for IsQuandle, IsCollection 11.5-2 
+  subquasigroup 3.3 
+  [2XSubquasigroup[102X, for IsQuasigroup, IsCollection 3.3-2 
+  [2XSubrack[102X, for IsRack, IsCollection 11.5-2 
+  subrightquasigroup 3.3 
+  [2XSubrightquasigroup[102X, for IsRightQuasigroup, IsCollection 3.3-2 
+  transformation, parent 4.1 
+  transformtation, canonical 4.1 
+  translation, left 1.2 
+      right 1.2 
+  [2XTrialityPcGroup[102X, for IsLoop 10.2-2 
+  [2XTrialityPermGroup[102X, for IsLoop 10.2-1 
+  twist 9.2 
+  two-sided inverse 1.5-3 
+  underlying set 1.2 
+  [2XUnderlyingSet[102X, for IsRightQuasigroup 1.4-2 
+  [2XUnderlyingSetElm[102X, for IsRightQuasigroupElement 1.4-1 
+  unipotent magma 7.2 
+  [2XUpperCentralSeriesOfLoop[102X, for IsLoop 6.2-3 
+  variety of Bol-Moufang type 7.6 
+  weak inverse property 7.5-3 
+  
+  
+  -------------------------------------------------------

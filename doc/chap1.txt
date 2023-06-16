@@ -1,0 +1,868 @@
+  
+  [1X1 [33X[0;0YIntroduction[133X[101X
+  
+  [33X[0;0Y[5XRightQuasigroups[105X is a package for [5XGAP[105X that supports calculations with finite
+  right  quasigroups,  quasigroups,  loops  and  various  varieties  of  right
+  quasigroups, such as racks and quandles.[133X
+  
+  [33X[0;0YFirst  time users should read Section [14X1.1[114X, skim the rest of this chapter and
+  look inside Chapter [14X2[114X for examples on how right quasigroups are constructed.[133X
+  
+  [33X[0;0YMost  functions  are  intuitively named and can be traced in the manual from
+  the index.[133X
+  
+  [33X[0;0YSections  and  subsections  marked by * are for users who wish to understand
+  the inner workings of the package.[133X
+  
+  
+  [1X1.1 [33X[0;0YMain features of the package[133X[101X
+  
+  [33X[0;0Y[13XRepresentation[113X[133X
+  [33X[0;0YRight quasigroups, quasigroups and loops are represented as a subcategory of
+  magmas  in  [5XGAP[105X.  See Section [14X1.2[114X for more technical details and Section [14X1.3[114X
+  for how right quasigroups and their elements are displayed.[133X
+  
+  [33X[0;0Y[13XUnderlying set[113X[133X
+  [33X[0;0YEvery  right quasigroup has [5XGAP[105X elements and also has an underlying set. The
+  underlying  set is used to display [5XGAP[105X elements nicely and in Cayley tables.
+  Furthermore, the underlying set plays an important role in right quasigroups
+  that are not index based (see below) because the multiplication operation is
+  then  based  on  the  underlying set. For index based right quasigroups, the
+  underlying set is cosmetic and can be changed. See Section [14X1.4[114X.[133X
+  
+  [33X[0;0Y[13XArithmetic operations[113X[133X
+  [33X[0;0YRight   quasigroups   come   equipped  with  the  arithmetic  operations  of
+  multiplication  and  right  division.  Quasigroups  have additionally a left
+  division  operation,  and  loops have also a neutral element with respect to
+  multiplication. See Section [14X1.5[114X.[133X
+  
+  [33X[0;0Y[13XIndex based and non-index based right quasigroups[113X[133X
+  [33X[0;0YEvery  right  quasigroup  is  constructed  either  as  an  [13Xindex based[113X right
+  quasigroup  or  as  a  right  quasigroup  that is not index based. Generally
+  speaking,  index based right quasigroups take longer to construct, cannot be
+  very  large  (thousands  of elements) and can be calculated with fast, while
+  non-index based right quasigroups are constructed quickly, can be very large
+  (millions  of  elements)  but  only  basic  methods  will work for them. The
+  fundamental  piece  of  data  for  index  based  right  quasigroups  is  the
+  multiplication  table, while for non-index based right quasigroups it is the
+  multiplication function on the underlying set. See Section [14X1.8[114X.[133X
+  
+  [33X[0;0YMost  constructors  accept  an optional argument that determines whether the
+  resulting right quasigroup will be index based and whether arguments will be
+  checked. By default, the resulting right quasigroups will be index based and
+  arguments will not be checked (!). See Chapter [14X2[114X.[133X
+  
+  [33X[0;0Y[13XParent[113X[133X
+  [33X[0;0YThe  parent  mechanism  is  employed  in [5XGAP[105X and in [5XRightQuasigroups[105X to save
+  memory  and  to  take  advantage  of the containment of subalgebras in their
+  enveloping  algebras.  An  element  of a right quasigroup [10XQ[110X knows into which
+  parent  right  quasigroup it belongs and it therefore has access to all data
+  stored in the parent quasigroup. See Sections [14X1.7[114X and [14X1.11[114X.[133X
+  
+  [33X[0;0Y[13XMappings[113X[133X
+  [33X[0;0Y[5XRightQuasigroups[105X    uses    three   kinds   of   mappings:   [5XGAP[105X   mappings,
+  transformations,  and  permutations. Transformations that represent mappings
+  between  two  right  quasigroups,  as  well  as  permutations that represent
+  bijective mappings on a right quasigroup, are indexed either with respect to
+  the  order  of  elements  in  the  source  and  range quasigroups (so called
+  [13Xcanonical  tranformations[113X  and  [13Xcanonical  permutations[113X)  or with respect to
+  their parents (so called [13Xparent tranformations[113X and [13Xparent permutations[113X). See
+  Chapter [14X4[114X.[133X
+  
+  [33X[0;0YThe  package works with parent permutations as much as possible, cf. Chapter
+  [14X5[114X.  But  canonical  permutations are useful in the context of multiplication
+  tables,  and  transformations  are  useful  for  left  translations of right
+  quasigroups, for instance.[133X
+  
+  [33X[0;0Y[13XInfo class[113X[133X
+  [33X[0;0YThe  info  class  for  the  package  is  called [10XInfoRightQuasigroups[110X and its
+  initial  value  is set to 1, which will only print information on tasks that
+  are assumed to take a long time to execute, such as reading and initializing
+  a  large  data file. The user can prevent all messages from [5XRightQuasigroups[105X
+  by  calling  [10XSetInfoLevel(  InfoRightQuasigroups,  0  )[110X.  On the other hand,
+  setting  the  info  level  higher  for  [10XInfoRightQuasigroups[110X might result in
+  additional messages.[133X
+  
+  [33X[0;0Y[13XGlobal variables[113X[133X
+  [33X[0;0YFinally,  global variables and auxiliary functions in [5XRightQuasigroups[105X start
+  with  the  prefix [10XRQ_[110X and they are not fully documented in this manual. More
+  information  on  these  functions  can  be  found  in  the declaration files
+  [10Xgap\*.gd[110X.[133X
+  
+  
+  [1X1.2  [33X[0;0YCategories  and  representations for right quasigroups, quasigroups and[101X
+  [1Xloops[133X[101X
+  
+  [33X[0;0YGiven  a  magma [23X(Q,\cdot)[123X and [23Xx\in Q[123X, the [13Xright translation[113X by [23Xx[123X in [23XQ[123X is the
+  mapping  [23XR_x:Q\to Q[123X defined by [23XR_x(y)=yx[123X, while the [13Xleft translation[113X by [23Xx[123X in
+  [23XQ[123X is the mapping [23XL_x:Q\to Q[123X defined by [23XL_x(y)=xy[123X. The binary operation [23X\cdot[123X
+  will be referred to as [13Xmultiplication[113X.[133X
+  
+  [33X[0;0YA  magma  [23X(Q,\cdot)[123X  is  a  [13Xright  quasigroup[113X  if for every [23Xx\in Q[123X the right
+  translation [23XR_x[123X is a permutation of [23XQ[123X. We then denote [23XR_x^{-1}(y)[123X by [23Xy/x[123X and
+  refer to [23X/[123X as [13Xright division[113X.[133X
+  
+  [33X[0;0YDually,  a magma [23X(Q,\cdot)[123X is a [13Xleft quasigroup[113X if for every [23Xx\in Q[123X the left
+  translation  [23XL_x[123X  is  a  permutation  of  [23XQ[123X.  We  then denote [23XL_x^{-1}(y)[123X by
+  [23Xx\backslash y[123X and refer to [23X\backslash[123X as [13Xleft division[113X.[133X
+  
+  [33X[0;0YIf  [23X(Q,\cdot)[123X  is  both  a  right  quasigroup and a left quasigroup, it is a
+  [13Xquasigroup[113X.[133X
+  
+  [33X[0;0YA  [13Xloop[113X  is  a quasigroup [23X(Q,\cdot)[123X with a neutral element [23Xe\in Q[123X satisfying
+  [23Xx\cdot e=x=e\cdot x[123X for every [23Xx\in Q[123X.[133X
+  
+  [33X[0;0YIn  [5XGAP[105X,  right quasigroups and their elements are constructs that mimic the
+  mathematical objects. The set on which a right quasigroup is based is called
+  the [13Xunderlying set[113X, cf. Section [14X1.3[114X.[133X
+  
+  [33X[0;0YFrom a universal-algebraic point of view, right quasigroups, quasigroups and
+  loops  have  different  signatures,  which is why there are separate, nested
+  representations for the three kinds of algebras and their elements.[133X
+  
+  
+  [1X1.2-1 [33X[0;0YCategories and representations for right quasigroup elements and right[101X
+  [1Xquasigroups[133X[101X
+  
+  [33X[1;0Y[29X[2XIsRightQuasigroupElement[102X( [3Xobject[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsRightQuasigroupElmRep[102X( [3Xobject[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsRightQuasigroup[102X( [3Xobject[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X.[133X
+  
+  [33X[0;0YThese  are  the  [5XGAP[105X  categories  and  representations  for right quasigroup
+  elements and right quasigroups. [10XIsRightQuasigroupElement[110X is contained in the
+  filter  [10XIsMultiplicativeElement[110X, [10XIsRightQuasigroupElmRep[110X is contained in the
+  filters     [10XIsPositionalObjectRep[110X     and    [10XIsMultiplicativeElement[110X,    and
+  [10XIsRightQuasigroup[110X is contained in the filter [10XIsMagma[110X.[133X
+  
+  
+  [1X1.2-2 [33X[0;0YCategories and representations for quasigroup elements and quasigroups[133X[101X
+  
+  [33X[1;0Y[29X[2XIsQuasigroupElement[102X( [3Xobject[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsQuasigroupElmRep[102X( [3Xobject[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsQuasigroup[102X( [3Xobject[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YThese are the [5XGAP[105X categories and representations for quasigroup elements and
+  quasigroups.    [10XIsQuasigroupElement[110X    is    contained    in    the   filter
+  [10XIsRightQuasigroupElement[110X,  [10XIsQuasigroupElmRep[110X  is  contained  in the filters
+  [10XIsPositionalObjectRep[110X   and  [10XIsMultiplicativeElement[110X,  and  [10XIsQuasigroup[110X  is
+  contained in the filter [10XIsRightQuasigroup[110X.[133X
+  
+  
+  [1X1.2-3 [33X[0;0YCategories and representations for loop elements and loops[133X[101X
+  
+  [33X[1;0Y[29X[2XIsLoopElement[102X( [3Xobject[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsLoopElmRep[102X( [3Xobject[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsLoop[102X( [3Xobject[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YThese  are  the  [5XGAP[105X  categories  and  representations for loop elements and
+  loops.  [10XIsLoopElement[110X  is  contained  in the filters [10XIsQuasigroupElement[110X and
+  [10XIsMultiplicativeElementWithInverse[110X, [10XIsLoopElmRep[110X is contained in the filters
+  [10XIsPositionalObjectRep[110X  and [10XIsMultiplicativeElementWithInverse[110X, and [10XIsLoop[110X is
+  contained        in        the        filters        [10XIsQuasigroup[110X        and
+  [10XIsMultiplicativeElementWithInverseCollection[110X.[133X
+  
+  [33X[0;0YNote  that  these  declarations  do not imply that every loop element has an
+  inverse.[133X
+  
+  [1X1.2-4 CategoryOfRightQuasigroup[101X
+  
+  [33X[1;0Y[29X[2XCategoryOfRightQuasigroup[102X( [3Xobj[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YIf  the  argument  is  a  right  quasigroup,  returns the smallest
+            category  from  among  [10XIsRightQuasigroup[110X,  [10XIsQuasigroup[110X and [10XIsLoop[110X
+            into which the right quasigroup belongs. If the argument is a list
+            of  right  quasigroups,  returns  the smallest category from among
+            [10XIsRightQuasigroup[110X,  [10XIsQuasigroup[110X  and  [10XIsLoop[110X  into  which all the
+            right quasigroups on the list belong.[133X
+  
+  [33X[0;0YAll  declared  right quasigroups, quasigroups and loops belong to the filter
+  [10XIsRightQuasigroup[110X.  It  is  often useful to know if a right quasigroup is in
+  fact  declared  as  a  quasigroup  or a loop, which is what the above method
+  furnishes.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := QuasigroupByCayleyTable( [[0,1],[1,0]] ); # declared quasigroup, in fact a group mathematically[127X[104X
+    [4X[28X<quasigroup of size 2>[128X[104X
+    [4X[25Xgap>[125X [27X[ IsMagma( Q ), IsRightQuasigroup( Q ), IsQuasigroup( Q ), IsLoop( Q ), IsGroup( Q ) ];[127X[104X
+    [4X[28X[ true, true, true, false, false ][128X[104X
+    [4X[25Xgap>[125X [27XCategoryOfRightQuasigroup( Q );[127X[104X
+    [4X[28X<Category "IsQuasigroup">[128X[104X
+    [4X[25Xgap>[125X [27XCategoryOfRightQuasigroup( [ Q, ProjectionRightQuasigroup( 5 ) ] ); # common category[127X[104X
+    [4X[28X<Category "IsRightQuasigroup">[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.3 [33X[0;0YDisplaying right quasigroups and their elements[133X[101X
+  
+  
+  [1X1.3-1 [33X[0;0YDisplaying right quasigroups, quasigroups and loops[133X[101X
+  
+  [33X[0;0YThe [10XView[110X, [10XDisplay[110X and [10XPrint[110X methods are implemented for right quasigroups as
+  dynamic  methods  that  display (some) currently known information about the
+  object.[133X
+  
+  [33X[0;0YIf  [10XQ[110X  has  a  name (typically when [10XQ[110X is a library object), [10XView( Q )[110X prints
+  [10XName(  Q  )[110X,  e.g., [10X<Moufang loop 64/12>[110X. In all other situations, [10XView( Q )[110X
+  reveals  at  least  the  size  of  [10XQ[110X,  as  in  [10X<right quasigroup of size 8>[110X,
+  [10X<quasigroup  of  size  8>[110X  or  [10X<loop  of  size 8>[110X, depending on whether [10XQ[110X is
+  declared  as  a  right  quasigroup,  quasigroup  or  loop.  Once  additional
+  properties  of  [10XQ[110X become known, one of the strongest properties of [10XQ[110X is also
+  included in [10XView( Q )[110X, e.g., [10X<associative loop of order n>[110X.[133X
+  
+  [33X[0;0Y[10XPrint(Q)[110X  and  [10XDisplay( Q )[110X additionally displays up to the first 5 elements
+  of the underlying set of [10XQ[110X.[133X
+  
+  [33X[0;0YThe [10XString[110X attribute is also implemented for right quasigroups. Initially it
+  behaves as [10XView[110X, except that the returned value is returned as a string, not
+  just  displayed  in  the  terminal window. Since [10XString[110X is an attribute, the
+  value is set at first call and does not change dynamically, unlike [10XView[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := QuasigroupByCayleyTable( [[0,1],[1,0]] );[127X[104X
+    [4X[28X<quasigroup of size 2>[128X[104X
+    [4X[25Xgap>[125X [27XString( Q );[127X[104X
+    [4X[28X"<quasigroup of size 2>"[128X[104X
+    [4X[25Xgap>[125X [27XIsAssociative( Q );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XQ;[127X[104X
+    [4X[28X<associative quasigroup of size 2>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Q );[127X[104X
+    [4X[28X<associative quasigroup of size 2 on 0, 1>[128X[104X
+    [4X[25Xgap>[125X [27XPrint( Q );[127X[104X
+    [4X[28X<associative quasigroup of size 2 on 0, 1>[128X[104X
+    [4X[25Xgap>[125X [27XString( Q ); # was stored as attribute at first call[127X[104X
+    [4X[28X"<quasigroup of size 2>"[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.3-2 [33X[0;0YDisplaying right quasigroup elements[133X[101X
+  
+  [33X[0;0YThe  [10XView[110X,  [10XDisplay[110X  and  [10XPrint[110X methods are implemented for right quasigroup
+  elements.[133X
+  
+  [33X[0;0YBy  default,  if  [10Xx[110X  is  an  element  of  a  right quasigroup [10XQ[110X and [10Xe[110X is the
+  underlying  element  of  [10Xx[110X,  both  [10XView(  x  )[110X  and [10XDisplay( x )[110X display the
+  character  [10Xr[110X  or  [10Xq[110X  or  [10Xl[110X  (depending  on  whether [10XQ[110X is declared as a right
+  quasigroup,  a  quasigroup  or a loop), followed by the result of [10XView( e )[110X.
+  The method [10XPrint( x )[110X behaves similarly, except that it calls [10XPrint( e )[110X.[133X
+  
+  [33X[0;0YThe  [10XString[110X  attribute is also implemented for right quasigroup elements. It
+  returns  the same value as [10XView[110X, except that the returned value is a string.
+  Since  right  quasigroup  elements  are not attribute storing, the attribute
+  [10XString[110X is dynamic.[133X
+  
+  
+  [1X1.3-3 [33X[0;0YChanging the name of right quasigroup elements[133X[101X
+  
+  [33X[1;0Y[29X[2XSetRightQuasigroupElementsName[102X( [3XQ[103X, [3Xs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSetQuasigroupElementsName[102X( [3XQ[103X, [3Xs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSetLoopElementsName[102X( [3XQ[103X, [3Xs[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X.[133X
+  
+  [33X[0;0YChanges  the  name  of  all  elements of the parent of [3XQ[103X for the purposes of
+  displaying so that the name of every element starts with the prefix (string)
+  [3Xs[103X.  Note  that  it  is  possible to change the prefix to an empty string, in
+  which  case the elements of the parent of [3XQ[103X will be displayed exactly as the
+  elements  of  the underlying set; this improves legibility but might lead to
+  confusion.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := AsLoop( Group( (1,2) ) );[127X[104X
+    [4X[28X<associative loop of size 2>[128X[104X
+    [4X[25Xgap>[125X [27XString( Q.1 );[127X[104X
+    [4X[28X"l()"[128X[104X
+    [4X[25Xgap>[125X [27XElements( Q );[127X[104X
+    [4X[28X[ l(), l(1,2) ][128X[104X
+    [4X[25Xgap>[125X [27XSetLoopElementsName( Q, "g" );; Elements( Q );[127X[104X
+    [4X[28X[ g(), g(1,2) ][128X[104X
+    [4X[25Xgap>[125X [27XString( Q.1 ); # dynamic since right quasigroup elements are not attribute storing[127X[104X
+    [4X[28X"g()"[128X[104X
+    [4X[25Xgap>[125X [27XSetLoopElementsName( Q, "" );; Elements( Q ); # better legibility but perhaps confusing[127X[104X
+    [4X[28X[ (), (1,2) ][128X[104X
+    [4X[25Xgap>[125X [27XIsPerm( last[1] );[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.4 [33X[0;0YThe underlying set[133X[101X
+  
+  [33X[0;0YEvery  right  quasigroup [10XQ[110X consists of [5XGAP[105X elements returned via [10XElements( Q
+  )[110X.  In addition, every right quasigroup also has an underlying set accesible
+  via  [10XUnderlyingSet(  Q  )[110X.  The  underlying  set  is  used in displaying [5XGAP[105X
+  elements  of  right  quasigroups (cf. Section [14X1.3[114X) and in Cayley tables (cf.
+  Section [14X2.4[114X).[133X
+  
+  [33X[0;0YIf  a  right  quasigroup  is  not  index  based  (cf. Section [14X1.8[114X), then the
+  underlying  set  plays  a  critical  role  since  its  elements  are used as
+  arguments   of   the  multiplication  function.  In  non-index  based  right
+  quasigroups  the underlying set is merely cosmetic and can be changed at any
+  time.[133X
+  
+  [1X1.4-1 UnderlyingSetElm[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingSetElm[102X( [3Xobj[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YIf  [3Xobj[103X  is  a right quasigroup element, returns the corresponding
+            element  of  the  underlying  set.  If  [3Xobj[103X  is  a  list  of right
+            quasigroup  elements  (possibly from different right quasigroups),
+            returns  the  list of the corresponding elements of the underlying
+            set.  If  [3Xobj[103X is a right quasigroup, returns the underlying set of
+            [3Xobj[103X.[133X
+  
+  [1X1.4-2 UnderlyingSet[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingSet[102X( [3XQ[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe   underlying   set  of  the  right  quasigroup  [3XQ[103X.  Note  that
+            [10XUnderlyingSet( [110X[3XQ[103X[10X )[110X has the same effect as [10XUnderlyingSetElm( [110X[3XQ[103X[10X )[110X.[133X
+  
+  [1X1.4-3 ChangeUnderlyingSet[101X
+  
+  [33X[1;0Y[29X[2XChangeUnderlyingSet[102X( [3XQ[103X, [3XS[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X.[133X
+  
+  [33X[0;0YIf  [3XQ[103X  is  a  right  quasigroup  that  is  index  based  and its own parent,
+  [10XChangeUnderlyingSet(  [110X[3XQ[103X[10X,  [110X[3XS[103X[10X  )[110X  changes the underlying set of [3XQ[103X to [3XS[103X. If the
+  Cayley   table   of  [3XQ[103X  was  previously  stored,  it  will  be  automtically
+  recalculated.  The  argument  [3XS[103X  must  be  a collection and it is internally
+  sorted.[133X
+  
+  [33X[0;0YNote  that  is  it  not possible to change the underlying set of a non-index
+  based  right  quasigroup because the multiplication function then depends on
+  the  underlying set and it would have to be changed as well. In addition, we
+  do  not  support  changing  the underlying set for a single element or for a
+  list of elements because the underlying set of a parent quasigroup is sorted
+  and the order might not be maintained by local changes.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := AsLoop( SymmetricGroup( 3 ) );;[127X[104X
+    [4X[25Xgap>[125X [27XUnderlyingSetElm( Q.1 );[127X[104X
+    [4X[28X()[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingSet( Q );[127X[104X
+    [4X[28X[ (), (2,3), (1,2), (1,2,3), (1,3,2), (1,3) ][128X[104X
+    [4X[25Xgap>[125X [27XChangeUnderlyingSet( Q, ['a','b','c','d','e','f'] );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingSet( Q );[127X[104X
+    [4X[28X"abcdef"[128X[104X
+    [4X[25Xgap>[125X [27XCayleyTable( Q );[127X[104X
+    [4X[28X[ "abcdef", "badcfe", "ceafbd", "dfbeac", "ecfadb", "fdebca" ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.5 [33X[0;0YAccessing elements and elementwise right quasigroup operations[133X[101X
+  
+  [33X[0;0YThe  [23Xi[123Xth element of a right quasigroup [10XQ[110X can be obtained by [10XElements( Q )[ i
+  ][110X.[133X
+  
+  [33X[0;0YThe  [23Xi[123Xth  element  of  the parent [10XParent( Q )[110X or a right quasigroup [10XQ[110X can be
+  obtained  by  [10XQ.i[110X  (see  Section  [14X1.7[114X).  Note  that [10XQ.i[110X need not be the same
+  element as [10XElements( Q )[ i ][110X, in fact, it need not even be an element of [10XQ[110X.[133X
+  
+  [33X[0;0YFinally,  if  [10Xx[110X  is  an  element  of  the underlying set of [10XParent( Q )[110X, the
+  corresponding  element  of  [10XParent(  Q )[110X is obtained by [10XQ[x][110X. Note that [10XQ[x][110X
+  therefore need not be an element of [10XQ[110X.[133X
+  
+  [33X[0;0YThe product of two right quasigroup elements [10Xx[110X and [10Xy[110X is obtained by [10Xx*y[110X. The
+  right  quotient  of  [10Xx[110X  and  [10Xy[110X is obtained via [10Xx/y[110X, [10XRightQuotient( x, y )[110X or
+  [10XRightDivision( x, y )[110X. In case of quasigroups, the left division is obtained
+  via  [10XLeftQuotient(  x, y )[110X or [10XLeftDivision( x, y )[110X but not by [10Xx\y[110X since [10X\[110X is
+  not supported in [5XGAP[105X as a binary operation symbol.[133X
+  
+  [33X[0;0YFor  each  of  these  operations,  one of the two arguments can be a list of
+  right  quasigroup  elements  or  a  right  quasigroup,  in  which  case  the
+  corresponding  list is returned. We allow [10Xx*Q[110X etc even if [10Xx[110X is an element of
+  [10XParent(Q)[110X, not necessarily an element of [10XQ[110X.[133X
+  
+  [1X1.5-1 RightQuotient[101X
+  
+  [33X[1;0Y[29X[2XRightQuotient[102X( [3Xx[103X, [3Xy[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  right quotient of right quasigroup elements [3Xx[103X and [3Xy[103X, that is,
+            the unique element [10Xz[110X such that [3Xx[103X[10X = z*[110X[3Xy[103X. The synonym [10XRightDivision(
+            [110X[3Xx[103X[10X, [110X[3Xy[103X[10X )[110X is also supported.[133X
+  
+  [1X1.5-2 LeftQuotient[101X
+  
+  [33X[1;0Y[29X[2XLeftQuotient[102X( [3Xx[103X, [3Xy[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  left  quotient  of  quasigroup elements [3Xx[103X and [3Xy[103X, that is, the
+            unique element [10Xz[110X such that [3Xy[103X[10X = [110X[3Xx[103X[10X*z[110X. The synonym [10XLeftDivision( [110X[3Xx[103X[10X, [110X[3Xy[103X[10X
+            )[110X is also supported.[133X
+  
+  
+  [1X1.5-3 [33X[0;0YInverses in loops[133X[101X
+  
+  [33X[1;0Y[29X[2XOne[102X( [3XQ[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRightInverse[102X( [3Xx[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XLeftInverse[102X( [3Xx[103X ) [32X attribute[133X
+  
+  [33X[0;0YIn  a  loop  [10XQ[110X,  the  neutral element is returned by [10XOne( Q )[110X. Note that the
+  neutral element need not be the first element [10XElements( Q )[ 1 ][110X of [10XQ[110X.[133X
+  
+  [33X[0;0YIf [10Xe[110X is the neutral element of [10XQ[110X, then for every [10Xx[110X in [10XQ[110X there are [10Xy[110X and [10Xz[110X in
+  [10XQ[110X  such  that  [10Xx*y = z*x = e[110X. The element [10Xy[110X is the [13Xright inverse[113X of [10Xx[110X and is
+  returned  by [10XRightInverse( x )[110X. Dually, the element [10Xz[110X is the [13Xleft inverse[113X of
+  [10Xx[110X and is returned by [10XLeftInverse( x )[110X.[133X
+  
+  [33X[0;0YIf the two inverses of [10Xx[110X coincide, the [13Xtwo-sided inverse[113X of [10Xx[110X is returned by
+  [10XInverse(x)[110X or by [10Xx^-1[110X.[133X
+  
+  
+  [1X1.5-4 [33X[0;0YPowers, order and exponent[133X[101X
+  
+  [33X[0;0YProducts  without  specified  parentheses are evalutated from left to right,
+  i.e., [10Xx*y*z = (x*y)*z[110X.[133X
+  
+  [33X[0;0YA  magma  [10XM[110X is said to be [13Xpower associative[113X if for every [10Xx[110X in [10XM[110X the submagma
+  generated  by  [10Xx[110X  is  a group. In particular, powers [10Xx^n[110X are well-defined in
+  power  associative  magmas.  Even  if  [10XM[110X  is not power-associative, [10Xx^n[110X with
+  positive  [10Xn[110X  returns  the element of [10XM[110X obtained from the binary expansion of
+  the exponent [10Xn[110X.[133X
+  
+  [33X[0;0YIf [10XM[110X is a magma with neutral element [10Xe[110X and [10Xx[110X is an element of [10XM[110X, then [10XOrder(
+  x )[110X returns the smallest nonnegative integer [10Xn[110X such that [10Xx^n=e[110X, if possible,
+  else returns [10Xfail[110X. Note that in view of the above remarks, [10XOrder( x )[110X always
+  returns a nonnegative integer if [10Xx[110X is an element of a finite loop.[133X
+  
+  [33X[0;0YThe  exponent  [10XExponent( Q )[110X returns the smallest nonnegative integer [10Xn[110X such
+  that  [10Xx^n[110X  is  the  neutral element of [10XQ[110X, if such an integer exists, else it
+  returns  [10Xfail[110X.  Note  again  that [10XExponent( Q )[110X will never fail for a finite
+  loop [10XQ[110X in [5XRightQuasigroups[105X, even if [10XQ[110X is not power associative.[133X
+  
+  [33X[0;0YIf  [10Xn[110X  is  negative and [10Xx[110X has a two-sided inverse, then [10Xx^n[110X is calculated as
+  [10X(x^(-1))^(-n)[110X.[133X
+  
+  [1X1.5-5 Commutator[101X
+  
+  [33X[1;0Y[29X[2XCommutator[102X( [3Xx[103X, [3Xy[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  commutator  of  [10Xx[110X  and  [10Xy[110X,  that  is,  the unique element [10Xz =
+            (x*y)/(y*x)[110X satisfying [10Xx*y = z*(y*x)[110X. This is a logical choice for
+            the elementwise commutator in right quasigroups.[133X
+  
+  [33X[0;0YGroup-like  commutators  are  obtained  via  [10XComm(  x,  y  )[110X. If [10Xx[110X and [10Xy[110X are
+  quasigroup   elements,  [10XComm(  x,  y  )[110X  returns  the  unique  element  [10Xz  =
+  LeftQuotient(  y*x,  x*y )[110X that satisfies [10Xx*y = (y*x)*z[110X. When the underlying
+  quasigroup  is  a  loop with two-sided inverses in which the antiautomorphic
+  inverse  property  [23X(xy)^{-1}=y^{-1}x^{-1}[123X  and  the  left  inverse  property
+  [23Xx^{-1}(xy)  =  y[123X  hold,  then [10XComm( x, y )[110X coincides with the [5XGAP[105X commutator
+  [10Xx^(-1)*y^(-1)*x*y[110X.[133X
+  
+  [1X1.5-6 Associator[101X
+  
+  [33X[1;0Y[29X[2XAssociator[102X( [3Xx[103X, [3Xy[103X, [3Xz[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  associator  of  [10Xx[110X,  [10Xy[110X  and [10Xz[110X, that is, the unique element [10Xu =
+            (x*(y*z))/((x*y)*z)[110X satisfying [10Xx*(y*z) = u*((x*y)*z)[110X.[133X
+  
+  
+  [1X1.6 [33X[0;0YFirst examples[133X[101X
+  
+  [33X[0;0YArithmetic  operations  in right quasigroups (quasigroup, loops) are carried
+  out  either via tables or via functions, depending on whether the algebra in
+  question  is  index  based  or  not. See Section [14X1.8[114X for more information on
+  index  based  versus  non-index  based  right  quasigroups,  Section [14X2.4[114X for
+  details  on  multiplication  tables  and  Cayley tables, and Section [14X2.5[114X for
+  details on how functions can be used as arithmetic operations.[133X
+  
+  [33X[0;0YChapter  [14X2[114X  contains  a comprehensive list of right quasigroup constructors.
+  Here  we  present two examples, starting with a right quasigroup constructor
+  based on a multiplication function.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := RightQuasigroupByFunction( [0..3], function( x,y ) return (x+2*y) mod 4; end ); # index based by default[127X[104X
+    [4X[28X<right quasigroup of size 4>[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingSet( Q );[127X[104X
+    [4X[28X[ 0, 1, 2, 3 ][128X[104X
+    [4X[25Xgap>[125X [27XElements( Q ); # default prefix "r" is assigned to right quasigroup elements[127X[104X
+    [4X[28X[ r0, r1, r2, r3 ][128X[104X
+    [4X[25Xgap>[125X [27X[ Elements(Q)[1], Q.1, Q[0] ]; # three ways of accessing elements[127X[104X
+    [4X[28X[ r0, r0, r0 ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( CayleyTable( Q ) ); # based on the underlying set[127X[104X
+    [4X[28X[ [  0,  2,  0,  2 ],[128X[104X
+    [4X[28X  [  1,  3,  1,  3 ],[128X[104X
+    [4X[28X  [  2,  0,  2,  0 ],[128X[104X
+    [4X[28X  [  3,  1,  3,  1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( MultiplicationTable( Q ) ); # based on [1..n], here [1..4][127X[104X
+    [4X[28X[ [  1,  3,  1,  3 ],[128X[104X
+    [4X[28X  [  2,  4,  2,  4 ],[128X[104X
+    [4X[28X  [  3,  1,  3,  1 ],[128X[104X
+    [4X[28X  [  4,  2,  4,  2 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xmult := MultiplicationFunction( Q ); # based on [1..n] since Q is index based[127X[104X
+    [4X[28Xfunction( i, j ) ... end[128X[104X
+    [4X[25Xgap>[125X [27Xmult( 1, 1 );[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XQ[0]*Q[1];[127X[104X
+    [4X[28Xr2[128X[104X
+    [4X[25Xgap>[125X [27XQ[0]/Q[1]; # RightQuotient and RightDivision are also supported[127X[104X
+    [4X[28Xr2[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIf,  as in the above example, the remaining operations (right division, left
+  division,   neutral  element)  are  not  provided  by  the  user,  they  are
+  automatically  inferred  from the given multiplication function depending on
+  the type of algebra under construction. This might (and typically will) lead
+  to  slower division operations in the non-index based case. For instance, if
+  only  the multiplication function for a right quasigroup [10XQ[110X is given and [10XQ[110X is
+  not  index  based,  then  the right quotient [10Xx/y[110X is obtained by locating the
+  first  (and  only)  element [10Xz[110X of [10XQ[110X such that [10Xx = z*y[110X; this is slow when [10XQ[110X is
+  large.[133X
+  
+  [33X[0;0YHere is an example of a loop constructor based on a conversion from a group.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := AsLoop( SymmetricGroup( 3 ), ConstructorStyle( false, false ) ); # not index based, arguments not checked[127X[104X
+    [4X[28X<associative loop of size 6>[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingSet( Q );[127X[104X
+    [4X[28X[ (), (2,3), (1,2), (1,2,3), (1,3,2), (1,3) ][128X[104X
+    [4X[25Xgap>[125X [27XElements( Q ); # default prefix "l" is assigned to loop elements[127X[104X
+    [4X[28X[ l(), l(2,3), l(1,2), l(1,2,3), l(1,3,2), l(1,3) ][128X[104X
+    [4X[25Xgap>[125X [27Xmult := MultiplicationFunction( Q ); # based on the underlying set since Q is not index based[127X[104X
+    [4X[28X<Operation "*">[128X[104X
+    [4X[25Xgap>[125X [27Xmult( (1,2), (1,3) );[127X[104X
+    [4X[28X(1,2,3)[128X[104X
+    [4X[25Xgap>[125X [27XOne( Q );[127X[104X
+    [4X[28Xl()[128X[104X
+    [4X[25Xgap>[125X [27XCommutator( Q[(1,2)], Q[(1,3)] );[127X[104X
+    [4X[28Xl(1,3,2)[128X[104X
+    [4X[25Xgap>[125X [27XAssociator( Q[(1,2)], Q[(1,3)], Q[(2,3)] );[127X[104X
+    [4X[28Xl()[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNote  that  right  quasigroups  that  happen  to be quasigroups and/or loops
+  mathematically must be explicitly declared as such in [5XGAP[105X to make quasigroup
+  and/or  loop methods available to them. For instance, the above loop of size
+  6  is  an  associative  loop  (that  is,  a  group),  but  it  will  not  be
+  automatically  recognized as a group by [5XGAP[105X. There are methods provided that
+  check  if a given right quasigroup is mathematically a quasigroup or a loop,
+  cf. Section [14X2.2[114X.[133X
+  
+  
+  [1X1.7 [33X[0;0YThe parent right quasigroup[133X[101X
+  
+  [33X[0;0YThe  parent  mechanism  is  employed  in [5XGAP[105X and in [5XRightQuasigroups[105X to save
+  memory  and  to  take  advantage  of  the  containment of subalgebras in the
+  enveloping  algebras.  The parent [10XParent( Q )[110X of a right quasigorup [10XQ[110X is the
+  largest  right quasigroup from which [10XQ[110X has been constructed as a subalgebra.
+  In  more detail, if [10XQ[110X is constructed as a subalgebra of a right quasigroup [10XP[110X
+  then  [10XParent(  Q  )  =  Parent(  P  )[110X,  while  if  [10XQ[110X is not constructed as a
+  subalgebra of some right quasigroup then [10XParent( Q ) = Q[110X.[133X
+  
+  [33X[0;0YRight  quasigroup  elements are created automatically every time a new right
+  quasigroup  is  constructed,  with one exception: When [10XQ[110X is constructed as a
+  subalgebra  then  the  elements  of  [10XQ[110X  are  inherited  from [10XParent( Q )[110X. In
+  particular,  if  [10Xx[110X  is  any  element  of [10XQ[110X then [10XF = FamilyObj( x )[110X points to
+  [10XParent(  Q  )[110X  and many attributes of [10XParent( Q )[110X can be accessed via [10XF[110X (see
+  Section [14X1.11[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := RightQuasigroupByFunction([0..5], function(x,y) return (x+y) mod 6; end );; Elements( Q ); [127X[104X
+    [4X[28X[ r0, r1, r2, r3, r4, r5 ][128X[104X
+    [4X[25Xgap>[125X [27XA := Subrightquasigroup( Q, [2] );[127X[104X
+    [4X[28X<right quasigroup of size 3>[128X[104X
+    [4X[25Xgap>[125X [27XElements( A );[127X[104X
+    [4X[28X[ r0, r2, r4 ][128X[104X
+    [4X[25Xgap>[125X [27XParent( A ) = Q;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XElements( A )[ 3 ]; # the 3rd element of A[127X[104X
+    [4X[28Xr4[128X[104X
+    [4X[25Xgap>[125X [27XA.3; # the 3rd element of the parent of A[127X[104X
+    [4X[28Xr2[128X[104X
+    [4X[25Xgap>[125X [27XA[4]; # the element of the parent of A corresponding to the given underlying element[127X[104X
+    [4X[28Xr4[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( CayleyTable( A ) );[127X[104X
+    [4X[28X[ [  0,  2,  4 ],[128X[104X
+    [4X[28X  [  2,  4,  0 ],[128X[104X
+    [4X[28X  [  4,  0,  2 ] ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( MultiplicationTable( A ) );[127X[104X
+    [4X[28X[ [  1,  2,  3 ],[128X[104X
+    [4X[28X  [  2,  3,  1 ],[128X[104X
+    [4X[28X  [  3,  1,  2 ] ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.8 [33X[0;0YIndex based and canonical right quasigroups[133X[101X
+  
+  [33X[0;0YEvery  right  quasigroup  [10XQ[110X  is  constructed  either as an [13Xindex based[113X right
+  quasigroup or as a right quasigroup that is not index based.[133X
+  
+  [33X[0;0YGenerally  speaking, index based right quasigroups take longer to construct,
+  cannot  be  very  large  (thousands  of elements) and can be calculated with
+  fast,  while  non-index based right quasigroups are constructed quickly, can
+  be  very  large  (millions of elements) but only basic methods will work for
+  them.[133X
+  
+  [33X[0;0YIf  [10XQ[110X  is an index based right quasigroup of size [23Xn[123X, then the multiplication
+  and  divisions  in [10XQ[110X are carried out via multiplication and division tables.
+  The multiplication and division functions might then be present as functions
+  [23X[1..n]\times[1..n]\to[1..n][123X  but  they are not directly involved in carrying
+  out arithmetic operations.[133X
+  
+  [33X[0;0YIf [10XQ[110X is a non-index based right quasigroup on the underlying set [23XS[123X, then the
+  multiplication  and  divisions  in  [10XQ[110X are carried out via multiplication and
+  division  functions  [23XS\times  S\to S[123X. The multiplication and division tables
+  might  then  be  present  but they are not directly involved in carrying out
+  arithmetic operations.[133X
+  
+  [33X[0;0YIn more details, if [10XQ[110X is a right quasigroup with parent [10XP[110X of size [23Xn[123X, [10Xx[110X is an
+  an element of [10XQ[110X and [10XF=FamilyObj( x )[110X, then:[133X
+  
+  [30X    [33X[0;6YIf [10XQ[110X is index based:[133X
+  
+        [30X    [33X[0;12Y[10Xx![1][110X  is  the  position of [10Xx[110X among the elements of [10XP[110X, i.e., the
+              index of [10Xx[110X (see below),[133X
+  
+        [30X    [33X[0;12Ythe  multiplication  table  of  [10XP[110X is precalculated and stored as
+              F!.multTable (the attribute [10XMultiplicationTable( Q )[110X is set when
+              requested for the first time),[133X
+  
+        [30X    [33X[0;12Ythe  division  tables  of  [10XP[110X  are calculated and stored at first
+              usage of the respective divisions,[133X
+  
+        [30X    [33X[0;12Ythe  multiplication and division functions of [10XP[110X, if present, are
+              functions   [23X[1..n]\times[1..n]\to   [1..n][123X  but  all  arithmetic
+              operations are handled via tables,[133X
+  
+        [30X    [33X[0;12Ythe   fundamental   piece   of   data   is   [10XF!.multTable[110X,   the
+              multiplication table of [10XP[110X.[133X
+  
+  [30X    [33X[0;6YIf [10XQ[110X is not index based:[133X
+  
+        [30X    [33X[0;12Y[10Xx![1][110X  is the element of the underlying set [23XS[123X of [10XQ[110X corresponding
+              to [10Xx[110X,[133X
+  
+        [30X    [33X[0;12Ythe   mutliplication   and   division   tables   of  [10XP[110X  are  not
+              precalculated,[133X
+  
+        [30X    [33X[0;12Ythe multiplication and division functions of [10XP[110X are possibly slow
+              functions  [23XS\times  S\to  S[123X, often based on some additional data
+              provided by the user in the constructor,[133X
+  
+        [30X    [33X[0;12Ythe  fundamental  piece  of  data is [10XF!.mult[110X, the multiplication
+              function of [10XP[110X.[133X
+  
+  [33X[0;0YA  right  quasigroup of size [23Xn[123X is said to be [13Xcanonical[113X if it is index based,
+  is  its  own  parent  and the underlying set is [23X[1..n][123X. Many computationally
+  intensive  methods  of [5XRightQuasigroups[105X internally work with canonical right
+  quasigroups.[133X
+  
+  [1X1.8-1 ParentInd[101X
+  
+  [33X[1;0Y[29X[2XParentInd[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ythe index of the object [3Xarg[103X. If [3Xarg[103X is a right quasigroup element,
+            it  returns  the  index of [3Xarg[103X, that is, the position of [3Xarg[103X among
+            the  elements of the parent right quasigroup. If the argument is a
+            list  of  right  quasigroup elements, it returns the corresponding
+            list of indices. If the argument is a right quasigroup, it returns
+            the  corresponding  list  of  indices  and stores the result as an
+            attribute.  Finally,  if  [3Xarg[103X  is  a right quasigroup mapping with
+            source  [10XQ1[110X and range [10XQ2[110X, the function calls [10XAsParentPerm( [110X[3Xarg[103X[10X )[110X if
+            [10XQ1    =    Q2[110X    and    [3Xarg[103X    is   bijective,   else   it   calls
+            [10XAsParentTransformation( [110X[3Xarg[103X[10X )[110X.[133X
+  
+  [1X1.8-2 IsIndexBased[101X
+  
+  [33X[1;0Y[29X[2XIsIndexBased[102X( [3XQ[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X if the right quasigroup [3XQ[103X is index based, else returns [10Xfalse[110X.[133X
+  
+  [1X1.8-3 IndexBasedCopy[101X
+  
+  [33X[1;0Y[29X[2XIndexBasedCopy[102X( [3XQ[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya  copy of [3XQ[103X that has the same underlying set as [3XQ[103X, is index based
+            and  is  its  own  parent. An effort is made to inherit properties
+            from [3XQ[103X.[133X
+  
+  [33X[0;0YNote  that  there  is no general method available for converting index based
+  right quasigroups into right quasigroups that are not index based.[133X
+  
+  [1X1.8-4 IsCanonical[101X
+  
+  [33X[1;0Y[29X[2XIsCanonical[102X( [3XQ[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  the  right  quasigroup  [3XQ[103X  of  size [23Xn[123X is canonical, else
+            returns [10Xfalse[110X.[133X
+  
+  [1X1.8-5 CanonicalCopy[101X
+  
+  [33X[1;0Y[29X[2XCanonicalCopy[102X( [3XQ[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya  canonical  copy of the right quasigroup [3XQ[103X. An effort is made to
+            inherit properties from [3XQ[103X.[133X
+  
+  [33X[0;0YNote  that  there  is  no  general method available for converting canonical
+  right quasigroups into right quasigroups that are not canonical.[133X
+  
+  [33X[0;0YThe  following  example  illustrates basic features of non-index based right
+  quasigroups.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := RightQuasigroupByFunction( GF( 9 ), \+, ConstructorStyle( false, false ) ); # not index based, arguments not checked[127X[104X
+    [4X[28X<right quasigroup of size 9>[128X[104X
+    [4X[25Xgap>[125X [27XIsIndexBased( Q );[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xx := Q.2;[127X[104X
+    [4X[28XrZ(3)^0[128X[104X
+    [4X[25Xgap>[125X [27Xx![1]; # the underlying element[127X[104X
+    [4X[28XZ(3)^0[128X[104X
+    [4X[25Xgap>[125X [27Xx*x;[127X[104X
+    [4X[28XrZ(3)[128X[104X
+    [4X[25Xgap>[125X [27XF := FamilyObj( x );[127X[104X
+    [4X[28X<Family: "RightQuasigroupFam">[128X[104X
+    [4X[25Xgap>[125X [27X[ IsBound( F!.mult ), IsBound( F!.rdiv ), IsBound( F!.ldiv ) ]; # no left division in a right quasigroup[127X[104X
+    [4X[28X[ true, true, false ][128X[104X
+    [4X[25Xgap>[125X [27X[ IsBound( F!.multTable ), IsBound( F!.rdivTable ), IsBound( F!.ldivTable ) ]; # no tables are bound[127X[104X
+    [4X[28X[ false, false, false ][128X[104X
+    [4X[25Xgap>[125X [27Xmult := MultiplicationFunction( Q );[127X[104X
+    [4X[28X<Operation "+">[128X[104X
+    [4X[25Xgap>[125X [27Xmult( Z(3), Z(3) );[127X[104X
+    [4X[28XZ(3)^0[128X[104X
+    [4X[25Xgap>[125X [27Xrdiv := RightDivisionFunction( Q ); # the constructor does not know that this really is <Operation "-">[127X[104X
+    [4X[28Xfunction( x, y ) ... end[128X[104X
+    [4X[25Xgap>[125X [27Xrdiv( Z(3), Z(3) );[127X[104X
+    [4X[28X0*Z(3)[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNote how things change in index based and canonical copies.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := RightQuasigroupByFunction( GF( 9 ), \+, ConstructorStyle( false, false ) );; # same as in the above example, not index based[127X[104X
+    [4X[25Xgap>[125X [27XR := IndexBasedCopy( Q );;[127X[104X
+    [4X[25Xgap>[125X [27XIsIndexBased( R );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingSet( R ); # no change to the underlying set[127X[104X
+    [4X[28X[ 0*Z(3), Z(3)^0, Z(3), Z(3^2), Z(3^2)^2, Z(3^2)^3, Z(3^2)^5, Z(3^2)^6, [128X[104X
+    [4X[28X  Z(3^2)^7 ][128X[104X
+    [4X[25Xgap>[125X [27XIsCanonical( R ); # underlying set is not [1..n][127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xx := R.2;;[127X[104X
+    [4X[25Xgap>[125X [27Xx![1]; # the index of x in the parent of R (here R itself)[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27Xx*x;[127X[104X
+    [4X[28XrZ(3)[128X[104X
+    [4X[25Xgap>[125X [27XF := FamilyObj( R.1 );;[127X[104X
+    [4X[25Xgap>[125X [27X[ IsBound( F!.mult ), IsBound( F!.rdiv ), IsBound( F!.ldiv ) ]; # if bound then based on respective tables[127X[104X
+    [4X[28X[ true, true, false ][128X[104X
+    [4X[25Xgap>[125X [27X[ IsBound( F!.multTable ), IsBound( F!.rdivTable ), IsBound( F!.ldivTable ) ]; # division tables will be bound when divisions are called [127X[104X
+    [4X[28X[ true, false, false ][128X[104X
+    [4X[25Xgap>[125X [27Xx/x;[127X[104X
+    [4X[28Xr0*Z(3)[128X[104X
+    [4X[25Xgap>[125X [27XIsBound( F!.rdivTable );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xmult := MultiplicationFunction( R ); # the multiplication function is based on indices[127X[104X
+    [4X[28Xfunction( i, j ) ... end[128X[104X
+    [4X[25Xgap>[125X [27Xmult( 1, 1 );[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XC := CanonicalCopy( Q );[127X[104X
+    [4X[28X<right quasigroup of size 9>[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingSet( C ); # underlying set has changed to [1..n][127X[104X
+    [4X[28X[ 1, 2, 3, 4, 5, 6, 7, 8, 9 ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.9 [33X[0;0YGenerators and comparison of right quasigroups[133X[101X
+  
+  [33X[0;0Y[10XGeneratorsOfRightQuasigroup[110X, [10XGeneratorsOfQuasigroup[110X and [10XGeneratorsOfLoop[110X are
+  supported as synonyms of [10XGeneratorsOfMagma[110X.[133X
+  
+  [1X1.9-1 SmallGeneratingSet[101X
+  
+  [33X[1;0Y[29X[2XSmallGeneratingSet[102X( [3XQ[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya  small  generating  set  of  a  right quasigroup [3XQ[103X obtained by a
+            greedy  algorithm that starts with the empty set of generators and
+            in  every  steps  adds  the  first  element of [3XQ[103X that enlarges the
+            generated   subalgebra  the  most.  There  is  no  guarantee  that
+            [10XSmallGeneratingSet[110X  will  return  a  generating  set  of  smallest
+            possible  cardinality.  If  the returned set [10Xgens[110X of generators is
+            smaller  in cardinality than [10XGeneratorsOfRightQuasigroup( [110X[3XQ[103X[10X )[110X, the
+            value  of [10XGeneratorsOfRightQuasigroup( [110X[3XQ[103X[10X )[110X is automatically set to
+            [10Xgens[110X.[133X
+  
+  [1X1.9-2 GeneratorsSmallest[101X
+  
+  [33X[1;0Y[29X[2XGeneratorsSmallest[102X( [3XQ[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ythe smallest generating set of [3XQ[103X with respect to the lexicographic
+            ordering  based  on  the  linear ordering of elements of [3XQ[103X. If the
+            returned  set  [10Xgens[110X  of  generators is smaller in cardinality than
+            [10XGeneratorsOfRightQuasigroup(     [110X[3XQ[103X[10X     )[110X,     the     value     of
+            [10XGeneratorsOfRightQuasigroup( [110X[3XQ[103X[10X )[110X is automatically set to [10Xgens[110X.[133X
+  
+  [33X[0;0YIf [10XA[110X and [10XB[110X are right quasigroups with the same parent, cf. Section [14X1.7[114X, then
+  [10XA<B[110X  iff  [10XGeneratorsSmallest(  A  )<GeneratorsSmallest(  B )[110X. When two right
+  quasigroups do not have the same parent, they cannot be compared.[133X
+  
+  [33X[0;0YThere  is a fast test for equality of two right quasigroups [10XA[110X, [10XB[110X that avoids
+  calling [10XGeneratorsSmallest[110X.[133X
+  
+  [33X[0;0YJust like with other [5XGAP[105X objects, if [10XA = B[110X returns [10Xtrue[110X, this does not imply
+  that  [10XA[110X  and  [10XB[110X  are  identical  [5XGAP[105X objects, merely that they have the same
+  parent  and  consist of the same elements. In particular, if [10XA = Parent( A )[110X
+  holds  then [10XA[110X is not necessarily its own parent; it might be a subalgebra of
+  [10XParent(  A  )[110X  that happens to contain all elements of [10XParent( A )[110X. (One can
+  call  [10XIsIdenticalObj(  A,  Parent( A ) )[110X to check whether [10XA[110X truly is its own
+  parent.)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := AsLoop( GF(8) );;[127X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfLoop( Q ); # trivial generating set[127X[104X
+    [4X[28X[ l0*Z(2), lZ(2)^0, lZ(2^3), lZ(2^3)^2, lZ(2^3)^3, lZ(2^3)^4, lZ(2^3)^5, [128X[104X
+    [4X[28X  lZ(2^3)^6 ][128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsSmallest( Q ); # with respect to lexicographic ordering[127X[104X
+    [4X[28X[ lZ(2^3)^4, lZ(2^3)^5, lZ(2^3)^6 ][128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfLoop( Q ); # changed since a smaller generating set has been found[127X[104X
+    [4X[28X[ lZ(2^3)^4, lZ(2^3)^5, lZ(2^3)^6 ][128X[104X
+    [4X[25Xgap>[125X [27XSmallGeneratingSet( Q ); # with respect to greedy algorithm[127X[104X
+    [4X[28X[ lZ(2)^0, lZ(2^3), lZ(2^3)^2 ][128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfLoop( Q ); # not changed since no smaller generating set has been found[127X[104X
+    [4X[28X[ lZ(2^3)^4, lZ(2^3)^5, lZ(2^3)^6 ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.10 [33X[0;0YNon-qualified operations[133X[101X
+  
+  [33X[0;0YThere  are  several  so-called  [13Xnon-qualified  operations[113X  in [5XGAP[105X. These are
+  operations  which  are not attributes or properties but whose result depends
+  on  the  type  of the argument. As far as [5XRightQuasigroups[105X is concerned, the
+  non-qualified   operations   are   [10XDerivedSeries[110X,   [10XIsNilpotent[110X,   [10XIsSimple[110X,
+  [10XIsSolvable[110X,   [10XLowerCentralSeries[110X   and   [10XUpperCentralSeries[110X.  For  all  such
+  operations  we  provide  qualified  methods,  e.g., [10XDerivedSeriesOfLoop( Q )[110X
+  called  with  a  loop  [10XQ[110X  as  argument,  but  also support the non-qualified
+  versions, e.g., [10XDerivedSeries( Q )[110X.[133X
+  
+  
+  [1X1.11 [33X[0;0Y*Direct access to the parent right quasigroup record[133X[101X
+  
+  [33X[0;0YLet  [10XQ[110X  be a right quasigroup, [10XF[110X the family object of any element of [10XQ[110X (that
+  is, [10XF = FamilyObj(Q.1)[110X) and [10XP[110X the parent of [10XQ[110X (see Section [14X1.7[114X). Then:[133X
+  
+  [30X    [33X[0;6Y[10XF!.cayleyTable[110X is the Cayley table of [10XP[110X.[133X
+  
+  [30X    [33X[0;6Y[10XF!.indexBased[110X determines is [10XP[110X and hence also [10XQ[110X are index based.[133X
+  
+  [30X    [33X[0;6Y[10XF!.ldiv[110X  is  the  left  division  function  of  [10XP[110X,  if [10XQ[110X is a declared
+        quasigroup.[133X
+  
+  [30X    [33X[0;6Y[10XF!.ldivTable[110X  is  the  left  division  table  of [10XP[110X, if [10XQ[110X is a declared
+        quasigroup.[133X
+  
+  [30X    [33X[0;6Y[10XF!.mult[110X is the multiplication function of [10XP[110X.[133X
+  
+  [30X    [33X[0;6Y[10XF!.multTable[110X is the multiplication table of [10XP[110X.[133X
+  
+  [30X    [33X[0;6Y[10XF!.names[110X is the prefix used for all elements of [10XP[110X.[133X
+  
+  [30X    [33X[0;6Y[10XF!.one[110X  is  the  neutral  element  of [10XP[110X and hence also of [10XQ[110X, if [10XQ[110X is a
+        declared loop.[133X
+  
+  [30X    [33X[0;6Y[10XF!.parent[110X is [10XP[110X.[133X
+  
+  [30X    [33X[0;6Y[10XF!.rdiv[110X is the right division function of [10XP[110X.[133X
+  
+  [30X    [33X[0;6Y[10XF!.rdivTable[110X is the right division table of [10XP[110X.[133X
+  
+  [30X    [33X[0;6Y[10XF!.rSection[110X is the right section for [10XP[110X.[133X
+  
+  [30X    [33X[0;6Y[10XF!.set[110X is the set of [5XGAP[105X elements of [10XP[110X.[133X
+  
+  [30X    [33X[0;6Y[10XF!.size[110X is the size of [10XP[110X.[133X
+  
+  [30X    [33X[0;6Y[10XF!.uSet[110X  is  the  underlying  set  of  [10XP[110X.  Note  that if [10XQ[110X is a proper
+        subalgebra of [10XP[110X then [10XUnderlyingSet( Q )[110X is a proper subset of [10XF!.uSet[110X.[133X
+  
+  [33X[0;0YNote  that  not  all  of  the  above  components of [10XF[110X are necessarily bound,
+  depending  on  the  constructor  used  for  [10XP[110X.  To  see  the  list  of bound
+  components, call [10XNamesOfComponents( F )[110X.[133X
+  

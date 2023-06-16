@@ -1,0 +1,659 @@
+  
+  [1X3 [33X[0;0YDirect products, subalgebras and factor algebras[133X[101X
+  
+  [33X[0;0YIn  this chapter we describe methods of universal-algebraic flavor for right
+  quasigroups.[133X
+  
+  
+  [1X3.1 [33X[0;0YDirect product of right quasigroups[133X[101X
+  
+  [33X[0;0Y[10XDirectProduct(Q1,...,Qn)[110X returns the direct product of right quasigroups [10XQ1[110X,
+  ..., [10XQn[110X. We allow groups to be among the arguments.[133X
+  
+  [33X[0;0YIf  all  arguments  are  groups then the standard [5XGAP[105X method is called and a
+  group is returned.[133X
+  
+  [33X[0;0YOtherwise,  if  all  non-group  arguments are loops then a loop is returned,
+  else  if  all  non-group  arguments  are  quasigroups  then  a quasigroup is
+  returned,  else  a  right  quasigroup is returned. The underlying set is the
+  carthesian  product  of  elements  of [10XQ1[110X, ..., [10XQn[110X. The restulting algebra is
+  index  based  if  and  only  if  all non-group arguments are index based. An
+  effort is made to inherit common properties of [10XQ1[110X, ...,. [10XQn[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG := Group((1,2));;[127X[104X
+    [4X[25Xgap>[125X [27XL := LoopByCayleyTable( [[1,2,3],[2,3,1],[3,1,2]] );;[127X[104X
+    [4X[25Xgap>[125X [27XR := ProjectionRightQuasigroup( [1..3] );;[127X[104X
+    [4X[25Xgap>[125X [27XD := DirectProduct( G, L );[127X[104X
+    [4X[28X<loop of size 6>[128X[104X
+    [4X[25Xgap>[125X [27XD.1;[127X[104X
+    [4X[28Xl[ (), l1 ][128X[104X
+    [4X[25Xgap>[125X [27XDirectProduct( G, L, R );[127X[104X
+    [4X[28X<right quasigroup of size 18>[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.2 [33X[0;0YOpposite quasigroups[133X[101X
+  
+  [33X[0;0YGiven  a quasigroup [23X(Q,\cdot)[123X, its [13Xopposite[113X is the quasigroup [23X(Q,\circ)[123X with
+  multiplication  [23Xx\circ y = y\cdot x[123X. If [23X(Q,\cdot)[123X is a loop, its opposite is
+  also  a  loop.  (Note  that  the opposite of a right quasigroup [23XQ[123X is a right
+  quasigroup  iff  [23XQ[123X is a quasigroup. We therefore do not support the opposite
+  construction for right quasigroups.)[133X
+  
+  
+  [1X3.2-1 [33X[0;0YOpposite quasigroups and loops[133X[101X
+  
+  [33X[1;0Y[29X[2XOppositeQuasigroup[102X( [3XQ[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XOppositeLoop[102X( [3XQ[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  opposite  quasigroup  (loop)  of the quasigroup (loop) [3XQ[103X. The
+            resulting  algebra  is index based iff [3XQ[103X is index based. An effort
+            is made to inherit dual properties from [3XQ[103X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := QuasigroupByFunction( GF(3), \- );;[127X[104X
+    [4X[25Xgap>[125X [27XOQ := OppositeQuasigroup( Q );[127X[104X
+    [4X[28X<quasigroup of size 3>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( MultiplicationTable( Q ) );[127X[104X
+    [4X[28X[ [  1,  3,  2 ],[128X[104X
+    [4X[28X  [  2,  1,  3 ],[128X[104X
+    [4X[28X  [  3,  2,  1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( MultiplicationTable( OQ ) );[127X[104X
+    [4X[28X[ [  1,  2,  3 ],[128X[104X
+    [4X[28X  [  3,  1,  2 ],[128X[104X
+    [4X[28X  [  2,  3,  1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XB := LeftBolLoop( 8, 1 );[127X[104X
+    [4X[28XLeftBolLoop( 8, 1 )[128X[104X
+    [4X[25Xgap>[125X [27XOppositeLoop( B ); # dual properties inherited[127X[104X
+    [4X[28X<right Bol loop of size 8>[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.3 [33X[0;0YSubalgebras[133X[101X
+  
+  [33X[0;0YA  subset  [23XS[123X  of  a right quasigroup [23XQ[123X is a [13Xsubrightquasigroup[113X of [23XQ[123X if it is
+  closed  under  multiplication and right division. A subset [23XS[123X of a quasigroup
+  (resp.  loop)  [23XQ[123X  is  a  [13Xsubquasigroup[113X (resp. [13Xsubloop[113X) if it is closed under
+  multiplication  and  both  divisions.  In  all of the above cases, when [23XQ[123X is
+  finite, [23XS[123X is a subalgebra if it is closed under multiplicaton.[133X
+  
+  [33X[0;0YIn  [5XRightQuasigroups[105X,  if  a  subalgebra [10XS[110X is created from an algebra [10XQ[110X, the
+  parent  of  [10XS[110X is set to the parent of [10XQ[110X, possibly [10XQ[110X itself, and the elements
+  of  [10XS[110X  are  inherited from the parent of [10XQ[110X, cf. Section [14X1.7[114X. If [10XA[110X, [10XB[110X are two
+  algebras  then  [10XA[110X is a subalgebra of [10XB[110X iff [10XParent( A ) = Parent( B )[110X and the
+  elements of [10XA[110X form a subset of [10XB[110X.[133X
+  
+  
+  [1X3.3-1 [33X[0;0YTesting for subalgebras[133X[101X
+  
+  [33X[1;0Y[29X[2XIsSubrightquasigroup[102X( [3XQ[103X, [3XS[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsSubquasigroup[102X( [3XQ[103X, [3XS[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsSubloop[102X( [3XQ[103X, [3XS[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue   if   a   right   quasigroup   (quasigroup,  loop)  [3XS[103X  is  a
+            subrightquasigroup  (subquasigroup, subloop) of a right quasigroup
+            (quasigroup, loop) [3XQ[103X, else returns [10Xfalse[110X.[133X
+  
+  
+  [1X3.3-2 [33X[0;0YConstructing subalgebras[133X[101X
+  
+  [33X[1;0Y[29X[2XSubrightquasigroup[102X( [3XQ[103X, [3Xgens[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSubquasigroup[102X( [3XQ[103X, [3Xgens[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSubloop[102X( [3XQ[103X, [3Xgens[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe   subrightquasigoup   (subquasigroup,   subloop)  of  a  right
+            quasigroup  (quasigroup, loop) [3XQ[103X generated by the list of elements
+            [3Xgens[103X.  We allow [3Xgens[103X to consist of elements of [3XQ[103X or of elements of
+            the underlying set of [3XQ[103X. Note that there are no optional arguments
+            in  this constructor. The resulting subalgebra will be index based
+            (cf.  Section  [14X1.8[114X)  iff  [3XQ[103X is index based. For subloops, we allow
+            [3Xgens[103X  to  be  an  empty  set, in which case the trivial subloop is
+            returned.[133X
+  
+  [33X[0;0YAn  effort  is  made  for  the  subalgebra to inherit properties from [3XQ[103X. For
+  instance,  if it is known that [3XQ[103X is commutative, the subalgebra will have an
+  attribute that signifies it is commutative.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := LoopByFunction([0..7],function(x,y) return (x+y) mod 8; end);;[127X[104X
+    [4X[25Xgap>[125X [27XS := Subrightquasigroup( Q, [4] ); # inherits loop property from parent[127X[104X
+    [4X[28X<loop of size 2>[128X[104X
+    [4X[25Xgap>[125X [27X[ IsSubrightquasigroup( Q, S ), IsSubquasigroup( Q, S ), IsSubloop( Q, S ) ];[127X[104X
+    [4X[28X[ true, true, true ][128X[104X
+    [4X[25Xgap>[125X [27XElements( S ); # note indexing of elements here and below[127X[104X
+    [4X[28X[ l0, l4 ][128X[104X
+    [4X[25Xgap>[125X [27XElements( S )[ 2 ]; # the 2nd element of S[127X[104X
+    [4X[28Xl4[128X[104X
+    [4X[25Xgap>[125X [27XS.2; # the 2nd element of Q, the parent of S[127X[104X
+    [4X[28Xl1[128X[104X
+    [4X[25Xgap>[125X [27XS[4]; # the element of parent Q corresponding to the given element of the underlying set[127X[104X
+    [4X[28Xl4[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( CayleyTable( S ) );[127X[104X
+    [4X[28X[ [  0,  4 ],[128X[104X
+    [4X[28X  [  4,  0 ] ][128X[104X
+    [4X[25Xgap>[125X [27XRightTranslation( Q, Q[4] ); # a permutation of the index set of Q[127X[104X
+    [4X[28X(1,5)(2,6)(3,7)(4,8)[128X[104X
+    [4X[25Xgap>[125X [27XRightTranslation( S, S[4] ); # a permutation of the index set of S[127X[104X
+    [4X[28X(1,5)[128X[104X
+    [4X[25Xgap>[125X [27XSubquasigroup( Q, [4] );[127X[104X
+    [4X[28X<loop of size 2>[128X[104X
+    [4X[25Xgap>[125X [27XSubloop( Q, [4] );[127X[104X
+    [4X[28X<loop of size 2>[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.3-3 [33X[0;0YAll subalgebras[133X[101X
+  
+  [33X[1;0Y[29X[2XAllSubrightquasigroups[102X( [3XQ[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAllSubquasigroups[102X( [3XQ[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAllSubloops[102X( [3XQ[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya  list of all subrightquasigroups (subquasigroups, subloops) of a
+            right quasigroup (quasigroup, loop) [3XQ[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XAllSubloops( AsLoop( CyclicGroup( 3 ) ) );[127X[104X
+    [4X[28X[ <trivial group with 1 generator>, <associative loop of size 3> ][128X[104X
+    [4X[25Xgap>[125X [27XP := ProjectionRightQuasigroup( 2 );; [127X[104X
+    [4X[25Xgap>[125X [27XLength( AllSubrightquasigroups( P ) ); # every nonempty subset is a subrightquasigroup here[127X[104X
+    [4X[28X3[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YA  subloop  [23XS[123X  of  a  loop [23XQ[123X is [13Xminimal[113X if [23XS[123X is nontrivial and [23XS[123X contains no
+  proper nontrivial subloops. A sub(right)quasigroup [23XS[123X of a (right) quasigroup
+  [23XQ[123X is [13Xminimal[113X if [23XS[123X contains no proper sub(right)quasigroups.[133X
+  
+  
+  [1X3.3-4 [33X[0;0YTesting minimal subalgebras[133X[101X
+  
+  [33X[1;0Y[29X[2XIsMinimalSubrightquasigroup[102X( [[3XQ[103X, ][3XS[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsMinimalSubquasigroup[102X( [[3XQ[103X, ][3XS[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsMinimalSubloop[102X( [[3XQ[103X, ][3XS[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X   iff  [3XS[103X  is  a  minimal  subrightquasigroup  (subquasigroup,
+            subloop), else returns false.[133X
+  
+  [33X[0;0YNote  that  it  is  not necessary to specify the enveloping right quasigroup
+  (quasigroup,  loop)  since all needed information is contained already in [3XS[103X.
+  In  the  version  with  two  arguments [3XQ[103X, [3XS[103X, it is first checked that [3XS[103X is a
+  subalgebra of [3XQ[103X.[133X
+  
+  
+  [1X3.3-5 [33X[0;0YAll minimal subalgebras[133X[101X
+  
+  [33X[1;0Y[29X[2XAllMinimalSubrightquasigroups[102X( [3XQ[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAllMinimalSubquasigroups[102X( [3XQ[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAllMinimalSubloops[102X( [3XQ[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya   list   of  all  minimal  subrightquasigroups  (subquasigroups,
+            subloops) of a right quasigroup (quasigroup, loop) [3XQ[103X.[133X
+  
+  [33X[0;0YA  surighquasigroup  [23XS[123X  of a right quasigroup [23XQ[123X is [13Xmaximal[113X if [23XS[123X is propertly
+  contained in [23XQ[123X and if whenever [23XS<A<Q[123X then either [23XA=S[123X or [23XA=Q[123X.[133X
+  
+  
+  [1X3.3-6 [33X[0;0YTesting maximal subalgebras[133X[101X
+  
+  [33X[1;0Y[29X[2XIsMaximalSubrightquasigroup[102X( [3XQ[103X, [3XS[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsMaximalSubquasigroup[102X( [3XQ[103X, [3XS[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsMaximalSubloop[102X( [3XQ[103X, [3XS[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X   iff  [3XS[103X  is  a  maximal  subrightquasigroup  (subquasigroup,
+            subloop)  of  the  right  quasigroup  (quasigroup,  loop)  [3XQ[103X, else
+            returns false.[133X
+  
+  
+  [1X3.3-7 [33X[0;0YAll maximal subalgebras[133X[101X
+  
+  [33X[1;0Y[29X[2XAllMaximalSubrightquasigroups[102X( [3XQ[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAllMaximalSubquasigroups[102X( [3XQ[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAllMaximalSubloops[102X( [3XQ[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya   list   of  all  maximal  subrightquasigroups  (subquasigroups,
+            subloops) of the right quasigroup (quasigroup, loop) [3XQ[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := MoufangLoop(12,1);;[127X[104X
+    [4X[25Xgap>[125X [27XS := Subloop(Q,[Q.2]);;[127X[104X
+    [4X[25Xgap>[125X [27XIsMinimalSubloop(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XAllMinimalSubloops(Q);[127X[104X
+    [4X[28X[ <Moufang loop of size 2>, <Moufang loop of size 2>, [128X[104X
+    [4X[28X  <Moufang loop of size 3>, <Moufang loop of size 2>, [128X[104X
+    [4X[28X  <Moufang loop of size 2>, <Moufang loop of size 2>, [128X[104X
+    [4X[28X  <Moufang loop of size 2>, <Moufang loop of size 2>, [128X[104X
+    [4X[28X  <Moufang loop of size 2>, <Moufang loop of size 2> ][128X[104X
+    [4X[25Xgap>[125X [27XIsMaximalSubloop(Q,S);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XAllMaximalSubloops(Q);[127X[104X
+    [4X[28X[ <Moufang loop of size 6>, <Moufang loop of size 4>, [128X[104X
+    [4X[28X  <Moufang loop of size 4>, <Moufang loop of size 4>, [128X[104X
+    [4X[28X  <Moufang loop of size 6>, <Moufang loop of size 6>, [128X[104X
+    [4X[28X  <Moufang loop of size 4>, <Moufang loop of size 4>, [128X[104X
+    [4X[28X  <Moufang loop of size 4>, <Moufang loop of size 4>, [128X[104X
+    [4X[28X  <Moufang loop of size 4>, <Moufang loop of size 4> ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.4 [33X[0;0YCosets and transversals[133X[101X
+  
+  [33X[0;0YIf  [23XS[123X  is a subrightquasigroup of a right quasigroup [23XQ[123X, the [13Xright cosets[113X are
+  subsets of [23XQ[123X of the form [23XSx=\{sx:s\in S\}[123X, where [23Xx\in Q[123X. All right cosets of
+  a  subrightquasigroup  [23XS[123X  of a right quasigroup [23XQ[123X have the same cardinality,
+  but  they  need  not  cover  [23XQ[123X and they can intersect in nontrivial ways. In
+  quasigroups and loops, the right cosest cover [23XQ[123X.[133X
+  
+  [33X[0;0YA [13Xright transversal[113X to [23XS[123X in [23XQ[123X is then a list of elements of [10XQ[110X containing one
+  element from each right coset of [23XS[123X in [23XQ[123X.[133X
+  
+  [33X[0;0YIn [5XRightQuasigroups[105X, the right cosets and right transversals are mere lists,
+  not special [5XGAP[105X objects.[133X
+  
+  [33X[0;0YThe  function [10XRightCosets( Q, S )[110X checks that [10XS[110X is a subrightquasigroup of [10XQ[110X
+  and then returns a list of all right cosets of [10XS[110X in [10XQ[110X.[133X
+  
+  [1X3.4-1 RightTransversal[101X
+  
+  [33X[1;0Y[29X[2XRightTransversal[102X( [3XQ[103X, [3XS[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya right transversal to [3XS[103X in [3XQ[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XP := ProjectionRightQuasigroup( 3 );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( MultiplicationTable( P ) );[127X[104X
+    [4X[28X[ [  1,  1,  1 ],[128X[104X
+    [4X[28X  [  2,  2,  2 ],[128X[104X
+    [4X[28X  [  3,  3,  3 ] ][128X[104X
+    [4X[25Xgap>[125X [27XS := Subrightquasigroup( P, [1,2] );;[127X[104X
+    [4X[25Xgap>[125X [27XRightCosets( P, S ); # there is a single right coset of S in P[127X[104X
+    [4X[28X[ [ r1, r2 ] ][128X[104X
+    [4X[25Xgap>[125X [27XRightTransversal( P, S );[127X[104X
+    [4X[28X[ r1 ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Y[13XLeft  cosets[113X [23XxS[123X and [13Xleft transversals[113X are defined dually to right cosets and
+  right transversals. In right quasigroups, the left cosets of [23XS[123X need not have
+  the same cardinality and can intersect in nontrivial ways, but they cover [23XQ[123X.
+  In quasigroups and loops, all left cosets of [23XS[123X have the same cardinality.[133X
+  
+  [33X[0;0YThe  function  [10XLeftCosets( Q, S )[110X checks that [10XS[110X is a subrightquasigroup of [10XQ[110X
+  and then returns a list of all left cosets of [10XS[110X in [10XQ[110X.[133X
+  
+  [1X3.4-2 LeftTransversal[101X
+  
+  [33X[1;0Y[29X[2XLeftTransversal[102X( [3XQ[103X, [3XS[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya left transversal to [3XS[103X in [3XQ[103X.[133X
+  
+  
+  [1X3.5 [33X[0;0YRight quasigroups by generators[133X[101X
+  
+  [33X[0;0YIn analogy with the [10XGroup[110X function in [5XGAP[105X, we provide methods for generating
+  right  quasigroups  (quasigroups,  loops)  from  a  list of right quasigroup
+  (quasigroup, loop) elements.[133X
+  
+  
+  [1X3.5-1 [33X[0;0YRightQuasigroup, Quasigroup and Loop[133X[101X
+  
+  [33X[1;0Y[29X[2XRightQuasigroup[102X( [3Xgens...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XQuasigroup[102X( [3Xgens...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XLoop[102X( [3Xgens...[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe  right  quasigroup  (quasigroup,  loop) generated by the given
+            right  quasigroup  (quasigroup, loop) elements. The generators can
+            be given as [10Xgen1[110X, [10Xgen2[110X, [10X...[110X, or as a single argument [10X[ gen1, gen2,
+            ...][110X.  The  generators must belong to the same parent algebra. The
+            attribute  [10XGeneratorsOfMagma[110X  (see  Section  [14X1.9[114X)  is  not  set to
+            coincide  with the given list of generators. The resulting algebra
+            is index based iff the parent algebra is index based.[133X
+  
+  
+  [1X3.5-2      [33X[0;0YRightQuasigroupByGenerators,      QuasigroupByGenerators      and[101X
+  [1XLoopByGenerators[133X[101X
+  
+  [33X[1;0Y[29X[2XRightQuasigroupByGenerators[102X( [3Xgens...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XQuasigroupByGenerators[102X( [3Xgens...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XLoopByGenerators[102X( [3Xgens...[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe  right  quasigroup  (quasigroup,  loop) generated by the given
+            right  quasigroup  (quasigroup,  loop) elements. This is just like
+            [10XRightQuasigroup[110X ([10XQuasigroup[110X, [10XLoop[110X).[133X
+  
+  
+  [1X3.5-3     [33X[0;0YRightQuasigroupWithGenerators,     QuasigroupWithGenerators    and[101X
+  [1XLoopWithGenerators[133X[101X
+  
+  [33X[1;0Y[29X[2XRightQuasigroupWithGenerators[102X( [3Xgens...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XQuasigroupWithGenerators[102X( [3Xgens...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XLoopWithGenerators[102X( [3Xgens...[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe  right  quasigroup  (quasigroup,  loop) generated by the given
+            right  quasigroup  (quasigroup,  loop) elements. This is just like
+            [10XRightQuasigroup[110X  ([10XQuasigroup[110X,  [10XLoop[110X)  except that it is guaranteed
+            that  the  value of [10XGeneratorsOfMagma[110X will be set to coincide with
+            the given list of generators.[133X
+  
+  
+  [1X3.6 [33X[0;0YIntersections and joins of right quasigroups[133X[101X
+  
+  [33X[0;0YGiven a list [10Xalgebras[110X of at least two right quasigroups (quasigroups, loops)
+  with  the  same  parent  algebra,  [10XIntersection(  algebras  )[110X  returns their
+  intersection  subalgebra.  We also support [10XIntersection( algebra1, algebra2,
+  ... )[110X.[133X
+  
+  [33X[0;0YPassing  of  arguments  for [10XIntersection[110X is handled in the standard [5XGAP[105X way.
+  Therefore  the  only method implemented in [5XRightQuasigroups[105X is [10XIntersection2[110X
+  for the intersection of two right quasigroups.[133X
+  
+  [33X[0;0YGiven  a  list  [10Xalgebras[110X  of right quasigroups (quasigroups, loops) with the
+  same  parent  algebra,  [10XJoin(  algebras  )[110X  returns  the smallest subalgebra
+  containing  all  algebras  in  the  list.  We  also  support [10XJoin( algebra1,
+  algebra2, ... )[110X.[133X
+  
+  [33X[0;0YThe   function   [10XJoin[110X   does   not   seem  to  be  implemented  in  [5XGAP[105X.  In
+  [5XRightQuasigroups[105X,  [10XJoin[110X  and  [10XJoin2[110X  are  implemented  in a way analogous to
+  [10XIntersection[110X  and  [10XIntersection2[110X, except that we also allow a single algebra
+  as the argument, in which case that algebra is returned.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XP := ProjectionRightQuasigroup( 10 );;[127X[104X
+    [4X[25Xgap>[125X [27XA := Subrightquasigroup( P, [1..4] );;[127X[104X
+    [4X[25Xgap>[125X [27XB := Subrightquasigroup( P, [3..7] );;[127X[104X
+    [4X[25Xgap>[125X [27XIntersection( A, B );[127X[104X
+    [4X[28X<associative quandle of size 2>[128X[104X
+    [4X[25Xgap>[125X [27XElements( last );[127X[104X
+    [4X[28X[ r3, r4 ][128X[104X
+    [4X[25Xgap>[125X [27XJoin( A, B );[127X[104X
+    [4X[28X<associative quandle of size 7>[128X[104X
+    [4X[25Xgap>[125X [27XElements( last );[127X[104X
+    [4X[28X[ r1, r2, r3, r4, r5, r6, r7 ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.7 [33X[0;0YCongruences[133X[101X
+  
+  [33X[0;0YLet  [23XA[123X be an algebra in a variety [23XV[123X. Then [23X\sim[123X is a [13Xcongruence[113X on [23XA[123X if it is
+  an  equivalence relation on [23XA[123X such that for every operation [23Xf[123X of arrity [23Xm[123X in
+  the  signature  of [23XV[123X, we have [23Xf(x_1,\dots,x_m)\sim f(y_1,\dots,y_m)[123X whenever
+  [23Xx_1,\dots,x_m,y_1,\dots,y_m\in A[123X satisfy [23Xx_1\sim y_1[123X, [23X\dots[123X, [23Xx_m\sim y_m[123X. If
+  [23XV[123X  is  the  variety  of all right quasigroups (resp. quasigroups, loops), we
+  speak  of  a  [13Xright quasigroup congruence[113X (resp. [13Xquasigroup congruence[113X, [13Xloop
+  congruence[113X).[133X
+  
+  [33X[0;0YIt  turns out that an equivalence relation [23X\sim[123X on a finite right quasigroup
+  (resp.  quasigroup,  loop)  is  a  right quasigroup (resp. quasigroup, loop)
+  congruence  iff  for  every  [23Xx,y,u\in  Q[123X  with [23Xx\sim y[123X we have [23Xxu\sim yu[123X and
+  [23Xux\sim  uy[123X.  Therefore,  an  equivalence  relation  [23X\sim[123X  on  a  finite loop
+  (quasigroup,  right  quasigroup)  is  a  loop (quasigroup, right quasigroup)
+  congruence iff it is a groupoid congruence.[133X
+  
+  [33X[0;0YIn  [5XGAP[105X,  equivalence  relations on [23XA[123X are represented as functions [23Xf:A\to A[123X,
+  where  [23Xa,b\in  A[123X  are related iff [23Xf(a)=b[123X. Since equivalence relations are in
+  one-to-one    correspondence    with    partitions,    the    [5XGAP[105X   function
+  [10XEquivalenceRelationByPartition[110X is particularly convenient, as illustrated by
+  the following example:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG := SymmetricGroup( 3 );;[127X[104X
+    [4X[25Xgap>[125X [27XC := EquivalenceRelationByPartition( G, [[(),(1,2,3),(1,3,2)],[(1,2),(1,3),(2,3)]] );[127X[104X
+    [4X[28X<equivalence relation on SymmetricGroup( [ 1 .. 3 ] ) >[128X[104X
+    [4X[25Xgap>[125X [27XSource( C );[127X[104X
+    [4X[28XSym( [ 1 .. 3 ] )[128X[104X
+    [4X[25Xgap>[125X [27XEquivalenceClasses( C );[127X[104X
+    [4X[28X[ {()}, {(1,2)} ][128X[104X
+    [4X[25Xgap>[125X [27XElements( last[1] );[127X[104X
+    [4X[28X[ (), (1,2,3), (1,3,2) ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.7-1 [33X[0;0YChecking right quasigroup congruences[133X[101X
+  
+  [33X[1;0Y[29X[2XIsRightQuasigroupCongruence[102X( [3XC[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsQuasigroupCongruence[102X( [3XC[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsLoopCongruence[102X( [3XC[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X   if  [3XC[103X  is  a  right  quasigroup  (resp.  quasigroup,  loop)
+            congruence  on  the  right  quasigroup  (resp.  quasigroup,  loop)
+            [10XSource(  [110X[3XC[103X[10X )[110X, else returns [10Xfalse[110X. Note that [10Xfalse[110X is returned when
+            a  stronger  algebra congruence is tested on a weaker algebra, for
+            instance, if [10XIsLoopCongruence( [110X[3XC[103X[10X )[110X is tested with [10XSource( [110X[3XC[103X[10X )[110X that
+            is not a declared loop.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := QuasigroupByFunction( [0..3], function(x,y) return (x-y) mod 4; end );;[127X[104X
+    [4X[25Xgap>[125X [27XC := EquivalenceRelationByPartition( Q, [ [Q[0],Q[2]], [Q[1],Q[3]] ] );[127X[104X
+    [4X[28X<equivalence relation on <quasigroup of size 4 on 0, 1, 2, 3> >[128X[104X
+    [4X[25Xgap>[125X [27XIsQuasigroupCongruence( C );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XD := EquivalenceRelationByPartition( Q, [ [Q[0],Q[1],Q[2]], [Q[3]] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XIsQuasigroupCongruence( D );[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.7-2 [33X[0;0YCongruences generated by partition[133X[101X
+  
+  [33X[1;0Y[29X[2XRightQuasigroupCongruenceByPartition[102X( [3XQ[103X, [3Xpartition[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XQuasigroupCongruenceByPartition[102X( [3XQ[103X, [3Xpartition[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLoopCongruenceByPartition[102X( [3XQ[103X, [3Xpartition[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  right  quasigroup  (quasigroup, loop) congruence of the right
+            quasigroup  (quasigroup,  loop) [3XQ[103X generated by [3Xpartition[103X, that is,
+            the  smallest congruence [10XC[110X such that every element of [3Xpartition[103X is
+            a  subset  of an equivalence class of [10XC[110X. Here, [3Xpartition[103X must be a
+            list  of disjoint subsets of [3XQ[103X (whose union is not necessarily all
+            of [3XQ[103X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := QuasigroupByFunction( GF(27), \- );;[127X[104X
+    [4X[25Xgap>[125X [27XC := QuasigroupCongruenceByPartition( Q, [ [ Q.1, Q.2, Q.3 ], [ Q.4, Q.5 ] ] );; # merge Q.1, Q.2, Q.3 and also Q.4, Q.5[127X[104X
+    [4X[25Xgap>[125X [27XList( EquivalenceClasses( C ), Size );[127X[104X
+    [4X[28X[ 9, 9, 9 ][128X[104X
+    [4X[25Xgap>[125X [27XG := AsLoop( SymmetricGroup( 5 ) );;[127X[104X
+    [4X[25Xgap>[125X [27XC := LoopCongruenceByPartition( G, [ [ G[()], G[(1,2,3)] ] ] );; # merge (), (1,2,3)[127X[104X
+    [4X[25Xgap>[125X [27XList( EquivalenceClasses( C ), Size );[127X[104X
+    [4X[28X[ 60, 60 ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.7-3 [33X[0;0YCongruences generated by pairs[133X[101X
+  
+  [33X[1;0Y[29X[2XRightQuasigroupCongruenceByPairs[102X( [3XQ[103X, [3Xpairs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XQuasigroupCongruenceByPairs[102X( [3XQ[103X, [3Xpairs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLoopCongruenceByPairs[102X( [3XQ[103X, [3Xpairs[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  right  quasigroup  (quasigroup, loop) congruence of the right
+            quasigroup  (quasigroup,  loop) [3XQ[103X generated by [3Xpairs[103X, that is, the
+            smallest  congruence  that contains [3Xpairs[103X as a subset. Here, [3Xpairs[103X
+            must be a list of pairs of elements of [3XQ[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := RightQuasigroupByFunction([0..7], function(x,y) return (x+2*y) mod 8; end );;[127X[104X
+    [4X[25Xgap>[125X [27XC := RightQuasigroupCongruenceByPairs( Q, [ [ Q[0],Q[2] ] ] );; # merge 0, 2[127X[104X
+    [4X[25Xgap>[125X [27XList( EquivalenceClasses( C ), Elements );[127X[104X
+    [4X[28X[ [ r0, r2, r4, r6 ], [ r1, r5 ], [ r3, r7 ] ][128X[104X
+    [4X[25Xgap>[125X [27XC := RightQuasigroupCongruenceByPairs( Q, [ [ Q[0],Q[2] ], [ Q[0], Q[1] ] ] );; # merge 0, 2 and also 0, 1[127X[104X
+    [4X[25Xgap>[125X [27XList( EquivalenceClasses( C ), Elements );[127X[104X
+    [4X[28X[ [ r0, r1, r2, r3, r4, r5, r6, r7 ] ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.7-4 [33X[0;0YAll congruences[133X[101X
+  
+  [33X[1;0Y[29X[2XAllRightQuasigroupCongruences[102X( [3XQ[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAllQuasigroupCongruences[102X( [3XQ[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAllLoopCongruences[102X( [3XQ[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list of all right quasigroup (quasigroup, loop) congruences of a
+            right   quasigroup  (quasigroup,  loop)  [3XQ[103X.  The  congruences  are
+            returned    as    [5XGAP[105X    objects    suitable   as   arguments   of
+            [10XFactorRightQuasigroup[110X ([10XFactorQuasigroup[110X, [10XFactorLoop[110X).[133X
+  
+  [33X[0;0YNote:  For  a  right  quasigroup [3XQ[103X, there is no method yet for the case when
+  [10XRightMultiplicationGroup( Q )[110X does not act transitively on [3XQ[103X.[133X
+  
+  
+  [1X3.8 [33X[0;0YNormality and simplicity[133X[101X
+  
+  [33X[0;0YA  subloop  [23XS[123X  of  a loop [23XQ[123X is [13Xnormal[113X in [23XQ[123X if [23XSx=xS[123X, [23XS(xy)=(Sx)y[123X and [23X(xy)S =
+  x(yS)[123X  for  every [23Xx,y\in Q[123X. It can be shown that a subset [23XS[123X of [23XQ[123X is a normal
+  subloop  of  [23XQ[123X  iff  there is a loop congruence [23X\sim[123X on [23XQ[123X such that [23XS[123X is the
+  congruence class of [23X\sim[123X containing the neutral element of [23XQ[123X.[133X
+  
+  [33X[0;0YIf [10XS[110X is a subloop of a loop [10XQ[110X, the function [10XIsNormal( Q, S )[110X returns [10Xtrue[110X if
+  [10XS[110X is normal in [10XQ[110X, else it returns [10Xfalse[110X.[133X
+  
+  [33X[0;0YIf [10XS[110X is a subset or a subloop of a loop [10XQ[110X, [10XNormalClosure( Q, S )[110X returns the
+  normal  closure  of  [10XS[110X  in  [10XQ[110X,  that  is,  the  smallest normal subloop of [10XQ[110X
+  containing [10XS[110X.[133X
+  
+  [1X3.8-1 AllNormalSubloops[101X
+  
+  [33X[1;0Y[29X[2XAllNormalSubloops[102X( [3XQ[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya  list  of  all  normal  subloops  of  a  loop [3XQ[103X. Normal subloops
+            correspond to blocks of the multiplication group of [3XQ[103X that contain
+            the neutral element.[133X
+  
+  [33X[0;0YA right quasigroup [23XQ[123X is [13Xsimple[113X if the only congruences on [23XQ[123X are the diagonal
+  congruence  [23X\{(x,x):x\in  Q\}[123X  and the full congruence [23XQ\times Q[123X. It is well
+  known  that  a  quasigroup  (loop)  [23XQ[123X is simple iff its multiplication group
+  [23X\mathrm{Mlt}(Q)=\langle  R_x,L_x:x\in  Q\rangle[123X  acts  primitively on [23XQ[123X (see
+  Section [14X5.2[114X).[133X
+  
+  [33X[0;0YNote  that  in  the  finite  case,  which  is  the  only  case  supported by
+  [5XRightQuasigroups[105X,  a  loop  [23XQ[123X  is  simple  as  a  loop  (no  nontrivial loop
+  congruences)  iff  it  is  simple  as a quasigroup (no nontrivial quasigroup
+  congruences)  iff  it  is  simple as a right quasigroup (no nontrivial right
+  quasigroup  congruences)  iff  it  is  simple  as  a groupoid (no nontrivial
+  groupoid congruences).[133X
+  
+  
+  [1X3.8-2 [33X[0;0YTesting right quasigroups for simplicity[133X[101X
+  
+  [33X[1;0Y[29X[2XIsSimpleRightQuasigroup[102X( [3XQ[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsSimpleQuasigroup[102X( [3XQ[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsSimpleLoop[102X( [3XQ[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  [3XQ[103X  is a simple right quasigroup (quasigroup, loop), else
+            returns   [10Xfalse[110X.  The  non-qualified  function  [10XIsSimple[110X  is  also
+            supported.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27X# right quasigroup example[127X[104X
+    [4X[25Xgap>[125X [27XR := RightQuasigroupByCayleyTable( [[2,2,1,1],[3,1,2,2],[4,3,3,3],[1,4,4,4]] );; [127X[104X
+    [4X[25Xgap>[125X [27XRMlt := RightMultiplicationGroup( R );[127X[104X
+    [4X[28XGroup([ (1,2,3,4), (1,2) ])[128X[104X
+    [4X[25Xgap>[125X [27XAllRightQuasigroupCongruences( R );[127X[104X
+    [4X[28X[ <equivalence relation on <right quasigroup of size 4 on 1, 2, 3, 4> >, [128X[104X
+    [4X[28X  <equivalence relation on <right quasigroup of size 4 on 1, 2, 3, 4> > ][128X[104X
+    [4X[25Xgap>[125X [27XIsSimpleRightQuasigroup( R ); # IsSimple( R ) is also supported[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27X# quasigroup example[127X[104X
+    [4X[25Xgap>[125X [27XQ := QuasigroupByFunction( [0..3], function(x,y) return (x-y) mod 4; end );;[127X[104X
+    [4X[25Xgap>[125X [27Xcongruences := AllQuasigroupCongruences( Q );;[127X[104X
+    [4X[25Xgap>[125X [27XList( congruences, EquivalenceClasses );[127X[104X
+    [4X[28X[ [ {q0}, {q1}, {q2}, {q3} ], [ {q0}, {q1} ], [ {q0} ] ][128X[104X
+    [4X[25Xgap>[125X [27XList( EquivalenceClasses( congruences[ 2 ] ), Elements );[127X[104X
+    [4X[28X[ [ q0, q2 ], [ q1, q3 ] ][128X[104X
+    [4X[25Xgap>[125X [27XIsSimpleQuasigroup( Q ); # IsSimple( Q ) is also supported[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27X# loop example[127X[104X
+    [4X[25Xgap>[125X [27XL := AsLoop( Group((1,2,3,4)) );;[127X[104X
+    [4X[25Xgap>[125X [27XAllNormalSubloops( L );[127X[104X
+    [4X[28X[ <trivial group with 1 generator>, <associative loop of size 2>, [128X[104X
+    [4X[28X  <associative loop of size 4> ][128X[104X
+    [4X[25Xgap>[125X [27XIsSimpleLoop( L ); # IsSimple( L ) is also supported[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XS := Subloop(  L, [ (1,3)(2,4) ] );;[127X[104X
+    [4X[25Xgap>[125X [27XIsNormal( L, S );[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.9 [33X[0;0YFactor algebras[133X[101X
+  
+  [33X[0;0YWhen  [23X\sim[123X  is  a  congruence  on  [23XA[123X, then the factor algebra [23XA/\sim[123X is well
+  defined    on   the   equivalence   classes   [23X[x][123X   of   [23X\sim[123X   by   setting
+  [23Xf([x_1],\dots,[x_m])  =  [f(x_1,\dots,x_m)][123X for every operation [23Xf[123X of arity [23Xm[123X
+  in the signature of the enveloping variety [23XV[123X and every [23Xx_1,\dots,x_m\in A[123X.[133X
+  
+  [33X[0;0YIn  case of right quasigroups and quasigroups, the factor construction based
+  on  congruences  is the standard way of defining factor alegbras. In case of
+  loops,  the  equivalence  classes  of  [23X\sim[123X  are precisely the cosets of the
+  normal  subloop  [23XS[123X,  the  equivalence  class  of  the  identity element. The
+  congruence-based  factor  algebra  construction  is  then  equivalent to the
+  standard coset-based construction [23XSx\cdot Sy = S(xy)[123X from group theory.[133X
+  
+  
+  [1X3.9-1 [33X[0;0YConstructing factor algebras[133X[101X
+  
+  [33X[1;0Y[29X[2XFactorRightQuasigroup[102X( [3XC[103X[, [3XconstructorStyle[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XFactorQuasigroup[102X( [3XC[103X[, [3XconstructorStyle[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XFactorLoop[102X( [3XC[103X[, [3XconstructorStyle[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  factor  algebra  of  [10XSource(  [110X[3XC[103X[10X )[110X modulo the right quasigroup
+            (resp.  quasigroup,  loop)  congruence [3XC[103X. In case of loops we also
+            allow arguments [3XQ[103X and [3XN[103X instead of [3XC[103X, where [3XQ[103X is a loop and [3XN[103X is a
+            normal  subloop  of  [3XQ[103X.  See Section [14X2.1[114X for the optional argument
+            [10XconstructorStyle[110X.[133X
+  
+  [33X[0;0YAn  effort  is  made  for  the factor algebra to inherit properties from the
+  enveloping algebra. For instance, if it is known that the enveloping algebra
+  is  commutative, the factor algebra will have an attribute that signifies it
+  is commutative.[133X
+  
+  [33X[0;0YWe  also support infix notation for factor algebras, that is, [10XQ/C[110X or [10XQ/N[110X. In
+  that version:[133X
+  
+  [30X    [33X[0;6Ythe enveloping algebra [10XQ[110X must always be given,[133X
+  
+  [30X    [33X[0;6Ythe optional argument [10XconstructorStyle[110X cannot be given,[133X
+  
+  [30X    [33X[0;6Ythe resulting algebra will be index based iff [10XQ[110X is index based.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := ProjectionRightQuasigroup( 6 );;[127X[104X
+    [4X[25Xgap>[125X [27XC := EquivalenceRelationByPartition( Q, [[Q.1,Q.2],[Q.3,Q.4,Q.5],[Q.6]] );;[127X[104X
+    [4X[25Xgap>[125X [27X[ IsRightQuasigroupCongruence( C ), IsQuasigroupCongruence( C ), IsLoopCongruence( C ) ];[127X[104X
+    [4X[28X[ true, false, false ][128X[104X
+    [4X[25Xgap>[125X [27XF := Q/C;[127X[104X
+    [4X[28X<associative quandle of size 3>[128X[104X
+    [4X[25Xgap>[125X [27XElements( F ); # the inner "r" comes from Q, the outer "r" from F.[127X[104X
+    [4X[28X[ r<object>, r<object>, r<object> ][128X[104X
+    [4X[25Xgap>[125X [27XH := FactorRightQuasigroup( C, ConstructorStyle( false, false ) ); # non-index based version is supported (but not for /)[127X[104X
+    [4X[28X<associative quandle of size 3>[128X[104X
+    [4X[25Xgap>[125X [27XHasMultiplicationTable( H );[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XH.1*H.2;[127X[104X
+    [4X[28Xr<object>[128X[104X
+    [4X[25Xgap>[125X [27XCayleyTable( H );   [127X[104X
+    [4X[28X[ [ {r1}, {r1}, {r1} ], [ {r3}, {r3}, {r3} ], [ {r6}, {r6}, {r6} ] ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YSee Section [14X8.1[114X for natural projections onto factor algebras.[133X
+  
+  
+  [1X3.10 [33X[0;0YAn example of the factor construction: Paige loops[133X[101X
+  
+  [33X[0;0YWe conclude with a larger example, the construction of finite simple Moufang
+  loops,  so-called  Paige  loops.  These  are  obtained  as the factor of the
+  multiplicative  set  [23XS[123X  of  elements  of  norm one in the Zorn vector matrix
+  algebra modulo the center of [23XS[123X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27X# auxiliary functions[127X[104X
+    [4X[25Xgap>[125X [27XDotProduct := function( x, y ) return Sum( [1..Length(x)], i -> x[i]*y[i] ); end;;[127X[104X
+    [4X[25Xgap>[125X [27XCrossProduct := function( x, y ) return [ x[2]*y[3]-x[3]*y[2], x[3]*y[1]-x[1]*y[3], x[1]*y[2]-x[2]*y[1] ]; end;;[127X[104X
+    [4X[25Xgap>[125X [27XPaigeNorm := function( x ) return x[1]*x[8] - DotProduct( x{[2,3,4]},x{[5,6,7]} ); end;;[127X[104X
+    [4X[25Xgap>[125X [27XPaigeMult := function( x, y )[127X[104X
+    [4X[25X>[125X [27X  local a, b, c, d;[127X[104X
+    [4X[25X>[125X [27X  a := x[1]*y[1] + DotProduct(x{[2,3,4]},y{[5,6,7]});[127X[104X
+    [4X[25X>[125X [27X  b := x[1]*y{[2,3,4]} + x{[2,3,4]}*y[8] - CrossProduct(x{[5,6,7]},y{[5,6,7]});[127X[104X
+    [4X[25X>[125X [27X  c := x{[5,6,7]}*y[1] + x[8]*y{[5,6,7]} + CrossProduct(x{[2,3,4]},y{[2,3,4]});[127X[104X
+    [4X[25X>[125X [27X  d := DotProduct(x{[5,6,7]},y{[2,3,4]})+x[8]*y[8];[127X[104X
+    [4X[25X>[125X [27X  return Concatenation( [a], b, c, [d] );[127X[104X
+    [4X[25X>[125X [27X  end;;[127X[104X
+    [4X[25Xgap>[125X [27X# Paige loop over GF(2) (index based approach in characteristic 2)[127X[104X
+    [4X[25Xgap>[125X [27XF := GF(2);;[127X[104X
+    [4X[25Xgap>[125X [27XS := Filtered( F^8, x -> PaigeNorm( x ) = One( F ) );;[127X[104X
+    [4X[25Xgap>[125X [27XP := LoopByFunction( S, PaigeMult, ConstructorStyle( true, true ) ); [127X[104X
+    [4X[28X<loop of size 120>[128X[104X
+    [4X[25Xgap>[125X [27X# general approach (not index based, any characteristic, using congruences)[127X[104X
+    [4X[25Xgap>[125X [27Xn := 3;; # any prime power works but it will be very slow[127X[104X
+    [4X[25Xgap>[125X [27XF := GF(n);;[127X[104X
+    [4X[25Xgap>[125X [27XS := Filtered( F^8, x -> PaigeNorm( x ) = One( F ) );;[127X[104X
+    [4X[25Xgap>[125X [27XM := LoopByFunction( S, PaigeMult, ConstructorStyle( false, false ) );;[127X[104X
+    [4X[25Xgap>[125X [27XC := EquivalenceRelationByPartition( M, Set( S, x -> Set( [ M[x], M[-x] ] ) ) );; # factoring out +/- one[127X[104X
+    [4X[25Xgap>[125X [27XP := FactorLoop( C, ConstructorStyle( false, false ) ); # 2000 ms[127X[104X
+    [4X[28X<loop of size 1080>[128X[104X
+    [4X[25Xgap>[125X [27X# another approach using normal subloop[127X[104X
+    [4X[25Xgap>[125X [27Xn := 3;; F := GF(n);; S := Filtered( F^8, x -> PaigeNorm( x ) = One( F ) );;[127X[104X
+    [4X[25Xgap>[125X [27XM := LoopByFunction( S, PaigeMult, ConstructorStyle( false, false ) );;[127X[104X
+    [4X[25Xgap>[125X [27Xone := [ Z(n)^0, 0*Z(n), 0*Z(n), 0*Z(n), 0*Z(n), 0*Z(n), 0*Z(n), Z(n)^0 ];;[127X[104X
+    [4X[25Xgap>[125X [27XN := Subloop( M, [-one] );;[127X[104X
+    [4X[25Xgap>[125X [27XP := FactorLoop( M, N, ConstructorStyle( false, false ) ); # 2000 ms, it takes a while to find the neutral element[127X[104X
+    [4X[28X<loop of size 1080>[128X[104X
+  [4X[32X[104X
+  

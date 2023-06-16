@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (RightQuasigroups) - Chapter 3: Direct products, subalgebras and factor algebras</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap3"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap3_mj.html">[MathJax on]</a></p>
+<p><a id="X7A0F54567D54CF6C" name="X7A0F54567D54CF6C"></a></p>
+<div class="ChapSects"><a href="chap3.html#X7A0F54567D54CF6C">3 <span class="Heading">Direct products, subalgebras and factor algebras</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X81F9478B83BEF1AF">3.1 <span class="Heading">Direct product of right quasigroups</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X85EB330A87D6857B">3.2 <span class="Heading">Opposite quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7865FC8D7854C2E3">3.2-1 <span class="Heading">Opposite quasigroups and loops</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7DF5989886BE611E">3.3 <span class="Heading">Subalgebras</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X83B506F5803D7770">3.3-1 <span class="Heading">Testing for subalgebras</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X794D95147920C10B">3.3-2 <span class="Heading">Constructing subalgebras</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7829B313876D5C35">3.3-3 <span class="Heading">All subalgebras</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7B81239B7C8C5254">3.3-4 <span class="Heading">Testing minimal subalgebras</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8523FBF57C70E1FD">3.3-5 <span class="Heading">All minimal subalgebras</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X81F26B9C79D516B3">3.3-6 <span class="Heading">Testing maximal subalgebras</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7F50B3F282F53344">3.3-7 <span class="Heading">All maximal subalgebras</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7A43C1DF835C4299">3.4 <span class="Heading">Cosets and transversals</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7BF8B87D8121FBBF">3.4-1 RightTransversal</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X861C5CC97E0901B2">3.4-2 LeftTransversal</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X852E2582803ABADD">3.5 <span class="Heading">Right quasigroups by generators</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X87BE4D0C7CA70695">3.5-1 <span class="Heading">RightQuasigroup, Quasigroup and Loop</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7EFFDFB37EC11996">3.5-2 <span class="Heading">RightQuasigroupByGenerators, QuasigroupByGenerators and LoopByGenerators</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7943CD7381916A09">3.5-3 <span class="Heading">RightQuasigroupWithGenerators, QuasigroupWithGenerators and LoopWithGenerators</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X86F9C3F08626EA6F">3.6 <span class="Heading">Intersections and joins of right quasigroups</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X82BD951079E3C349">3.7 <span class="Heading">Congruences</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X814ED6EE848AC131">3.7-1 <span class="Heading">Checking right quasigroup congruences</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X84A1A1157B80D9A0">3.7-2 <span class="Heading">Congruences generated by partition</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X83E8828C845E5003">3.7-3 <span class="Heading">Congruences generated by pairs</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8761BE9B787D9632">3.7-4 <span class="Heading">All congruences</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X82DDA72B834ABD8D">3.8 <span class="Heading">Normality and simplicity</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X836C52FB7DF25B9E">3.8-1 AllNormalSubloops</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X798EF3CC7E896C1C">3.8-2 <span class="Heading">Testing right quasigroups for simplicity</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X800399CC879ADD91">3.9 <span class="Heading">Factor algebras</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7F8629117C8B1422">3.9-1 <span class="Heading">Constructing factor algebras</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X81AF1E9C7F22C760">3.10 <span class="Heading">An example of the factor construction: Paige loops</span></a>
+</span>
+</div>
+</div>
+
+<h3>3 <span class="Heading">Direct products, subalgebras and factor algebras</span></h3>
+
+<p>In this chapter we describe methods of universal-algebraic flavor for right quasigroups.</p>
+
+<p><a id="X81F9478B83BEF1AF" name="X81F9478B83BEF1AF"></a></p>
+
+<h4>3.1 <span class="Heading">Direct product of right quasigroups</span></h4>
+
+<p><code class="code">DirectProduct(Q1,...,Qn)</code> returns the direct product of right quasigroups <code class="code">Q1</code>, ..., <code class="code">Qn</code>. We allow groups to be among the arguments.</p>
+
+<p>If all arguments are groups then the standard <strong class="pkg">GAP</strong> method is called and a group is returned.</p>
+
+<p>Otherwise, if all non-group arguments are loops then a loop is returned, else if all non-group arguments are quasigroups then a quasigroup is returned, else a right quasigroup is returned. The underlying set is the carthesian product of elements of <code class="code">Q1</code>, ..., <code class="code">Qn</code>. The restulting algebra is index based if and only if all non-group arguments are index based. An effort is made to inherit common properties of <code class="code">Q1</code>, ...,. <code class="code">Qn</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group((1,2));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := LoopByCayleyTable( [[1,2,3],[2,3,1],[3,1,2]] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := ProjectionRightQuasigroup( [1..3] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DirectProduct( G, L );</span>
+&lt;loop of size 6&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D.1;</span>
+l[ (), l1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DirectProduct( G, L, R );</span>
+&lt;right quasigroup of size 18&gt;
+</pre></div>
+
+<p><a id="X85EB330A87D6857B" name="X85EB330A87D6857B"></a></p>
+
+<h4>3.2 <span class="Heading">Opposite quasigroups</span></h4>
+
+<p>Given a quasigroup <span class="Math">(Q,\cdot)</span>, its <em>opposite</em> is the quasigroup <span class="Math">(Q,\circ)</span> with multiplication <span class="Math">x\circ y = y\cdot x</span>. If <span class="Math">(Q,\cdot)</span> is a loop, its opposite is also a loop. (Note that the opposite of a right quasigroup <span class="Math">Q</span> is a right quasigroup iff <span class="Math">Q</span> is a quasigroup. We therefore do not support the opposite construction for right quasigroups.)</p>
+
+<p><a id="X7865FC8D7854C2E3" name="X7865FC8D7854C2E3"></a></p>
+
+<h5>3.2-1 <span class="Heading">Opposite quasigroups and loops</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OppositeQuasigroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OppositeLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the opposite quasigroup (loop) of the quasigroup (loop) <var class="Arg">Q</var>. The resulting algebra is index based iff <var class="Arg">Q</var> is index based. An effort is made to inherit dual properties from <var class="Arg">Q</var></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := QuasigroupByFunction( GF(3), \- );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OQ := OppositeQuasigroup( Q );</span>
+&lt;quasigroup of size 3&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( MultiplicationTable( Q ) );</span>
+[ [  1,  3,  2 ],
+  [  2,  1,  3 ],
+  [  3,  2,  1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( MultiplicationTable( OQ ) );</span>
+[ [  1,  2,  3 ],
+  [  3,  1,  2 ],
+  [  2,  3,  1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := LeftBolLoop( 8, 1 );</span>
+LeftBolLoop( 8, 1 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OppositeLoop( B ); # dual properties inherited</span>
+&lt;right Bol loop of size 8&gt;
+</pre></div>
+
+<p><a id="X7DF5989886BE611E" name="X7DF5989886BE611E"></a></p>
+
+<h4>3.3 <span class="Heading">Subalgebras</span></h4>
+
+<p>A subset <span class="Math">S</span> of a right quasigroup <span class="Math">Q</span> is a <em>subrightquasigroup</em> of <span class="Math">Q</span> if it is closed under multiplication and right division. A subset <span class="Math">S</span> of a quasigroup (resp. loop) <span class="Math">Q</span> is a <em>subquasigroup</em> (resp. <em>subloop</em>) if it is closed under multiplication and both divisions. In all of the above cases, when <span class="Math">Q</span> is finite, <span class="Math">S</span> is a subalgebra if it is closed under multiplicaton.</p>
+
+<p>In <strong class="pkg">RightQuasigroups</strong>, if a subalgebra <code class="code">S</code> is created from an algebra <code class="code">Q</code>, the parent of <code class="code">S</code> is set to the parent of <code class="code">Q</code>, possibly <code class="code">Q</code> itself, and the elements of <code class="code">S</code> are inherited from the parent of <code class="code">Q</code>, cf. Section <a href="chap1.html#X7ECE815C8590BAA4"><span class="RefLink">1.7</span></a>. If <code class="code">A</code>, <code class="code">B</code> are two algebras then <code class="code">A</code> is a subalgebra of <code class="code">B</code> iff <code class="code">Parent( A ) = Parent( B )</code> and the elements of <code class="code">A</code> form a subset of <code class="code">B</code>.</p>
+
+<p><a id="X83B506F5803D7770" name="X83B506F5803D7770"></a></p>
+
+<h5>3.3-1 <span class="Heading">Testing for subalgebras</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubrightquasigroup</code>( <var class="Arg">Q</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubquasigroup</code>( <var class="Arg">Q</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubloop</code>( <var class="Arg">Q</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: true if a right quasigroup (quasigroup, loop) <var class="Arg">S</var> is a subrightquasigroup (subquasigroup, subloop) of a right quasigroup (quasigroup, loop) <var class="Arg">Q</var>, else returns <code class="code">false</code>.</p>
+
+<p><a id="X794D95147920C10B" name="X794D95147920C10B"></a></p>
+
+<h5>3.3-2 <span class="Heading">Constructing subalgebras</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Subrightquasigroup</code>( <var class="Arg">Q</var>, <var class="Arg">gens</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Subquasigroup</code>( <var class="Arg">Q</var>, <var class="Arg">gens</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Subloop</code>( <var class="Arg">Q</var>, <var class="Arg">gens</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the subrightquasigoup (subquasigroup, subloop) of a right quasigroup (quasigroup, loop) <var class="Arg">Q</var> generated by the list of elements <var class="Arg">gens</var>. We allow <var class="Arg">gens</var> to consist of elements of <var class="Arg">Q</var> or of elements of the underlying set of <var class="Arg">Q</var>. Note that there are no optional arguments in this constructor. The resulting subalgebra will be index based (cf. Section <a href="chap1.html#X81DECB427F4826CD"><span class="RefLink">1.8</span></a>) iff <var class="Arg">Q</var> is index based. For subloops, we allow <var class="Arg">gens</var> to be an empty set, in which case the trivial subloop is returned.</p>
+
+<p>An effort is made for the subalgebra to inherit properties from <var class="Arg">Q</var>. For instance, if it is known that <var class="Arg">Q</var> is commutative, the subalgebra will have an attribute that signifies it is commutative.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := LoopByFunction([0..7],function(x,y) return (x+y) mod 8; end);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Subrightquasigroup( Q, [4] ); # inherits loop property from parent</span>
+&lt;loop of size 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ IsSubrightquasigroup( Q, S ), IsSubquasigroup( Q, S ), IsSubloop( Q, S ) ];</span>
+[ true, true, true ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements( S ); # note indexing of elements here and below</span>
+[ l0, l4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements( S )[ 2 ]; # the 2nd element of S</span>
+l4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S.2; # the 2nd element of Q, the parent of S</span>
+l1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S[4]; # the element of parent Q corresponding to the given element of the underlying set</span>
+l4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( CayleyTable( S ) );</span>
+[ [  0,  4 ],
+  [  4,  0 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightTranslation( Q, Q[4] ); # a permutation of the index set of Q</span>
+(1,5)(2,6)(3,7)(4,8)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightTranslation( S, S[4] ); # a permutation of the index set of S</span>
+(1,5)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Subquasigroup( Q, [4] );</span>
+&lt;loop of size 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Subloop( Q, [4] );</span>
+&lt;loop of size 2&gt;
+</pre></div>
+
+<p><a id="X7829B313876D5C35" name="X7829B313876D5C35"></a></p>
+
+<h5>3.3-3 <span class="Heading">All subalgebras</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllSubrightquasigroups</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllSubquasigroups</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllSubloops</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of all subrightquasigroups (subquasigroups, subloops) of a right quasigroup (quasigroup, loop) <var class="Arg">Q</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AllSubloops( AsLoop( CyclicGroup( 3 ) ) );</span>
+[ &lt;trivial group with 1 generator&gt;, &lt;associative loop of size 3&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P := ProjectionRightQuasigroup( 2 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length( AllSubrightquasigroups( P ) ); # every nonempty subset is a subrightquasigroup here</span>
+3
+</pre></div>
+
+<p>A subloop <span class="Math">S</span> of a loop <span class="Math">Q</span> is <em>minimal</em> if <span class="Math">S</span> is nontrivial and <span class="Math">S</span> contains no proper nontrivial subloops. A sub(right)quasigroup <span class="Math">S</span> of a (right) quasigroup <span class="Math">Q</span> is <em>minimal</em> if <span class="Math">S</span> contains no proper sub(right)quasigroups.</p>
+
+<p><a id="X7B81239B7C8C5254" name="X7B81239B7C8C5254"></a></p>
+
+<h5>3.3-4 <span class="Heading">Testing minimal subalgebras</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMinimalSubrightquasigroup</code>( [<var class="Arg">Q</var>, ]<var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMinimalSubquasigroup</code>( [<var class="Arg">Q</var>, ]<var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMinimalSubloop</code>( [<var class="Arg">Q</var>, ]<var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> iff <var class="Arg">S</var> is a minimal subrightquasigroup (subquasigroup, subloop), else returns false.</p>
+
+<p>Note that it is not necessary to specify the enveloping right quasigroup (quasigroup, loop) since all needed information is contained already in <var class="Arg">S</var>. In the version with two arguments <var class="Arg">Q</var>, <var class="Arg">S</var>, it is first checked that <var class="Arg">S</var> is a subalgebra of <var class="Arg">Q</var>.</p>
+
+<p><a id="X8523FBF57C70E1FD" name="X8523FBF57C70E1FD"></a></p>
+
+<h5>3.3-5 <span class="Heading">All minimal subalgebras</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllMinimalSubrightquasigroups</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllMinimalSubquasigroups</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllMinimalSubloops</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of all minimal subrightquasigroups (subquasigroups, subloops) of a right quasigroup (quasigroup, loop) <var class="Arg">Q</var>.</p>
+
+<p>A surighquasigroup <span class="Math">S</span> of a right quasigroup <span class="Math">Q</span> is <em>maximal</em> if <span class="Math">S</span> is propertly contained in <span class="Math">Q</span> and if whenever <span class="Math">S&lt;A&lt;Q</span> then either <span class="Math">A=S</span> or <span class="Math">A=Q</span>.</p>
+
+<p><a id="X81F26B9C79D516B3" name="X81F26B9C79D516B3"></a></p>
+
+<h5>3.3-6 <span class="Heading">Testing maximal subalgebras</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMaximalSubrightquasigroup</code>( <var class="Arg">Q</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMaximalSubquasigroup</code>( <var class="Arg">Q</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMaximalSubloop</code>( <var class="Arg">Q</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> iff <var class="Arg">S</var> is a maximal subrightquasigroup (subquasigroup, subloop) of the right quasigroup (quasigroup, loop) <var class="Arg">Q</var>, else returns false.</p>
+
+<p><a id="X7F50B3F282F53344" name="X7F50B3F282F53344"></a></p>
+
+<h5>3.3-7 <span class="Heading">All maximal subalgebras</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllMaximalSubrightquasigroups</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllMaximalSubquasigroups</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllMaximalSubloops</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of all maximal subrightquasigroups (subquasigroups, subloops) of the right quasigroup (quasigroup, loop) <var class="Arg">Q</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := MoufangLoop(12,1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Subloop(Q,[Q.2]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMinimalSubloop(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AllMinimalSubloops(Q);</span>
+[ &lt;Moufang loop of size 2&gt;, &lt;Moufang loop of size 2&gt;, 
+  &lt;Moufang loop of size 3&gt;, &lt;Moufang loop of size 2&gt;, 
+  &lt;Moufang loop of size 2&gt;, &lt;Moufang loop of size 2&gt;, 
+  &lt;Moufang loop of size 2&gt;, &lt;Moufang loop of size 2&gt;, 
+  &lt;Moufang loop of size 2&gt;, &lt;Moufang loop of size 2&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMaximalSubloop(Q,S);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AllMaximalSubloops(Q);</span>
+[ &lt;Moufang loop of size 6&gt;, &lt;Moufang loop of size 4&gt;, 
+  &lt;Moufang loop of size 4&gt;, &lt;Moufang loop of size 4&gt;, 
+  &lt;Moufang loop of size 6&gt;, &lt;Moufang loop of size 6&gt;, 
+  &lt;Moufang loop of size 4&gt;, &lt;Moufang loop of size 4&gt;, 
+  &lt;Moufang loop of size 4&gt;, &lt;Moufang loop of size 4&gt;, 
+  &lt;Moufang loop of size 4&gt;, &lt;Moufang loop of size 4&gt; ]
+</pre></div>
+
+<p><a id="X7A43C1DF835C4299" name="X7A43C1DF835C4299"></a></p>
+
+<h4>3.4 <span class="Heading">Cosets and transversals</span></h4>
+
+<p>If <span class="Math">S</span> is a subrightquasigroup of a right quasigroup <span class="Math">Q</span>, the <em>right cosets</em> are subsets of <span class="Math">Q</span> of the form <span class="Math">Sx=\{sx:s\in S\}</span>, where <span class="Math">x\in Q</span>. All right cosets of a subrightquasigroup <span class="Math">S</span> of a right quasigroup <span class="Math">Q</span> have the same cardinality, but they need not cover <span class="Math">Q</span> and they can intersect in nontrivial ways. In quasigroups and loops, the right cosest cover <span class="Math">Q</span>.</p>
+
+<p>A <em>right transversal</em> to <span class="Math">S</span> in <span class="Math">Q</span> is then a list of elements of <code class="code">Q</code> containing one element from each right coset of <span class="Math">S</span> in <span class="Math">Q</span>.</p>
+
+<p>In <strong class="pkg">RightQuasigroups</strong>, the right cosets and right transversals are mere lists, not special <strong class="pkg">GAP</strong> objects.</p>
+
+<p>The function <code class="code">RightCosets( Q, S )</code> checks that <code class="code">S</code> is a subrightquasigroup of <code class="code">Q</code> and then returns a list of all right cosets of <code class="code">S</code> in <code class="code">Q</code>.</p>
+
+<p><a id="X7BF8B87D8121FBBF" name="X7BF8B87D8121FBBF"></a></p>
+
+<h5>3.4-1 RightTransversal</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightTransversal</code>( <var class="Arg">Q</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a right transversal to <var class="Arg">S</var> in <var class="Arg">Q</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P := ProjectionRightQuasigroup( 3 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( MultiplicationTable( P ) );</span>
+[ [  1,  1,  1 ],
+  [  2,  2,  2 ],
+  [  3,  3,  3 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Subrightquasigroup( P, [1,2] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightCosets( P, S ); # there is a single right coset of S in P</span>
+[ [ r1, r2 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightTransversal( P, S );</span>
+[ r1 ]
+</pre></div>
+
+<p><em>Left cosets</em> <span class="Math">xS</span> and <em>left transversals</em> are defined dually to right cosets and right transversals. In right quasigroups, the left cosets of <span class="Math">S</span> need not have the same cardinality and can intersect in nontrivial ways, but they cover <span class="Math">Q</span>. In quasigroups and loops, all left cosets of <span class="Math">S</span> have the same cardinality.</p>
+
+<p>The function <code class="code">LeftCosets( Q, S )</code> checks that <code class="code">S</code> is a subrightquasigroup of <code class="code">Q</code> and then returns a list of all left cosets of <code class="code">S</code> in <code class="code">Q</code>.</p>
+
+<p><a id="X861C5CC97E0901B2" name="X861C5CC97E0901B2"></a></p>
+
+<h5>3.4-2 LeftTransversal</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftTransversal</code>( <var class="Arg">Q</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a left transversal to <var class="Arg">S</var> in <var class="Arg">Q</var>.</p>
+
+<p><a id="X852E2582803ABADD" name="X852E2582803ABADD"></a></p>
+
+<h4>3.5 <span class="Heading">Right quasigroups by generators</span></h4>
+
+<p>In analogy with the <code class="code">Group</code> function in <strong class="pkg">GAP</strong>, we provide methods for generating right quasigroups (quasigroups, loops) from a list of right quasigroup (quasigroup, loop) elements.</p>
+
+<p><a id="X87BE4D0C7CA70695" name="X87BE4D0C7CA70695"></a></p>
+
+<h5>3.5-1 <span class="Heading">RightQuasigroup, Quasigroup and Loop</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightQuasigroup</code>( <var class="Arg">gens...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Quasigroup</code>( <var class="Arg">gens...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Loop</code>( <var class="Arg">gens...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: the right quasigroup (quasigroup, loop) generated by the given right quasigroup (quasigroup, loop) elements. The generators can be given as <code class="code">gen1</code>, <code class="code">gen2</code>, <code class="code">...</code>, or as a single argument <code class="code">[ gen1, gen2, ...]</code>. The generators must belong to the same parent algebra. The attribute <code class="code">GeneratorsOfMagma</code> (see Section <a href="chap1.html#X86E32404878D45C7"><span class="RefLink">1.9</span></a>) is not set to coincide with the given list of generators. The resulting algebra is index based iff the parent algebra is index based.</p>
+
+<p><a id="X7EFFDFB37EC11996" name="X7EFFDFB37EC11996"></a></p>
+
+<h5>3.5-2 <span class="Heading">RightQuasigroupByGenerators, QuasigroupByGenerators and LoopByGenerators</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightQuasigroupByGenerators</code>( <var class="Arg">gens...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasigroupByGenerators</code>( <var class="Arg">gens...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopByGenerators</code>( <var class="Arg">gens...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: the right quasigroup (quasigroup, loop) generated by the given right quasigroup (quasigroup, loop) elements. This is just like <code class="code">RightQuasigroup</code> (<code class="code">Quasigroup</code>, <code class="code">Loop</code>).</p>
+
+<p><a id="X7943CD7381916A09" name="X7943CD7381916A09"></a></p>
+
+<h5>3.5-3 <span class="Heading">RightQuasigroupWithGenerators, QuasigroupWithGenerators and LoopWithGenerators</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightQuasigroupWithGenerators</code>( <var class="Arg">gens...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasigroupWithGenerators</code>( <var class="Arg">gens...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopWithGenerators</code>( <var class="Arg">gens...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: the right quasigroup (quasigroup, loop) generated by the given right quasigroup (quasigroup, loop) elements. This is just like <code class="code">RightQuasigroup</code> (<code class="code">Quasigroup</code>, <code class="code">Loop</code>) except that it is guaranteed that the value of <code class="code">GeneratorsOfMagma</code> will be set to coincide with the given list of generators.</p>
+
+<p><a id="X86F9C3F08626EA6F" name="X86F9C3F08626EA6F"></a></p>
+
+<h4>3.6 <span class="Heading">Intersections and joins of right quasigroups</span></h4>
+
+<p>Given a list <code class="code">algebras</code> of at least two right quasigroups (quasigroups, loops) with the same parent algebra, <code class="code">Intersection( algebras )</code> returns their intersection subalgebra. We also support <code class="code">Intersection( algebra1, algebra2, ... )</code>.</p>
+
+<p>Passing of arguments for <code class="code">Intersection</code> is handled in the standard <strong class="pkg">GAP</strong> way. Therefore the only method implemented in <strong class="pkg">RightQuasigroups</strong> is <code class="code">Intersection2</code> for the intersection of two right quasigroups.</p>
+
+<p>Given a list <code class="code">algebras</code> of right quasigroups (quasigroups, loops) with the same parent algebra, <code class="code">Join( algebras )</code> returns the smallest subalgebra containing all algebras in the list. We also support <code class="code">Join( algebra1, algebra2, ... )</code>.</p>
+
+<p>The function <code class="code">Join</code> does not seem to be implemented in <strong class="pkg">GAP</strong>. In <strong class="pkg">RightQuasigroups</strong>, <code class="code">Join</code> and <code class="code">Join2</code> are implemented in a way analogous to <code class="code">Intersection</code> and <code class="code">Intersection2</code>, except that we also allow a single algebra as the argument, in which case that algebra is returned.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P := ProjectionRightQuasigroup( 10 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := Subrightquasigroup( P, [1..4] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := Subrightquasigroup( P, [3..7] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Intersection( A, B );</span>
+&lt;associative quandle of size 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements( last );</span>
+[ r3, r4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Join( A, B );</span>
+&lt;associative quandle of size 7&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements( last );</span>
+[ r1, r2, r3, r4, r5, r6, r7 ]
+</pre></div>
+
+<p><a id="X82BD951079E3C349" name="X82BD951079E3C349"></a></p>
+
+<h4>3.7 <span class="Heading">Congruences</span></h4>
+
+<p>Let <span class="Math">A</span> be an algebra in a variety <span class="Math">V</span>. Then <span class="Math">\sim</span> is a <em>congruence</em> on <span class="Math">A</span> if it is an equivalence relation on <span class="Math">A</span> such that for every operation <span class="Math">f</span> of arrity <span class="Math">m</span> in the signature of <span class="Math">V</span>, we have <span class="Math">f(x_1,\dots,x_m)\sim f(y_1,\dots,y_m)</span> whenever <span class="Math">x_1,\dots,x_m,y_1,\dots,y_m\in A</span> satisfy <span class="Math">x_1\sim y_1</span>, <span class="Math">\dots</span>, <span class="Math">x_m\sim y_m</span>. If <span class="Math">V</span> is the variety of all right quasigroups (resp. quasigroups, loops), we speak of a <em>right quasigroup congruence</em> (resp. <em>quasigroup congruence</em>, <em>loop congruence</em>).</p>
+
+<p>It turns out that an equivalence relation <span class="Math">\sim</span> on a finite right quasigroup (resp. quasigroup, loop) is a right quasigroup (resp. quasigroup, loop) congruence iff for every <span class="Math">x,y,u\in Q</span> with <span class="Math">x\sim y</span> we have <span class="Math">xu\sim yu</span> and <span class="Math">ux\sim uy</span>. Therefore, an equivalence relation <span class="Math">\sim</span> on a finite loop (quasigroup, right quasigroup) is a loop (quasigroup, right quasigroup) congruence iff it is a groupoid congruence.</p>
+
+<p>In <strong class="pkg">GAP</strong>, equivalence relations on <span class="Math">A</span> are represented as functions <span class="Math">f:A\to A</span>, where <span class="Math">a,b\in A</span> are related iff <span class="Math">f(a)=b</span>. Since equivalence relations are in one-to-one correspondence with partitions, the <strong class="pkg">GAP</strong> function <code class="code">EquivalenceRelationByPartition</code> is particularly convenient, as illustrated by the following example:</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SymmetricGroup( 3 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C := EquivalenceRelationByPartition( G, [[(),(1,2,3),(1,3,2)],[(1,2),(1,3),(2,3)]] );</span>
+&lt;equivalence relation on SymmetricGroup( [ 1 .. 3 ] ) &gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Source( C );</span>
+Sym( [ 1 .. 3 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">EquivalenceClasses( C );</span>
+[ {()}, {(1,2)} ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements( last[1] );</span>
+[ (), (1,2,3), (1,3,2) ]
+</pre></div>
+
+<p><a id="X814ED6EE848AC131" name="X814ED6EE848AC131"></a></p>
+
+<h5>3.7-1 <span class="Heading">Checking right quasigroup congruences</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightQuasigroupCongruence</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsQuasigroupCongruence</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLoopCongruence</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <var class="Arg">C</var> is a right quasigroup (resp. quasigroup, loop) congruence on the right quasigroup (resp. quasigroup, loop) <code class="code">Source( </code><var class="Arg">C</var><code class="code"> )</code>, else returns <code class="code">false</code>. Note that <code class="code">false</code> is returned when a stronger algebra congruence is tested on a weaker algebra, for instance, if <code class="code">IsLoopCongruence( </code><var class="Arg">C</var><code class="code"> )</code> is tested with <code class="code">Source( </code><var class="Arg">C</var><code class="code"> )</code> that is not a declared loop.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := QuasigroupByFunction( [0..3], function(x,y) return (x-y) mod 4; end );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C := EquivalenceRelationByPartition( Q, [ [Q[0],Q[2]], [Q[1],Q[3]] ] );</span>
+&lt;equivalence relation on &lt;quasigroup of size 4 on 0, 1, 2, 3&gt; &gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsQuasigroupCongruence( C );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := EquivalenceRelationByPartition( Q, [ [Q[0],Q[1],Q[2]], [Q[3]] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsQuasigroupCongruence( D );</span>
+false
+</pre></div>
+
+<p><a id="X84A1A1157B80D9A0" name="X84A1A1157B80D9A0"></a></p>
+
+<h5>3.7-2 <span class="Heading">Congruences generated by partition</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightQuasigroupCongruenceByPartition</code>( <var class="Arg">Q</var>, <var class="Arg">partition</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasigroupCongruenceByPartition</code>( <var class="Arg">Q</var>, <var class="Arg">partition</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopCongruenceByPartition</code>( <var class="Arg">Q</var>, <var class="Arg">partition</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the right quasigroup (quasigroup, loop) congruence of the right quasigroup (quasigroup, loop) <var class="Arg">Q</var> generated by <var class="Arg">partition</var>, that is, the smallest congruence <code class="code">C</code> such that every element of <var class="Arg">partition</var> is a subset of an equivalence class of <code class="code">C</code>. Here, <var class="Arg">partition</var> must be a list of disjoint subsets of <var class="Arg">Q</var> (whose union is not necessarily all of <var class="Arg">Q</var>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := QuasigroupByFunction( GF(27), \- );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C := QuasigroupCongruenceByPartition( Q, [ [ Q.1, Q.2, Q.3 ], [ Q.4, Q.5 ] ] );; # merge Q.1, Q.2, Q.3 and also Q.4, Q.5</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List( EquivalenceClasses( C ), Size );</span>
+[ 9, 9, 9 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := AsLoop( SymmetricGroup( 5 ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C := LoopCongruenceByPartition( G, [ [ G[()], G[(1,2,3)] ] ] );; # merge (), (1,2,3)</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List( EquivalenceClasses( C ), Size );</span>
+[ 60, 60 ]
+</pre></div>
+
+<p><a id="X83E8828C845E5003" name="X83E8828C845E5003"></a></p>
+
+<h5>3.7-3 <span class="Heading">Congruences generated by pairs</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightQuasigroupCongruenceByPairs</code>( <var class="Arg">Q</var>, <var class="Arg">pairs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasigroupCongruenceByPairs</code>( <var class="Arg">Q</var>, <var class="Arg">pairs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopCongruenceByPairs</code>( <var class="Arg">Q</var>, <var class="Arg">pairs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the right quasigroup (quasigroup, loop) congruence of the right quasigroup (quasigroup, loop) <var class="Arg">Q</var> generated by <var class="Arg">pairs</var>, that is, the smallest congruence that contains <var class="Arg">pairs</var> as a subset. Here, <var class="Arg">pairs</var> must be a list of pairs of elements of <var class="Arg">Q</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := RightQuasigroupByFunction([0..7], function(x,y) return (x+2*y) mod 8; end );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C := RightQuasigroupCongruenceByPairs( Q, [ [ Q[0],Q[2] ] ] );; # merge 0, 2</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List( EquivalenceClasses( C ), Elements );</span>
+[ [ r0, r2, r4, r6 ], [ r1, r5 ], [ r3, r7 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C := RightQuasigroupCongruenceByPairs( Q, [ [ Q[0],Q[2] ], [ Q[0], Q[1] ] ] );; # merge 0, 2 and also 0, 1</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List( EquivalenceClasses( C ), Elements );</span>
+[ [ r0, r1, r2, r3, r4, r5, r6, r7 ] ]
+</pre></div>
+
+<p><a id="X8761BE9B787D9632" name="X8761BE9B787D9632"></a></p>
+
+<h5>3.7-4 <span class="Heading">All congruences</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllRightQuasigroupCongruences</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllQuasigroupCongruences</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllLoopCongruences</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of all right quasigroup (quasigroup, loop) congruences of a right quasigroup (quasigroup, loop) <var class="Arg">Q</var>. The congruences are returned as <strong class="pkg">GAP</strong> objects suitable as arguments of <code class="code">FactorRightQuasigroup</code> (<code class="code">FactorQuasigroup</code>, <code class="code">FactorLoop</code>).</p>
+
+<p>Note: For a right quasigroup <var class="Arg">Q</var>, there is no method yet for the case when <code class="code">RightMultiplicationGroup( Q )</code> does not act transitively on <var class="Arg">Q</var>.</p>
+
+<p><a id="X82DDA72B834ABD8D" name="X82DDA72B834ABD8D"></a></p>
+
+<h4>3.8 <span class="Heading">Normality and simplicity</span></h4>
+
+<p>A subloop <span class="Math">S</span> of a loop <span class="Math">Q</span> is <em>normal</em> in <span class="Math">Q</span> if <span class="Math">Sx=xS</span>, <span class="Math">S(xy)=(Sx)y</span> and <span class="Math">(xy)S = x(yS)</span> for every <span class="Math">x,y\in Q</span>. It can be shown that a subset <span class="Math">S</span> of <span class="Math">Q</span> is a normal subloop of <span class="Math">Q</span> iff there is a loop congruence <span class="Math">\sim</span> on <span class="Math">Q</span> such that <span class="Math">S</span> is the congruence class of <span class="Math">\sim</span> containing the neutral element of <span class="Math">Q</span>.</p>
+
+<p>If <code class="code">S</code> is a subloop of a loop <code class="code">Q</code>, the function <code class="code">IsNormal( Q, S )</code> returns <code class="code">true</code> if <code class="code">S</code> is normal in <code class="code">Q</code>, else it returns <code class="code">false</code>.</p>
+
+<p>If <code class="code">S</code> is a subset or a subloop of a loop <code class="code">Q</code>, <code class="code">NormalClosure( Q, S )</code> returns the normal closure of <code class="code">S</code> in <code class="code">Q</code>, that is, the smallest normal subloop of <code class="code">Q</code> containing <code class="code">S</code>.</p>
+
+<p><a id="X836C52FB7DF25B9E" name="X836C52FB7DF25B9E"></a></p>
+
+<h5>3.8-1 AllNormalSubloops</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllNormalSubloops</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of all normal subloops of a loop <var class="Arg">Q</var>. Normal subloops correspond to blocks of the multiplication group of <var class="Arg">Q</var> that contain the neutral element.</p>
+
+<p>A right quasigroup <span class="Math">Q</span> is <em>simple</em> if the only congruences on <span class="Math">Q</span> are the diagonal congruence <span class="Math">\{(x,x):x\in Q\}</span> and the full congruence <span class="Math">Q\times Q</span>. It is well known that a quasigroup (loop) <span class="Math">Q</span> is simple iff its multiplication group <span class="Math">\mathrm{Mlt}(Q)=\langle R_x,L_x:x\in Q\rangle</span> acts primitively on <span class="Math">Q</span> (see Section <a href="chap5.html#X7AF75B397C3E23AF"><span class="RefLink">5.2</span></a>).</p>
+
+<p>Note that in the finite case, which is the only case supported by <strong class="pkg">RightQuasigroups</strong>, a loop <span class="Math">Q</span> is simple as a loop (no nontrivial loop congruences) iff it is simple as a quasigroup (no nontrivial quasigroup congruences) iff it is simple as a right quasigroup (no nontrivial right quasigroup congruences) iff it is simple as a groupoid (no nontrivial groupoid congruences).</p>
+
+<p><a id="X798EF3CC7E896C1C" name="X798EF3CC7E896C1C"></a></p>
+
+<h5>3.8-2 <span class="Heading">Testing right quasigroups for simplicity</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSimpleRightQuasigroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSimpleQuasigroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSimpleLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <var class="Arg">Q</var> is a simple right quasigroup (quasigroup, loop), else returns <code class="code">false</code>. The non-qualified function <code class="code">IsSimple</code> is also supported.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># right quasigroup example</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := RightQuasigroupByCayleyTable( [[2,2,1,1],[3,1,2,2],[4,3,3,3],[1,4,4,4]] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RMlt := RightMultiplicationGroup( R );</span>
+Group([ (1,2,3,4), (1,2) ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AllRightQuasigroupCongruences( R );</span>
+[ &lt;equivalence relation on &lt;right quasigroup of size 4 on 1, 2, 3, 4&gt; &gt;, 
+  &lt;equivalence relation on &lt;right quasigroup of size 4 on 1, 2, 3, 4&gt; &gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSimpleRightQuasigroup( R ); # IsSimple( R ) is also supported</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># quasigroup example</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := QuasigroupByFunction( [0..3], function(x,y) return (x-y) mod 4; end );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">congruences := AllQuasigroupCongruences( Q );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List( congruences, EquivalenceClasses );</span>
+[ [ {q0}, {q1}, {q2}, {q3} ], [ {q0}, {q1} ], [ {q0} ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List( EquivalenceClasses( congruences[ 2 ] ), Elements );</span>
+[ [ q0, q2 ], [ q1, q3 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSimpleQuasigroup( Q ); # IsSimple( Q ) is also supported</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># loop example</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := AsLoop( Group((1,2,3,4)) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AllNormalSubloops( L );</span>
+[ &lt;trivial group with 1 generator&gt;, &lt;associative loop of size 2&gt;, 
+  &lt;associative loop of size 4&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSimpleLoop( L ); # IsSimple( L ) is also supported</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Subloop(  L, [ (1,3)(2,4) ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsNormal( L, S );</span>
+true
+</pre></div>
+
+<p><a id="X800399CC879ADD91" name="X800399CC879ADD91"></a></p>
+
+<h4>3.9 <span class="Heading">Factor algebras</span></h4>
+
+<p>When <span class="Math">\sim</span> is a congruence on <span class="Math">A</span>, then the factor algebra <span class="Math">A/\sim</span> is well defined on the equivalence classes <span class="Math">[x]</span> of <span class="Math">\sim</span> by setting <span class="Math">f([x_1],\dots,[x_m]) = [f(x_1,\dots,x_m)]</span> for every operation <span class="Math">f</span> of arity <span class="Math">m</span> in the signature of the enveloping variety <span class="Math">V</span> and every <span class="Math">x_1,\dots,x_m\in A</span>.</p>
+
+<p>In case of right quasigroups and quasigroups, the factor construction based on congruences is the standard way of defining factor alegbras. In case of loops, the equivalence classes of <span class="Math">\sim</span> are precisely the cosets of the normal subloop <span class="Math">S</span>, the equivalence class of the identity element. The congruence-based factor algebra construction is then equivalent to the standard coset-based construction <span class="Math">Sx\cdot Sy = S(xy)</span> from group theory.</p>
+
+<p><a id="X7F8629117C8B1422" name="X7F8629117C8B1422"></a></p>
+
+<h5>3.9-1 <span class="Heading">Constructing factor algebras</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FactorRightQuasigroup</code>( <var class="Arg">C</var>[, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FactorQuasigroup</code>( <var class="Arg">C</var>[, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FactorLoop</code>( <var class="Arg">C</var>[, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the factor algebra of <code class="code">Source( </code><var class="Arg">C</var><code class="code"> )</code> modulo the right quasigroup (resp. quasigroup, loop) congruence <var class="Arg">C</var>. In case of loops we also allow arguments <var class="Arg">Q</var> and <var class="Arg">N</var> instead of <var class="Arg">C</var>, where <var class="Arg">Q</var> is a loop and <var class="Arg">N</var> is a normal subloop of <var class="Arg">Q</var>. See Section <a href="chap2.html#X85C8B48C7BEC8AB6"><span class="RefLink">2.1</span></a> for the optional argument <code class="code">constructorStyle</code>.</p>
+
+<p>An effort is made for the factor algebra to inherit properties from the enveloping algebra. For instance, if it is known that the enveloping algebra is commutative, the factor algebra will have an attribute that signifies it is commutative.</p>
+
+<p>We also support infix notation for factor algebras, that is, <code class="code">Q/C</code> or <code class="code">Q/N</code>. In that version:</p>
+
+
+<ul>
+<li><p>the enveloping algebra <code class="code">Q</code> must always be given,</p>
+
+</li>
+<li><p>the optional argument <code class="code">constructorStyle</code> cannot be given,</p>
+
+</li>
+<li><p>the resulting algebra will be index based iff <code class="code">Q</code> is index based.</p>
+
+</li>
+</ul>
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := ProjectionRightQuasigroup( 6 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C := EquivalenceRelationByPartition( Q, [[Q.1,Q.2],[Q.3,Q.4,Q.5],[Q.6]] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ IsRightQuasigroupCongruence( C ), IsQuasigroupCongruence( C ), IsLoopCongruence( C ) ];</span>
+[ true, false, false ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := Q/C;</span>
+&lt;associative quandle of size 3&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements( F ); # the inner "r" comes from Q, the outer "r" from F.</span>
+[ r&lt;object&gt;, r&lt;object&gt;, r&lt;object&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := FactorRightQuasigroup( C, ConstructorStyle( false, false ) ); # non-index based version is supported (but not for /)</span>
+&lt;associative quandle of size 3&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HasMultiplicationTable( H );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H.1*H.2;</span>
+r&lt;object&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CayleyTable( H );   </span>
+[ [ {r1}, {r1}, {r1} ], [ {r3}, {r3}, {r3} ], [ {r6}, {r6}, {r6} ] ]
+</pre></div>
+
+<p>See Section <a href="chap8.html#X822F70BA85814F1A"><span class="RefLink">8.1</span></a> for natural projections onto factor algebras.</p>
+
+<p><a id="X81AF1E9C7F22C760" name="X81AF1E9C7F22C760"></a></p>
+
+<h4>3.10 <span class="Heading">An example of the factor construction: Paige loops</span></h4>
+
+<p>We conclude with a larger example, the construction of finite simple Moufang loops, so-called Paige loops. These are obtained as the factor of the multiplicative set <span class="Math">S</span> of elements of norm one in the Zorn vector matrix algebra modulo the center of <span class="Math">S</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># auxiliary functions</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DotProduct := function( x, y ) return Sum( [1..Length(x)], i -&gt; x[i]*y[i] ); end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CrossProduct := function( x, y ) return [ x[2]*y[3]-x[3]*y[2], x[3]*y[1]-x[1]*y[3], x[1]*y[2]-x[2]*y[1] ]; end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PaigeNorm := function( x ) return x[1]*x[8] - DotProduct( x{[2,3,4]},x{[5,6,7]} ); end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PaigeMult := function( x, y )</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  local a, b, c, d;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  a := x[1]*y[1] + DotProduct(x{[2,3,4]},y{[5,6,7]});</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  b := x[1]*y{[2,3,4]} + x{[2,3,4]}*y[8] - CrossProduct(x{[5,6,7]},y{[5,6,7]});</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  c := x{[5,6,7]}*y[1] + x[8]*y{[5,6,7]} + CrossProduct(x{[2,3,4]},y{[2,3,4]});</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  d := DotProduct(x{[5,6,7]},y{[2,3,4]})+x[8]*y[8];</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  return Concatenation( [a], b, c, [d] );</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># Paige loop over GF(2) (index based approach in characteristic 2)</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := GF(2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Filtered( F^8, x -&gt; PaigeNorm( x ) = One( F ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P := LoopByFunction( S, PaigeMult, ConstructorStyle( true, true ) ); </span>
+&lt;loop of size 120&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># general approach (not index based, any characteristic, using congruences)</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n := 3;; # any prime power works but it will be very slow</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := GF(n);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Filtered( F^8, x -&gt; PaigeNorm( x ) = One( F ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := LoopByFunction( S, PaigeMult, ConstructorStyle( false, false ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C := EquivalenceRelationByPartition( M, Set( S, x -&gt; Set( [ M[x], M[-x] ] ) ) );; # factoring out +/- one</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P := FactorLoop( C, ConstructorStyle( false, false ) ); # 2000 ms</span>
+&lt;loop of size 1080&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># another approach using normal subloop</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n := 3;; F := GF(n);; S := Filtered( F^8, x -&gt; PaigeNorm( x ) = One( F ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := LoopByFunction( S, PaigeMult, ConstructorStyle( false, false ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">one := [ Z(n)^0, 0*Z(n), 0*Z(n), 0*Z(n), 0*Z(n), 0*Z(n), 0*Z(n), Z(n)^0 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := Subloop( M, [-one] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P := FactorLoop( M, N, ConstructorStyle( false, false ) ); # 2000 ms, it takes a while to find the neutral element</span>
+&lt;loop of size 1080&gt;
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

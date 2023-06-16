@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (RightQuasigroups) - Chapter 6: Nilpotency and solvability</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap6"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap6.html">[MathJax off]</a></p>
+<p><a id="X7EB823F1823BE234" name="X7EB823F1823BE234"></a></p>
+<div class="ChapSects"><a href="chap6_mj.html#X7EB823F1823BE234">6 <span class="Heading">Nilpotency and solvability</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X7E0C18087C472EA6">6.1 <span class="Heading">Nuclei, commutant and center</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X877BF80078DC3F7A">6.1-1 <span class="Heading">Nuclei</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X87F9B4C783C1B9F7">6.1-2 Commutant</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X8523415779DC2418">6.1-3 Center</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X7A4D23D682F45E9B">6.2 <span class="Heading">Nilpotency for loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X80B21F1482A45064">6.2-1 NilpotencyClassOfLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7CF1D1B47BA69C61">6.2-2 IsNilpotentLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X796082BD83444865">6.2-3 UpperCentralSeriesOfLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X879AE0A57983A368">6.2-4 LowerCentralSeriesOfLoop</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X829A274082453AFF">6.3 <span class="Heading">Solvability and congruence solvability for loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X781375E981909CCB">6.3-1 AssociatorSubloop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X85C0F29D7E08A5B4">6.3-2 IsSolvableLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7B93E8338098EA99">6.3-3 DerivedSubloop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7DDC86537C7688E8">6.3-4 DerivedSeriesOfLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7D3462FD83620D77">6.3-5 DerivedLength</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7A4BFB197DEDB853">6.3-6 CommutatorOfNormalSubloops</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7D83750C7D59A4C5">6.3-7 IsAbelianNormalSubloop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X87B88B6A8299D756">6.3-8 IsCongruenceSolvableLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X79A8A79081150BA4">6.3-9 CongruenceDerivedSeriesOfLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7923C6BE81B89020">6.3-10 CongruenceDerivedLength</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X835E8C7D7D00A5AE">6.4 <span class="Heading">Nuclear and central extensions of loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X8548C5C17DD1E60F">6.4-1 IsLoopCocycle</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X87BEE5987E838DFE">6.4-2 LoopByNuclearExtension</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7A49ED86819A0F93">6.4-3 LoopByCentralExtension</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7A413E8F86572F3D">6.4-4 AsSquareTable</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X8754116680773266">6.4-5 NuclearExtensionByNormalSubloop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X80604A5C84B5408A">6.4-6 CentralExtensionByNormalSubloop</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X7E2A6C6E83E83542">6.5 <span class="Heading">All central extensions in a variety of loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7F4DD38278DAD119">6.5-1 LoopCocyclesInVariety</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X8142783284BABDA8">6.5-2 LoopCoboundaries</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7C2998337F3D460C">6.5-3 LoopCocyclesModAction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7BBCAC987B6DBBD4">6.5-4 AllLoopCocyclesInVariety</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7908FE63797E2AE4">6.5-5 AllLoopCentralExtensionsInVariety</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X8401718E80FA6F34">6.6 <span class="Heading">Frattini subalgebra</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7CD31B4C85AC5F65">6.6-1 FrattiniSubrightquasigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X847CBD7F85F18F05">6.6-2 FrattiniSubquasigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X809490687E9B5CD8">6.6-3 FrattiniSubloop</a></span>
+</div></div>
+</div>
+
+<h3>6 <span class="Heading">Nilpotency and solvability</span></h3>
+
+<p>Nilpotency and solvability are well-developed for loops but less so for quasigroups and right quasigroups. Many methods described in this chapter therefore apply only to loops.</p>
+
+<p><a id="X7E0C18087C472EA6" name="X7E0C18087C472EA6"></a></p>
+
+<h4>6.1 <span class="Heading">Nuclei, commutant and center</span></h4>
+
+<p>The <em>right nucleus</em> (resp. <em>middle nucleus</em>, <em>left nucleus</em>) of a right quasigroup <span class="SimpleMath">\(Q\)</span> is the set <span class="SimpleMath">\(\mathrm{Nuc}_r(Q) = \{z\in Q:x(yz)=(xy)z\)</span> for all <span class="SimpleMath">\(x,y\in Q\}\)</span> (resp. <span class="SimpleMath">\(\mathrm{Nuc}_m(Q) = \{y\in Q:x(yz)=(xy)z\)</span> for all <span class="SimpleMath">\(x,z\in Q\}\)</span>, <span class="SimpleMath">\(\mathrm{Nuc}_\ell(Q) = \{x\in Q:x(yz)=(xy)z\)</span> for all <span class="SimpleMath">\(y,z\in Q\}\)</span>). The <em>nucleus</em> <span class="SimpleMath">\(\mathrm{Nuc}(Q)\)</span> of <span class="SimpleMath">\(Q\)</span> is the intesection of the three nuclei.</p>
+
+<p>In the finite case, each of the four nuclei is either an empty set or a subalgebra. For loops, each of the four nuclei is always a subloop.</p>
+
+<p>The <em>commutant</em> of a right quasigroup <span class="SimpleMath">\(Q\)</span> is the possibly empty set <span class="SimpleMath">\(\{x\in Q:xy=yx\)</span> for all <span class="SimpleMath">\(y\in Q\}\)</span>. In the case of loops, the neutral element always belongs to the commutant.</p>
+
+<p>The <em>center</em> of a right quasigroup is the intersection of the nucleus and the commutant. In the case of loops, the center is always a normal subloop.</p>
+
+<p><a id="X877BF80078DC3F7A" name="X877BF80078DC3F7A"></a></p>
+
+<h5>6.1-1 <span class="Heading">Nuclei</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightNucleus</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MiddleNucleus</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftNucleus</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Nuc</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the (right, middle, left) nucleus of a right quasigroup <code class="code">Q</code>, either as the empty set or as a subalgebra of <code class="code">Q</code>.</p>
+
+<p>We also support the synonyms <code class="code">NucleusOfRightQuasigroup</code>, <code class="code">NucleusOfQuasigroup</code> and <code class="code">NucleusOfLoop</code> of <code class="code">Nuc</code>.</p>
+
+<p><a id="X87F9B4C783C1B9F7" name="X87F9B4C783C1B9F7"></a></p>
+
+<h5>6.1-2 Commutant</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Commutant</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the commutant of the rigt quasigroup <code class="code">Q</code>, a possibly empty subset of <code class="code">Q</code>.</p>
+
+<p><a id="X8523415779DC2418" name="X8523415779DC2418"></a></p>
+
+<h5>6.1-3 Center</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Center</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the center of the right quasigroup <code class="code">Q</code>, a possibly empty subset of <code class="code">Q</code>.</p>
+
+<p><a id="X7A4D23D682F45E9B" name="X7A4D23D682F45E9B"></a></p>
+
+<h4>6.2 <span class="Heading">Nilpotency for loops</span></h4>
+
+<p>The <em>nilpotency class</em> of a loop <span class="SimpleMath">\(Q\)</span> is defined inductively by <span class="SimpleMath">\(cl(Q)=1\)</span> if <span class="SimpleMath">\(Q\)</span> is an abelian group and by <span class="SimpleMath">\(cl(Q)=cl(Q/Z(Q))+1\)</span>, if this process terminates, in which case <code class="code">Q</code> is <em>nilpotent</em>.</p>
+
+<p><a id="X80B21F1482A45064" name="X80B21F1482A45064"></a></p>
+
+<h5>6.2-1 NilpotencyClassOfLoop</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NilpotencyClassOfLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the nilpotency class of a loop <code class="code">Q</code>. When <code class="code">Q</code> is not nilpotent, returns <code class="code">fail</code>.</p>
+
+<p><a id="X7CF1D1B47BA69C61" name="X7CF1D1B47BA69C61"></a></p>
+
+<h5>6.2-2 IsNilpotentLoop</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNilpotentLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <code class="code">Q</code> is a nilpotent loop, else returns <code class="code">false</code>. The non-qualified version <code class="code">IsNilpotent</code> is also supported, cf. Section <a href="chap1_mj.html#X7E2E2D5B87A21A1F"><span class="RefLink">1.10</span></a>.</p>
+
+<p><a id="X796082BD83444865" name="X796082BD83444865"></a></p>
+
+<h5>6.2-3 UpperCentralSeriesOfLoop</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UpperCentralSeriesOfLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the upper central series of the loop <code class="code">Q</code>, that is, the series <span class="SimpleMath">\([Z_0(Q), Z_1(Q), Z_2(Q), ...]\)</span>, where <span class="SimpleMath">\(Z_0(Q)=1\)</span> and <span class="SimpleMath">\(Z_{n+1}(Q)\)</span> is the preimage of <span class="SimpleMath">\(Z(Q/Z_n(Q))\)</span> under the canonical projection <span class="SimpleMath">\(Q\to Q/Z_n(Q)\)</span>. The function returns the longest strictly increasing segment of the upper central series. The non-qualified version <code class="code">UpperCentralSeries</code> is also supported.</p>
+
+<p><a id="X879AE0A57983A368" name="X879AE0A57983A368"></a></p>
+
+<h5>6.2-4 LowerCentralSeriesOfLoop</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LowerCentralSeriesOfLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the lower central series of the loop <code class="code">Q</code>, that is, the series <span class="SimpleMath">\(Q=Q_{(0)}\ge Q_{(1)}\ge Q_{(2)}\ge \dots\)</span> such that <span class="SimpleMath">\(Q_{(i+1)}\)</span> is the smallest normal subloop of <span class="SimpleMath">\(Q\)</span> such that <span class="SimpleMath">\(Q_{(i)}/Q_{(i+1)}\le Z(Q/Q_{(i+1)})\)</span>. The function returns the longest strictly decreasing segment of the lower central series. The non-qualified version <code class="code">LowerCentralSeries</code> is also supported.</p>
+
+<p><a id="X829A274082453AFF" name="X829A274082453AFF"></a></p>
+
+<h4>6.3 <span class="Heading">Solvability and congruence solvability for loops</span></h4>
+
+<p>There are two competing notions of solvability in loop theory and both are supported in <strong class="pkg">RightQuasigroups</strong>.</p>
+
+<p>A loop <span class="SimpleMath">\(Q\)</span> is <em>classically solvable</em> if there exists a series <span class="SimpleMath">\(Q=Q_0&gt; Q_1&gt;\dots&gt;Q_n=1\)</span> such that <span class="SimpleMath">\(Q_i\unlhd Q\)</span> and <span class="SimpleMath">\(Q_i/Q_{i+1}\)</span> is a commutative group. To conform with historical terminology, we call classically solvable loops <em>solvable</em>.</p>
+
+<p>There is a well-established universal-algebraic notion of commutators of congruences in congruence-modular varieties, which includes the variety of loops. We denote by <span class="SimpleMath">\([A,B]_Q\)</span> this commutator of two normal subloops <span class="SimpleMath">\(A\)</span>, <span class="SimpleMath">\(B\)</span> of a loop <span class="SimpleMath">\(Q\)</span>. A normal subloop <span class="SimpleMath">\(A\)</span> is <em>abelian in</em> <span class="SimpleMath">\(Q\)</span> if <span class="SimpleMath">\([A,A]_Q=1\)</span>. If a normal subloop <span class="SimpleMath">\(A\)</span> is abelian in <span class="SimpleMath">\(Q\)</span> then <span class="SimpleMath">\(A\)</span> is a commutative group, but not necessarily vice versa.</p>
+
+<p>A loop <span class="SimpleMath">\(Q\)</span> is then <em>congruence solvable</em> if there exists a series <span class="SimpleMath">\(Q=Q_0&gt; Q_1&gt;\dots&gt;Q_n=1\)</span> such that <span class="SimpleMath">\(Q_i\unlhd Q\)</span> and <span class="SimpleMath">\(Q_i/Q_{i+1}\)</span> is abelian in <span class="SimpleMath">\(Q/Q_{i+1}\)</span>. Universally-algebraically speaking, this is the correct notion of solvablity for loops. Every congruence solvable loop is classically solvable but not necessarily vice versa. A group is congruence solvable iff it is classically solvable.</p>
+
+<p><a id="X781375E981909CCB" name="X781375E981909CCB"></a></p>
+
+<h5>6.3-1 AssociatorSubloop</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AssociatorSubloop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the <em>associator subloop</em> of <code class="code">Q</code>, that is, the smallest normal subloop of <code class="code">Q</code> containing all associators.</p>
+
+<p><a id="X85C0F29D7E08A5B4" name="X85C0F29D7E08A5B4"></a></p>
+
+<h5>6.3-2 IsSolvableLoop</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSolvableLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <code class="code">Q</code> is a (classically) solvable loop, else returns <code class="code">false</code>. The non-qualified version <code class="code">IsSolvable</code> is also supported.</p>
+
+<p><a id="X7B93E8338098EA99" name="X7B93E8338098EA99"></a></p>
+
+<h5>6.3-3 DerivedSubloop</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DerivedSubloop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the <em>derived subloop</em> of <code class="code">Q</code>, that is, the smallest normal subloop <code class="code">A</code> of <code class="code">Q</code> such that <code class="code">Q/A</code> is an abelian group. Note that this coincides with the congruence derived subloop <span class="SimpleMath">\([Q,Q]_Q\)</span> and there is therefore no need for <code class="code">CongruenceDerivedSubloop</code>.</p>
+
+<p><a id="X7DDC86537C7688E8" name="X7DDC86537C7688E8"></a></p>
+
+<h5>6.3-4 DerivedSeriesOfLoop</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DerivedSeriesOfLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the derived series of <code class="code">Q</code>. If <span class="SimpleMath">\(Q'\)</span> denotes the derived subloop of <span class="SimpleMath">\(Q\)</span>, then the derived series is the series <span class="SimpleMath">\([Q,Q',Q'',\dots]\)</span>. The function returns the longest strictly decreasing initial segment of the derived series. The non-qualified version <code class="code">DerivedSeries</code> is also supported.</p>
+
+<p><a id="X7D3462FD83620D77" name="X7D3462FD83620D77"></a></p>
+
+<h5>6.3-5 DerivedLength</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DerivedLength</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the number of steps in the derived series of the loop <code class="code">Q</code> if <code class="code">Q</code> is solvable, else returns <code class="code">fail</code>.</p>
+
+<p>The following methods deal with congruence solvability of loops.</p>
+
+<p><a id="X7A4BFB197DEDB853" name="X7A4BFB197DEDB853"></a></p>
+
+<h5>6.3-6 CommutatorOfNormalSubloops</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CommutatorOfNormalSubloops</code>( <var class="Arg">Q</var>, <var class="Arg">A</var>, <var class="Arg">B</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the commutator of normal subloops <code class="code">A</code>, <code class="code">B</code> of the loop <code class="code">Q</code>, that is, <span class="SimpleMath">\([A,B]_Q\)</span>. For finite loops, <span class="SimpleMath">\([A,B]_Q\)</span> is the smallest normal subloop of <span class="SimpleMath">\(Q\)</span> contaning the elements <span class="SimpleMath">\(R_{b_1,c_1}(a)/R_{b_2,c_2}(a)\)</span>, <span class="SimpleMath">\(L_{b_1,c_1}(a)/L_{b_2,c_2}(a)\)</span>, <span class="SimpleMath">\(T_{b_1}(a)/T_{b_2}(a)\)</span>, where <span class="SimpleMath">\(a\in A\)</span>, <span class="SimpleMath">\(b_1/b_2\in B\)</span>, <span class="SimpleMath">\(c_1/c_2\in B\)</span> and where <span class="SimpleMath">\(R_{x,y}\)</span>, <span class="SimpleMath">\(L_{x,y}\)</span>, <span class="SimpleMath">\(T_x\)</span> are the standard inner mappings of <span class="SimpleMath">\(Q\)</span>.</p>
+
+<p><a id="X7D83750C7D59A4C5" name="X7D83750C7D59A4C5"></a></p>
+
+<h5>6.3-7 IsAbelianNormalSubloop</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAbelianNormalSubloop</code>( <var class="Arg">Q</var>, <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <code class="code">A</code> is an abelian (in the universal-algebraic sense) normal subloop of the loop <code class="code">Q</code>, else returns <code class="code">false</code>. A normal subloop <span class="SimpleMath">\(A\)</span> of <span class="SimpleMath">\(Q\)</span> is abelian in <span class="SimpleMath">\(Q\)</span> if <span class="SimpleMath">\([A,A]_Q=1\)</span>.</p>
+
+<p><a id="X87B88B6A8299D756" name="X87B88B6A8299D756"></a></p>
+
+<h5>6.3-8 IsCongruenceSolvableLoop</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCongruenceSolvableLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <code class="code">Q</code> is a congruence solvable loop, else returns <code class="code">false</code>.</p>
+
+<p><a id="X79A8A79081150BA4" name="X79A8A79081150BA4"></a></p>
+
+<h5>6.3-9 CongruenceDerivedSeriesOfLoop</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CongruenceDerivedSeriesOfLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the congruence derived series of <code class="code">Q</code>. With <span class="SimpleMath">\(Q^{(0)}=Q\)</span> and <span class="SimpleMath">\(Q^{(i+1)} = [Q^{(i)},Q^{(i)}]_Q\)</span>, this is the series <span class="SimpleMath">\([Q^{(0)},Q^{(1)},Q^{(2)},\dots]\)</span>. The function returns the longest strictly decreasing initial segment of the congruence derived series.</p>
+
+<p><a id="X7923C6BE81B89020" name="X7923C6BE81B89020"></a></p>
+
+<h5>6.3-10 CongruenceDerivedLength</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CongruenceDerivedLength</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the number of steps in the congruence derived series of the loop <code class="code">Q</code> if <code class="code">Q</code> is congruence solvable, else returns <code class="code">fail</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">uset := Union( List([0..3], i-&gt; [[i,0],[i,1]] ) ); # the underlying set</span>
+[ [ 0, 0 ], [ 0, 1 ], [ 1, 0 ], [ 1, 1 ], [ 2, 0 ], [ 2, 1 ], 
+  [ 3, 0 ], [ 3, 1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ct := [[0,1,2,3],[1,3,0,2],[2,0,3,1],[3,2,1,0]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mult := function( x, y )</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        if x[2]=0 or y[2]=0 then</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                return [ (x[1]+y[1]) mod 4, (x[2]+y[2]) mod 2 ];</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        else</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                return [ ct[x[1]+1,y[1]+1], (x[2]+y[2]) mod 2 ];</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        fi;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  end;</span>
+function( x, y ) ... end
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := LoopByFunction( uset, mult ); # Z_4 x Z_2 with one quandrant "replaced" with ct</span>
+&lt;loop of size 8&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DerivedSeries( Q );</span>
+[ &lt;loop of size 8&gt;, &lt;loop of size 4&gt;, 
+  &lt;trivial group with 1 generator&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSolvable( Q );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DerivedLength( Q );</span>
+2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C := CommutatorOfNormalSubloops(Q,Q,Q); # congruence derived subloop = derived subloop</span>
+&lt;loop of size 4&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := CommutatorOfNormalSubloops(Q,C,C); # 2nd congruence derived subloop differs from 2nd derived subloop</span>
+&lt;loop of size 4&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CongruenceDerivedSeriesOfLoop( Q );</span>
+[ &lt;loop of size 8&gt;, &lt;loop of size 4&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruenceSolvableLoop( Q );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CongruenceDerivedLength( Q );</span>
+fail
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCommutative( C ) and IsAssociative( C ) and IsNormal( Q, C ); # commutative group, normal in Q</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsAbelianNormalSubloop( Q, C ); # but not abelian in Q</span>
+false
+</pre></div>
+
+<p><a id="X835E8C7D7D00A5AE" name="X835E8C7D7D00A5AE"></a></p>
+
+<h4>6.4 <span class="Heading">Nuclear and central extensions of loops</span></h4>
+
+<p>A loop <span class="SimpleMath">\(Q\)</span> is an <em>extension</em> of <span class="SimpleMath">\(K\)</span> by <span class="SimpleMath">\(F\)</span> if <span class="SimpleMath">\(K\)</span> is a normal subloop of <span class="SimpleMath">\(Q\)</span> such that <span class="SimpleMath">\(Q/K\)</span> is isomorphic to <span class="SimpleMath">\(F\)</span>. If <span class="SimpleMath">\(K\)</span> is in the nucleus of <span class="SimpleMath">\(Q\)</span> then the extension is <em>nuclear</em>, while if <span class="SimpleMath">\(K\)</span> is in the center of <span class="SimpleMath">\(Q\)</span> then the enxtension is <em>central</em>.</p>
+
+<p>If <span class="SimpleMath">\(K\)</span>, <span class="SimpleMath">\(F\)</span> are loops then <span class="SimpleMath">\(\theta:F\times F\to K\)</span> is a <em>loop cocycle</em> if <span class="SimpleMath">\(\theta(x,1_F)=\theta(1_F,x)=1_K\)</span> for all <span class="SimpleMath">\(x\in F\)</span>. In <strong class="pkg">RightQuasigroups</strong>, a loop cocycle is represented as an <span class="SimpleMath">\(|F|\times |F|\)</span> table with entries in <span class="SimpleMath">\([1..|K|]\)</span>.</p>
+
+<p>Every nuclear extension of <span class="SimpleMath">\(K\)</span> by <span class="SimpleMath">\(F\)</span> with <span class="SimpleMath">\(K\)</span> an abelian group is isomorphic to the loop <span class="SimpleMath">\((K\times F,\circ)\)</span>, where <span class="SimpleMath">\((a,x)\circ(b,y) = (a\phi_x(b)\theta(x,y),xy)\)</span> for some homomorphism <span class="SimpleMath">\(\phi:F\to\mathrm{Aut}(K)\)</span> and some loop cocycle <span class="SimpleMath">\(\theta:F\times F\to K\)</span>.</p>
+
+<p>Every central extension of <span class="SimpleMath">\(K\)</span> by <span class="SimpleMath">\(F\)</span> is isomorphic to the loop <span class="SimpleMath">\((K\times F,\circ)\)</span>, where <span class="SimpleMath">\((a,x)\circ(b,y) = (ab\theta(x,y),xy)\)</span> for some loop cocycle <span class="SimpleMath">\(\theta:F\times F\to K\)</span>. This loop will also be denoted by <span class="SimpleMath">\(K\times_\theta F\)</span>.</p>
+
+<p><a id="X8548C5C17DD1E60F" name="X8548C5C17DD1E60F"></a></p>
+
+<h5>6.4-1 IsLoopCocycle</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLoopCocycle</code>( <var class="Arg">K</var>, <var class="Arg">F</var>, <var class="Arg">theta</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <var class="Arg">theta</var> is a loop cocycle from <var class="Arg">F</var> to <var class="Arg">K</var>, else returns <code class="code">false</code>. A loop cocycle is an <span class="SimpleMath">\(|F|\times |F|\)</span> table with entries in <span class="SimpleMath">\([1..|K|]\)</span> such that all entries in the row and in the column corresponding to the neutral element of <span class="SimpleMath">\(F\)</span> are equal to the neutral element of <span class="SimpleMath">\(K\)</span>.</p>
+
+<p><a id="X87BEE5987E838DFE" name="X87BEE5987E838DFE"></a></p>
+
+<h5>6.4-2 LoopByNuclearExtension</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopByNuclearExtension</code>( <var class="Arg">K</var>, <var class="Arg">F</var>, <var class="Arg">phi</var>, <var class="Arg">theta</var>[, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the nuclear extension of the abelian group <var class="Arg">K</var> by the loop <var class="Arg">F</var> via the homomorphism <var class="Arg">phi</var> and cocycle <var class="Arg">theta</var>. The arguments must be formatted as follows: <var class="Arg">K</var> is a commutative and associative loop of size <code class="code">nK</code>, <var class="Arg">F</var> is a loop of size <code class="code">nF</code>, <var class="Arg">phi</var> is a list of length <code class="code">nF</code> consisting of permutations of <code class="code">[1..nK]</code> (each permutation standing for an automorphism of <var class="Arg">K</var>), <var class="Arg">theta</var> is an <code class="code">nF</code> by <code class="code">nF</code> matrix with entries in <code class="code">[1..nK]</code>. We also support giving the first four arguments as a list. The loop is returned as index based loop with the underlying set equal to the carthesian product of the underlying sets of <code class="code">K</code> and <code class="code">F</code>, and with multiplication <code class="code">[a,x]*[b,y] = [a * b^phi[x] * theta[x,y], x*y ]</code>.</p>
+
+<p><a id="X7A49ED86819A0F93" name="X7A49ED86819A0F93"></a></p>
+
+<h5>6.4-3 LoopByCentralExtension</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopByCentralExtension</code>( <var class="Arg">K</var>, <var class="Arg">F</var>, <var class="Arg">theta</var>[, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the central extension of the abelian group <var class="Arg">K</var> by the loop <var class="Arg">F</var> via the cocycle <var class="Arg">theta</var>. The format of arguments and of the resulting loop are the same as in <code class="code">LoopByNuclearExtension</code>. We also support giving the first three arguments as a list.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K := AsLoop( CyclicGroup( 4 ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := LoopByCayleyTable( [ [ "a", "b" ], [ "b", "a" ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AutomorphismGroup( K );</span>
+Group([ (2,4) ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := [ (), (2,4) ];; # homomorphism from F to Aut( K )</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">theta := [ [ 1, 1 ], [ 1, 4 ] ];; # loop cocycle from FxF to K</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLoopCocycle( K, F, theta );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := LoopByNuclearExtension( K, F, phi, theta );</span>
+&lt;loop of size 8&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := NucleusOfLoop( Q );</span>
+&lt;associative loop of size 4&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsNormal( Q, S );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsCanonicalPerm( IsomorphismLoops( F, Q/S ) );</span>
+()
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( MultiplicationTable( Q ) );</span>
+[ [  1,  2,  3,  4,  5,  6,  7,  8 ],
+  [  2,  7,  8,  5,  6,  3,  4,  1 ],
+  [  3,  4,  5,  6,  7,  8,  1,  2 ],
+  [  4,  1,  2,  7,  8,  5,  6,  3 ],
+  [  5,  6,  7,  8,  1,  2,  3,  4 ],
+  [  6,  3,  4,  1,  2,  7,  8,  5 ],
+  [  7,  8,  1,  2,  3,  4,  5,  6 ],
+  [  8,  5,  6,  3,  4,  1,  2,  7 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q.1; # the underlying set of Q is the carthesian product of underlying sets K x F</span>
+l[ &lt;identity&gt; of ..., "a" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoopByCentralExtension( K, F, theta );</span>
+&lt;loop of size 8&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Center( last );</span>
+&lt;associative loop of size 8&gt;
+</pre></div>
+
+<p><a id="X7A413E8F86572F3D" name="X7A413E8F86572F3D"></a></p>
+
+<h5>6.4-4 AsSquareTable</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsSquareTable</code>( <var class="Arg">ls</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: If <var class="Arg">ls</var> is a list of length <code class="code">n^2</code> for some <code class="code">n</code>, returns <var class="Arg">ls</var> as a square table, a list of lists of length <code class="code">n</code>.</p>
+
+<p>Note: This function is convenient for transforming row vector cocycles obtained by <code class="code">LoopCocyclesInVariety</code> and by similar functions to square table cocycles required by the <code class="code">LoopByNuclearExtensions</code> function.</p>
+
+<p><a id="X8754116680773266" name="X8754116680773266"></a></p>
+
+<h5>6.4-5 NuclearExtensionByNormalSubloop</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NuclearExtensionByNormalSubloop</code>( <var class="Arg">Q</var>, <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the parameters <code class="code">[K,F,phi,theta]</code> for a nuclear extension of <var class="Arg">K</var> by <var class="Arg">Q</var><code class="code">/</code><var class="Arg">K</var>. Here, <var class="Arg">K</var> must be a commutative normal subloop of the nucleus of the loop <var class="Arg">Q</var>. The returned loop <code class="code">K</code> is identical to the argument <var class="Arg">K</var> and the returned factor loop <code class="code">F</code> is identical to <var class="Arg">Q</var><code class="code">/</code><var class="Arg">K</var>.</p>
+
+<p><a id="X80604A5C84B5408A" name="X80604A5C84B5408A"></a></p>
+
+<h5>6.4-6 CentralExtensionByNormalSubloop</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CentralExtensionByNormalSubloop</code>( <var class="Arg">Q</var>, <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the parameters <code class="code">[K,F,theta]</code> for a central extension of <var class="Arg">K</var> by <var class="Arg">Q</var><code class="code">/</code><var class="Arg">K</var>. Here, <var class="Arg">K</var> must be a subloop of the center of the loop <var class="Arg">Q</var>. The returned loop <code class="code">K</code> is identical to the argument <var class="Arg">K</var> and the returned factor loop <code class="code">F</code> is identical to <var class="Arg">Q</var><code class="code">/</code><var class="Arg">K</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := MoufangLoop(32,3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Nuc( Q ); # here, the nucleus is commutative and properly contains the center</span>
+&lt;associative loop of size 4&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Center( Q );</span>
+&lt;associative loop of size 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ext := NuclearExtensionByNormalSubloop( Q, Nuc( Q ) );</span>
+[ &lt;associative loop of size 4&gt;, &lt;Moufang loop of size 8&gt;, 
+  [ (), (), (), (2,4), (), (2,4), (2,4), (2,4) ], 
+  [ [ 1, 1, 1, 1, 1, 1, 1, 1 ], [ 1, 1, 1, 1, 1, 1, 3, 3 ], 
+      [ 1, 3, 1, 1, 3, 1, 1, 1 ], [ 1, 1, 1, 1, 3, 1, 1, 3 ], 
+      [ 1, 3, 1, 1, 3, 1, 3, 3 ], [ 1, 1, 1, 1, 3, 1, 3, 1 ], 
+      [ 1, 3, 1, 1, 1, 1, 1, 3 ], [ 1, 3, 1, 1, 1, 1, 3, 1 ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">copyQ := LoopByNuclearExtension( ext[1],ext[2],ext[3],ext[4] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsCanonicalPerm( IsomorphismLoops( Q, copyQ ) );</span>
+(4,9,11,28,29,24,22,21,20,25,27,12,13,8,6,5)(7,10)(14,30)(15,31)(16,32)(23,26)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ext := CentralExtensionByNormalSubloop( Q, Center( Q ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">copyQ := LoopByCentralExtension( ext );; # extension can also be given as a list</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsCanonicalPerm( IsomorphismLoops( Q, copyQ ) );</span>
+()
+</pre></div>
+
+<p><a id="X7E2A6C6E83E83542" name="X7E2A6C6E83E83542"></a></p>
+
+<h4>6.5 <span class="Heading">All central extensions in a variety of loops</span></h4>
+
+<p>If a loop <span class="SimpleMath">\(Q\)</span> has a nontrivial center, it is a central extension of an abelian group <span class="SimpleMath">\(K\)</span> of order <span class="SimpleMath">\(p\)</span> by a loop <span class="SimpleMath">\(F\)</span> of order <span class="SimpleMath">\(|Q|/p\)</span>. The following functions construct all central extensions of the cyclic group of order <span class="SimpleMath">\(p\)</span> by a given loop <span class="SimpleMath">\(F\)</span> in a given variety of loops.</p>
+
+<p>Just like all <span class="SimpleMath">\(p\)</span>-groups are centrally nilpotent, all <span class="SimpleMath">\(p\)</span>-loops in certain varieties of loops (e.g., Moufang loops) are centrally nilpotent. The following functions therefore allow us in principle to construct all <span class="SimpleMath">\(p\)</span>-loops of small orders in such varieties.</p>
+
+<p>The enveloping variety is specified as a finite list of loop identities that the built-in parser can understand (see Section <a href="chap7_mj.html#X7AEB9CFF825ED614"><span class="RefLink">7.1</span></a>).</p>
+
+<p>Given a variety <span class="SimpleMath">\(V\)</span>, an abelian group <span class="SimpleMath">\(K\in V\)</span> and a loop <span class="SimpleMath">\(F\in V\)</span>, let <span class="SimpleMath">\(\mathrm{Coc}_V(F,K)\)</span> be the vector space of cocycles <span class="SimpleMath">\(\theta:F\times F\to K\)</span> such that the central extension <span class="SimpleMath">\(K\times_\theta F\)</span> is a loop in <span class="SimpleMath">\(V\)</span>.</p>
+
+<p>The vector space of coboundaries <span class="SimpleMath">\(\mathrm{Cob}_V(F,K)\)</span> is generated by the cocycles <span class="SimpleMath">\(\theta:F\times F\to (K,+)\)</span> of the form <span class="SimpleMath">\(\theta(x,y) = f(xy)-f(x)-f(y)\)</span>, where <span class="SimpleMath">\(f:F\to\mathbb K\)</span> satisfies <span class="SimpleMath">\(f(1)=0\)</span>.</p>
+
+<p>If <span class="SimpleMath">\(\theta,\mu\in\mathrm{Coc}_V(F,K)\)</span> then the central extensions <span class="SimpleMath">\(K\times_\theta F\)</span> and <span class="SimpleMath">\(K\times_\mu F\)</span> are isomorphic if <span class="SimpleMath">\(\theta\)</span> and <span class="SimpleMath">\(\mu\)</span> differ by a coboundary, that is, <span class="SimpleMath">\(\theta-\mu\in\mathrm{Cob}_V(F,K)\)</span>.</p>
+
+<p>Finally, the group <span class="SimpleMath">\(G=\mathrm{Aut}(K)\times\mathrm{Aut}(F)\)</span> acts on the cohomology group <span class="SimpleMath">\(\mathrm{Coc}_V(F,K)/\mathrm{Cob}_V(F,K)\)</span> (details ommitted) and two central extensions are isomorphic if their cocycles lie in the same orbit of <span class="SimpleMath">\(G\)</span>.</p>
+
+<p>In <strong class="pkg">RightQuasigroups</strong>, the elements of <span class="SimpleMath">\(\mathrm{Coc}_V(F,\mathbb Z_p)\)</span> are represented as vectors of length <span class="SimpleMath">\(|F|^2\)</span> with entries in <span class="SimpleMath">\(GF(p)\)</span>. (In particular, a cocycle from <span class="SimpleMath">\(\mathrm{Coc}_V(F,\mathbb Z_p)\)</span> must be transformed into a square matrix to be suitable as an argument for <code class="code">LoopByCentralExtension</code>.)</p>
+
+<p><a id="X7F4DD38278DAD119" name="X7F4DD38278DAD119"></a></p>
+
+<h5>6.5-1 LoopCocyclesInVariety</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopCocyclesInVariety</code>( <var class="Arg">F</var>, <var class="Arg">p</var>, <var class="Arg">equationalBasis</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a basis of the vector space of cocycles <span class="SimpleMath">\(\mathrm{Coc}_V(F,\mathbb Z_p)\)</span>, where <var class="Arg">F</var> is a loop, <var class="Arg">p</var> is a prime and <span class="SimpleMath">\(V\)</span> is a variety of loops defined by the list of loop identities <var class="Arg">equationalBasis</var>. It is checked that all identities of <var class="Arg">equationalBasis</var> hold in the (multiplicative) cyclic group of order <var class="Arg">p</var> and in the loop <var class="Arg">F</var>, else en error message is generated.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := AsLoop( Group( (1,2), (3,4) ) );; # the Klein group</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">coc := LoopCocyclesInVariety( F, 2, [ "x*(y*(x*z)) = (x*(y*x))*z" ] );; # basis of left Bol cocycles</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length( coc ); # dimension of the vector space of cocycles</span>
+6
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">theta := coc[3];; Display( theta ); # one cocycle</span>
+[ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 
+Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">theta := List( theta, x -&gt; IntFFE( x ) + 1 );; Display( theta ); # converting cocycle entries to [1..Size(K)]</span>
+[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">theta := AsSquareTable( theta );; Display( theta ); # converting cocycle to square table</span>
+[ [  1,  1,  1,  1 ],
+  [  1,  1,  1,  1 ],
+  [  1,  2,  2,  1 ],
+  [  1,  1,  1,  1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := LoopByCentralExtension( AsLoop( CyclicGroup(2) ), F, theta );</span>
+&lt;loop of size 8&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLeftBolLoop( Q );</span>
+true
+</pre></div>
+
+<p><a id="X8142783284BABDA8" name="X8142783284BABDA8"></a></p>
+
+<h5>6.5-2 LoopCoboundaries</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopCoboundaries</code>( <var class="Arg">F</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a basis of the vector space of coboundaries <span class="SimpleMath">\(\mathrm{Cob}_V(F,\mathbb Z_p)\)</span>, where <var class="Arg">F</var> is a loop and <var class="Arg">p</var> is a prime. Note that <span class="SimpleMath">\(V\)</span> is irrelevant here.</p>
+
+<p><a id="X7C2998337F3D460C" name="X7C2998337F3D460C"></a></p>
+
+<h5>6.5-3 LoopCocyclesModAction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopCocyclesModAction</code>( <var class="Arg">F</var>, <var class="Arg">p</var>, <var class="Arg">coc</var>, <var class="Arg">cob</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: Given a loop <var class="Arg">F</var>, prime <var class="Arg">p</var>, basis <var class="Arg">coc</var> of the vector space <span class="SimpleMath">\(\mathrm{Coc}_V(F,\mathbb Z_p)\)</span> and a basis <var class="Arg">cob</var> of the vector space <span class="SimpleMath">\(\mathrm{Cob}_V(F,\mathbb Z_p)\)</span>, returns a list of cocycles from <span class="SimpleMath">\(\mathrm{Coc}_V(F,\mathbb Z_p)\)</span>, one from each orbit of <span class="SimpleMath">\(\mathrm{Aut}(\mathbb Z_p)\times\mathrm{Aut}(F)\)</span> acting on the cohomology group <span class="SimpleMath">\(\mathrm{Coc}_V(F,\mathbb Z_p)/\mathrm{Cob}_V(F,\mathbb Z_p)\)</span>. Once the central extensions corresponding to the cocycles are constructed, they are guaranteed to contain all central extensions of <span class="SimpleMath">\(\mathbb Z_p\)</span> by <span class="SimpleMath">\(\mathbb F\)</span> up to isomorphism (with possible duplications).</p>
+
+<p><a id="X7BBCAC987B6DBBD4" name="X7BBCAC987B6DBBD4"></a></p>
+
+<h5>6.5-4 AllLoopCocyclesInVariety</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllLoopCocyclesInVariety</code>( <var class="Arg">F</var>, <var class="Arg">p</var>, <var class="Arg">equationalBasis</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: Given a loop <var class="Arg">F</var>, prime <var class="Arg">p</var> and a list of loop identities <var class="Arg">equationalBasis</var> defining a variety <span class="SimpleMath">\(V\)</span>, returns a list of cocycles from <span class="SimpleMath">\(\mathrm{Coc}_V(F,\mathbb Z_p)\)</span> modulo coboundaries and modulo the action described in <code class="code">LoopCocyclesModAction</code>.</p>
+
+<p><a id="X7908FE63797E2AE4" name="X7908FE63797E2AE4"></a></p>
+
+<h5>6.5-5 AllLoopCentralExtensionsInVariety</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllLoopCentralExtensionsInVariety</code>( <var class="Arg">F</var>, <var class="Arg">p</var>, <var class="Arg">equationalBasis</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of loops constructed as central extensions of the cyclic group of order <var class="Arg">p</var> by the loop <var class="Arg">F</var> via the cocycles obtained by <code class="code">AllLoopCocyclesInVariety( </code><var class="Arg">F</var><code class="code">, </code><var class="Arg">p</var><code class="code">, </code><var class="Arg">equationalBasis</var><code class="code"> )</code>. The returned list is guaranteed to contain all central extensions of the cyclic group of order <var class="Arg">p</var> by the loop <var class="Arg">F</var> in the variety of loops defined by the identities <var class="Arg">equationalBasis</var>, but it might contain duplicate loops of the same isomorphism type. (See <code class="code">LoopsUpToIsomorphism</code>.)</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := AsLoop( Group( (1,2), (3,4 ) ) );; # Klein group</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">coc := LoopCocyclesInVariety( F, 2, [ "x*(y*(x*z)) = (x*(y*x))*z" ] );; Length( coc ); # basis of left Bol cocycles</span>
+6
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cob := LoopCoboundaries( F, 2 );; Length( cob ); # basis of coboundaries</span>
+1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length( LoopCocyclesModAction( F, 2, coc, cob ) ); # cocycles modulo coboundaries and action of Aut(K)x Aut(F)</span>
+10
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length( AllLoopCocyclesInVariety( F, 2, [ "x*(y*(x*z)) = (x*(y*x))*z" ] ) ); # the same in one step</span>
+#I  RQ: Calculating coboundaries
+#I  RQ: Coboundaries have dimension 1
+#I  RQ: Calculating cocycles
+#I  RQ: Cocycles have dimension 6
+10
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lps := AllLoopCentralExtensionsInVariety( F, 2, [ "x*(y*(x*z)) = (x*(y*x))*z" ] );; Length( lps ); # all central extensions in one step</span>
+#I  RQ: Calculating coboundaries
+#I  RQ: Coboundaries have dimension 1
+#I  RQ: Calculating cocycles
+#I  RQ: Cocycles have dimension 6
+10
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ForAll( lps, IsLeftBolLoop );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length( LoopsUpToIsomorphism( lps ) ); # filtering up to isomorphism (no isomorphisms in this example)</span>
+10
+</pre></div>
+
+<p><a id="X8401718E80FA6F34" name="X8401718E80FA6F34"></a></p>
+
+<h4>6.6 <span class="Heading">Frattini subalgebra</span></h4>
+
+<p>For a finite algebra <span class="SimpleMath">\(Q\)</span> the <em>Frattini subalgebra</em> <span class="SimpleMath">\(\Phi(Q)\)</span> is the intersection of all maximal subalgebras of <span class="SimpleMath">\(Q\)</span>. It is precisely the set of <em>non-generators</em> of <span class="SimpleMath">\(Q\)</span>, i.e., elements <span class="SimpleMath">\(x\in Q\)</span> such that whenever <span class="SimpleMath">\(Q=\langle S,x\rangle\)</span> then <span class="SimpleMath">\(Q=\langle S\rangle\)</span>.</p>
+
+<p>The Frattini subalgebra might be empty if <span class="SimpleMath">\(Q\)</span> is a quasigroup. If <span class="SimpleMath">\(Q\)</span> is a loop, the <span class="SimpleMath">\(\Phi(Q)\)</span> is a subloop of <span class="SimpleMath">\(Q\)</span>, the <em>Frattini subloop</em> of <span class="SimpleMath">\(Q\)</span>. When <span class="SimpleMath">\(Q\)</span> is a nilpotent loop, then <span class="SimpleMath">\(\Phi(Q)\)</span> is a normal subloop of <span class="SimpleMath">\(Q\)</span>. If <span class="SimpleMath">\(Q\)</span> is a nilpotent <span class="SimpleMath">\(p\)</span>-loop then <span class="SimpleMath">\(Q/\Phi(Q)\)</span> is isomorphic to a vector space over <span class="SimpleMath">\(\mathbb Z_p\)</span> whose dimension is the size of a minimal generating subset of <span class="SimpleMath">\(Q\)</span>.</p>
+
+<p>When <span class="SimpleMath">\(Q\)</span> is a loop with nilpotent multiplication group <span class="SimpleMath">\(\mathrm{Mlt}(Q)\)</span>, then <span class="SimpleMath">\(\Phi(Q)\)</span> is the orbit of <span class="SimpleMath">\(\Phi(\mathrm{Mlt}(Q))\)</span> containing <span class="SimpleMath">\(1\)</span>.</p>
+
+<p><a id="X7CD31B4C85AC5F65" name="X7CD31B4C85AC5F65"></a></p>
+
+<h5>6.6-1 FrattiniSubrightquasigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FrattiniSubrightquasigroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the Frattini subrightquasigroup (possibly empty) of the right quasigroup <code class="code">Q</code>.</p>
+
+<p><a id="X847CBD7F85F18F05" name="X847CBD7F85F18F05"></a></p>
+
+<h5>6.6-2 FrattiniSubquasigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FrattiniSubquasigroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the Frattini subquasigroup (possibly empty) of the quasigroup <code class="code">Q</code>.</p>
+
+<p><a id="X809490687E9B5CD8" name="X809490687E9B5CD8"></a></p>
+
+<h5>6.6-3 FrattiniSubloop</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FrattiniSubloop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the Frattini subloop of the loop <code class="code">Q</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := MoufangLoop(64,5);</span>
+MoufangLoop( 64, 5 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := FrattiniSubloop(Q);</span>
+&lt;Moufang loop of size 8&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exponent(Q/F);</span>
+2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FrattiniSubrightquasigroup( ProjectionRightQuasigroup([1,2]) );</span>
+[  ]
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>
