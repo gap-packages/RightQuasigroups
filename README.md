@@ -11,7 +11,7 @@ for quasigroups, loops, racks and quandles.
 
 ### Install via gzipped archive
 
-- Download the latest release from the [Github site of the package](https://github.com/gap-packages/loops/releases).
+- Download the latest release from the [Github site of the package](https://github.com/gap-packages/RightQuasigroups/releases).
 - Extract it in the directory `GAPDIR/pkg`. 
 
 ### Install via git
@@ -36,7 +36,7 @@ gap> LoadPackage( "RightQuasigroups" );
 
 ## Maintainers
 
-* [Gábor P. Nagy](https://algebra.math.bme.hu/nagy-gabor-peter), Budapest University of Technology and Economics, Hungary.
+* [Gábor P. Nagy](https://www.math.u-szeged.hu/~nagyg), University of Szeged, Hungary.
 * [Petr Vojtěchovský](http://www.math.du.edu/~petr/), University of Denver, Colorado, USA.
 
 For questions, remarks and issues please use the [issue tracker](https://github.com/gap-packages/RightQuasigroups/issues).
