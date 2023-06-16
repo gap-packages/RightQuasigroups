@@ -100,8 +100,8 @@ true
 # doc/_Chapter_Morphisms.xml:365-374
 gap> Q := MoufangLoop( 12, 1 );
 MoufangLoop( 12, 1 )
-gap> AutomorphismGroup( Q );
-Group([ (2,8)(4,12)(6,10), (2,9,10,4,11,8)(3,5)(6,7,12) ])
+gap> ag := AutomorphismGroup( Q );; IdGroup( ag );
+[ 108, 17 ]
 gap> S := Subloop( Q, [Q.3] );; ParentInd( S );
 [ 1, 3, 5 ]
 gap> AutomorphismGroup( S ); # consists of parent permutations

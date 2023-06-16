@@ -160,7 +160,7 @@ gap> Q3 := PrincipalLoopIsotope( Q2, Q2.10, Q2.20 );; # a loop isotopic to Q1
 gap> IsotopismLoops( Q1, Q3 ); 
 <isotopism of loops>
 
-# doc/_Chapter_Topisms.xml:682-689
+# doc/_Chapter_Topisms.xml:685-692
 gap> q := RightBolLoop( 16, 3 );
 RightBolLoop( 16, 3 )
 gap> ag := AutotopismGroup( q );
