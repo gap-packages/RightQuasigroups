@@ -87,7 +87,7 @@ Transformation( [ 1, 2, 4, 5, 3 ] )
 gap> AsPermutation( last );
 (3,4,5)
 
-# doc/_Chapter_Morphisms.xml:337-346
+# doc/_Chapter_Morphisms.xml:338-355
 gap> Q1 := CheinLoop( SymmetricGroup( 3 ) );;
 gap> Q2 := LoopIsomorph( Q1, (1,2) );;
 gap> Q3 := AsLoop( CyclicGroup( 12 ) );;
@@ -96,8 +96,16 @@ gap> lps := LoopsUpToIsomorphism( [ Q1, Q2, Q3 ] );
 gap> lps[1] = Q1; lps[2] = Q3;
 true
 true
+gap> 
+gap> g := TransitiveGroup( 8, 31 );
+[2^4]E(4)
+gap> lps := AllLoopsWithMltInGroup( g, 2, 0 );; Size( lps );
+192
+gap> Apply( lps, LoopByRightSection );
+gap> Size( LoopsUpToIsomorphism( lps : UseDiscriminator ) );
+58
 
-# doc/_Chapter_Morphisms.xml:365-374
+# doc/_Chapter_Morphisms.xml:374-383
 gap> Q := MoufangLoop( 12, 1 );
 MoufangLoop( 12, 1 )
 gap> ag := AutomorphismGroup( Q );; IdGroup( ag );

@@ -289,7 +289,7 @@ DeclareGlobalFunction( "LoopIsomorph" );
 
 #! @Arguments Q
 #! @Returns a data structure suitable for isomorphism searches from a right quasigroup `Q`.
-DeclareOperation( "IsomorphismDiscriminator", [ IsRightQuasigroup ] );
+DeclareAttribute( "IsomorphismDiscriminator", IsRightQuasigroup );
 
 # Auxiliary function (Q,dis)
 # Given a right quasigroup <Q> with isomorphism discriminator <dis>,
@@ -372,13 +372,11 @@ DeclareOperation( "IsomorphismLoops", [ IsLoop, IsLoop ] );
 #! @BeginGroup
 #! @GroupTitle Right quasigroups up to isomorphism
 
-# auxiliary function ( category, ls )
-# given a list <ls> of algebras of type <category>, returns a sublist of <ls> with algebras up to isomorphism
-DeclareOperation( "RQ_AlgebrasUpToIsomorphism", [ IsOperation, IsList ] );
-
 #! @Arguments ls
 #! @Returns a sublist of `ls` consisting of all right quasigroups (quasigroups, loops) in `ls` up to isomorphism.
-DeclareOperation( "RightQuasigroupsUpToIsomorphism", [ IsList ] ); # all must be declared right quasigroups, not quasigroups or loops
+#! Via an optional parameter `:UseDiscriminator` one may force the algorithm to use `IsomorphismDiscriminator`
+#! as an invariant to speed up isomorph rejection. 
+DeclareOperation( "RightQuasigroupsUpToIsomorphism", [ IsList ] ); 
 
 #! @Arguments ls
 DeclareOperation( "QuasigroupsUpToIsomorphism", [ IsList ] );
@@ -395,6 +393,14 @@ DeclareOperation( "LoopsUpToIsomorphism", [ IsList ] );
 #! gap> lps[1] = Q1; lps[2] = Q3;
 #! true
 #! true
+#! gap> 
+#! gap> g := TransitiveGroup( 8, 31 );
+#! [2^4]E(4)
+#! gap> lps := AllLoopsWithMltInGroup( g, 2, 0 );; Size( lps );
+#! 192
+#! gap> Apply( lps, LoopByRightSection );
+#! gap> Size( LoopsUpToIsomorphism( lps : UseDiscriminator ) );
+#! 58
 #! @EndExampleSession
 
 #! @EndGroup

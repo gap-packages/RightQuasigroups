@@ -626,70 +626,63 @@ function( Q1, Q2 )
     return RQ_IsomorphismAlgebras( IsLoop, Q1, Q2 );
 end );
 
-# RQ_AlgebrasUpToIsomorphism
-
-InstallMethod( RQ_AlgebrasUpToIsomorphism, "for category and list of algebras",
-    [ IsOperation, IsList ],
-function( category, ls )
-    local kept, positions, pos, Q, dis, gen, with_same_D, is_new, K;
-    
-    if IsEmpty( ls ) then
-        return ls;
-    fi;
-    if not ForAll( ls, IsRightQuasigroup ) then
-        Error( "RQ: <1> must be a list of right quasigroups" );
-    fi;
-    if Length( ls ) = 1 then
-        return ls;
-    fi;
-    if not ForAll( ls, Q -> CategoryOfRightQuasigroup( Q ) = category ) then 
-        Error("RQ: <1> must be a list of algebras of the same type");
-    fi;        
-       
-    kept := []; # kept algebras an their discriminators
-    positions := []; # positions of kept algebras in the original list
-    pos := 0;
-    for Q in ls do
-        pos := pos + 1;
-        if not IsCanonical( Q ) then Q := CanonicalCopy( Q ); fi; # making canonical when seen for the first time
-        dis := IsomorphismDiscriminator( Q );
-        gen := RQ_EfficientGenerators( Q, dis );
-        # testing against kept algebras with the same discriminator
-        with_same_D := Filtered( kept, K -> AreEqualIsomorphismDiscriminators( K[2], dis ) );
-        is_new := true;
-        for K in with_same_D do
-            if not RQ_IsomorphismAlgebrasWithPrecalculatedData( category, Q, gen, dis, K[1], K[2] ) = fail then
-                is_new := false;
-                break;
-            fi;
-        od;
-        if is_new then
-            Add( kept, [ Q, dis ] ); # storing discriminator, too
-            Add( positions, pos );
-        fi;
-    od;
-    # returning algebras from the original list
-    return ls{positions};
-end );
 
 # RightQuasigroupsUpToIsomorphism
 # QuasigroupsUpToIsomorphism
 # LoopsUpToIsomorphism
 
-InstallMethod( RightQuasigroupsUpToIsomorphism, "for list of right quasigroups",
-    [ IsList ],
-    ls -> RQ_AlgebrasUpToIsomorphism( IsRightQuasigroup, ls )
-);
+InstallMethod( RightQuasigroupsUpToIsomorphism, "for a list of right quasigroup",
+    [ IsList ], 
+function( ls )
+    local pos, remaining, isos, i;
+    pos := [];
+    remaining := [ 1..Length( ls ) ];
+    while remaining <> [] do
+        if not IsRightQuasigroup( ls[remaining[1]] ) then
+            Error( "RQ: The elements of the argument list must be right quasigroups." );
+        fi;
+        #isos := Filtered( remaining, i -> fail <> IsomorphismRightQuasigroups( ls[i], ls[remaining[1]] ) );
+        isos := [];
+        for i in remaining do
+            if ValueOption( "UseDiscriminator" ) = true then 
+                if not AreEqualIsomorphismDiscriminators(
+                    IsomorphismDiscriminator( ls[i] ),
+                    IsomorphismDiscriminator( ls[remaining[1]] )
+                    ) 
+                then 
+                    continue; 
+                fi;
+            fi;
+            if fail <> IsomorphismRightQuasigroups( ls[i], ls[remaining[1]] ) then
+                Add( isos, i );
+            fi;
+        od;
+        Add( pos, isos[1] );
+        remaining := Difference( remaining, isos );
+    od;
+    return ls{pos};
+end );
+
 
 InstallMethod( QuasigroupsUpToIsomorphism, "for list of right quasigroups",
     [ IsList ],
-    ls -> RQ_AlgebrasUpToIsomorphism( IsQuasigroup, ls )
-);
+function( ls )
+    if Size( ls ) > 1 and IsQuasigroup( ls[1] ) then 
+        return RightQuasigroupsUpToIsomorphism( ls );
+    else
+        Error( "RQ: list elements must be quasigroups" );
+    fi;
+end );
 
 InstallMethod( LoopsUpToIsomorphism, "for list of right quasigroups",
     [ IsList ],
-    ls -> RQ_AlgebrasUpToIsomorphism( IsLoop, ls )
-);
+function( ls )
+    if Size( ls ) > 1 and IsLoop( ls[1] ) then 
+        return RightQuasigroupsUpToIsomorphism( ls );
+    else
+        Error( "RQ: list elements must be loops" );
+    fi;
+end );
 
 # AUTOMORPHISM GROUPS OF RIGHT QUASIGROUPS
 # _____________________________________________________________________________

@@ -22,3 +22,20 @@ Error, no method found! ...
 - `AutomorphismGroup` returns permutations acting on the parent indices
 - `AutotopismGroup` returns homotopism objects
 - `AsParentPerm` returns the action on the parent indices
+
+# Methods and method selections
+
+## UptoIsomorphisms
+
+### RQ_AlgebrasUpToIsomorphism
+
+- Uses `RQ_IsomorphismAlgebrasWithPrecalculatedData`, which uses `IsomorphismDiscriminator`
+- `IsomorphismDiscriminator` is large, not a stored attribute
+- The specific methods for lists (one argument) only invoke 
+  * `RightQuasigroupsUpToIsomorphism`
+  * `QuasigroupsUpToIsomorphism`
+  * `LoopsUpToIsomorphism`
+
+## UptoIsotopisms
+
+### RQ_AlgebrasUpToIsotopism

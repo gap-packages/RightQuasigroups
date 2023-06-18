@@ -53,3 +53,65 @@ ff:=List([1,2,3],i->AsPermutation(ComponentOfHomotopism(iso,i)));
 AutotopismRightQuasigroup(Q1,f[1]/ff[1],f[2]/ff[2],f[3]/ff[3]);
 
 UntraceMethods([AutotopismGroup,AutomorphismGroup,IsomorphismRightQuasigroups,IsotopismRightQuasigroups]);
+
+#####################################
+###        TESTS for UPTOs        ###
+#####################################
+
+LoadPackage( "RightQuasigroups" );
+TraceMethods([AutotopismGroup,AutomorphismGroup,IsomorphismRightQuasigroups,IsotopismRightQuasigroups]);
+AutomorphismGroup( MoufangLoop( 12, 1) );
+UntraceMethods([AutotopismGroup,AutomorphismGroup,IsomorphismRightQuasigroups,IsotopismRightQuasigroups]);
+
+g := TransitiveGroup( 8, 31 );
+lps := AllLoopsWithMltInGroup( g, 2, 0 );; Size( lps );
+Apply( lps, LoopByRightSection );
+Size( LoopsUpToIsomorphism( lps) ); time;
+
+g := TransitiveGroup( 8, 31 );
+lps := AllLoopsWithMltInGroup( g, 2, 0 );; Size( lps );
+Apply( lps, LoopByRightSection );
+Size( LoopsUpToIsomorphism( lps : UseDiscriminator ) ); time;
+
+# with Digraphs: 3917 vs 1397
+# without Digraphs: 1523 vs 1629
+
+############################
+############################
+
+ls := AllLoopsWithMltInGroup( SymmetricGroup( 6 ), 2, 0 );; Size( ls );
+Apply( ls, LoopByRightSection );
+ls1 := LoopsUpToIsomorphism( ls ); time; Size( ls1 );
+#ls2 := LoopsUpToIsotopism( ls1 ); time; Size( ls2 );
+
+
+############################
+############################
+
+
+rq:=RandomNilpotentLoop([ElementaryAbelianGroup(2),ElementaryAbelianGroup(n2/2)]);
+
+ts:=[];; 
+for n in [10..50] do 
+    t1:=Runtime(); 
+    a:=RandomLoop(n); 
+    t2:=Runtime(); 
+    b:=IsomorphismDiscriminator(a); 
+    t3:=Runtime();
+    Add(ts,[Size(a),t2-t1,t3-t2]); 
+    Print(Size(a),"\t",t2-t1,"\t",t3-t2,"\n"); 
+od;
+
+ts:=[];; 
+for n in [5..25] do 
+    t1:=Runtime(); 
+    a:=RandomNilpotentLoop([ElementaryAbelianGroup(2),CyclicGroup(n)]); 
+    t2:=Runtime(); 
+    b:=IsomorphismDiscriminator(a); 
+    t3:=Runtime();
+    Add(ts,[Size(a),t2-t1,t3-t2]); 
+    Print(Size(a),"\t",t2-t1,"\t",t3-t2,"\n"); 
+od;
+
+ls:=List([1..100],i->RandomNilpotentLoop([ElementaryAbelianGroup(2),ElementaryAbelianGroup(4)]));;
+ls1 := LoopsUpToIsomorphism( ls ); time; Size( ls1 );
