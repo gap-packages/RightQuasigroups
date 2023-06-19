@@ -39,3 +39,17 @@ Error, no method found! ...
 ## UptoIsotopisms
 
 ### RQ_AlgebrasUpToIsotopism
+
+- 3 arguments: `cat:IsCategory`, `ls:IsList`, `method:IsString`
+- Uses `IsotopismRightQuasigroups` with 3 arguments `Q1,Q2:cat` and `method:IsString`
+- It makes `CanonicalCopy` when seen for the first time
+
+### RightQuasigroupsUpToIsotopism, QuasigroupsUpToIsotopism, LoopsUpToIsotopism 
+
+- With 2 aguments `ls:IsList`, `method:IsString` is simply calls `RQ_AlgebrasUpToIsotopism`
+- With 1 argument `ls:IsList`:
+  * `RightQuasigroupsUpToIsotopism` uses the method "via perfect matchings with invariants" 
+  * `QuasigroupsUpToIsotopism` uses the method "via domain extension"
+  * `LoopsUpToIsotopism` uses the method "via domain extension"
+- These are precisely the default methods for `IsotopismRightQuasigroups`, `IsotopismQuasigroups` and `IsotopismLoops`
+

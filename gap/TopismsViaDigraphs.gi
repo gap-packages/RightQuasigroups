@@ -96,7 +96,9 @@ function( Q, S )
         AsTransformation( clQ[3]/clS[3] ), 
         true # canonical perms
     ); 
-    SetIsBijective( iso, true );
+    if iso <> fail then
+        SetIsBijective( iso, true );
+    fi;
     return iso;
 end );
 

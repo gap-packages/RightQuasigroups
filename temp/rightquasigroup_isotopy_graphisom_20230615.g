@@ -66,7 +66,7 @@ UntraceMethods([AutotopismGroup,AutomorphismGroup,IsomorphismRightQuasigroups,Is
 g := TransitiveGroup( 8, 31 );
 lps := AllLoopsWithMltInGroup( g, 2, 0 );; Size( lps );
 Apply( lps, LoopByRightSection );
-Size( LoopsUpToIsomorphism( lps) ); time;
+Size( LoopsUpToIsomorphism( lps ) ); time;
 
 g := TransitiveGroup( 8, 31 );
 lps := AllLoopsWithMltInGroup( g, 2, 0 );; Size( lps );
@@ -75,6 +75,22 @@ Size( LoopsUpToIsomorphism( lps : UseDiscriminator ) ); time;
 
 # with Digraphs: 3917 vs 1397
 # without Digraphs: 1523 vs 1629
+
+############################
+############################
+
+LoadPackage( "RightQuasigroups" );
+TraceMethods([AutotopismGroup,AutomorphismGroup,IsomorphismRightQuasigroups,IsotopismRightQuasigroups]);
+
+g := TransitiveGroup( 8, 31 );
+lps := AllLoopsWithMltInGroup( g, 2, 0 );; Size( lps );
+Apply( lps, LoopByRightSection );
+Size( LoopsUpToIsotopism( lps{[1..5]} ) ); time;
+
+UntraceMethods([AutotopismGroup,AutomorphismGroup,IsomorphismRightQuasigroups,IsotopismRightQuasigroups]);
+
+# with Digraphs: 9ms
+# without Digraphs: 88433ms
 
 ############################
 ############################

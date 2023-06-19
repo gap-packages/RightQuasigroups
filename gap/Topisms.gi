@@ -1155,7 +1155,7 @@ end );
 InstallMethod( RQ_AlgebrasUpToIsotopism, "for category, list of algebras and method selector (string)",
     [ IsOperation, IsList, IsString ],
 function( category, ls, method )
-    local kept, positions, pos, Q, is_new, K;
+    local kept, positions, pos, Q, is_new, K, isequiv;
     # check arguments
     if IsEmpty( ls ) then return ls; fi;
     if not ForAll( ls, IsRightQuasigroup ) then
@@ -1174,7 +1174,12 @@ function( category, ls, method )
         if not IsCanonical( Q ) then Q := CanonicalCopy( Q ); fi; # making canonical when seen for the first time
         is_new := true;
         for K in kept do
-            if not IsotopismRightQuasigroups( Q, K, method ) = fail then
+            if method = "via default method" then
+                isequiv := ( IsotopismRightQuasigroups( Q, K ) <> fail );
+            else 
+                isequiv := ( IsotopismRightQuasigroups( Q, K, method ) <> fail );
+            fi;
+            if isequiv then
                 is_new := false;
                 break;
             fi;
@@ -1201,7 +1206,7 @@ end );
 InstallOtherMethod( RightQuasigroupsUpToIsotopism, "for list of right quasigroups",
     [ IsList ],
 function( ls )
-    return RQ_AlgebrasUpToIsotopism( IsRightQuasigroup, ls, "via perfect matchings with invariants" );
+    return RQ_AlgebrasUpToIsotopism( IsRightQuasigroup, ls, "via default method" );
 end );
 
 InstallMethod( QuasigroupsUpToIsotopism, "for list of quasigroups and method selector (string)",
@@ -1213,7 +1218,7 @@ end );
 InstallOtherMethod( QuasigroupsUpToIsotopism, "for list of right quasigroups",
     [ IsList ],
 function( ls )
-    return RQ_AlgebrasUpToIsotopism( IsQuasigroup, ls, "via domain extension" );
+    return RQ_AlgebrasUpToIsotopism( IsQuasigroup, ls, "via default method" );
 end );
 
 InstallMethod( LoopsUpToIsotopism, "for list of loops and method selector (string)",
@@ -1225,7 +1230,7 @@ end );
 InstallOtherMethod( LoopsUpToIsotopism, "for list of loops",
     [ IsList ],
 function( ls )
-    return RQ_AlgebrasUpToIsotopism( IsLoop, ls, "via domain extension" );
+    return RQ_AlgebrasUpToIsotopism( IsLoop, ls, "via default method" );
 end );
 
 # AUTOTOPISM GROUPS OF RIGHT QUASIGROUPS
