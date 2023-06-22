@@ -57,7 +57,7 @@ IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
 PackageWWWHome := "https://gap-packages.github.io/RightQuasigroups/",
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 README_URL     := Concatenation( ~.PackageWWWHome, "README.md" ),
-ArchiveURL     := Concatenation( ~.PackageWWWHome,
+ArchiveURL     := Concatenation( ~.SourceRepository.URL,
                                  "/releases/download/v", ~.Version,
                                  "/", ~.PackageName, "-", ~.Version ),
 
