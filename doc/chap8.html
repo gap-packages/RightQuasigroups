@@ -279,7 +279,7 @@ MoufangLoop( 12, 1 )
 
 <h5>8.3-1 IsomorphismDiscriminator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismDiscriminator</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismDiscriminator</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a data structure suitable for isomorphism searches from a right quasigroup <code class="code">Q</code>.</p>
 
 <p><a id="X85FD215285153778" name="X85FD215285153778"></a></p>
@@ -320,7 +320,7 @@ Transformation( [ 1, 2, 4, 5, 3 ] )
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightQuasigroupsUpToIsomorphism</code>( <var class="Arg">ls</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasigroupsUpToIsomorphism</code>( <var class="Arg">ls</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopsUpToIsomorphism</code>( <var class="Arg">ls</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a sublist of <code class="code">ls</code> consisting of all right quasigroups (quasigroups, loops) in <code class="code">ls</code> up to isomorphism.</p>
+<p>Returns: a sublist of <code class="code">ls</code> consisting of all right quasigroups (quasigroups, loops) in <code class="code">ls</code> up to isomorphism. Via an optional parameter <code class="code">:UseDiscriminator</code> one may force the algorithm to use <code class="code">IsomorphismDiscriminator</code> as an invariant to speed up isomorph rejection.</p>
 
 
 <div class="example"><pre>
@@ -332,6 +332,14 @@ Transformation( [ 1, 2, 4, 5, 3 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lps[1] = Q1; lps[2] = Q3;</span>
 true
 true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"></span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := TransitiveGroup( 8, 31 );</span>
+[2^4]E(4)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lps := AllLoopsWithMltInGroup( g, 2, 0 );; Size( lps );</span>
+192
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Apply( lps, LoopByRightSection );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( LoopsUpToIsomorphism( lps : UseDiscriminator ) );</span>
+58
 </pre></div>
 
 <p><a id="X80D040A77F4A860C" name="X80D040A77F4A860C"></a></p>

@@ -233,7 +233,7 @@
   
   [1X8.3-1 IsomorphismDiscriminator[101X
   
-  [33X[1;0Y[29X[2XIsomorphismDiscriminator[102X( [3XQ[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsomorphismDiscriminator[102X( [3XQ[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya  data  structure  suitable for isomorphism searches from a right
             quasigroup [10XQ[110X.[133X
   
@@ -280,7 +280,10 @@
   [33X[1;0Y[29X[2XQuasigroupsUpToIsomorphism[102X( [3Xls[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XLoopsUpToIsomorphism[102X( [3Xls[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya  sublist of [10Xls[110X consisting of all right quasigroups (quasigroups,
-            loops) in [10Xls[110X up to isomorphism.[133X
+            loops)  in  [10Xls[110X  up  to  isomorphism.  Via  an  optional  parameter
+            [10X:UseDiscriminator[110X   one   may   force   the   algorithm   to   use
+            [10XIsomorphismDiscriminator[110X  as  an  invariant  to  speed up isomorph
+            rejection.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XQ1 := CheinLoop( SymmetricGroup( 3 ) );;[127X[104X
@@ -291,6 +294,14 @@
     [4X[25Xgap>[125X [27Xlps[1] = Q1; lps[2] = Q3;[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27X[127X[104X
+    [4X[25Xgap>[125X [27Xg := TransitiveGroup( 8, 31 );[127X[104X
+    [4X[28X[2^4]E(4)[128X[104X
+    [4X[25Xgap>[125X [27Xlps := AllLoopsWithMltInGroup( g, 2, 0 );; Size( lps );[127X[104X
+    [4X[28X192[128X[104X
+    [4X[25Xgap>[125X [27XApply( lps, LoopByRightSection );[127X[104X
+    [4X[25Xgap>[125X [27XSize( LoopsUpToIsomorphism( lps : UseDiscriminator ) );[127X[104X
+    [4X[28X58[128X[104X
   [4X[32X[104X
   
   
