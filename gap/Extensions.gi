@@ -322,7 +322,10 @@ function( Q, p )
         ConvertToVectorRep( row );
         Add(ret, row );
     od;
-    return BaseMat( ret );
+    if not IsEmpty( ret ) then # it is empty if Q is trivial
+        return BaseMat( ret );
+    fi;
+    return [ ];
 end );
 
 # LoopCocyclesModAction
@@ -330,12 +333,17 @@ end );
 InstallMethod( LoopCocyclesModAction, "for loop, prime, cocycles and coboundaries",
     [ IsLoop, IsPosInt, IsList, IsList ],
 function( Q, p, coc, cob )
-    local factorsets, exts, on_fs, autgr, ret, space;
+    local trivialcocycle, factorsets, exts, on_fs, autgr, ret, space;
 
+    trivialcocycle := Zero(GF(p))*[1..Size(Q)^2];
     factorsets := BaseMat( Concatenation( cob, coc ) );
     # basis for the complement of coboundaries in the v.s. of cocycles
     exts := factorsets{[Length(cob)+1..Length(factorsets)]};
-   
+
+    if IsEmpty( exts ) then # only coboundaries, hence return only the trivial cocycle for the direct product
+        return [ trivialcocycle ];
+    fi;
+
     # defining the action of the automorphism group on cocycles
     on_fs := function( fs, perm )
         local n, ret, a, b;
@@ -366,7 +374,7 @@ function( Q, p, coc, cob )
     od;
 
     # returning the survivors with respect to the original basis
-    return List( ret, x->x*exts );
+    return Concatenation( [ trivialcocycle ],  List( ret, x->x*exts ) );
 end );
 
 # AllLoopCocyclesInVariety

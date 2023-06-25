@@ -143,7 +143,7 @@ function( Q )
     f := NaturalHomomorphismByNormalSubloop( Q, Center( Q ) );
     Qbar := Range( f );
     ucs := UpperCentralSeriesOfLoop( Qbar );
-    return Concatenation( List( ucs, s -> Subloop(Q, PreImage( f, s ) ), [ Subloop( Q, [] ) ] ) );
+    return Concatenation( List( ucs, s -> Subloop(Q, PreImage( f, s ) ) ), [ Subloop( Q, [] ) ] );
 end );
 
 # UpperCentralSeries
