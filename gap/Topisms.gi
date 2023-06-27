@@ -1307,7 +1307,7 @@ function( Q )
     origQ := Q;
     Q := CanonicalCopy( Q ); 
     # start with the embedding of Aut( Q ) to Atp( Q )
-    gens := List( GeneratorsOfGroup( AutomorphismGroup( Q ) ), f -> AutotopismRightQuasigroup( Q, f, f, f ) );
+    gens := Set( GeneratorsOfGroup( AutomorphismGroup( Q ) ), f -> AutotopismRightQuasigroup( Q, f, f, f ) );
     # keep track of pairs (a,b) for which Q_{a,b} is isomorphic to Q
     isomorphic := []; # reps [a,b] of orbits of atp such that Q_{b,a} is isomorphic to Q
     nonisomorphic := []; # reps [a,b] of orbits of atp such that Q_{b,a} is not isomorphic to Q
