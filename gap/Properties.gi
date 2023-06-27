@@ -74,11 +74,10 @@ end );
 InstallOtherMethod( IsDiassociative, "for right quasigroup",
     [ IsRightQuasigroup ], 1,
 function( Q )
-    local category, pairs, S;
-    category := CategoryOfRightQuasigroup( Q );
+    local pairs, S;
     pairs := Combinations( Elements( Q ), 2 );
     while not IsEmpty( pairs ) do
-        S := RQ_Subalgebra( category, Q, pairs[ 1 ] );
+        S := RQ_Subalgebra( Q, pairs[ 1 ] );
         if not IsAssociative( S ) then
             return false;
         fi;
