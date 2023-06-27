@@ -561,19 +561,19 @@ gap> coc := LoopCocyclesInVariety( F, 2, [ "x*(y*(x*z)) = (x*(y*x))*z" ] );; Len
 gap> cob := LoopCoboundaries( F, 2 );; Length( cob ); # basis of coboundaries
 1
 gap> Length( LoopCocyclesModAction( F, 2, coc, cob ) ); # cocycles modulo coboundaries and action of Aut(K)x Aut(F)
-10
+11
 gap> Length( AllLoopCocyclesInVariety( F, 2, [ "x*(y*(x*z)) = (x*(y*x))*z" ] ) ); # the same in one step
 #I  RQ: Calculating coboundaries
 #I  RQ: Coboundaries have dimension 1
 #I  RQ: Calculating cocycles
 #I  RQ: Cocycles have dimension 6
-10
+11
 gap> lps := AllLoopCentralExtensionsInVariety( F, 2, [ "x*(y*(x*z)) = (x*(y*x))*z" ] );; Length( lps ); # all central extensions in one step
 #I  RQ: Calculating coboundaries
 #I  RQ: Coboundaries have dimension 1
 #I  RQ: Calculating cocycles
 #I  RQ: Cocycles have dimension 6
-10
+11
 gap> ForAll( lps, IsLeftBolLoop );
 true
 gap> Length( LoopsUpToIsomorphism( lps ) ); # filtering up to isomorphism (no isomorphisms in this example)
