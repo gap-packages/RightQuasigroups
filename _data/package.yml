@@ -54,13 +54,17 @@ citeas: |
 bibtex: |
     @misc{ RightQuasigroups0.9.1,
       author =           {Nagy, G. P. and Vojt{\v e}chovsk{\a'y}, P.},
-      title =            {{RightQuasigroups}, Computing with one-sided quasigroups in GAP., {V}ersion 0.9.1},
+      title =            {{RightQuasigroups},     Computing    with    one-sided
+                          quasigroups in GAP., {V}ersion 0.9.1},
       month =            {Jun},
       year =             {2023},
       note =             {GAP package},
-      howpublished =     {\href                                                   {https://gap-packages.github.io/RightQuasigroups/}
-                          {\texttt{https://gap-packages.github.io/}\discretionary {}{}{}\texttt{RightQuasigroups/}}},
-      keywords =         {right quasigroup; nonassociative; quasigroup; loop; rack; quandle},
+      howpublished =     {\href
+                          {https://gap-packages.github.io/RightQuasigroups/}
+                          {\texttt{https://gap-packages.github.io/}\discretionary
+                          {}{}{}\texttt{RightQuasigroups/}}},
+      keywords =         {right  quasigroup;  nonassociative;  quasigroup; loop;
+                          rack; quandle},
       printedkey =       {NV23}
     }
 

@@ -2,54 +2,65 @@
   
   [1XReferences[101X
   
-  [[20XArt15[120X] [16XArtic, K.[116X, [17XOn conjugacy closed loops and conjugacy closed loop folders[117X, Ph.D. thesis, RWTH Aachen University (2015).
+  [[20XArt15[120X]  [16XArtic,  K.[116X,  [17XOn  conjugacy  closed  loops and conjugacy closed loop
+  folders[117X, Ph.D. thesis, RWTH Aachen University (2015).
   
-  [[20XCoD05[120X]  [16XCs{\"o}rg{\H  o},  P.  and Dr{\a'a}pal, A.[116X, [17XLeft conjugacy closed loops of nilpotency class two[117X, [18XResults Math.[118X, [19X47[119X, 3-4
-  (2005), 242{\textendash}265.
+  [[20XCoD05[120X] [16XCs{\"o}rg{\H o}, P. and Dr{\a'a}pal, A.[116X, [17XLeft conjugacy closed loops
+  of nilpotency class two[117X, [18XResults Math.[118X, [19X47[119X, 3-4 (2005), 242{\textendash}265.
   
-  [[20XCR99[120X]  [16XColbourn,  C.  J.  and  Rosa,  A.[116X,  [17XTriple  systems[117X,  The  Clarendon  Press Oxford University Press, Oxford Mathematical
-  Monographs, New York (1999), xvi+560 pages.
+  [[20XCR99[120X]  [16XColbourn,  C.  J.  and Rosa, A.[116X, [17XTriple systems[117X, The Clarendon Press
+  Oxford  University  Press,  Oxford Mathematical Monographs, New York (1999),
+  xvi+560 pages.
   
-  [[20XDr\03[120X]  [16XDr{\a'a}pal,  A.[116X,  [17XCyclic  and  dihedral  constructions  of  even  order[117X,  [18XComment. Math. Univ. Carolin.[118X, [19X44[119X, 4 (2003),
-  593{\textendash}614.
+  [[20XDr\03[120X]  [16XDr{\a'a}pal,  A.[116X,  [17XCyclic and dihedral constructions of even order[117X,
+  [18XComment. Math. Univ. Carolin.[118X, [19X44[119X, 4 (2003), 593{\textendash}614.
   
-  [[20XDVe06[120X]  [16XDr{\a'a}pal,  A.  and  Vojt{\v  e}chovsk{\a'y},  P.[116X,  [17XMoufang  loops  that share associator and three quarters of their
-  multiplication tables[117X, [18XRocky Mountain J. Math.[118X, [19X36[119X, 2 (2006), 425{\textendash}455.
+  [[20XDVe06[120X]  [16XDr{\a'a}pal,  A. and Vojt{\v e}chovsk{\a'y}, P.[116X, [17XMoufang loops that
+  share  associator  and  three quarters of their multiplication tables[117X, [18XRocky
+  Mountain J. Math.[118X, [19X36[119X, 2 (2006), 425{\textendash}455.
   
-  [[20XDVe09[120X]  [16XDaly,  D.  and  Vojt{\v  e}chovsk{\a'y}, P.[116X, [17XEnumeration of nilpotent loops via cohomology[117X, [18XJ. Algebra[118X, [19X322[119X, 11 (2009),
-  4080{\textendash}4098.
+  [[20XDVe09[120X]  [16XDaly,  D.  and Vojt{\v e}chovsk{\a'y}, P.[116X, [17XEnumeration of nilpotent
+  loops via cohomology[117X, [18XJ. Algebra[118X, [19X322[119X, 11 (2009), 4080{\textendash}4098.
   
-  [[20XGMR99[120X]  [16XGoodaire, E. G., May, S. and Raman, M.[116X, [17XThe Moufang loops of order less than 64[117X, Nova Science Publishers Inc., Commack,
-  NY (1999), xviii+287 pages.
+  [[20XGMR99[120X]  [16XGoodaire,  E. G., May, S. and Raman, M.[116X, [17XThe Moufang loops of order
+  less  than  64[117X,  Nova Science Publishers Inc., Commack, NY (1999), xviii+287
+  pages.
   
-  [[20XGre14[120X]  [16XGreer,  M.[116X,  [17XA  class  of  loops  categorically  isomorphic  to  Bruck loops of odd order[117X, [18XComm. Algebra[118X, [19X42[119X, 8 (2014),
-  3682-3697.
+  [[20XGre14[120X]  [16XGreer, M.[116X, [17XA class of loops categorically isomorphic to Bruck loops
+  of odd order[117X, [18XComm. Algebra[118X, [19X42[119X, 8 (2014), 3682-3697.
   
-  [[20XKNVe15[120X] [16XKinyon, M. K., Nagy, G. P. and Vojt{\v e}chovsk{\a'y}, P.[116X, [17XBol loops and Bruck loops of order pq[117X, [18X[118X (2015), (preprint).
+  [[20XKNVe15[120X]  [16XKinyon,  M.  K.,  Nagy,  G. P. and Vojt{\v e}chovsk{\a'y}, P.[116X, [17XBol
+  loops and Bruck loops of order pq[117X, [18X[118X (2015), (preprint).
   
-  [[20XKun00[120X] [16XKunen, K.[116X, [17XThe structure of conjugacy closed loops[117X, [18XTrans. Amer. Math. Soc.[118X, [19X352[119X, 6 (2000), 2889{\textendash}2911.
+  [[20XKun00[120X]  [16XKunen,  K.[116X,  [17XThe  structure of conjugacy closed loops[117X, [18XTrans. Amer.
+  Math. Soc.[118X, [19X352[119X, 6 (2000), 2889{\textendash}2911.
   
-  [[20XLie87[120X]  [16XLiebeck,  M.  W.[116X, [17XThe classification of finite simple Moufang loops[117X, [18XMath. Proc. Cambridge Philos. Soc.[118X, [19X102[119X, 1 (1987),
-  33{\textendash}47.
+  [[20XLie87[120X]  [16XLiebeck,  M. W.[116X, [17XThe classification of finite simple Moufang loops[117X,
+  [18XMath. Proc. Cambridge Philos. Soc.[118X, [19X102[119X, 1 (1987), 33{\textendash}47.
   
-  [[20XMoo[120X] [16XMoorhouse, G. E.[116X, [17XBol loops of small order[117X, (https://www.uwyo.edu/moorhouse/pub/bol/).
+  [[20XMoo[120X]     [16XMoorhouse,     G.     E.[116X,    [17XBol    loops    of    small    order[117X,
+  (https://www.uwyo.edu/moorhouse/pub/bol/).
   
-  [[20XNVe03[120X]  [16XNagy,  G. P. and Vojt{\v e}chovsk{\a'y}, P.[116X, [17XOctonions, simple Moufang loops and triality[117X, [18XQuasigroups Related Systems[118X,
-  [19X10[119X (2003), 65{\textendash}94.
+  [[20XNVe03[120X]  [16XNagy,  G.  P.  and  Vojt{\v  e}chovsk{\a'y},  P.[116X, [17XOctonions, simple
+  Moufang   loops  and  triality[117X,  [18XQuasigroups  Related  Systems[118X,  [19X10[119X  (2003),
+  65{\textendash}94.
   
-  [[20XNVe07[120X]  [16XNagy,  G.  P.  and Vojt{\v e}chovsk{\a'y}, P.[116X, [17XThe Moufang loops of order 64 and 81[117X, [18XJ. Symbolic Comput.[118X, [19X42[119X, 9 (2007),
-  871{\textendash}883.
+  [[20XNVe07[120X]  [16XNagy,  G.  P.  and Vojt{\v e}chovsk{\a'y}, P.[116X, [17XThe Moufang loops of
+  order 64 and 81[117X, [18XJ. Symbolic Comput.[118X, [19X42[119X, 9 (2007), 871{\textendash}883.
   
-  [[20XOV17[120X]   [16XO'Brien,  E.  A.  and  Vojt\v{e}chovsk\'{y},  P.[116X,  [17XCode  loops  in  dimension  at  most  8[117X,  [18XJ.  Algebra[118X,  [19X473[119X  (2017),
-  607{\textendash}626.
+  [[20XOV17[120X]  [16XO'Brien, E. A. and Vojt\v{e}chovsk\'{y}, P.[116X, [17XCode loops in dimension
+  at most 8[117X, [18XJ. Algebra[118X, [19X473[119X (2017), 607{\textendash}626.
   
-  [[20XSVe17[120X]  [16XStuhl,  I.  and Vojt{\v e}chovsk{\a'y}, P.[116X, [17XInvolutory latin quandles, Bruck loops and commutative automorphic loops of
-  odd prime power order[117X, [18X[118X (2017), (preprint).
+  [[20XSVe17[120X] [16XStuhl, I. and Vojt{\v e}chovsk{\a'y}, P.[116X, [17XInvolutory latin quandles,
+  Bruck  loops  and  commutative  automorphic loops of odd prime power order[117X, [18X[118X
+  (2017), (preprint).
   
-  [[20XSZ12[120X]  [16XSlattery,  M.  and  Zenisek,  A.[116X, [17XMoufang loops of order 243[117X, [18XCommentationes Mathematicae Universitatis Carolinae[118X, [19X53[119X, 3
-  (2012), 423{\textendash}428.
+  [[20XSZ12[120X]   [16XSlattery,   M.  and  Zenisek,  A.[116X,  [17XMoufang  loops  of  order  243[117X,
+  [18XCommentationes   Mathematicae   Universitatis   Carolinae[118X,   [19X53[119X,  3  (2012),
+  423{\textendash}428.
   
-  [[20XWJ75[120X] [16XWilson Jr., R. L.[116X, [17XQuasidirect products of quasigroups[117X, [18XComm. Algebra[118X, [19X3[119X, 9 (1975), 835{\textendash}850.
+  [[20XWJ75[120X]  [16XWilson  Jr.,  R.  L.[116X,  [17XQuasidirect  products  of  quasigroups[117X, [18XComm.
+  Algebra[118X, [19X3[119X, 9 (1975), 835{\textendash}850.
   
   
   
