@@ -1,7 +1,7 @@
 name: RightQuasigroups
-version: "0.9"
+version: "0.9.1"
 license: "GPL-2.0-or-later"
-date: 2023-06-22
+date: 2023-06-28
 description: |
     Computing with one-sided quasigroups in GAP.
 
@@ -21,7 +21,7 @@ GAP: ">= 4.12"
 
 suggested-pkgs:
     - name: "Digraphs"
-      version: "1.6"
+      version: "1.4"
       url: "https://digraphs.github.io/Digraphs"
 
 www: https://gap-packages.github.io/RightQuasigroups/
@@ -30,7 +30,7 @@ packageinfo: https://gap-packages.github.io/RightQuasigroups/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-packages/RightQuasigroups/releases/download/v0.9/RightQuasigroups-0.9.tar.gz
+      url: https://github.com/gap-packages/RightQuasigroups/releases/download/v0.9.1/RightQuasigroups-0.9.1.tar.gz
 
 abstract: |
     This package implements basic methods for calculations with finiteright quasigroups. Additional methods and libraries are providedfor quasigroups, loops, racks and quandles.
@@ -44,7 +44,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>NV23</span>]   <b class='BibAuthor'>Nagy, G. P. and Vojtěchovský, P.</b>,
      <i class='BibTitle'>RightQuasigroups, Computing with one-sided quasigroups in GAP.,
-             Version 0.9</i>
+             Version 0.9.1</i>
      (<span class='BibYear'>2023</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://gap-packages.github.io/RightQuasigroups/">https://gap-packages.github.io/RightQuasigroups/</a></span>.
@@ -52,19 +52,15 @@ citeas: |
     
 
 bibtex: |
-    @misc{ RightQuasigroups0.9,
+    @misc{ RightQuasigroups0.9.1,
       author =           {Nagy, G. P. and Vojt{\v e}chovsk{\a'y}, P.},
-      title =            {{RightQuasigroups},     Computing    with    one-sided
-                          quasigroups in GAP., {V}ersion 0.9},
+      title =            {{RightQuasigroups}, Computing with one-sided quasigroups in GAP., {V}ersion 0.9.1},
       month =            {Jun},
       year =             {2023},
       note =             {GAP package},
-      howpublished =     {\href
-                          {https://gap-packages.github.io/RightQuasigroups/}
-                          {\texttt{https://gap-packages.github.io/}\discretionary
-                          {}{}{}\texttt{RightQuasigroups/}}},
-      keywords =         {right  quasigroup;  nonassociative;  quasigroup; loop;
-                          rack; quandle},
+      howpublished =     {\href                                                   {https://gap-packages.github.io/RightQuasigroups/}
+                          {\texttt{https://gap-packages.github.io/}\discretionary {}{}{}\texttt{RightQuasigroups/}}},
+      keywords =         {right quasigroup; nonassociative; quasigroup; loop; rack; quandle},
       printedkey =       {NV23}
     }
 

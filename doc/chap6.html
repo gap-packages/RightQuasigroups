@@ -478,19 +478,19 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cob := LoopCoboundaries( F, 2 );; Length( cob ); # basis of coboundaries</span>
 1
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length( LoopCocyclesModAction( F, 2, coc, cob ) ); # cocycles modulo coboundaries and action of Aut(K)x Aut(F)</span>
-10
+11
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length( AllLoopCocyclesInVariety( F, 2, [ "x*(y*(x*z)) = (x*(y*x))*z" ] ) ); # the same in one step</span>
 #I  RQ: Calculating coboundaries
 #I  RQ: Coboundaries have dimension 1
 #I  RQ: Calculating cocycles
 #I  RQ: Cocycles have dimension 6
-10
+11
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lps := AllLoopCentralExtensionsInVariety( F, 2, [ "x*(y*(x*z)) = (x*(y*x))*z" ] );; Length( lps ); # all central extensions in one step</span>
 #I  RQ: Calculating coboundaries
 #I  RQ: Coboundaries have dimension 1
 #I  RQ: Calculating cocycles
 #I  RQ: Cocycles have dimension 6
-10
+11
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ForAll( lps, IsLeftBolLoop );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length( LoopsUpToIsomorphism( lps ) ); # filtering up to isomorphism (no isomorphisms in this example)</span>

@@ -476,19 +476,19 @@
     [4X[25Xgap>[125X [27Xcob := LoopCoboundaries( F, 2 );; Length( cob ); # basis of coboundaries[127X[104X
     [4X[28X1[128X[104X
     [4X[25Xgap>[125X [27XLength( LoopCocyclesModAction( F, 2, coc, cob ) ); # cocycles modulo coboundaries and action of Aut(K)x Aut(F)[127X[104X
-    [4X[28X10[128X[104X
+    [4X[28X11[128X[104X
     [4X[25Xgap>[125X [27XLength( AllLoopCocyclesInVariety( F, 2, [ "x*(y*(x*z)) = (x*(y*x))*z" ] ) ); # the same in one step[127X[104X
     [4X[28X#I  RQ: Calculating coboundaries[128X[104X
     [4X[28X#I  RQ: Coboundaries have dimension 1[128X[104X
     [4X[28X#I  RQ: Calculating cocycles[128X[104X
     [4X[28X#I  RQ: Cocycles have dimension 6[128X[104X
-    [4X[28X10[128X[104X
+    [4X[28X11[128X[104X
     [4X[25Xgap>[125X [27Xlps := AllLoopCentralExtensionsInVariety( F, 2, [ "x*(y*(x*z)) = (x*(y*x))*z" ] );; Length( lps ); # all central extensions in one step[127X[104X
     [4X[28X#I  RQ: Calculating coboundaries[128X[104X
     [4X[28X#I  RQ: Coboundaries have dimension 1[128X[104X
     [4X[28X#I  RQ: Calculating cocycles[128X[104X
     [4X[28X#I  RQ: Cocycles have dimension 6[128X[104X
-    [4X[28X10[128X[104X
+    [4X[28X11[128X[104X
     [4X[25Xgap>[125X [27XForAll( lps, IsLeftBolLoop );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XLength( LoopsUpToIsomorphism( lps ) ); # filtering up to isomorphism (no isomorphisms in this example)[127X[104X
