@@ -635,6 +635,9 @@ InstallMethod( RightQuasigroupsUpToIsomorphism, "for a list of right quasigroup"
     [ IsList ], 
 function( ls )
     local pos, remaining, isos, i;
+    if ls = [] or ( Length( ls ) = 1 and IsRightQuasigroup( ls[1] ) ) then
+        return ls;
+    fi;
     pos := [];
     remaining := [ 1..Length( ls ) ];
     while remaining <> [] do
@@ -667,7 +670,7 @@ end );
 InstallMethod( QuasigroupsUpToIsomorphism, "for list of right quasigroups",
     [ IsList ],
 function( ls )
-    if Size( ls ) > 1 and IsQuasigroup( ls[1] ) then 
+    if ls = [] or ( Size( ls ) > 0 and IsQuasigroup( ls[1] ) ) then 
         return RightQuasigroupsUpToIsomorphism( ls );
     else
         Error( "RQ: list elements must be quasigroups" );
@@ -677,7 +680,7 @@ end );
 InstallMethod( LoopsUpToIsomorphism, "for list of right quasigroups",
     [ IsList ],
 function( ls )
-    if Size( ls ) > 1 and IsLoop( ls[1] ) then 
+    if ls = [] or ( Size( ls ) > 0 and IsLoop( ls[1] ) ) then 
         return RightQuasigroupsUpToIsomorphism( ls );
     else
         Error( "RQ: list elements must be loops" );
