@@ -1,104 +1,103 @@
-#
-# RightQuasigroups: Computing with one-sided quasigroups in GAP.
-#
+#############################################################################
+##  
+##  Demo PackageInfo.g for the GitHubPagesForGAP
+##
+
 SetPackageInfo( rec(
 
-PackageName := "RightQuasigroups",
-Subtitle := "Computing with one-sided quasigroups in GAP.",
-Version := "0.9.1",
-Date := "28/06/2023", # dd/mm/yyyy format
-License := "GPL-2.0-or-later",
+PackageName := "GitHubPagesForGAP",
+
+Subtitle := "A GitHub Pages generator for GAP packages",
+Version := "0.4",
+Date := "10/04/2025", # dd/mm/yyyy format
+License := "0BSD",
 
 Persons := [
   rec(
-    IsAuthor := true,
-    IsMaintainer := true,
-    FirstNames := "Gábor P.",
-    LastName := "Nagy",
-    # WWWHome := "https://algebra.math.bme.hu/nagy-gabor-peter",
-    # Email := "nagyg@math.bme.hu",
-    # PostalAddress := Concatenation(
-    #            "Institute of Mathematics, Budapest University of Technology and Economics\n",
-    #            "Műegyetem rkp 3\n",
-    #            "H-1111 Budapest (Hungary)" ),
-    # Place := "Budapest",
-    # Institution := "Budapest University of Technology and Economics",
-    WWWHome := "http://www.math.u-szeged.hu/~nagyg",
-    Email := "nagyg@math.u-szeged.hu",
+    LastName      := "Horn",
+    FirstNames    := "Max",
+    IsAuthor      := true,
+    IsMaintainer  := true,
+    Email         := "mhorn@rptu.de",
+    WWWHome       := "https://www.quendi.de/math",
+    GitHubUsername:= "fingolfin",
     PostalAddress := Concatenation(
-               "Bolyai Institute of the University of Szeged\n",
-               "Aradi vértanúk tere 1\n",
-               "H-6720 Szeged (Hungary)" ),
-    Place := "Szeged",
-    Institution := "University of Szeged",
+                       "Fachbereich Mathematik\n",
+                       "RPTU Kaiserslautern-Landau\n",
+                       "Gottlieb-Daimler-Straße 48\n",
+                       "67663 Kaiserslautern\n",
+                       "Germany" ),
+    Place         := "Kaiserslautern, Germany",
+    Institution   := "RPTU Kaiserslautern-Landau"
   ),
+
   rec(
-    IsAuthor := true,
-    IsMaintainer := true,
-    FirstNames := "Petr",
-    LastName := "Vojtěchovský",
-    WWWHome := "http://www.math.du.edu/~petr/",
-    Email := "petr@math.du.edu",
-    PostalAddress := Concatenation(
-               "Department of Mathematics, University of Denver\n",
-               "2390 S York St\n",
-               "Denver, CO 80208\n",
-               "USA" ),
-    Place := "Denver",
-    Institution := "University of Denver",
+    LastName      := "Thor",
+    FirstNames    := "A. U.",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    #Email         := "author@example.com",
+  ),
+
+  rec(
+    LastName      := "Itor",
+    FirstNames    := "Jan",
+    IsAuthor      := false,
+    IsMaintainer  := true,
+    #Email         := "janitor@example.com",
   ),
 ],
 
-SourceRepository := rec( 
-  Type := "git", 
-  URL := "https://github.com/gap-packages/RightQuasigroups" 
-),
-IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome := "https://gap-packages.github.io/RightQuasigroups/",
-PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+Status := "other",
+
+# The following are not strictly necessary in your own PackageInfo.g
+# (in the sense that update.g only looks at the usual fields
+# like PackageWWWHome, ArchiveURL etc.). But they are convenient
+# if you use exactly the scheme for your package website that we propose.
+GithubUser := "gap-system",
+GithubRepository := ~.PackageName,
+GithubWWW := Concatenation("https://github.com/", ~.GithubUser, "/", ~.GithubRepository),
+
+PackageWWWHome := Concatenation("https://", ~.GithubUser, ".github.io/", ~.GithubRepository, "/"),
 README_URL     := Concatenation( ~.PackageWWWHome, "README.md" ),
-ArchiveURL     := Concatenation( ~.SourceRepository.URL,
-                                 "/releases/download/v", ~.Version,
-                                 "/", ~.PackageName, "-", ~.Version ),
+PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+# The following assumes you are using the Github releases system. If not, adjust
+# it accordingly.
+ArchiveURL     := Concatenation(~.GithubWWW,
+                    "/releases/download/v", ~.Version, "/",
+                    ~.GithubRepository, "-", ~.Version),
 
-ArchiveFormats := ".tar.gz",
+ArchiveFormats := ".tar.gz .tar.bz2",
 
-##  Status information. Currently the following cases are recognized:
-##    "accepted"      for successfully refereed packages
-##    "submitted"     for packages submitted for the refereeing
-##    "deposited"     for packages for which the GAP developers agreed
-##                    to distribute them with the core GAP system
-##    "dev"           for development versions of packages
-##    "other"         for all other packages
-##
-Status := "dev",
-
-AbstractHTML   :=  Concatenation( 
-  "This package implements basic methods for calculations with finite",
-  "right quasigroups. Additional methods and libraries are provided",
-  "for quasigroups, loops, racks and quandles." 
-),
+AbstractHTML := 
+  "This is a pseudo package that contains no actual\
+  <span class=\"pkgname\">GAP</span> code. Instead, it is a template for other\
+  GAP packages that allows to quickly setup GitHub Pages.",
 
 PackageDoc := rec(
-  BookName  := "RightQuasigroups",
+  BookName  := "GitHubPagesForGAP",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "Computing with one-sided quasigroups in GAP.",
+  LongTitle := "A GitHub Pages generator for GAP packages",
 ),
 
+# The following dependencies are fake and for testing / demo purposes
 Dependencies := rec(
-  GAP := ">= 4.12",
-  NeededOtherPackages := [ ],
-  SuggestedOtherPackages := [ [ "Digraphs", "1.4" ] ],
-  ExternalConditions := [ ],
+  GAP := ">=4.8.1",
+  NeededOtherPackages := [
+    ["GAPDoc", ">= 1.2"],
+    ["IO", ">= 4.1"],
+  ],
+  SuggestedOtherPackages := [["orb", ">= 4.2"]],
+  ExternalConditions := []
 ),
 
 AvailabilityTest := ReturnTrue,
 
-TestFile := "tst/testall.g",
-
-Keywords := [ "right quasigroup", "nonassociative", "quasigroup", "loop", "rack", "quandle" ],
+Keywords := ["GitHub Pages", "GAP"]
 
 ));
+
+
