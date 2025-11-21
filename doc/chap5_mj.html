@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (RightQuasigroups) - Chapter 5: Associated permutation groups</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap5"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap4_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap6_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap5.html">[MathJax off]</a></p>
+<p><a id="X7E0365AF7CAFF2DF" name="X7E0365AF7CAFF2DF"></a></p>
+<div class="ChapSects"><a href="chap5_mj.html#X7E0365AF7CAFF2DF">5 <span class="Heading">Associated permutation groups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X78AA3D177CCA49FF">5.1 <span class="Heading">Translations and sections</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7E497FCD787C985B">5.1-1 RightTranslation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X78584018789E4D0E">5.1-2 LeftTranslation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7F4CF4B0851E7235">5.1-3 <span class="Heading">Sections</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X7AF75B397C3E23AF">5.2 <span class="Heading">Multiplication groups and relative multiplication groups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X78ED50F578A88046">5.2-1 <span class="Heading">Multiplication groups</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X78A885027C9A439B">5.2-2 LeftMultiplicationSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X8521593280EC6E05">5.2-3 <span class="Heading">Relative multiplication groups</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X7884CEE3829DDC9E">5.3 <span class="Heading">Inner mappings and inner mapping groups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7A4D75D386B4D6B8">5.3-1 <span class="Heading">Inner mappings</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X8740D61178ACD217">5.3-2 <span class="Heading">Inner mapping groups</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X83ED285B7C0EED61">5.4 <span class="Heading">Displacement groups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X80EF79DD79638DB0">5.4-1 <span class="Heading">Right displacement groups</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X85F8CF12879B13C3">5.4-2 <span class="Heading">Left displacement groups</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X80FCFCCD7B5D216D">5.4-3 IsIsotopicToGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X85E9E5B47C2574D9">5.4-4 IsIsotopicToAbelianGroup</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X806709E27F118086">5.5 <span class="Heading">Realizing permutation groups as multiplication groups of loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X8434C74F841F6EBF">5.5-1 AllLoopsWithMltInGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7D469E327A612D9E">5.5-2 AllNonassociativeLoopsWithMltInGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7AE137E5787A29E4">5.5-3 OneLoopWithMltInGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7D3244297F256D27">5.5-4 OneNonassociativeLoopWithMltInGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X863FFA5C7B7078E2">5.5-5 AllLoopsWithMltGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X8525F22C7CFE1119">5.5-6 OneLoopWithMltGroup</a></span>
+</div></div>
+</div>
+
+<h3>5 <span class="Heading">Associated permutation groups</span></h3>
+
+<p><a id="X78AA3D177CCA49FF" name="X78AA3D177CCA49FF"></a></p>
+
+<h4>5.1 <span class="Heading">Translations and sections</span></h4>
+
+<p>Let <code class="code">Q</code> be a right quasigroup with a parernt of size <code class="code">nP</code>. Right translations of right quasigroups and left translations of quasigroups are represented as parent permutations in <strong class="pkg">RightQuasigroups</strong>, cf. Section <a href="chap4_mj.html#X8372074486AAC9EB"><span class="RefLink">4.1</span></a>. Consequently, such translations are elements of the symmetric group on <code class="code">[1..nP]</code>.</p>
+
+<p>A left translation of a right quasigroup <code class="code">Q</code> is not necessarily a permutation and it is represented as a transformation on <code class="code">[1..nP]</code> that fixes all points outside of <code class="code">ParentInd( Q )</code>. Consequently, such translations are elements of the full transformation semigroup on <code class="code">[1..nP]</code>.</p>
+
+<p><a id="X7E497FCD787C985B" name="X7E497FCD787C985B"></a></p>
+
+<h5>5.1-1 RightTranslation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightTranslation</code>( <var class="Arg">Q</var>, <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the right translation by the element <var class="Arg">x</var> in the right quasigroup <var class="Arg">Q</var>. We allow <var class="Arg">x</var> to be an element of <var class="Arg">Q</var> or an element of the underlying set of <var class="Arg">Q</var>. The right translation is returned as a parent permutation, cf. Section <a href="chap4_mj.html#X8372074486AAC9EB"><span class="RefLink">4.1</span></a>.</p>
+
+<p><a id="X78584018789E4D0E" name="X78584018789E4D0E"></a></p>
+
+<h5>5.1-2 LeftTranslation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftTranslation</code>( <var class="Arg">Q</var>, <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the left translation by the element <var class="Arg">x</var> in the right quasigroup <var class="Arg">Q</var>. We allow <var class="Arg">x</var> to be an element of <var class="Arg">Q</var> or an element of the underlying set of <var class="Arg">Q</var>. If <var class="Arg">Q</var> is a quasigroup, the translation is returned as a parent permutation, cf. Section <a href="chap4_mj.html#X8372074486AAC9EB"><span class="RefLink">4.1</span></a>. If <var class="Arg">Q</var> is merely a right quasigroup, the left translation is returned as a transformation on <code class="code">[1..Size( Parent( </code><var class="Arg">Q</var><code class="code"> ) )]</code>, even if the left translation happens to be a permutation.</p>
+
+<p><a id="X7F4CF4B0851E7235" name="X7F4CF4B0851E7235"></a></p>
+
+<h5>5.1-3 <span class="Heading">Sections</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightSection</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftSection</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the right (left) section of a right quasigroup <code class="code">Q</code>, i.e., the list of all right (left) translations by elements of <code class="code">Q</code>.</p>
+
+<p><a id="X7AF75B397C3E23AF" name="X7AF75B397C3E23AF"></a></p>
+
+<h4>5.2 <span class="Heading">Multiplication groups and relative multiplication groups</span></h4>
+
+<p>The <em>right multiplication group</em> <span class="SimpleMath">\(\textrm{Mlt}_r(Q)\)</span> of a right quasigroup <span class="SimpleMath">\(Q\)</span> is the permutation group generated by all right translations of <span class="SimpleMath">\(Q\)</span>. The <em>left multiplication group</em> <span class="SimpleMath">\(\textrm{Mlt}_\ell(Q)\)</span> of a left quasigroup <span class="SimpleMath">\(Q\)</span> is defined dually. The <em>multiplication group</em> <span class="SimpleMath">\(\textrm{Mlt}(Q)\)</span> of a quasigroup <code class="code">Q</code> is the permutation group generated by all left and right translations of <span class="SimpleMath">\(Q\)</span>.</p>
+
+<p>If <span class="SimpleMath">\(S\)</span> is a subrightquasigroup of a right quasigroup <span class="SimpleMath">\(Q\)</span>, the <em>relative right multiplication group</em> of <span class="SimpleMath">\(S\)</span> in <span class="SimpleMath">\(Q\)</span> is the subgroup of <span class="SimpleMath">\(\textrm{Mlt}_r(Q)\)</span> generated by all right translations in <span class="SimpleMath">\(Q\)</span> by elements of <span class="SimpleMath">\(S\)</span>. Note that there is a difference betwee the relative right multiplication group of <span class="SimpleMath">\(S\)</span> in <span class="SimpleMath">\(Q\)</span> and the right multiplication group of <span class="SimpleMath">\(S\)</span>. The <em>relative left multiplication group</em> and the <em>relative multiplication group</em> of <span class="SimpleMath">\(S\)</span> in <span class="SimpleMath">\(Q\)</span> are defined analogously.</p>
+
+<p><a id="X78ED50F578A88046" name="X78ED50F578A88046"></a></p>
+
+<h5>5.2-1 <span class="Heading">Multiplication groups</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightMultiplicationGroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftMultiplicationGroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MultiplicationGroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the (right, left) multiplication group of the right quasigroup <code class="code">Q</code> as a subgroup of the symmetric group on the set <code class="code">[1..Size(Parent(Q))]</code>. For the left and two-sided versions, <code class="code">Q</code> must be a quasigroup. An effort is made to return the group with a precalculated small generating set.</p>
+
+<p><a id="X78A885027C9A439B" name="X78A885027C9A439B"></a></p>
+
+<h5>5.2-2 LeftMultiplicationSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftMultiplicationSemigroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the left multiplication semigroup of the right quasigroup <code class="code">Q</code> as a subsemigroup of the full transformation semigroup on the set <code class="code">[1..Size(Parent(Q))]</code>. If <code class="code">Q</code> is a quasigorup, the function returns the group <code class="code">LeftMultiplicationGroup( Q )</code>.</p>
+
+<p><a id="X8521593280EC6E05" name="X8521593280EC6E05"></a></p>
+
+<h5>5.2-3 <span class="Heading">Relative multiplication groups</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RelativeRightMultiplicationGroup</code>( <var class="Arg">Q</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RelativeLeftMultiplicationGroup</code>( <var class="Arg">Q</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RelativeMultiplicationGroup</code>( <var class="Arg">Q</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the relative (right, left) multiplication group of a subrightquasigroup <code class="code">S</code> in the right quasigroup <code class="code">Q</code>. For the left an two-sided versions, <code class="code">Q</code> must be a quasigroup. An effort is made to return the group with a precalculated small generating set.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := AsQuasigroup( Group( (1,2,3,4,5,6 ) ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( RightMultiplicationGroup( Q ) );</span>
+6
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Subquasigroup( Q, [ Q[(1,3,5)(2,4,6)] ] );</span>
+&lt;associative quasigroup of size 3&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightTranslation( S, (1,3,5)(2,4,6) );</span>
+(1,3,5)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftTranslation( S, (1,3,5)(2,4,6) );</span>
+(1,3,5)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( LeftMultiplicationGroup( S ) );</span>
+3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelativeLeftMultiplicationGroup( Q, S );</span>
+Group([ (1,3,5)(2,4,6) ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftMultiplicationGroup( S );</span>
+Group([ (1,3,5) ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelativeRightMultiplicationGroup( Q, S );</span>
+Group([ (1,3,5)(2,4,6) ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( MultiplicationGroup( Q ) );</span>
+6
+</pre></div>
+
+<p><a id="X7884CEE3829DDC9E" name="X7884CEE3829DDC9E"></a></p>
+
+<h4>5.3 <span class="Heading">Inner mappings and inner mapping groups</span></h4>
+
+<p>In loop theory, the mappings in the multiplication group that fix the identity element are called <em>inner mappings</em>. Certain standard inner mappings of loops make sense for quasigroups and right quasigroups, when written out as products of translations. We will call such mappings of right quasigroups inner mappings, too.</p>
+
+<p>When <span class="SimpleMath">\(Q\)</span> is a right quasigroup and <span class="SimpleMath">\(x,y\in Q\)</span>, the <em>right inner mapping</em> determined by <span class="SimpleMath">\(x\)</span> and <span class="SimpleMath">\(y\)</span> is the permutation <span class="SimpleMath">\(R(x,y) = R_{xy}^{-1} R_y R_x\)</span>, where we compose mappings from right to left. The <em>right inner mapping group</em> of <span class="SimpleMath">\(Q\)</span> is the subgroup of the right multiplication group <span class="SimpleMath">\(\textrm{Mlt}_r(Q)\)</span> of <span class="SimpleMath">\(Q\)</span> generated by all right inner mappings. When <span class="SimpleMath">\(Q\)</span> is a loop, the right inner mapping group is the stabilizer of the neutral element of <span class="SimpleMath">\(Q\)</span> in <span class="SimpleMath">\(\textrm{Mlt}_r(Q)\)</span>.</p>
+
+<p>When <span class="SimpleMath">\(Q\)</span> is a quasigroup and <span class="SimpleMath">\(x,y\in Q\)</span>, the <em>middle inner mapping</em> determined by <span class="SimpleMath">\(x\)</span> is the permutation <span class="SimpleMath">\(L(x)^{-1} R(x)\)</span>, and the <em>left inner mapping</em> determined by <span class="SimpleMath">\(x\)</span> and <span class="SimpleMath">\(y\)</span> is the permutation <span class="SimpleMath">\(L(x,y) = L_{yx}^{-1} L_y L_x\)</span>. The <em>middle inner mapping group</em> of <span class="SimpleMath">\(Q\)</span> is the subgroup of the multiplication group of <span class="SimpleMath">\(Q\)</span> generated by all middle inner mappings. The <em>left inner mapping group</em> of <span class="SimpleMath">\(Q\)</span> is the subgroup of the left multiplication group <span class="SimpleMath">\(\textrm{Mlt}_\ell(Q)\)</span> of <span class="SimpleMath">\(Q\)</span> generarted by all left inner mappings. When <span class="SimpleMath">\(Q\)</span> is a loop, the left inner mapping grup is the stabilizer of the neutral element of <span class="SimpleMath">\(Q\)</span> in <span class="SimpleMath">\(\textrm{Mlt}_\ell(Q)\)</span>. Finally, the <em>inner mapping group</em> of <span class="SimpleMath">\(Q\)</span> is the subroup of the multiplication group <span class="SimpleMath">\(\textrm{Mlt}(Q)\)</span> of <span class="SimpleMath">\(Q\)</span> generated by all right, middle and left inner mappings. When <span class="SimpleMath">\(Q\)</span> is a loop, the inner mapping group is the stabilizer of the neutral element of <span class="SimpleMath">\(Q\)</span> in <span class="SimpleMath">\(\textrm{Mlt}(Q)\)</span>.</p>
+
+<p><a id="X7A4D75D386B4D6B8" name="X7A4D75D386B4D6B8"></a></p>
+
+<h5>5.3-1 <span class="Heading">Inner mappings</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightInnerMapping</code>( <var class="Arg">Q</var>, <var class="Arg">x</var>, <var class="Arg">y</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MiddleInnerMapping</code>( <var class="Arg">Q</var>, <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftInnerMapping</code>( <var class="Arg">Q</var>, <var class="Arg">x</var>, <var class="Arg">y</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the right, middle and left inner mappings in <code class="code">Q</code> determined by <code class="code">x</code> (and <code class="code">y</code>). For the right inner mappings, <code class="code">Q</code> can be a right quasigroup. For the middle and left inner mappings, <code class="code">Q</code> must be a quasigroup.</p>
+
+<p><a id="X8740D61178ACD217" name="X8740D61178ACD217"></a></p>
+
+<h5>5.3-2 <span class="Heading">Inner mapping groups</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightInnerMappingGroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MiddleInnerMappingGroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftInnerMappingGroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InnerMappingGroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the (right, middle, left) inner mapping group of a quasigroup <code class="code">Q</code>. For the right inner mapping group, we alow <code class="code">Q</code> to be a right quasigroup.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ct := [[1,2,3,4,5],[2,1,4,5,3],[3,5,1,2,4],[4,3,5,1,2],[5,4,2,3,1]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := LoopByCayleyTable( ct );; # not commutative</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftInnerMapping( Q, Q.3, Q.3 );</span>
+(2,4,5)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := LeftMultiplicationGroup( Q );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LInn := LeftInnerMappingGroup( Q );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ Size( L ), Size( LInn ) ];</span>
+[ 120, 24 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">(2,4,5) in L;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LInn = Stabilizer( L, 1 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RInn := RightInnerMappingGroup( Q );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( RInn );</span>
+24
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ForAll( Q, x -&gt; ForAll( Q, y -&gt; RightInnerMapping( Q, x, y ) in RInn ) );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LInn = RInn;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( MiddleInnerMappingGroup( Q ) );</span>
+12
+</pre></div>
+
+<p><a id="X83ED285B7C0EED61" name="X83ED285B7C0EED61"></a></p>
+
+<h4>5.4 <span class="Heading">Displacement groups</span></h4>
+
+<p>For a right quasigroup <span class="SimpleMath">\((Q,\cdot)\)</span>, define the <em>right positive displacement group</em> <span class="SimpleMath">\(\mathrm{Dis}_r^+(Q) =\langle R_xR_y^{-1}:x,y\in Q\rangle\)</span>, the <em>right negative displacement group</em> <span class="SimpleMath">\(\mathrm{Dis}_r^-(Q) =\langle R_x^{-1}R_y:x,y\in Q\rangle\)</span>, and the <em>right displacement group</em> <span class="SimpleMath">\(\mathrm{Dis}_r(Q) = \langle R_xR_y^{-1},R_x^{-1}R_y:x,y\in Q\rangle\)</span>.</p>
+
+<p>For a fixed <span class="SimpleMath">\(e\in Q\)</span> we then have <span class="SimpleMath">\(\mathrm{Dis}_r^+(Q)=\langle R_eR_x^{-1}:x\in Q\rangle = \langle R_xR_e^{-1}:x\in Q\rangle\)</span> and <span class="SimpleMath">\(\mathrm{Dis}_r^-(Q)=\langle R_x^{-1}R_e:x\in Q\rangle = \langle R_e^{-1}R_x:x\in Q\rangle\)</span>.</p>
+
+<p>The <em>left displacement groups</em> are defined analogously for a left quasigroup <span class="SimpleMath">\((Q,\cdot)\)</span> by <span class="SimpleMath">\(\mathrm{Dis}_\ell^+(Q) =\langle L_xL_y^{-1}:x,y\in Q\rangle\)</span>, <span class="SimpleMath">\(\mathrm{Dis}_\ell^-(Q) =\langle L_x^{-1}L_y:x,y\in Q\rangle\)</span> and <span class="SimpleMath">\(\mathrm{Dis}_\ell(Q) = \langle L_xL_y^{-1},L_x^{-1}L_y:x,y\in Q\rangle\)</span>.</p>
+
+<p>For a fixed <span class="SimpleMath">\(e\in Q\)</span> we then have <span class="SimpleMath">\(\mathrm{Dis}_\ell^+(Q)=\langle L_eL_x^{-1}:x\in Q\rangle = \langle L_xL_e^{-1}:x\in Q\rangle\)</span> and <span class="SimpleMath">\(\mathrm{Dis}_\ell^-(Q)=\langle L_x^{-1}L_e:x\in Q\rangle = \langle L_e^{-1}L_x:x\in Q\rangle\)</span>.</p>
+
+<p><a id="X80EF79DD79638DB0" name="X80EF79DD79638DB0"></a></p>
+
+<h5>5.4-1 <span class="Heading">Right displacement groups</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightPosDisplacementGroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightNegDisplacementGroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightDisplacementGroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the various right displacement groups of the right quasigroup <var class="Arg">Q</var>.</p>
+
+<p><a id="X85F8CF12879B13C3" name="X85F8CF12879B13C3"></a></p>
+
+<h5>5.4-2 <span class="Heading">Left displacement groups</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftPosDisplacementGroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftNegDisplacementGroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftDisplacementGroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the various left displacement groups of the quasigroup <var class="Arg">Q</var>.</p>
+
+<p><a id="X80FCFCCD7B5D216D" name="X80FCFCCD7B5D216D"></a></p>
+
+<h5>5.4-3 IsIsotopicToGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIsotopicToGroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if the quasigroup <var class="Arg">Q</var> is isotopic to a group, else returns <code class="code">false</code>.</p>
+
+<p>Note that a quasigroup <span class="SimpleMath">\((Q,\cdot)\)</span> is isotopic to a group iff <span class="SimpleMath">\(\mathrm{Dis}_\ell^+(Q)\)</span> acts regularly on <span class="SimpleMath">\(Q\)</span>, in which case <span class="SimpleMath">\((Q,\cdot)\)</span> is isotopic to <span class="SimpleMath">\(\mathrm{Dis}_\ell^+(Q)\)</span> (cf. Chapter <a href="chap8_mj.html#X7AA78DB6815E123F"><span class="RefLink">8</span></a>).</p>
+
+<p><a id="X85E9E5B47C2574D9" name="X85E9E5B47C2574D9"></a></p>
+
+<h5>5.4-4 IsIsotopicToAbelianGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIsotopicToAbelianGroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if the quasigroup <var class="Arg">Q</var> is isotopic to an abelian group, else returns <code class="code">false</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := QuasigroupByFunction( GF(5), \- );</span>
+&lt;quasigroup of size 5&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightPosDisplacementGroup( Q );</span>
+Group([ (1,2,3,5,4) ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftDisplacementGroup( Q );</span>
+Group([ (1,2,3,5,4) ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsotopicToGroup( Q );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsotopicToAbelianGroup( Q );</span>
+true
+</pre></div>
+
+<p><a id="X806709E27F118086" name="X806709E27F118086"></a></p>
+
+<h4>5.5 <span class="Heading">Realizing permutation groups as multiplication groups of loops</span></h4>
+
+<p>The multiplication group <span class="SimpleMath">\(\mathrm{Mlt}(Q)\)</span> of a loop <span class="SimpleMath">\(Q\)</span> is the permutation group generated by all left and right translations of <span class="SimpleMath">\(Q\)</span>, cf. <a href="chap5_mj.html#X7AF75B397C3E23AF"><span class="RefLink">5.2</span></a>. It is a difficult question in loop theory to determine which permutation groups can be realized as multiplication groups of loops. The following functions search for loops such that their multiplication group is contained in or equal to a given permutation group <code class="code">G</code>.</p>
+
+<p>Since the emphasis here is on the multiplication groups, the results are returned not as loops but as right sections of loops, cf. <a href="chap5_mj.html#X78AA3D177CCA49FF"><span class="RefLink">5.1</span></a>. A right section <code class="code">sec</code> contained in the symmetric group on <code class="code">[1..n]</code> can then be converted to a loop by the command <code class="code">LoopByRightSection( [1..n], sec )</code>.</p>
+
+<p>There are two optional parameters in the searches.</p>
+
+
+<ul>
+<li><p>One can speed up the search by setting the argument <code class="code">depth</code> higher; the price is a much bigger memory consumption. The value of <code class="code">depth</code> is automatically and optimally chosen if in the permutation group <code class="code">G</code> there are "not many" permutations fixing <code class="code">depth</code> elements. The optional argument <code class="code">depth</code> can be ommmitted, or set to <code class="code">depth=2</code> with no harm.</p>
+
+</li>
+<li><p>The second optional argument <code class="code">infolevel</code> determines the amount of information reported during the search. With <code class="code">infolevel=0</code>, no information is reported. With <code class="code">infolevel=1</code>, information on timing and hits is reported. With <code class="code">infolevel=2</code>, intermediate results are printed as well.</p>
+
+</li>
+</ul>
+<p><a id="X8434C74F841F6EBF" name="X8434C74F841F6EBF"></a></p>
+
+<h5>5.5-1 AllLoopsWithMltInGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllLoopsWithMltInGroup</code>( <var class="Arg">G</var>[, <var class="Arg">depth</var>[, <var class="Arg">infolevel</var>]] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a (possibly empty) list of right sections of all loops <span class="SimpleMath">\(Q\)</span> such that <span class="SimpleMath">\(\mathrm{Mlt}(Q)\le G\)</span>. Returns <code class="code">fail</code> is something is wrong with the arguments.</p>
+
+<p><a id="X7D469E327A612D9E" name="X7D469E327A612D9E"></a></p>
+
+<h5>5.5-2 AllNonassociativeLoopsWithMltInGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllNonassociativeLoopsWithMltInGroup</code>( <var class="Arg">G</var>[, <var class="Arg">depth</var>[, <var class="Arg">infolevel</var>]] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a (possibly empty) list of right sections of all nonassociative loops <span class="SimpleMath">\(Q\)</span> such that <span class="SimpleMath">\(\mathrm{Mlt}(Q)\le G\)</span>. Returns <code class="code">fail</code> if something is wrong with the arguments.</p>
+
+<p><a id="X7AE137E5787A29E4" name="X7AE137E5787A29E4"></a></p>
+
+<h5>5.5-3 OneLoopWithMltInGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OneLoopWithMltInGroup</code>( <var class="Arg">G</var>[, <var class="Arg">depth</var>[, <var class="Arg">infolevel</var>]] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list that is either empty or contains the right section of a loop <span class="SimpleMath">\(Q\)</span> such that <span class="SimpleMath">\(\mathrm{Mlt}(Q)\le G\)</span>. Returns <code class="code">fail</code> if something is wrong with the arguments.</p>
+
+<p><a id="X7D3244297F256D27" name="X7D3244297F256D27"></a></p>
+
+<h5>5.5-4 OneNonassociativeLoopWithMltInGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OneNonassociativeLoopWithMltInGroup</code>( <var class="Arg">G</var>[, <var class="Arg">depth</var>[, <var class="Arg">infolevel</var>]] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list that is either empty or contains the right section of a nonassociative loop <span class="SimpleMath">\(Q\)</span> such that <span class="SimpleMath">\(\mathrm{Mlt}(Q)\le G\)</span>. Returns <code class="code">fail</code> if something is wrong with the arguments.</p>
+
+<p><a id="X863FFA5C7B7078E2" name="X863FFA5C7B7078E2"></a></p>
+
+<h5>5.5-5 AllLoopsWithMltGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllLoopsWithMltGroup</code>( <var class="Arg">G</var>[, <var class="Arg">depth</var>[, <var class="Arg">infolevel</var>]] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a (possibly empty) list of right sections of all loops <span class="SimpleMath">\(Q\)</span> such that <span class="SimpleMath">\(\mathrm{Mlt}(Q)=G\)</span>. Returns <code class="code">fail</code> if something is wrong with the arguments.</p>
+
+<p><a id="X8525F22C7CFE1119" name="X8525F22C7CFE1119"></a></p>
+
+<h5>5.5-6 OneLoopWithMltGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OneLoopWithMltGroup</code>( <var class="Arg">G</var>[, <var class="Arg">depth</var>[, <var class="Arg">infolevel</var>]] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list that is either empty or contains the right section of a loop <span class="SimpleMath">\(Q\)</span> such that <span class="SimpleMath">\(\mathrm{Mlt}(Q)=G\)</span>. Returns <code class="code">fail</code> if something is wrong with the arguments.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := AlternatingGroup( 6 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OneLoopWithMltGroup( G, 2, 0 );</span>
+[ [ (), (1,2)(3,4,5,6), (1,3)(2,4,6,5), (1,4)(2,5,3,6), 
+      (1,5)(2,6,4,3), (1,6)(2,3,5,4) ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := LoopByRightSection( [1..6], last[ 1 ] );</span>
+&lt;loop of size 6&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MultiplicationGroup( Q ) = G;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AllLoopsWithMltInGroup( SymmetricGroup( 4 ), 2, 0);</span>
+[ [ (), (1,2)(3,4), (1,3)(2,4), (1,4)(2,3) ], 
+  [ (), (1,2)(3,4), (1,3,2,4), (1,4,2,3) ], 
+  [ (), (1,2,3,4), (1,3)(2,4), (1,4,3,2) ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := AllLoopsWithMltInGroup( PGL(3,3), 3, 0 );; Size(a);</span>
+56
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := AllLoopsWithMltGroup(PGL(3,3), 3, 0);; Size(a);</span>
+52
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap4_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap6_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

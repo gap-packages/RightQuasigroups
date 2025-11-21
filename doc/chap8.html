@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (RightQuasigroups) - Chapter 8: Homomorphisms, isomorphisms and automorphisms</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap8"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap7.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap9.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap8_mj.html">[MathJax on]</a></p>
+<p><a id="X7AA78DB6815E123F" name="X7AA78DB6815E123F"></a></p>
+<div class="ChapSects"><a href="chap8.html#X7AA78DB6815E123F">8 <span class="Heading">Homomorphisms, isomorphisms and automorphisms</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X822F70BA85814F1A">8.1 <span class="Heading">Homomorphisms, isomorphisms and automorphisms of right quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X852FE33883890DEE">8.1-1 <span class="Heading">Testing homomorphisms</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X85DAC9E583D8EFB9">8.1-2 <span class="Heading">Testing isomorphisms</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7F53A21185D506C0">8.1-3 <span class="Heading">Testing endomorphisms</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7E6FFC6B8710483D">8.1-4 <span class="Heading">Testing automorphisms</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7B9BAA9B8539A276">8.1-5 <span class="Heading">Homomorphisms by images</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7A2B095A8662C626">8.1-6 KernelRelationOfMapping</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7D9276D67FBE3FE0">8.1-7 <span class="Heading">Kernel of loop homomorphisms</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X78C5775E7B605EEF">8.1-8 <span class="Heading">Natural homomorphism by congruence</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7F8C42818116DB98">8.1-9 <span class="Heading">Natural homomorphism by normal subloop</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7D6B9FFE7F9DEFA2">8.2 <span class="Heading">Isomorphs of right quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X83B0619A80B7B313">8.2-1 <span class="Heading">Isomorphs</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7CDF5CC47A9AE872">8.3 <span class="Heading">Right quasigroups up to isomorphisms</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X85EF2A0E7C96E83B">8.3-1 IsomorphismDiscriminator</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X85FD215285153778">8.3-2 AreEqualIsomorphismDiscriminators</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X793DE9D58270D7DD">8.3-3 <span class="Heading">IsomorphismRightQuasigroups, IsomorphismQuasigroups, IsomorphismLoops</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X822CAD3884B6CE94">8.3-4 <span class="Heading">Right quasigroups up to isomorphism</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X80D040A77F4A860C">8.4 <span class="Heading">Automorphism groups of right quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7E284E3784927F3E">8.4-1 AutomorphismGroup</a></span>
+</div></div>
+</div>
+
+<h3>8 <span class="Heading">Homomorphisms, isomorphisms and automorphisms</span></h3>
+
+<p><a id="X822F70BA85814F1A" name="X822F70BA85814F1A"></a></p>
+
+<h4>8.1 <span class="Heading">Homomorphisms, isomorphisms and automorphisms of right quasigroups</span></h4>
+
+<p>A mapping <span class="Math">f:(Q_1,\cdot)\to (Q_2,*)</span> between (right) quasigroups is a <em>homomorphism</em> if <span class="Math">f(x)*f(y) = f(x\cdot y)</span> for every <span class="Math">x,y\in Q_1</span>. The homomorphism <span class="Math">f</span> then automatically preserves divisons. If <span class="Math">f</span> is also a bijection, it is an <em>isomorphism</em>. If <span class="Math">(Q_1,\cdot)=(Q_2,*)</span> then <span class="Math">f</span> is an <em>endomorphism</em>. A bijective endomorphism is an <em>automorphism</em>.</p>
+
+<p>In <strong class="pkg">RightQuasigroups</strong>, homomorphisms and isomorphisms are represented as right quasigroup mappings, while automorphisms are represented as parent permutations. See Chapter <a href="chap4.html#X81106768871C276F"><span class="RefLink">4</span></a> for conversions between right quasigroup mappings, permutations and transformations.</p>
+
+<p><a id="X852FE33883890DEE" name="X852FE33883890DEE"></a></p>
+
+<h5>8.1-1 <span class="Heading">Testing homomorphisms</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightQuasigroupHomomorphism</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsQuasigroupHomomorphism</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLoopHomomorphism</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if the mapping <var class="Arg">f</var> is a homomorphism of right quasigroups (quasigroups, loops), else returns <code class="code">false</code>. The function checks that the source and range of <var class="Arg">f</var> are right quasigroups (quasigroups, loops) and that <var class="Arg">f</var> respects multiplication.</p>
+
+<p><a id="X85DAC9E583D8EFB9" name="X85DAC9E583D8EFB9"></a></p>
+
+<h5>8.1-2 <span class="Heading">Testing isomorphisms</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightQuasigroupIsomorphism</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsQuasigroupIsomorphism</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLoopIsomorphism</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if the mapping <var class="Arg">f</var> is an isomorphism of right quasigroups (quasigroups, loops), else returns <code class="code">false</code>. The function checks <var class="Arg">f</var> is a bijective right quasigroup (quasigroup, loop) homomorphism.</p>
+
+<p>Mappings returned by <code class="code">IsomorphismRightQuasigroups</code> are right quasigroup isomorphisms.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := QuasigroupByFunction( [0..7], function(x,y) return (x-y) mod 8; end );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := QuasigroupByFunction( [0..3], function(x,y) return (x-y) mod 4; end );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetQuasigroupElementsName(B, "b" );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := function( x ) return B[ UnderlyingSetElm( x ) mod 4 ]; end;; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List( A, f );</span>
+[ b0, b1, b2, b3, b0, b1, b2, b3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m := MappingByFunction( A, B, f );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRightQuasigroupHomomorphism( m );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRightQuasigroupIsomorphism( m );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSurjective( m );</span>
+true
+</pre></div>
+
+<p><a id="X7F53A21185D506C0" name="X7F53A21185D506C0"></a></p>
+
+<h5>8.1-3 <span class="Heading">Testing endomorphisms</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightQuasigroupEndomorphism</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsQuasigroupEndomorphism</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLoopEndomorphism</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if the mapping <var class="Arg">f</var> is an endomorphism of a right quasigroup (quasigroup, loop), else returns <code class="code">false</code>. The function checks that <var class="Arg">f</var> is a right quasigroup (quasigroup, loop) homomorphism with identical source and range.</p>
+
+<p><a id="X7E6FFC6B8710483D" name="X7E6FFC6B8710483D"></a></p>
+
+<h5>8.1-4 <span class="Heading">Testing automorphisms</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightQuasigroupAutomorphism</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsQuasigroupAutomorphism</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLoopAutomorphism</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if the mapping <var class="Arg">f</var> is an automorphism of a right quasigroup (quasigroup, loop), else returns <code class="code">false</code>. The function checks that <var class="Arg">f</var> is a bijective right quasigroup (quasigroup, loop) endomorphism.</p>
+
+<p>Note that elements of automorphism groups of right quasigroups are not right quasigroup automorphisms in this sense and must be converted via <code class="code">AsRightQuasigroupMapping</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := AutomorphicLoop( 15, 1 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := LeftInnerMapping( Q, Q.6, Q.2 );</span>
+(6,9,8,7,10)(11,15,12,13,14)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m := AsRightQuasigroupMapping( Q, f );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRightQuasigroupAutomorphism( m );</span>
+true
+</pre></div>
+
+<p><a id="X7B9BAA9B8539A276" name="X7B9BAA9B8539A276"></a></p>
+
+<h5>8.1-5 <span class="Heading">Homomorphisms by images</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightQuasigroupHomomorphismByImages</code>( <var class="Arg">Q1</var>, <var class="Arg">Q2</var>[[, <var class="Arg">gens</var>], <var class="Arg">imgs</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasigroupHomomorphismByImages</code>( <var class="Arg">Q1</var>, <var class="Arg">Q2</var>[[, <var class="Arg">gens</var>], <var class="Arg">imgs</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopHomomorphismByImages</code>( <var class="Arg">Q1</var>, <var class="Arg">Q2</var>[[, <var class="Arg">gens</var>], <var class="Arg">imgs</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the homomorphism from right quasigroup (quasigroup, loop) <var class="Arg">Q1</var> to right quasigroup (quasigroup, loop) <var class="Arg">Q2</var> determined by the images <var class="Arg">imgs</var> on the generators <var class="Arg">gens</var> of <var class="Arg">Q1</var>. If the list <var class="Arg">gens</var> is omitted, <code class="code">GeneratorsOfRightQuasigroup(</code><var class="Arg">Q1</var><code class="code">)</code> is used instead. If the list <var class="Arg">imgs</var> is omitted, <code class="code">GeneratorsOfRightQuasigroup(</code><var class="Arg">Q2</var><code class="code">)</code> is used instead. If <var class="Arg">gens</var>, <var class="Arg">imgs</var> are not of the same length, error is returned. If <var class="Arg">gens</var> does not generate <var class="Arg">Q1</var>, <code class="code">fail</code> is returned. If the arguments do not define a homomorphism, <code class="code">fail</code> is returned.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := CheinLoop( SymmetricGroup( 3 ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens := SmallGeneratingSet( Q ); # also sets GeneratorsOfMagma in this case</span>
+[ l[ 0, (2,3) ], l[ 0, (1,2,3) ], l[ 1, () ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := AsLoop( Group((1,2)) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := LoopHomomorphismByImages( Q, S, gens, [ S[()],S[()],S[(1,2)] ] );</span>
+MappingByFunction( &lt;Moufang loop of size 12&gt;, &lt;associative loop of siz\
+e 2&gt;, function( x ) ... end )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q[ [1,(1,2,3)] ]^f;</span>
+l(1,2)
+</pre></div>
+
+<p><a id="X7A2B095A8662C626" name="X7A2B095A8662C626"></a></p>
+
+<h5>8.1-6 KernelRelationOfMapping</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KernelRelationOfMapping</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the kernel relation of the mapping <var class="Arg">f</var>, that is, the equivalence relation <code class="code">E</code> on <code class="code">Source( </code><var class="Arg">f</var><code class="code"> )</code> such that <code class="code">xEy</code> iff <code class="code">x^f = y^f</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SymmetricGroup( 3 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := MappingByFunction( G, Domain([1,-1]), SignPerm );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ker := KernelRelationOfMapping( f );</span>
+&lt;equivalence relation on SymmetricGroup( [ 1 .. 3 ] ) &gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">EquivalenceClasses( ker );</span>
+[ {(2,3)}, {()} ]
+</pre></div>
+
+<p><a id="X7D9276D67FBE3FE0" name="X7D9276D67FBE3FE0"></a></p>
+
+<h5>8.1-7 <span class="Heading">Kernel of loop homomorphisms</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KernelOfLoopHomomorphism</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KernelOfLoopHomomorphismNC</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the kernel of the loop homomorphism <var class="Arg">f</var>, that is, the subloop of the loop <code class="code">Source( </code><var class="Arg">f</var><code class="code"> )</code> consisting of all elements <code class="code">x</code> such that <code class="code">x^f</code> is the identity element of the loop <code class="code">Range( </code><var class="Arg">f</var><code class="code"> )</code>. The <code class="code">NC</code> version does not check whether <var class="Arg">f</var> is a loop homomorphism.</p>
+
+<p><a id="X78C5775E7B605EEF" name="X78C5775E7B605EEF"></a></p>
+
+<h5>8.1-8 <span class="Heading">Natural homomorphism by congruence</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalHomomorphismByCongruence</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalHomomorphismByCongruenceNC</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the natural projection corresponding to the right quasigroup congruence <var class="Arg">C</var>. With <code class="code">Q = Source( </code><var class="Arg">C</var><code class="code"> )</code>, it returns the endomorphism <code class="code">f</code> from <code class="code">Q</code> to <code class="code">Q/</code><var class="Arg">C</var> such that <code class="code">x^f</code> is the element of <code class="code">Q/</code><var class="Arg">C</var> containing <code class="code">x</code> (as a congruence class). The <code class="code">NC</code> version does not check whether <var class="Arg">C</var> is a congruence.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := QuasigroupByFunction( [0..3], function(x,y) return (x-y) mod 4; end );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C := EquivalenceRelationByPartition( Q, [ [Q[0],Q[2]], [Q[1],Q[3]] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := NaturalHomomorphismByCongruence( C );</span>
+MappingByFunction( &lt;quasigroup of size 4&gt;, &lt;quasigroup of size 2&gt;, fun\
+ction( x ) ... end )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UnderlyingSet( Range( f ) );</span>
+[ {q0}, {q1} ]
+</pre></div>
+
+<p><a id="X7F8C42818116DB98" name="X7F8C42818116DB98"></a></p>
+
+<h5>8.1-9 <span class="Heading">Natural homomorphism by normal subloop</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalHomomorphismByNormalSubloop</code>( <var class="Arg">Q</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalHomomorphismByNormalSubloopNC</code>( <var class="Arg">Q</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the natural projection from the loop <var class="Arg">Q</var> to the factor loop <var class="Arg">Q</var><code class="code">/</code><var class="Arg">S</var>. The <code class="code">NC</code> version does not check whether <var class="Arg">S</var> is a normal subloop of <var class="Arg">Q</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := MoufangLoop( 12, 1 );</span>
+MoufangLoop( 12, 1 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := NaturalHomomorphismByNormalSubloop( Q, Subloop(Q, [Q.2,Q.3] ) );</span>
+MappingByFunction( MoufangLoop( 12, 1 ), &lt;Moufang loop of size 2&gt;, fun\
+ction( x ) ... end )
+</pre></div>
+
+<p><a id="X7D6B9FFE7F9DEFA2" name="X7D6B9FFE7F9DEFA2"></a></p>
+
+<h4>8.2 <span class="Heading">Isomorphs of right quasigroups</span></h4>
+
+<p>If <span class="Math">f:(Q,\cdot)\to (Q,*)</span> is an isomorphism, then <span class="Math">x*y = f(f^{-1}(x)\cdot f^{-1}(y))</span> for all <span class="Math">x,y\in Q</span>, and <span class="Math">(Q,*)</span> is called an <em>isomorph</em> of <span class="Math">(Q,\cdot)</span> via <span class="Math">f</span>.</p>
+
+<p>For the convenience of the reader, functions that construct isomorphs accept a wide variety of arguments representing mappings:</p>
+
+
+<ul>
+<li><p>The argument <var class="Arg">f</var> is mandatory and can be given as a bijective right quasigroup mapping, a bijective transformation or a permutation.</p>
+
+</li>
+<li><p>If <var class="Arg">f</var> is given as a transformation/permutation, the argument <var class="Arg">Q</var> is also required, and it must be a right quasigroup, quasigroup or loop. The returned algebra will have the same underlying set as <var class="Arg">Q</var>. If <var class="Arg">f</var> is given as a right quasigroup mapping, its source will be used as <var class="Arg">Q</var>.</p>
+
+</li>
+<li><p>Any subset of the two optional arguments <var class="Arg">isCanonical</var> and <var class="Arg">constructorStyle</var> can be given.</p>
+
+</li>
+<li><p>If the optional argument <var class="Arg">isCanonical</var> is given and set to <code class="code">true</code>, the permutation/transformation <var class="Arg">f</var> is interpreted as a canonical permutation/transformation, else it is by default interpreted as parent permutation/transformation. (See Chapter <a href="chap4.html#X81106768871C276F"><span class="RefLink">4</span></a>.)</p>
+
+</li>
+<li><p>See Section <a href="chap2.html#X85C8B48C7BEC8AB6"><span class="RefLink">2.1</span></a> for the optional argument <var class="Arg">constructorStyle</var>.</p>
+
+</li>
+</ul>
+<p><a id="X83B0619A80B7B313" name="X83B0619A80B7B313"></a></p>
+
+<h5>8.2-1 <span class="Heading">Isomorphs</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightQuasigroupIsomorph</code>( [<var class="Arg">Q</var>, ]<var class="Arg">f</var>[, <var class="Arg">isCanonical</var>, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasigroupIsomorph</code>( [<var class="Arg">Q</var>, ]<var class="Arg">f</var>[, <var class="Arg">isCanonical</var>, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopIsomorph</code>( [<var class="Arg">Q</var>, ]<var class="Arg">f</var>[, <var class="Arg">isCanonical</var>, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: the isomorph of the right quasigroup (quasigroup, loop) <var class="Arg">Q</var> via <var class="Arg">f</var>. See above for conventions on the arguments. An effort is made for the isomorph to inherit properties from <var class="Arg">Q</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q1 := MoufangLoop( 12, 1 );</span>
+MoufangLoop( 12, 1 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q2 := LoopIsomorph( Q1, (3,4,5) ); # Other kinds of mappings are accepted. Note inherited properties.</span>
+&lt;Moufang loop of size 12&gt;
+</pre></div>
+
+<p><a id="X7CDF5CC47A9AE872" name="X7CDF5CC47A9AE872"></a></p>
+
+<h4>8.3 <span class="Heading">Right quasigroups up to isomorphisms</span></h4>
+
+<p>To decide if two right quasigroups are isomorphic, <strong class="pkg">RightQuasigroups</strong> first calculates some isomorphism invariants and a partition invariant under isomorphisms, and then determines if there is an isomorphisms that respects the partition.</p>
+
+<p><a id="X85EF2A0E7C96E83B" name="X85EF2A0E7C96E83B"></a></p>
+
+<h5>8.3-1 IsomorphismDiscriminator</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismDiscriminator</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a data structure suitable for isomorphism searches from a right quasigroup <code class="code">Q</code>.</p>
+
+<p><a id="X85FD215285153778" name="X85FD215285153778"></a></p>
+
+<h5>8.3-2 AreEqualIsomorphismDiscriminators</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AreEqualIsomorphismDiscriminators</code>( <var class="Arg">dis1</var>, <var class="Arg">dis2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if the two isomorphism discriminators <code class="code">dis1</code>, <code class="code">dis2</code> (each returned by <code class="code">IsomorphismDiscriminator</code>) are equal as discriminators, else returns <code class="code">false</code>. If <code class="code">false</code> is returned, the two disriminators correspond to right quasigroups that are not isomorphic. If <code class="code">true</code> is returned, the corresponding right quasigroups might be isomorphic.</p>
+
+<p><a id="X793DE9D58270D7DD" name="X793DE9D58270D7DD"></a></p>
+
+<h5>8.3-3 <span class="Heading">IsomorphismRightQuasigroups, IsomorphismQuasigroups, IsomorphismLoops</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismRightQuasigroups</code>( <var class="Arg">Q1</var>, <var class="Arg">Q2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismQuasigroups</code>( <var class="Arg">Q1</var>, <var class="Arg">Q2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismLoops</code>( <var class="Arg">Q1</var>, <var class="Arg">Q2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an isomorphism between the right quasigroups (quasigroups, loops) <code class="code">Q1</code> and <code class="code">Q2</code>, if one exists, else returns <code class="code">fail</code>. If an isomorphism from <code class="code">Q1</code> to <code class="code">Q2</code> exists, it is returned as a right quasigroup mapping. See Chapter <a href="chap4.html#X81106768871C276F"><span class="RefLink">4</span></a> for conversion options of the returned mapping.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q1 := RightQuasigroupByFunction( [0..9], function(x,y) return (x+2*y) mod 10; end );</span>
+&lt;right quasigroup of size 10&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q2 := RightQuasigroupIsomorph( Q1, (3,4,5) );</span>
+&lt;right quasigroup of size 10&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismRightQuasigroups( Q1, Q2 );</span>
+MappingByFunction( &lt;right quasigroup of size 10&gt;, &lt;right quasigroup of\
+ size 10&gt;, function( x ) ... end )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsCanonicalTransformation( last );</span>
+Transformation( [ 1, 2, 4, 5, 3 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsPermutation( last );</span>
+(3,4,5)
+</pre></div>
+
+<p><a id="X822CAD3884B6CE94" name="X822CAD3884B6CE94"></a></p>
+
+<h5>8.3-4 <span class="Heading">Right quasigroups up to isomorphism</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightQuasigroupsUpToIsomorphism</code>( <var class="Arg">ls</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasigroupsUpToIsomorphism</code>( <var class="Arg">ls</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopsUpToIsomorphism</code>( <var class="Arg">ls</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a sublist of <code class="code">ls</code> consisting of all right quasigroups (quasigroups, loops) in <code class="code">ls</code> up to isomorphism. Via an optional parameter <code class="code">:UseDiscriminator</code> one may force the algorithm to use <code class="code">IsomorphismDiscriminator</code> as an invariant to speed up isomorph rejection.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q1 := CheinLoop( SymmetricGroup( 3 ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q2 := LoopIsomorph( Q1, (1,2) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q3 := AsLoop( CyclicGroup( 12 ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lps := LoopsUpToIsomorphism( [ Q1, Q2, Q3 ] );</span>
+[ &lt;Moufang loop of size 12&gt;, &lt;associative loop of size 12&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lps[1] = Q1; lps[2] = Q3;</span>
+true
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"></span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := TransitiveGroup( 8, 31 );</span>
+[2^4]E(4)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lps := AllLoopsWithMltInGroup( g, 2, 0 );; Size( lps );</span>
+192
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Apply( lps, LoopByRightSection );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( LoopsUpToIsomorphism( lps : UseDiscriminator ) );</span>
+58
+</pre></div>
+
+<p><a id="X80D040A77F4A860C" name="X80D040A77F4A860C"></a></p>
+
+<h4>8.4 <span class="Heading">Automorphism groups of right quasigroups</span></h4>
+
+<p><a id="X7E284E3784927F3E" name="X7E284E3784927F3E"></a></p>
+
+<h5>8.4-1 AutomorphismGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AutomorphismGroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the automorphism group of the right quasigroup <code class="code">Q</code> as a subgroup of the symmetric group on <code class="code">[1..Size(Parent(Q))]</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := MoufangLoop( 12, 1 );</span>
+MoufangLoop( 12, 1 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ag := AutomorphismGroup( Q );; IdGroup( ag );</span>
+[ 108, 17 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Subloop( Q, [Q.3] );; ParentInd( S );</span>
+[ 1, 3, 5 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AutomorphismGroup( S ); # consists of parent permutations</span>
+Group([ (3,5) ])
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap7.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap9.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

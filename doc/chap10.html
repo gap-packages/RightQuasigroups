@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (RightQuasigroups) - Chapter 10: Bol loops, Bruck loops and Moufang loops</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap10"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap9.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap11.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap10_mj.html">[MathJax on]</a></p>
+<p><a id="X7AE3D55A7D72FDEE" name="X7AE3D55A7D72FDEE"></a></p>
+<div class="ChapSects"><a href="chap10.html#X7AE3D55A7D72FDEE">10 <span class="Heading">Bol loops, Bruck loops and Moufang loops</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X79B8BD5B79D05851">10.1 <span class="Heading">Bol loops and Bruck loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7F9585C47DA78A6E">10.1-1 <span class="Heading">Associated Bruck loop</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7A989541808DD000">10.1-2 IsExactGroupFactorization</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7B24AEF57B9C946E">10.1-3 RightBolLoopByExactGroupFactorization</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X83E73A767D79FAFD">10.2 <span class="Heading">Triality for Moufang loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X871FBF6586F11745">10.2-1 TrialityPermGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X84DD7D2B7AF9BDD0">10.2-2 TrialityPcGroup</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X7CE2DCE383227512">10.3 <span class="Heading">Quarter modifications of Moufang loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X80E913D68047DD8C">10.3-1 CheinLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7C3D409D87B3C239">10.3-2 <span class="Heading">*Cyclic modification</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X8328D46D79AD7543">10.3-3 <span class="Heading">*Dihedral modification</span></a>
+</span>
+</div></div>
+</div>
+
+<h3>10 <span class="Heading">Bol loops, Bruck loops and Moufang loops</span></h3>
+
+<p><a id="X79B8BD5B79D05851" name="X79B8BD5B79D05851"></a></p>
+
+<h4>10.1 <span class="Heading">Bol loops and Bruck loops</span></h4>
+
+<p>A right Bruck loop is a right Bol loop satisfying the automorphic inverse property. If <span class="Math">Q</span> is a right Bol loop in which the squaring map <span class="Math">x\mapsto x^2</span> is a permutation, then <span class="Math">(Q,\circ)</span> with multiplication <span class="Math">x\circ y = ((x(yy))x)^{1/2}</span> is a right Bruck loop, the right Bruck loop <em>associated</em> with <span class="Math">Q</span>. Here, <span class="Math">x^{1/2}</span> is the square-root of <span class="Math">x</span>, the unique element <span class="Math">y</span> of <span class="Math">Q</span> such that <span class="Math">y^2=x</span>.</p>
+
+<p>For a left Bol loop in which squaring is a permutation, the associated left Bruck loop is defined by <span class="Math">x\circ y = (x((yy)x))^{1/2}</span>.</p>
+
+<p><a id="X7F9585C47DA78A6E" name="X7F9585C47DA78A6E"></a></p>
+
+<h5>10.1-1 <span class="Heading">Associated Bruck loop</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AssociatedRightBruckLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AssociatedLeftBruckLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the right (left) Bruck loop associated with the right (left) Bol loop <code class="code">Q</code>. The returned loop is index based iff <code class="code">Q</code> is index based.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := RightBolLoop(21,1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssociatedRightBruckLoop( Q );</span>
+&lt;right Bruck loop of size 21&gt;
+</pre></div>
+
+<p><a id="X7A989541808DD000" name="X7A989541808DD000"></a></p>
+
+<h5>10.1-2 IsExactGroupFactorization</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsExactGroupFactorization</code>( <var class="Arg">G</var>, <var class="Arg">H1</var>, <var class="Arg">H2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <code class="code">G</code>, <code class="code">H1</code>, <code class="code">H2</code> is an exact group factorization, else returns <code class="code">false</code>.</p>
+
+<p>A triple <span class="Math">G</span>, <span class="Math">H_1</span>, <span class="Math">H_2</span> is an <em>exact group factorization</em> if <span class="Math">H_1</span>, <span class="Math">H_2</span> are subgroups of <span class="Math">G</span> such that <span class="Math">H_1\cap H_2=1</span> and <span class="Math">H_1H_2=G</span>.</p>
+
+<p><a id="X7B24AEF57B9C946E" name="X7B24AEF57B9C946E"></a></p>
+
+<h5>10.1-3 RightBolLoopByExactGroupFactorization</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightBolLoopByExactGroupFactorization</code>( <var class="Arg">G</var>, <var class="Arg">H1</var>[, <var class="Arg">H2</var>[, <var class="Arg">constructorStyle</var>]] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the right Bol loop obtained from the exact group factorization <code class="code">G</code>, <code class="code">H1</code>, <code class="code">H2</code>. With two arguments <code class="code">G</code> and <code class="code">H1</code>, the group <code class="code">G</code> must be a transitive permutation group and <code class="code">H1</code> must be a regular subgroup. Then, <code class="code">H2</code> is taken as the stabilizer of a point in <code class="code">G</code>.</p>
+
+<p>Given an exact group factorization <span class="Math">G</span>, <span class="Math">H_1</span>, <span class="Math">H_2</span>, the triple <span class="Math">(G\times G, H_1\times H_2, \{(g,g^{-1}):g\in G\})</span> is a loop right folder and the resulting group is automatically a right Bol loop.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SymmetricGroup( 5 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H1 := Subgroup( G, [(1,2),(1,3),(1,4)] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H2 := Subgroup( G, [(1,2,3,4,5)] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsExactGroupFactorization( G, H1, H2 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightBolLoopByExactGroupFactorization( G, H1, H2 );</span>
+&lt;right Bol loop of size 120&gt;
+</pre></div>
+
+<p><a id="X83E73A767D79FAFD" name="X83E73A767D79FAFD"></a></p>
+
+<h4>10.2 <span class="Heading">Triality for Moufang loops</span></h4>
+
+<p>Let <span class="Math">G</span> be a group and <span class="Math">\sigma</span>, <span class="Math">\rho</span> be automorphisms of <span class="Math">G</span> satisfying <span class="Math">\sigma^2 = \rho^3 = (\sigma \rho)^2 = 1</span>. Below we write automorphisms as exponents and <span class="Math">[g,\sigma]</span> for <span class="Math">g^{-1}g^\sigma</span>. We say that the triple <span class="Math">(G,\rho,\sigma)</span> is a <em>group with triality</em> if <span class="Math">[g, \sigma] [g,\sigma]^\rho [g,\sigma]^{\rho^2} =1</span> holds for all <span class="Math">g \in G</span>. It is known that one can associate a group with triality <span class="Math">(G,\rho,\sigma)</span> in a canonical way with a Moufang loop <span class="Math">Q</span>. See <a href="chapBib.html#biBNaVo2003">[NV03]</a> for more details.</p>
+
+<p>For any Moufang loop <span class="Math">Q</span>, we can calculate the triality group as a permutation group acting on <span class="Math">3|Q|</span> points. If the multiplication group of <span class="Math">Q</span> is polycyclic, then we can also represent the triality group as a pc group. In both cases, the automorphisms <span class="Math">\sigma</span> and <span class="Math">\rho</span> are in the same family as the elements of <span class="Math">G</span>.</p>
+
+<p><a id="X871FBF6586F11745" name="X871FBF6586F11745"></a></p>
+
+<h5>10.2-1 TrialityPermGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TrialityPermGroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a record with components <code class="code">G</code>, <code class="code">rho</code>, <code class="code">sigma</code>, where <code class="code">G</code> is the canonical group with triality associated with a Moufang loop <var class="Arg">Q</var>, and <code class="code">rho</code>, <code class="code">sigma</code> are the corresponding triality automorphisms. We allow <var class="Arg">Q</var> to be a group.</p>
+
+<p><a id="X84DD7D2B7AF9BDD0" name="X84DD7D2B7AF9BDD0"></a></p>
+
+<h5>10.2-2 TrialityPcGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TrialityPcGroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>This is a variation of <code class="code">TrialityPermGroup</code> in which <code class="code">G</code> is returned as a pc group.</p>
+
+<p><a id="X7CE2DCE383227512" name="X7CE2DCE383227512"></a></p>
+
+<h4>10.3 <span class="Heading">Quarter modifications of Moufang loops</span></h4>
+
+<p>Drápal <a href="chapBib.html#biBDrapalCD">[Dr\03]</a> described two prominent families of extensions of Moufang loops. The common feature of these extensions is that they modify multiplication tables of groups or other Moufang loops in exactly one quarter of the mutliplication table. It turns out that these extensions suffice to obtain all nonassociative Moufang loops of order at most 64 if one starts with so-called Chein loops. We call the two constructions <em>Moufang modifications</em>. The library of Moufang loops used to be based on Moufang modifications. See <a href="chapBib.html#biBDrVo">[DV06]</a> for details.</p>
+
+<p><a id="X80E913D68047DD8C" name="X80E913D68047DD8C"></a></p>
+
+<h5>10.3-1 CheinLoop</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CheinLoop</code>( <var class="Arg">G</var>[, <var class="Arg">constructorStyle</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the Chein loop constructed from the group <code class="code">G</code>, that is, the Moufang loop on <code class="code">[0,1] x G</code> with multiplication</p>
+
+<p class="pcenter"> (0,x)(0,y) = (0,xy),\ (0,x)(1,y) = (1,yx),\, (1,x)(0,y) = (1,xy^{-1}),\ (1,x)(1,y) = (0,yx^{-1}). </p>
+
+<p>The resulting Moufang loop is associative iff <code class="code">G</code> is commutative.</p>
+
+<p><a id="X7C3D409D87B3C239" name="X7C3D409D87B3C239"></a></p>
+
+<h5>10.3-2 <span class="Heading">*Cyclic modification</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopByCyclicModification</code>( <var class="Arg">Q</var>, <var class="Arg">S</var>, <var class="Arg">a</var>, <var class="Arg">h</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: The cyclic modification of a Moufang loop <var class="Arg">Q</var> obtained from <var class="Arg">S</var>, <var class="Arg">a</var><span class="Math">=\alpha</span> and <var class="Arg">h</var> as described below. We allow <var class="Arg">S</var> to be normal subloop of <var class="Arg">L</var> or a list of elements of <var class="Arg">L</var> generating a normal subloop. The returned loop will always be index based.</p>
+
+<p>Assume that <span class="Math">Q</span> is a Moufang loop with a normal subloop <span class="Math">S</span> such that <span class="Math">Q/S</span> is a cyclic group of order <span class="Math">2m</span>. Let <span class="Math">h\in S\cap Z(L)</span>. Let <span class="Math">\alpha</span> be a generator of <span class="Math">Q/S</span> and write <span class="Math">Q = \bigcup_{i\in M} \alpha^i</span>, where <span class="Math">M=\{-m+1</span>, <span class="Math">\dots</span>, <span class="Math">m\}</span>. Let <span class="Math">\sigma:\mathbb{Z}\to M</span> be defined by <span class="Math">\sigma(i)=0</span> if <span class="Math">i\in M</span>, <span class="Math">\sigma(i)=1</span> if <span class="Math">i&gt;m</span>, and <span class="Math">\sigma(i)=-1</span> if <span class="Math">i&lt;-m+1</span>. Introduce a new multiplication <span class="Math">*</span> on <span class="Math">Q</span> by <span class="Math">x*y = xyh^{\sigma(i+j)}</span>, where <span class="Math">x\in \alpha^i</span>, <span class="Math">y\in\alpha^j</span>, <span class="Math">i\in M</span> and <span class="Math">j\in M</span>. Then <span class="Math">(Q,*)</span> is a Moufang loop, a <em>cyclic modification</em> of <span class="Math">Q</span>.</p>
+
+<p><a id="X8328D46D79AD7543" name="X8328D46D79AD7543"></a></p>
+
+<h5>10.3-3 <span class="Heading">*Dihedral modification</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopByDihedralModification</code>( <var class="Arg">Q</var>, <var class="Arg">S</var>, <var class="Arg">e</var>, <var class="Arg">f</var>, <var class="Arg">h</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: The dihedral modification of a Moufang loop <var class="Arg">Q</var> obtained from <var class="Arg">S</var>, <var class="Arg">e</var>, <var class="Arg">f</var> and <var class="Arg">h</var> as described below. We allow <var class="Arg">S</var> to be normal subloop of <var class="Arg">L</var> or a list of elements of <var class="Arg">L</var> generating a normal subloop. The returned loop will always be index based.</p>
+
+<p>Let <span class="Math">Q</span> be a Moufang loop with a normal subloop <span class="Math">S</span> such that <span class="Math">Q/S</span> is a dihedral group of order <span class="Math">4m</span>, with <span class="Math">m\ge 1</span>. Let <span class="Math">M</span> and <span class="Math">\sigma</span> be efined as in the cyclic case. Let <span class="Math">\beta</span>, <span class="Math">\gamma</span> be two involutions of <span class="Math">Q/S</span> such that <span class="Math">\alpha=\beta\gamma</span> generates a cyclic subgroup of <span class="Math">Q/S</span> of order <span class="Math">2m</span>. Let <span class="Math">e\in\beta</span> and <span class="Math">f\in\gamma</span> be arbitrary. Then <span class="Math">Q</span> can be written as a disjoint union <span class="Math">Q=\bigcup_{i\in M}(\alpha^i\cup e\alpha^i)</span>, and also <span class="Math">Q=\bigcup_{i\in M}(\alpha^i\cup \alpha^if)</span>. Let <span class="Math">G_0=\bigcup_{i\in M}\alpha^i</span>, and <span class="Math">G_1=L\setminus G_0</span>. Let <span class="Math">h\in S\cap N(L)\cap Z(G_0)</span>. Introduce a new multiplication <span class="Math">*</span> on <span class="Math">Q</span> by <span class="Math">x*y = xyh^{(-1)^r\sigma(i+j)}</span>, where <span class="Math">x\in\alpha^i\cup e\alpha^i</span>, <span class="Math">y\in\alpha^j\cup \alpha^jf</span>, <span class="Math">i\in M</span>, <span class="Math">j\in M</span>, <span class="Math">y\in G_r</span> and <span class="Math">r\in\{0,1\}</span>. Then <span class="Math">(Q,*)</span> is a Moufang loop, a <em>dihedral modification</em> of <span class="Math">Q</span>.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap9.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap11.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

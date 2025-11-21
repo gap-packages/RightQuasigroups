@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (RightQuasigroups) - Chapter 7: Properties of right quasigroups, quasigroups and loops</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap7"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap7_mj.html">[MathJax on]</a></p>
+<p><a id="X7C36E2F07EF2D994" name="X7C36E2F07EF2D994"></a></p>
+<div class="ChapSects"><a href="chap7.html#X7C36E2F07EF2D994">7 <span class="Heading">Properties of right quasigroups, quasigroups and loops</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7AEB9CFF825ED614">7.1 <span class="Heading">Parser</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X861BDBD1805D8B92">7.1-1 <span class="Heading">Building terms from strings</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7E52257B80D03E65">7.1-2 <span class="Heading">Verifying identities</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7C31EE0D813BB6AE">7.1-3 <span class="Heading">*How evaluation of identities with the parser works</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X78AD3BFE78905C6A">7.2 <span class="Heading">Properties of magmas</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X83CDE74D8610577B">7.2-1 <span class="Heading">Testing properties of magmas and right quasigroups</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X86A9D00D7D86D430">7.3 <span class="Heading">Properties of right quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X79C0AC5B8647506A">7.3-1 IsFaithfulRightQuasigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7E58EE8B808DC687">7.3-2 IsProjectionRightQuasigroup</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X84C12E667BB4A664">7.4 <span class="Heading">Properties of quasigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7A32558786094FCE">7.4-1 IsSemisymmetric</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X787E77DA7A5FFD2E">7.4-2 IsTotallySymmetric</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7CD9E42B78847031">7.4-3 IsSteinerQuasigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X86D928A47B50BF68">7.4-4 IsEntropic</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X799488BB84503A92">7.5 <span class="Heading">Inverse properties of loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X861806A0819E0FC3">7.5-1 HasTwosidedInverses</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7EC09F33866964C6">7.5-2 <span class="Heading">Right and left inverse properties</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7D6EE389834522B2">7.5-3 HasWeakInverseProperty</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7E16F5487916D660">7.5-4 <span class="Heading">Automorphic and antiautomorphic inverse properties</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7C7F567E829960C0">7.6 <span class="Heading">Loops of Bol-Moufang type</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7AC2FDC385F9381C">7.6-1 <span class="Heading">Testing for loops of Bol-Moufang type</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X86B05C2579674382">7.6-2 IsNuclearSquareLoop</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X83A501387E1AC371">7.7 <span class="Heading">Power alternative loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7DB9267B85096FA4">7.7-1 <span class="Heading">Testing for power alternative loops</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7B160F0780192484">7.8 <span class="Heading">Conjugacy closed loops and Osborn loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7AB09D3380E626BE">7.8-1 <span class="Heading">Testing for conjugacy closed loops</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X86CF486F808ED13C">7.8-2 IsOsbornLoop</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X878C9D247FB0D56E">7.9 <span class="Heading">Additional varieties of loops</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7B1A473282641B20">7.9-1 IsCodeLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7F483B8B7F91CB0A">7.9-2 IsSteinerLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7B7DE0CF7C674239">7.9-3 <span class="Heading">Bruck loops</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X793B22EA8643C667">7.9-4 <span class="Heading">Automorphic loops</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7F942F1982DC5275">7.9-5 <span class="Heading">Jordan loops</span></a>
+</span>
+</div></div>
+</div>
+
+<h3>7 <span class="Heading">Properties of right quasigroups, quasigroups and loops</span></h3>
+
+<p>In this chapter we present functions that check various properties of right quasigroups, quasigroups and loops, some on the level of magmas. Any identity of right quasigroups, quasigroups and loops can be verified or refuted with the custom-built parser. Specific (and typically faster) methods are provided for many identities and properties of right quasigroups, and we recommend using them, rather than the generic parser method, whenever possible.</p>
+
+<p><a id="X7AEB9CFF825ED614" name="X7AEB9CFF825ED614"></a></p>
+
+<h4>7.1 <span class="Heading">Parser</span></h4>
+
+<p><strong class="pkg">RightQuasigroups</strong> contains a simple, custom-built parser for parsing of right quasigroup, quasigroup and loop terms and for verification of right quasigroup, quasigroup and loop identities. For the purposes of the parser:</p>
+
+
+<ul>
+<li><p>variables are lower case characters <code class="code">a</code>, ..., <code class="code">z</code>,</p>
+
+</li>
+<li><p>the multiplication operation is denoted by <code class="code">*</code>,</p>
+
+</li>
+<li><p>the right division operation is denoted by <code class="code">/</code>,</p>
+
+</li>
+<li><p>the left division operation is denoted by <code class="code">|</code> (since <code class="code">\</code> behaves badly in <strong class="pkg">GAP</strong> strings) and is only allowed in quasigroup and loop terms,</p>
+
+</li>
+<li><p>the neutral element is denoted by <code class="code">1</code> and is only allowed in loop terms,</p>
+
+</li>
+<li><p>parentheses and brackets <code class="code">(</code>, <code class="code">[</code>, <code class="code">{</code> and <code class="code">)</code>, <code class="code">]</code>, <code class="code">}</code> are allowed and they are all treated as <code class="code">(</code> and <code class="code">)</code>, respectively,</p>
+
+</li>
+<li><p>the three binary operations have the same priority and if terms are not fully parenthesized, the term is parsed from right to left, (e.g., <code class="code">x*y\z</code> is parsed as <code class="code">(x*y)\z</code>) in accordance with <strong class="pkg">GAP</strong> conventions for parsing of products,</p>
+
+</li>
+<li><p>spaces are allowed and ignorred,</p>
+
+</li>
+<li><p>no other characters are allowed.</p>
+
+</li>
+</ul>
+<p><a id="X861BDBD1805D8B92" name="X861BDBD1805D8B92"></a></p>
+
+<h5>7.1-1 <span class="Heading">Building terms from strings</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightQuasigroupTermFromString</code>( <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasigroupTermFromString</code>( <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopTermFromString</code>( <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the right quasigroup (quasigroup, loop) term corresponding to the string <code class="code">s</code>. The term is returned as a structured list mimicking the infix tree for the term.</p>
+
+<p>It is possible to verify identities directly in <strong class="pkg">GAP</strong>. For instance, <code class="code">ForAll( Q, x -&gt; ForAll( Q, y -&gt; ForAll( Q, z -&gt; x*(y*z) = (x*y)*z ) ) )</code> returns <code class="code">true</code> iff <code class="code">Q</code> is associative.</p>
+
+<p>For the convenience of the user, we support checking of identities in right quasigroups, quasigroups and loops by the custom-built parser. Despite some effort to make the checking fast, it is about half as fast as the direct check using <strong class="pkg">GAP</strong> code.</p>
+
+<p><a id="X7E52257B80D03E65" name="X7E52257B80D03E65"></a></p>
+
+<h5>7.1-2 <span class="Heading">Verifying identities</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightQuasigroupSatisfiesIdentity</code>( <var class="Arg">Q</var>, <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasigroupSatisfiesIdentity</code>( <var class="Arg">Q</var>, <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopSatisfiesIdentity</code>( <var class="Arg">Q</var>, <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if the right quasigroup (quasigroup, loop) <code class="code">Q</code> satisfies the right quasigroup (quasigroup, loop) identity represented by the string <code class="code">s</code>. If <code class="code">Q</code> does not satisfy <code class="code">s</code>, the function returns a list of variables of <code class="code">s</code> and their values in <code class="code">Q</code> that violate <code class="code">s</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := AsLoop( CyclicGroup( 6 ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoopSatisfiesIdentity( Q, "x*y=y*x" );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoopSatisfiesIdentity( Q, "x*x=1" );</span>
+[ [ 'x', lf1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightQuasigroupTermFromString("x*(y/z)");</span>
+[ 24, '*', [ 25, '/', 26 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QuasigroupTermFromString("(a|b)/(c*d)"); # note the symbol | for left division</span>
+[ [ 1, '|', 2 ], '/', [ 3, '*', 4 ] ]
+</pre></div>
+
+<p><a id="X7C31EE0D813BB6AE" name="X7C31EE0D813BB6AE"></a></p>
+
+<h5>7.1-3 <span class="Heading">*How evaluation of identities with the parser works</span></h5>
+
+<p>To speed up evaluation of identities, the parser produces terms in which variables have been replaced by their positions in the global variable string <code class="code">RQ_parserVarNames = "abcedfghijklmnopqrstuvwxyz"</code>. The current values of all variables are stored in the global list <code class="code">RQ_parserVars</code> of length 26. The current value of the neutral element is stored in the global variable <code class="code">RQ_parserOne</code>. A term <code class="code">t</code> produced by <code class="code">RightQuasigroupTermFromString</code>, <code class="code">QuasigroupTermFromString</code> or <code class="code">LoopTermFromString</code> is then evaluated via <code class="code">RQ_EvaluateTerm( t )</code>.</p>
+
+<p><a id="X78AD3BFE78905C6A" name="X78AD3BFE78905C6A"></a></p>
+
+<h4>7.2 <span class="Heading">Properties of magmas</span></h4>
+
+<p>The following list summarizes (mostly equational) properties of magmas tested in <strong class="pkg">RightQuasigroups</strong>. All identities are universally quantified with respect to all variables.</p>
+
+
+<ul>
+<li><p><em>3-power associative</em>: <span class="Math">x(xx)=(xx)x</span></p>
+
+</li>
+<li><p><em>alternative</em>: <span class="Math">x(xy) = (xx)y</span> and <span class="Math">x(yy)=(xy)y</span></p>
+
+</li>
+<li><p><em>associative</em>: <span class="Math">x(yz)=(xy)z</span></p>
+
+</li>
+<li><p><em>commutative</em>: <span class="Math">xy=yx</span></p>
+
+</li>
+<li><p><em>diassociative</em>: every submagma generated by two elements is associative</p>
+
+</li>
+<li><p><em>flexible</em>: <span class="Math">x(yx)=(xy)x</span></p>
+
+</li>
+<li><p><em>idempotent</em>: <span class="Math">xx=x</span></p>
+
+</li>
+<li><p><em>left alternative</em>: <span class="Math">x(xy)=(xx)y</span></p>
+
+</li>
+<li><p><em>left self-distributive</em>: <span class="Math">x(yz)=(xy)(xz)</span></p>
+
+</li>
+<li><p><em>power associative</em>: every submagma generated by a single element is associative</p>
+
+</li>
+<li><p><em>right alternative</em>: <span class="Math">x(yy)=(xy)y</span></p>
+
+</li>
+<li><p><em>right self-distributive</em>: <span class="Math">(xy)z=(xz)(yz)</span></p>
+
+</li>
+<li><p><em>self-distributive</em>: <span class="Math">x(yz)=(xy)(xz)</span> and <span class="Math">(xy)z=(xz)(yz)</span></p>
+
+</li>
+<li><p><em>unipotent</em>: <span class="Math">xx=yy</span></p>
+
+</li>
+</ul>
+<p>Some of these methods for magmas are already available in <strong class="pkg">GAP</strong>, e.g., <code class="code">IsCommutative</code>. In such a case, we provide a new method for right quasigroups that takes advantage of right translations as permutations.</p>
+
+<p><a id="X83CDE74D8610577B" name="X83CDE74D8610577B"></a></p>
+
+<h5>7.2-1 <span class="Heading">Testing properties of magmas and right quasigroups</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Is3PowerAssociative</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAlternative</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAssociative</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCommutative</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDiassociative</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFlexible</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIdempotent</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftAlternative</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftSelfDistributive</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPowerAssociative</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightAlternative</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightSelfDistributive</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSelfDistributive</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUnipotent</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <code class="code">Q</code> is a magma with the property in the title of the function, else returns <code class="code">false</code></p>
+
+<p><a id="X86A9D00D7D86D430" name="X86A9D00D7D86D430"></a></p>
+
+<h4>7.3 <span class="Heading">Properties of right quasigroups</span></h4>
+
+<p><a id="X79C0AC5B8647506A" name="X79C0AC5B8647506A"></a></p>
+
+<h5>7.3-1 IsFaithfulRightQuasigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFaithfulRightQuasigroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <var class="Arg">Q</var> is a faithful right quasigroup, that is, a right quasigroup for which the mapping <span class="Math">x\mapsto R_x</span> is injective.</p>
+
+<p><a id="X7E58EE8B808DC687" name="X7E58EE8B808DC687"></a></p>
+
+<h5>7.3-2 IsProjectionRightQuasigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsProjectionRightQuasigroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <var class="Arg">Q</var> is a projection right quasigroup, that is, a right quasigroup satisfying the identity <span class="Math">xy=x</span>.</p>
+
+<p><a id="X84C12E667BB4A664" name="X84C12E667BB4A664"></a></p>
+
+<h4>7.4 <span class="Heading">Properties of quasigroups</span></h4>
+
+<p><a id="X7A32558786094FCE" name="X7A32558786094FCE"></a></p>
+
+<h5>7.4-1 IsSemisymmetric</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemisymmetric</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <code class="code">Q</code> is a semisymmetric quasigroup (that is, a quasigroup satisfying <code class="code">(x*y)*x=y</code> for all <code class="code">x</code>, <code class="code">y</code>), else returns <code class="code">false</code>.</p>
+
+<p><a id="X787E77DA7A5FFD2E" name="X787E77DA7A5FFD2E"></a></p>
+
+<h5>7.4-2 IsTotallySymmetric</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTotallySymmetric</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <code class="code">Q</code> is a totally symmetric quasigroup (that is, a quasigroup that is semisymmetric and commutative), else returns <code class="code">false</code>.</p>
+
+<p><a id="X7CD9E42B78847031" name="X7CD9E42B78847031"></a></p>
+
+<h5>7.4-3 IsSteinerQuasigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSteinerQuasigroup</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <code class="code">Q</code> is a Steiner quasigroup (that is, a quasigroup that is idempotent and totally symmetric), else returns <code class="code">false</code>. We also support the synonym <code class="code">IsMedial</code>.</p>
+
+<p><a id="X86D928A47B50BF68" name="X86D928A47B50BF68"></a></p>
+
+<h5>7.4-4 IsEntropic</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEntropic</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <code class="code">Q</code> is an entropic quasigroup (that is, a quasigroup satisfying <code class="code">(x*u)*(v*y) = (x*v)*(u*y)</code> for all <code class="code">x</code>, <code class="code">y</code>, <code class="code">u</code>, <code class="code">v</code>), else returns <code class="code">false</code>. We also support the synonym <code class="code">IsMedial</code>.</p>
+
+<p><a id="X799488BB84503A92" name="X799488BB84503A92"></a></p>
+
+<h4>7.5 <span class="Heading">Inverse properties of loops</span></h4>
+
+<p>In a loop <span class="Math">Q</span> with neutral element <span class="Math">e</span>, for every <span class="Math">x\in Q</span> there is a unique left inverse <span class="Math">x^\ell</span> of <span class="Math">x</span> satisfying <span class="Math">x^\ell x = e</span> and a unique right inverse <span class="Math">x^r</span> of <span class="Math">x</span> satisfying <span class="Math">xx^r=e</span>, cf. Section <a href="chap1.html#X7C4C9F7C7E2E80CF"><span class="RefLink">1.5</span></a>. If <span class="Math">x^ell = x^r</span> then the two-sided inverse of <span class="Math">x</span> is denoted by <span class="Math">x^{-1}</span>.</p>
+
+<p><a id="X861806A0819E0FC3" name="X861806A0819E0FC3"></a></p>
+
+<h5>7.5-1 HasTwosidedInverses</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasTwosidedInverses</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <code class="code">Q</code> is a loop with two-sided inverses, else returns <code class="code">false</code>.</p>
+
+<p><a id="X7EC09F33866964C6" name="X7EC09F33866964C6"></a></p>
+
+<h5>7.5-2 <span class="Heading">Right and left inverse properties</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasRightInverseProperty</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasLeftInverseProperty</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasInverseProperty</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if the loop <code class="code">Q</code> has the right inverse property (resp. left inverse property, inverse property), else returns <code class="code">false</code>.</p>
+
+<p>A loop <span class="Math">Q</span> has the <em>right inverse property</em> (resp. <em>left inverse property</em>) if <span class="Math">(xy)y^r=x</span> (resp. <span class="Math">x^\ell(xy)=y</span>) holds for all <span class="Math">x,y\in Q</span>. It has the <em>inverse property</em> if it is has the right inverse property and the left inverse property. In all three cases, the loop automatically has two-sided inverses.</p>
+
+<p><a id="X7D6EE389834522B2" name="X7D6EE389834522B2"></a></p>
+
+<h5>7.5-3 HasWeakInverseProperty</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasWeakInverseProperty</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if the loop <code class="code">Q</code> has the weak inverse property.</p>
+
+<p>A loop <span class="Math">Q</span> has the <em>weak inverse property</em> if <span class="Math">(xy)^\ell x = y^\ell</span> holds for all <span class="Math">x,y\in Q</span>. The dual identity <span class="Math">x(yx)^r = y^r</span> is equivalent to the weak inverse property. A weak inverse property loop does not necessarily posses two-sided inverses.</p>
+
+<p><a id="X7E16F5487916D660" name="X7E16F5487916D660"></a></p>
+
+<h5>7.5-4 <span class="Heading">Automorphic and antiautomorphic inverse properties</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasAutomorphicInverseProperty</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasAntiautomorphicInverseProperty</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if the loop <code class="code">Q</code> has the automorphic inverse property (resp. antiautomorphic inverse property), else returns <code class="code">false</code>.</p>
+
+<p>A loop <span class="Math">Q</span> has the <em>automorphic inverse property</em> if <span class="Math">(xy)^r = x^r y^r</span> holds for all <span class="Math">x,y\in Q</span> (the dual identity <span class="Math">(xy)^\ell = x^\ell y^\ell</span> is equivalent to it in loops). An automorphic inverse property loop does not necessarily posses two-sided inverses. A loop <span class="Math">Q</span> has the <em>antiautomorphic inverse property</em> if <span class="Math">(xy)^r = y^r x^r</span> holds for all <span class="Math">x,y\in Q</span> (the dual identity <span class="Math">(xy)^\ell = y^\ell x^\ell</span> is equivalent to it in loops). An antiautomorphic inverse property loop automatically possesses two-sided inverses and the definining identity can therefore be restated as <span class="Math">(xy)^{-1}=y^{-1}x^{-1}</span>.</p>
+
+<p><a id="X7C7F567E829960C0" name="X7C7F567E829960C0"></a></p>
+
+<h4>7.6 <span class="Heading">Loops of Bol-Moufang type</span></h4>
+
+<p>A loop identity is said to be of <em>Bol-Moufang type</em> if two of its three variables occur once on each side, the third variable occurs twice on each side, and the order in which the variables appear on both sides is the same, cf. <span class="Math">((xy)x)z=x(y(xz))</span>. A variety of loops is of <em>Bol-Moufang type</em> if it is defined by a single identity of Bol-Moufang type. It can be shown that there are precisey 14 varieties of loops of Bol-Moufang type; the 11 varieties included in the list below plus the already introduced associative loops (aka groups), flexible loops, left alternative loops and right alternative loops.</p>
+
+<p>Here are the 11 varieties of loops of Bol-Moufang type not yet introduced. In some cases there are several equivalent identities of Bol-Moufang type for the given variety but we only list one such identity.</p>
+
+
+<ul>
+<li><p><em>C loops</em>: <span class="Math">x(y(yz))=((xy)y)z</span></p>
+
+</li>
+<li><p><em>extra loops</em>: <span class="Math">x(y(zx))=((xy)z)x</span></p>
+
+</li>
+<li><p><em>LC loops</em>: <span class="Math">(xx)(yz)=(x(xy))z</span></p>
+
+</li>
+<li><p><em>left Bol loops</em>: <span class="Math">x(y(xz)) = (x(yx))z</span></p>
+
+</li>
+<li><p><em>left nuclear square loops</em>: <span class="Math">(xx)(yz)=((xx)y)z</span></p>
+
+</li>
+<li><p><em>middle nuclear square loops</em>: <span class="Math">x((yy)z)=(x(yy))z</span></p>
+
+</li>
+<li><p><em>Moufang loops</em>: <span class="Math">(xy)(zx)=(x(yz))x</span></p>
+
+</li>
+<li><p><em>RC loops</em>: <span class="Math">x((yz)z)=(xy)(zz)</span></p>
+
+</li>
+<li><p><em>right Bol loops</em>: <span class="Math">x((yz)y)=((xy)z)y</span></p>
+
+</li>
+<li><p><em>right nuclear square loops</em>: <span class="Math">x(y(zz))=(xy)(zz)</span></p>
+
+</li>
+</ul>
+<p><a id="X7AC2FDC385F9381C" name="X7AC2FDC385F9381C"></a></p>
+
+<h5>7.6-1 <span class="Heading">Testing for loops of Bol-Moufang type</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsExtraLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLCLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftBolLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftNuclearSquareLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMiddleNuclearSquareLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMoufangLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRCLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightBolLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightNuclearSquareLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if the loop <code class="code">Q</code> has the property in the title of the function, else returns <code class="code">false</code>.</p>
+
+<p><a id="X86B05C2579674382" name="X86B05C2579674382"></a></p>
+
+<h5>7.6-2 IsNuclearSquareLoop</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNuclearSquareLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <code class="code">Q</code> is a <em>nuclear square loop</em> (that is, a loop where the square of every element lies in the nucleus), else returns <code class="code">false</code>. The variety of nuclear square loops is technically not of Bol-Moufang type, but can be obtained by interesecting varieties of Bol-Moufang type.</p>
+
+<p><a id="X83A501387E1AC371" name="X83A501387E1AC371"></a></p>
+
+<h4>7.7 <span class="Heading">Power alternative loops</span></h4>
+
+<p>A loop <span class="Math">Q</span> is <em>right power alternative</em> (resp. <em>left power alternative</em>) if it is power associative and <span class="Math">(xy^n)y^m = xy^{n+m}</span> (resp. <span class="Math">x^n(x^my) = x^{n+m}y</span>) holds for all <span class="Math">x,y\in Q</span> and all integers <span class="Math">n</span>, <span class="Math">m</span>. A loop is <em>power alternative</em> if it is both right and left power alternative.</p>
+
+<p><a id="X7DB9267B85096FA4" name="X7DB9267B85096FA4"></a></p>
+
+<h5>7.7-1 <span class="Heading">Testing for power alternative loops</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightPowerAlternative</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftPowerAlternative</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPowerAlternative</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if the loop <code class="code">Q</code> is right power alternative (resp. left power alternative, power alternative), else returns <code class="code">false</code>.</p>
+
+<p><a id="X7B160F0780192484" name="X7B160F0780192484"></a></p>
+
+<h4>7.8 <span class="Heading">Conjugacy closed loops and Osborn loops</span></h4>
+
+<p>A loop <span class="Math">Q</span> is <em>right conjugacy closed</em> (aka <em>RCC</em>) if for all <span class="Math">x,y\in Q</span> the permutation <span class="Math">R_x^{-1}R_yR_x</span> is a right translation. Dually, <span class="Math">Q</span> is <em>left conjugacy closed</em> (aka <em>LCC</em>) if for all <span class="Math">x,y\in Q</span> the permutation <span class="Math">L_x^{-1}L_yL_x</span> is a left translation. A loop <span class="Math">Q</span> is <em>conjugacy closed</em> (aka <em>CC</em>) if it is both RCC and LCC.</p>
+
+<p><a id="X7AB09D3380E626BE" name="X7AB09D3380E626BE"></a></p>
+
+<h5>7.8-1 <span class="Heading">Testing for conjugacy closed loops</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightConjugacyClosedLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftConjugacyClosedLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConjugacyClosedLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+
+<p>The synonyms <code class="code">IsRCCLoop</code>, <code class="code">IsLCCLoop</code> and <code class="code">IsCCLoop</code> are also supported.</p>
+
+<p><a id="X86CF486F808ED13C" name="X86CF486F808ED13C"></a></p>
+
+<h5>7.8-2 IsOsbornLoop</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsOsbornLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <code class="code">Q</code> is an Osborn loop (that is, a loop satisfying <span class="Math">y\backslash (x(zx)) = ((y/x)z)x</span>), else returns <code class="code">false</code>.</p>
+
+<p><a id="X878C9D247FB0D56E" name="X878C9D247FB0D56E"></a></p>
+
+<h4>7.9 <span class="Heading">Additional varieties of loops</span></h4>
+
+<p><a id="X7B1A473282641B20" name="X7B1A473282641B20"></a></p>
+
+<h5>7.9-1 IsCodeLoop</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCodeLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <code class="code">Q</code> is a code loop, else returns <code class="code">false</code>. A loop <span class="Math">Q</span> is a <em>code loop</em> if it a Moufang loop containing a central subloop <span class="Math">Z</span> of size <span class="Math">2</span> such that <span class="Math">Q/Z</span> is an elementary abelian <span class="Math">2</span>-group.</p>
+
+<p><a id="X7F483B8B7F91CB0A" name="X7F483B8B7F91CB0A"></a></p>
+
+<h5>7.9-2 IsSteinerLoop</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSteinerLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <code class="code">Q</code> is a Steiner loop, else retunrs <code class="code">false</code>. A loop <span class="Math">Q</span> is a <em>Steiner loop</em> if it is an inverse property loop of exponent at most <span class="Math">2</span>.</p>
+
+<p><a id="X7B7DE0CF7C674239" name="X7B7DE0CF7C674239"></a></p>
+
+<h5>7.9-3 <span class="Heading">Bruck loops</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightBruckLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftBruckLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <code class="code">Q</code> is a right Bruck loop (resp. left Bruck loop), else returns <code class="code">false</code>.</p>
+
+<p>A loop <span class="Math">Q</span> is a <em>right Bruck loop</em> (aka <em>right K-loop</em>) if it is right Bol an has the automorphic inverse property. A loop <span class="Math">Q</span> is a <em>left Bruck loop</em> (aka <em>left K-loop</em>) if it is left Bol and has the automorphic inverse property. The synonyms <code class="code">IsRightKLoop</code> and <code class="code">IsLeftKLoop</code> are also supported.</p>
+
+<p><a id="X793B22EA8643C667" name="X793B22EA8643C667"></a></p>
+
+<h5>7.9-4 <span class="Heading">Automorphic loops</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightAutomorphicLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMiddleAutomorphicLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftAutomorphicLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAutomorphicLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <code class="code">Q</code> is a right automorphic loop (resp. middle automorphic loop, left automorphic loop, automorphic loop), else returns <code class="code">false</code>.</p>
+
+<p>A loop <span class="Math">Q</span> is a <em>right automorphic loop</em> (aka <em>right A-loop</em>) if all right inner mapping of <span class="Math">Q</span> are automorphisms of <span class="Math">Q</span>. A loop <span class="Math">Q</span> is a <em>middle automorphic loop</em> (aka <em>middle A-loop</em>) if all its middle inner mappings are automorphisms of <span class="Math">Q</span>. A loop <span class="Math">Q</span> is a <em>left automorphic loop</em> (aka <em>left A-loop</em>) if all its left inner mappings are automorphisms of <span class="Math">Q</span>. A loop <span class="Math">Q</span> is an <em>automorphic loop</em> (aka <em>A-loop</em>) if all its inner mappings are automorphisms of <span class="Math">Q</span>.</p>
+
+<p>The synonyms <code class="code">IsRightALoop</code>, <code class="code">IsMiddleALoop</code>, <code class="code">IsLeftALoop</code> and <code class="code">IsALoop</code> are also supported.</p>
+
+<p><a id="X7F942F1982DC5275" name="X7F942F1982DC5275"></a></p>
+
+<h5>7.9-5 <span class="Heading">Jordan loops</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsJordanLoop</code>( <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> if <code class="code">Q</code> is a Jordan loop, else returns <code class="code">false</code>.</p>
+
+<p>A loop <span class="Math">Q</span> is a <em>Jordan</em> if it is commutative and satisfies the identity <span class="Math">x^2(yx) = (x^2y)x</span>.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>
