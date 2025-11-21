@@ -399,6 +399,18 @@ DeclareSynonymAttr( "IsALoop", IsAutomorphicLoop );
 
 #! @EndGroup
 
+#! @BeginGroup
+#! @GroupTitle Jordan loops
+
+#! <P/>A loop $Q$ is a <Index>Jordan loop</Index>**Jordan** if it is commutative and satisfies the identity 
+#! $x^2(yx) = (x^2y)x.
+
+#! @Arguments Q
+#! @Returns `true` if `Q` is a Jordan loop, else returns `false`.
+DeclareProperty( "IsJordanLoop", IsLoop );
+
+#! @EndGroup
+
 ############################################################################
 ##  IMPLICATIONS for InstallTrueMethod
 ##  -------------------------------------------------------------------------
@@ -517,6 +529,8 @@ InstallTrueMethod( IsALoop, IsCommutative and IsMoufangLoop );
 InstallTrueMethod( IsALoop, IsLeftALoop and IsMiddleALoop );
 InstallTrueMethod( IsALoop, IsRightALoop and IsMiddleALoop );
 InstallTrueMethod( IsALoop, IsAssociative and IsLoop);
+InstallTrueMethod( IsJordanLoop, IsCommutative and IsDiassociative );
+InstallTrueMethod( IsJordanLoop, IsCommutative and IsLeftNuclearSquareLoop );
 
 # for loops with inverse properties
 InstallTrueMethod( HasAntiautomorphicInverseProperty, HasAutomorphicInverseProperty and IsCommutative );

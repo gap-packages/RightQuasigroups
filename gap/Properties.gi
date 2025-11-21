@@ -548,3 +548,14 @@ InstallMethod( IsAutomorphicLoop, "for loop",
     Q -> IsLeftAutomorphicLoop( Q ) and IsMiddleAutomorphicLoop( Q )
     # MATH: Thm: rigth A-loop + middle A-loop implies left A-loop
 );
+
+# IsJordanLoop( L )
+InstallMethod( IsJordanLoop, "for loop",
+    [ IsLoop ],
+function( Q )
+    # a commutative loop satisfying the identity x^2(yx)=(x^2y)x
+    if not IsCommutative( Q ) then 
+        return false;
+    fi;
+    return ForAll( Q, x -> ForAll( Q, y -> (x*x)*(y*x) = ((x*x)*y)*x ) );
+end );

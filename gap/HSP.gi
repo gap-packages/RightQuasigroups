@@ -292,11 +292,12 @@ function( Q, gens )
             elms := ShallowCopy( gens );
             if category = IsRightQuasigroup then
                 transl := RightSection( P ){ gens };
-                relmultgr := Subgroup( RightMultiplicationGroup( P ), transl );
+                # relmultgr := Subgroup( RightMultiplicationGroup( P ), transl ); # slow                  
             else 
                 transl := Concatenation( RightSection( P ){ gens }, LeftSection( P ){ gens } );
-                relmultgr := Subgroup( MultiplicationGroup( P ), transl );
+                # relmultgr := Subgroup( MultiplicationGroup( P ), transl ); # slow
             fi;          
+            relmultgr := Group( transl ); # might have a lot of generators
             gens := Union( Orbits( relmultgr, gens ) );
         od;
         elms := Immutable( List( elms, i -> P.(i) ) );
