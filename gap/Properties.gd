@@ -403,7 +403,7 @@ DeclareSynonymAttr( "IsALoop", IsAutomorphicLoop );
 #! @GroupTitle Jordan loops
 
 #! <P/>A loop $Q$ is a <Index>Jordan loop</Index>**Jordan** if it is commutative and satisfies the identity 
-#! $x^2(yx) = (x^2y)x.
+#! $x^2(yx) = (x^2y)x$.
 
 #! @Arguments Q
 #! @Returns `true` if `Q` is a Jordan loop, else returns `false`.
