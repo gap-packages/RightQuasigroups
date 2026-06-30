@@ -90,7 +90,7 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">= 4.12",
-  NeededOtherPackages := [ ],
+  NeededOtherPackages := [ [ "utils", "0.75" ] ], # for LeftCosetsNC declaration
   SuggestedOtherPackages := [ [ "Digraphs", "1.4" ] ],
   ExternalConditions := [ ],
 ),
