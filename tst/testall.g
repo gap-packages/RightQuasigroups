@@ -9,7 +9,7 @@ LoadPackage( "RightQuasigroups" );
 TestDirectory(
     DirectoriesPackageLibrary( "RightQuasigroups", "tst" ), 
     rec(
-        exitGAP := false,
+        exitGAP := true,
         rewriteToFile := false,
         exclude := [ "Constructors.tst"],
         testOptions := rec(
