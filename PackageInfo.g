@@ -89,11 +89,15 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">= 4.12",
+  GAP := ">= 4.13",
   NeededOtherPackages := [ [ "utils", "0.75" ] ], # for LeftCosetsNC declaration
   SuggestedOtherPackages := [ [ "Digraphs", "1.4" ] ],
   ExternalConditions := [ ],
 ),
+
+Extensions := [
+  rec( needed := [ [ "Digraphs", ">= 1.6" ] ], filename := "gap/TopismsViaDigraphs.g" ),
+],
 
 AvailabilityTest := ReturnTrue,
 

@@ -27,7 +27,7 @@ jobs:
         gap-version:
           - 'devel'
           - 'latest'
-          - '4.12'
+          - '4.13'
 
     steps:
       - uses: actions/checkout@v7

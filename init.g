@@ -23,10 +23,6 @@ ReadPackage( "RightQuasigroups", "gap/Convert.gd");                 # Converting
 ReadPackage( "RightQuasigroups", "gap/Racks.gd");                   # Racks and quandles
 ReadPackage( "RightQuasigroups", "gap/Examples.gd");                # Libraries of loops, racks and quandles
 
-if IsPackageMarkedForLoading( "Digraphs", "1.6" ) then
-    ReadPackage( "RightQuasigroups", "gap/TopismsViaDigraphs.gd" );
-fi;
-
 #ReadPackage( "RightQuasigroups", "gap/file1.gd" );       # create file, replace filename and uncomment
 #ReadPackage( "RightQuasigroups", "gap/file2.gd" );       # 
 #ReadPackage( "RightQuasigroups", "gap/file3.gd" );       # 
